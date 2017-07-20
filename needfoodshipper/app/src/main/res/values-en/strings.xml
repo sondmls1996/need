@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //login
+    <string name="loginhinsodienthoai">Input phone</string>
+    <string name="loginhinmatkhau">Input password</string>
+    <string name="logindangnhap">Login</string>
+    <string name="loginquenmatkhau">forget password</string>
+    //thongtin
+    <string name="ttmanhanvien">Account ID      </string>
+    <string name="tthoten">Full Name       </string>
+    <string name="ttngaysinh">Brithday          </string>
+    <string name="wait">Waiting..</string>
+    <string name="ttsodienthoai">Mobile Phone </string>
+    <string name="ttemail">Email Contact</string>
+    <string name="ttdiachi">Address          </string>
+    <string name="ttskype">Skype              </string>
+    <string name="ttfacebook">Facebook       </string>
+    <string name="next">Next</string>
+    <string name="accode">Verification had sent to your email</string>
+    <string name="ttgioithieu">Description    </string>
+    <string name="ttsuapass">Change your password</string>
+    <string name="ttbtnsua">Edit</string>
+    <string name="ttbtnluu">Save</string>
+    //sua pass
+    <string name="cspmatkhaucu">Enter Old PassWord</string>
+    <string name="cspmatkhaumoi">Enter New PassWord</string>
+    <string name="cspnhaplai">Re-Enter New PassWord</string>
+    //customitem
+    <string name="ctdonship">NEW DEAL</string>
+    <string name="cttenhang">Order:\u0020</string>
+    <string name="ctdiachi">Location:\u0020</string>
+    <string name="ctlienhe">Contact:\u0020</string>
+    <string name="ctkhachhang">Recipients:\u0020</string>
+    <string name="ctthoigiannhan">Time left:\u0020</string>
+    <string name="cttongtien">Payment:\u0020</string>
+    <string name="ctbtnnhan">Accept</string>
+    <string name="ctbtnhuy">Deny</string>
+    <string name="ctbtnhuy2">Cancel</string>
+    <string name="strnew">New</string>
+    <string name="ctphanhoi">Leave a feedback</string>
+    <string name="ctbtngui">Send</string>
+    //deliveri
+    <string name="ctbtnhoanthanh">Hoàn thành</string>
+    <string name="dltext1">Customer Attitude Evaluation</string>
+    <string name="dltext2">Leave a reason if you can the bil</string>
+    <string name="dlcode">Code</string>
+    <string name="dlmoneyship">Money Ship</string>
+    <string name="dltimeleft">Time Left</string>
+</resources>

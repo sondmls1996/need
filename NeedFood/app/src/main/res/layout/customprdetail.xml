@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlmain"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        app:cardBackgroundColor="@color/white"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/prg1"
+            android:layout_gravity="center"/>
+        <LinearLayout android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/v1"
+            android:visibility="gone"
+
+            xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <RelativeLayout
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+
+                android:maxHeight="200dp">
+                <ImageView
+                    android:layout_width="120dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imgnews"
+                    android:maxHeight="200dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="1:20"
+
+                        android:padding="3dp"
+                        android:background="@drawable/borderedt"
+                        android:textColor="@color/white"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:maxLength="20"
+                    android:id="@+id/tvname2"
+                    android:text="SEA FOOD"
+                    android:textColor="@color/red"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="240.000 VND"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:id="@+id/pr1"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:maxLength="20"
+
+                        android:layout_marginRight="3dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 xuất"
+                        android:textColor="@color/black"
+                        android:maxLength="20"
+                        android:id="@+id/donvi1"
+                        android:layout_marginRight="3dp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/pr2"
+                        android:textColor="@color/gray2"
+                        android:text="160.000 vnd"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray2"
+                        android:text="/"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray2"
+                        android:id="@+id/donvi2"
+                        android:text="1 pices"/>
+                </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="One day of guided fishing on the Henry’s Fork of the Snake River and two nights lodging with Three Rivers Ranch.
+Nestled in the quiet town of Warm River, in Southeastern Idaho, the ranch is surrounded by enormous pines, brilliant colored aspens and three enticing rivers, all within walking distance from the front step of your cabin. Three Rivers Ranch has "
+                        android:maxLength="100"
+                        android:maxLines="3"
+                        android:ellipsize="middle"
+                        android:layout_marginBottom="5dp"
+                        android:id="@+id/des"
+                        android:textColor="@color/gray2"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:visibility="gone"
+                    android:background="@color/gray"
+                    android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:text="Free "/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="with deal minimum "
+                        android:textColor="@color/black"/>]
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:text="70.000"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

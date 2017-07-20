@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">needfoodshiper</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="checkLoginAPI">http://needfood.webmantan.com/checkLoginShiperAPI</string>
+    <string name="getListOrderShiperAPI">http://needfood.webmantan.com/getListOrderShiperAPI</string>
+    <string name="saveTokenDeviceShiperAPI">http://needfood.webmantan.com/saveTokenDeviceShiperAPI</string>
+    <string name="checkLogoutShiperAPI">http://needfood.webmantan.com/checkLogoutShiperAPI</string>
+    <string name="saveStatusOrderAPI">http://needfood.webmantan.com/saveStatusOrderAPI</string>
+    <string name="saveGPSShiperAPI">http://needfood.webmantan.com/saveGPSShiperAPI</string>
+    <string name="searchOrderShiperAPI">http://needfood.webmantan.com/searchOrderShiperAPI</string>
+    <string name="changePassShiperAPI">http://needfood.webmantan.com/changePassShiperAPI</string>
+    <string name="sendCodePassShiperAPI">http://needfood.webmantan.com/sendCodePassShiperAPI</string>
+    <string name="sendPassShiperAPI">http://needfood.webmantan.com/sendPassShiperAPI</string>
+    <string name="getListOrderDoneShiperAPI">http://needfood.webmantan.com/getListOrderDoneShiperAPI</string>
+    <string name="updateInfoShiperAPI">http://needfood.webmantan.com/updateInfoShiperAPI</string>
+    getListOrderWaitingShiperAPI
+    <string name="getListOrderWaitingShiperAPI">http://needfood.webmantan.com/getListOrderWaitingShiperAPI</string>
+
+    <string name="F_REF">com.mantanapp.needfoodshiper.f_ref</string>
+    <string name="F_CM">com.mantanapp.needfoodshiper.f_cm</string>
+    //login
+    <string name="loginhinsodienthoai">Nhập số điện thoại</string>
+    <string name="loginhinmatkhau">Nhập mật khẩu</string>
+    <string name="logindangnhap">Đăng nhập</string>
+    <string name="loginquenmatkhau">Quên mật khẩu?</string>
+    //thongtin
+    <string name="ttmanhanvien">Mã nhân viên</string>
+    <string name="tthoten">Họ tên</string>
+    <string name="ttngaysinh">Ngày sinh</string>
+    <string name="ttsodienthoai">Số điện thoại</string>
+    <string name="ttemail">Email</string>
+    <string name="ttdiachi">Địa chỉ</string>
+    <string name="ttskype">Skype</string>
+    <string name="ttfacebook">Facebook</string>
+    <string name="ttgioithieu">Thông tin</string>
+    <string name="ttsuapass">Sửa mật khẩu?</string>-
+    <string name="ttbtnsua">Chỉnh sửa</string>
+    <string name="next">Tiếp tục</string>
+    <string name="ttbtnluu">Lưu</string>
+    //sua pass
+    <string name="cspmatkhaucu">Nhập mật khẩu cũ</string>
+    <string name="cspmatkhaumoi">Nhập mật khẩu mới</string>
+    <string name="accode">Mã xác nhận đã được gửi vào email</string>
+    <string name="cspnhaplai">Nhập lại mật khẩu mới</string>
+    //customitem
+    <string name="ctdonship">ĐƠN SHIP</string>
+    <string name="cttenhang">Tên hàng:\u0020</string>
+    <string name="ctdiachi">Địa chỉ:\u0020</string>
+    <string name="ctlienhe">Liên hệ:\u0020</string>
+    <string name="ctkhachhang">Khách hàng:\u0020</string>
+    <string name="wait">Đang chờ..</string>
+
+    <string name="ctthoigiannhan">Thời gian :\u0020</string>
+    <string name="cttongtien">Tổng tiền:</string>
+    <string name="ctbtnnhan">Nhận </string>
+    <string name="ctbtnhuy">Hủy</string>
+    <string name="ctbtnhuy2">Hủy</string>
+    <string name="strnew">Đơn mới</string>
+    <string name="ctphanhoi">Lý do hủy</string>
+    <string name="ctbtngui">Gửi</string>
+    //deliveri
+    <string name="ctbtnhoanthanh">Hoàn thành</string>
+    <string name="dltext1">Đánh giá thái độ của khách hàng</string>
+    <string name="dltext2">Để lại một lý do nếu bạn có thể hóa đơn</string>
+    <string name="dlcode">Code:</string>
+    <string name="dlmoneyship">Phí Ship:</string>
+    <string name="dltimeleft">Còn Lại:</string>
+
+
+</resources>

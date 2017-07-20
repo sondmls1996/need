@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "910989136659",
+    "firebase_url": "https://chatapi-5c4c1.firebaseio.com",
+    "project_id": "chatapi-5c4c1",
+    "storage_bucket": "chatapi-5c4c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910989136659:android:db7666342d64e522",
+        "android_client_info": {
+          "package_name": "com.needfood.kh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "910989136659-5saakp70e5aamugo19njcmu93k09420h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF2zaJm2AxPNyhUroI0nOOKXlyGtKPfpM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
