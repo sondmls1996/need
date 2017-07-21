@@ -88,6 +88,7 @@
     <string name="shiptime">Shipping time</string>
     <string name="howtou">How to use?</string>
     <string name="prddetail">Product detail</string>
+    <string name="note">Note</string>
     <string name="search">Search...</string>
     <string name="tranhis">Transfer history</string>
     <string name="action_settings">Settings</string>
@@ -106,6 +107,7 @@
     <string name="linkmn">http://needfood.webmantan.com/getTypeMoneyAPI</string>
     <string name="linkprdsell">http://needfood.webmantan.com/getProductSellerAPI</string>
     <string name="linklogout">http://needfood.webmantan.com/checkLogoutUseronlAPI</string>
+
     <string name="linkprdcata">http://needfood.webmantan.com/getProductCategoryAPI</string>
     <string name="linksavecmt">http://needfood.webmantan.com/saveCommentSellerAPI</string>
     <string name="linkgetcmt">http://needfood.webmantan.com/getCommentSellerAPI</string>
