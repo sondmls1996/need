@@ -38,6 +38,8 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_contanct);
+        TextView txt = (TextView)findViewById(R.id.titletxt);
+        txt.setText(getResources().getString(R.string.yourin));
         db = new DataHandle(getApplicationContext());
         list = db.getAllInfor();
         for (InfoConstructor it : list) {

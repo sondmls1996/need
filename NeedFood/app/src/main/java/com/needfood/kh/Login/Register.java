@@ -29,6 +29,8 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        TextView txt = (TextView)findViewById(R.id.titletxt);
+        txt.setText(getResources().getString(R.string.regis));
         final String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         tvname = (TextView)findViewById(R.id.tvfn);
         tvfone = (TextView)findViewById(R.id.tvf);

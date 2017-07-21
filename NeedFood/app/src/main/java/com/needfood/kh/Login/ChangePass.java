@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -41,6 +42,8 @@ public class ChangePass extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pass);
+        TextView txt = (TextView)findViewById(R.id.titletxt);
+        txt.setText(getResources().getString(R.string.changepass));
         db = new DataHandle(getApplicationContext());
         list = db.getAllInfor();
         for (InfoConstructor it : list) {

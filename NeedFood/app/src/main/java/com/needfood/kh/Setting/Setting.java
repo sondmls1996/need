@@ -64,6 +64,8 @@ public class Setting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        TextView txt = (TextView)findViewById(R.id.titletxt);
+        txt.setText(getResources().getString(R.string.action_settings));
         ses = new Session(getApplicationContext());
         lgb = (LoginButton) findViewById(R.id.loginset);
         logout = (TextView) findViewById(R.id.logout);

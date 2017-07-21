@@ -46,6 +46,8 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        TextView txt = (TextView)findViewById(R.id.titletxt);
+        txt.setText(getResources().getString(R.string.login));
         db = new DataHandle(getApplicationContext());
         ses = new Session(getApplicationContext());
         edus = (EditText) findViewById(R.id.edus);
