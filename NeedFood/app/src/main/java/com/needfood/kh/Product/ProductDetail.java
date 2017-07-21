@@ -75,7 +75,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ImageView imgprd;
     String priceprd, prdcode, titl;
     Session ses;
-
+    String uadr;
     private SimpleDateFormat dateFormatter, timeformat;
     Calendar c;
     int day, month2, year2, hour, minitus;
@@ -191,6 +191,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             idu = listu.get(listu.size() - 1).getId();
             fullname = listu.get(listu.size() - 1).getFullname();
             phone = listu.get(listu.size() - 1).getFone();
+            uadr =  listu.get(listu.size() - 1).getAddress();
+            edadrs.setText(uadr);
+
         }
         tvco = (TextView) findViewById(R.id.tvco);
         tvcodes = (TextView) findViewById(R.id.tvcodes);

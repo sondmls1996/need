@@ -87,7 +87,8 @@ public class More extends Fragment implements View.OnClickListener {
         int id = view.getId();
         switch (id){
             case R.id.lntran:
-
+                Intent itt = new Intent(getContext(),Tranfer.class);
+                startActivity(itt);
                 break;
             case R.id.lnself:
                 Intent it = new Intent(getContext(),MoreContanct.class);
