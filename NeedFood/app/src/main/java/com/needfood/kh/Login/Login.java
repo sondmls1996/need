@@ -1,7 +1,9 @@
 package com.needfood.kh.Login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,15 +39,18 @@ public class Login extends AppCompatActivity {
     LoginButton lgb;
     CallbackManager callbackManager;
     Button lg;
-    TextView tvreg,tvfor;
+    TextView tvreg, tvfor;
     Session ses;
     EditText edus, edpass;
     DataHandle db;
+    String dvtoken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
+        dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
         db = new DataHandle(getApplicationContext());
         ses = new Session(getApplicationContext());
         edus = (EditText) findViewById(R.id.edus);
@@ -53,19 +58,19 @@ public class Login extends AppCompatActivity {
         lgb = (LoginButton) findViewById(R.id.login_button);
         lg = (Button) findViewById(R.id.btnlg);
         tvreg = (TextView) findViewById(R.id.tvreg);
-        edus = (EditText)findViewById(R.id.edus);
-        edpass = (EditText)findViewById(R.id.edpas);
-        lgb = (LoginButton)findViewById(R.id.login_button);
-        tvfor = (TextView)findViewById(R.id.tvfogot);
+        edus = (EditText) findViewById(R.id.edus);
+        edpass = (EditText) findViewById(R.id.edpas);
+        lgb = (LoginButton) findViewById(R.id.login_button);
+        tvfor = (TextView) findViewById(R.id.tvfogot);
         tvfor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(getApplicationContext(),GetCode.class);
+                Intent it = new Intent(getApplicationContext(), GetCode.class);
                 startActivity(it);
             }
         });
-        lg = (Button)findViewById(R.id.btnlg);
-        tvreg = (TextView)findViewById(R.id.tvreg);
+        lg = (Button) findViewById(R.id.btnlg);
+        tvreg = (TextView) findViewById(R.id.tvreg);
         tvreg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,7 +87,7 @@ public class Login extends AppCompatActivity {
                 String phone = edus.getText().toString();
                 String pass = edpass.getText().toString();
                 String link = getResources().getString(R.string.linklogin);
-                Log.d("LOGr", phone + "-" + pass);
+
                 Map<String, String> map = new HashMap<String, String>();
                 if (phone.matches("") || pass.equals("")) {
                     progressDialog.dismiss();
@@ -110,7 +115,7 @@ public class Login extends AppCompatActivity {
                                     String address = js.getString("address");
                                     String id = js.getString("id");
                                     String accesstoken = js.getString("accessToken");
-
+                                    postToken(accesstoken);
                                     db.addInfo(new InfoConstructor(fullname, email, fone, pass, address, id, accesstoken));
                                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                                     startActivity(it);
@@ -154,6 +159,37 @@ public class Login extends AppCompatActivity {
                 // App code
             }
         });
+    }
+
+    private void postToken(String tokent) {
+        Log.d("LOGr", dvtoken);
+        String linkk = getResources().getString(R.string.linksavetoken);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", tokent);
+        map.put("tokenDevice", dvtoken);
+        Response.Listener<String> response = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+
+                    JSONObject jo = new JSONObject(response);
+                    String code = jo.getString("code");
+                    if (code.equals("0")) {
+
+                    } else {
+                        Toast.makeText(getApplication(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        PostCL post = new PostCL(linkk, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(post);
     }
 
     @Override

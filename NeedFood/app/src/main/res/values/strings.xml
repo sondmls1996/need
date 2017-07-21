@@ -122,7 +122,7 @@
     <string name="linkgetcmpr">http://needfood.webmantan.com/getCommentProductAPI</string>
     <string name="linkgetselleraround">http://needfood.webmantan.com/getSellerAroundAPI</string>
     <string name="linkhiscoin">http://needfood.webmantan.com/getHistoryCoinAPI</string>
-
+    <string name="linksavetoken">http://needfood.webmantan.com/saveTokenDeviceAPI</string>
     <string name="logout">Logout</string>
     <string name="tiengviet">Vietnamese</string>
     <string name="tienganh">English</string>
@@ -140,4 +140,11 @@
     <string name="buyer">Buyer: \u0020</string>
     <string name="title_activity_maps">Map</string>
     <string name="addr">Address: \u0020</string>
+
+    <string name="F_REF">com.needfood.kh.fcm_re</string>
+    <string name="F_CM">com.needfood.kh.fcm_cm</string>
+
+    <string name="time">Time: \u0020</string>
+    <string name="pr">Property: \u0020</string>
+    <string name="mess">Message: \u0020 </string>
 </resources>

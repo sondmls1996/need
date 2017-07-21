@@ -100,7 +100,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     RecyclerView re_comment;
     String comment;
     String cmt, time, iduser, fullnameus;
-
+    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,6 +213,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         tvgia2 = (TextView) findViewById(R.id.pr2);
         dess = (TextView) findViewById(R.id.des);
 
+        imageView = (ImageView) findViewById(R.id.imageView);
         arrof = new ArrayList<>();
         arrof2 = new ArrayList<>();
         arrq = new ArrayList<>();
@@ -232,7 +233,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 startActivity(it);
             }
         });
-
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),Howtouse.class);
+                intent.putExtra("idp",idprd);
+                startActivity(intent);
+            }
+        });
         rcquan = (RecyclerView) findViewById(R.id.rcquan);
         rc = (RecyclerView) findViewById(R.id.recycm);
         rcof = (RecyclerView) findViewById(R.id.rcprd);

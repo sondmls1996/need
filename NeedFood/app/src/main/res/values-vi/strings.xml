@@ -122,6 +122,7 @@
     <string name="linkgetcm">http://needfood.webmantan.com/getCommentProductAPI</string>
     <string name="linkgetselleraround">http://needfood.webmantan.com/getSellerAroundAPI</string>
     <string name="linkhiscoin">http://needfood.webmantan.com/getHistoryCoinAPI</string>
+    <string name="linksavetoken">http://needfood.webmantan.com/saveTokenDeviceAPI</string>
 
     <string name="logout">Đăng xuất</string>
     <string name="ssor">Đặt hàng thành công</string>
@@ -139,4 +140,10 @@
     <string name="timeship">Thời gian giao/nhận: \u0020</string>
     <string name="buyer">Người mua: \u0020</string>
     <string name="addr">Địa chỉ: \u0020</string>
+
+    <string name="F_REF">com.needfood.kh.fcm_re</string>
+    <string name="F_CM">com.needfood.kh.fcm_cm</string>
+
+    <string name="time">Thời gian: \u0020</string>
+    <string name="mess">Tin nhắn: \u0020 </string>
 </resources>

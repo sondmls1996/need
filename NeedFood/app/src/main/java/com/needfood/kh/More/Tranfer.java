@@ -65,7 +65,6 @@ public class Tranfer extends AppCompatActivity {
             pro.dismiss();
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
 
-
         } else {
             Map<String, String> map = new HashMap<>();
             map.put("accessToken", acc);
