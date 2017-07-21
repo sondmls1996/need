@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.needfood.kh.More.Tranfer">
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/t"
+        ></include>
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/t"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/black"
+            android:text="@string/coins"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="@string/entercoin"
+            android:padding="5dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/edcoin"
+            android:background="@drawable/commentedt"
+            android:inputType="number"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/black"
+            android:text="@string/sento"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:background="@drawable/commentedt"
+            android:id="@+id/edrephone"
+            android:hint="@string/phonenum"
+            android:inputType="number"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/cusbtnred"
+            android:id="@+id/btnsend"
+            android:text="@string/send"/>
+    </LinearLayout>
+</RelativeLayout>

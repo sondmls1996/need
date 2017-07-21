@@ -72,6 +72,8 @@
     <string name="topdeal">Bán chạy</string>
     <string name="dontvmt">Không có bất kỳ bình luận nào</string>
     <string name="by">Bởi</string>
+    <string name="entercoin">Nhập số tiền cần chuyển</string>
+    <string name="send">Gửi</string>
     <string name="besqua">Chất lượng tốt nhất</string>
     <string name="sugg">Gợi ý</string>
     <string name="notif">Thông báo</string>
@@ -79,15 +81,20 @@
     <string name="emailwr">Email không đúng định dạng</string>
     <string name="wait">Vui lòng chờ...</string>
     <string name="wrreg">Không được để trống</string>
+    <string name="sento">Gửi cho:</string>
     <string name="wrpass">Mật khẩu xác nhận không khớp</string>
     <string name="messel">Ghi chú</string>
     <string name="shortpass">Mật khẩu phải có 6 ký tự trở lên</string>
     <string name="contact">Danh bạ</string>
     <string name="shiptime">Thời gian vận chuyển</string>
     <string name="howtou">Cách sử dụng?</string>
+    <string name="transuc">Chuyển khoản thành công</string>
     <string name="prddetail">Chi tiết sản phẩm</string>
     <string name="search">Tìm kiếm...</string>
+    <string name="ok">Đồng ý</string>
     <string name="action_settings">Cài đặt</string>
+
+    <string name="linktranf">http://needfood.webmantan.com/changeCoinAPI</string>
     <string name="linkorder">http://needfood.webmantan.com/saveOrderAPI</string>
     <string name="linkspch">http://needfood.webmantan.com/getProductManufacturerAPI</string>
     <string name="linkprdat">http://needfood.webmantan.com/getProductAttachAPI</string>

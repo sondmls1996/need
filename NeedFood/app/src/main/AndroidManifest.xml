@@ -102,6 +102,7 @@
         <activity android:name=".More.History.MoreHistory" />
         <activity android:name=".More.History.OrderHistory" />
         <activity android:name=".Hotdeal.Hotdeal" />
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -117,6 +118,9 @@
         <activity
             android:name=".Maps.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
+
+        <activity android:name=".More.Tranfer" />
+        <activity android:name=".Product.Howtouse"></activity>
     </application>
 
 </manifest>
