@@ -95,27 +95,6 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         }else{
             Picasso.with(context).load(ip.getImg()).into(viewHolder.img);
         }
-        viewHolder.textWatcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(viewHolder.edo.getText().toString().equals("")){
-                    viewHolder.edo.setText("1");
-                    arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
-                }else {
-                    arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
-                }
-            }
-        };
 
 
         viewHolder.cb.setChecked(ip.isSelected());
@@ -146,11 +125,11 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         public void afterTextChanged(Editable s) {
                             if(viewHolder.edo.getText().toString().equals("")){
                                 viewHolder.edo.setText("1");
-                                arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
-                                arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
+                                arrcheck.get(position-1).setQuanli(viewHolder.edo.getText().toString());
+                                arrcheck.get(position-1).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
                             }else {
-                                arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
-                                arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
+                                arrcheck.get(position-1).setQuanli(viewHolder.edo.getText().toString());
+                                arrcheck.get(position-1).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
                             }
                         }
                     };
@@ -161,7 +140,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     viewHolder.edo.setEnabled(false);
                     viewHolder.edo.removeTextChangedListener(viewHolder.textWatcher);
                     viewHolder.edo.setText(null);
-                    arrcheck.remove(position);
+                    arrcheck.remove(position-1 );
                     Log.d("ARRSIZE",arrcheck.size()+"");
                 }
             }

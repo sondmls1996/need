@@ -522,15 +522,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                 Log.d("RE", response);
                 try {
-                JSONObject jo = new JSONObject(response);
-                    String code = jo.getString("code");
-                    if(code.equals("0")){
-                        JSONArray ja = jo.getJSONArray("listData");
-                        for (int i = 0; i < ja.length(); i++) {
-                            String mn = "";
-                            JSONObject jo2 = ja.getJSONObject(i);
-                            JSONObject prd = jo2.getJSONObject("Product");
-                            JSONArray jaimg = prd.getJSONArray("images");
+                    JSONArray ja = new JSONArray(response);
+                    for (int i = 0;i<ja.length();i++){
+                        String mn = "";
+                        JSONObject jo = ja.getJSONObject(i);
+                        JSONObject prd = jo.getJSONObject("Product");
+                        JSONArray jaimg = prd.getJSONArray("images");
                             String typemn = prd.getString("typeMoneyId");
                             list = db.getMNid(typemn);
                             for (ListMN lu : list) {
@@ -540,13 +537,34 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                     prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
                                     "", prd.getString("id")));
-
-                        }
-                        adapterof2.notifyDataSetChanged();
-                        getAtach();
-                    }else{
-
                     }
+                    adapterof2.notifyDataSetChanged();
+                       getAtach();
+//                JSONObject jo = new JSONObject(response);
+//                    String code = jo.getString("code");
+//                    if(code.equals("0")){
+//                        JSONArray ja = jo.getJSONArray("listData");
+//                        for (int i = 0; i < ja.length(); i++) {
+//                            String mn = "";
+//                            JSONObject jo2 = ja.getJSONObject(i);
+//                            JSONObject prd = jo2.getJSONObject("Product");
+//                            JSONArray jaimg = prd.getJSONArray("images");
+//                            String typemn = prd.getString("typeMoneyId");
+//                            list = db.getMNid(typemn);
+//                            for (ListMN lu : list) {
+//                                mn = lu.getMn();
+//                            }
+//
+//                            arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
+//                                    prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
+//                                    "", prd.getString("id")));
+//
+//                        }
+//                        adapterof2.notifyDataSetChanged();
+//                        getAtach();
+//                    }else{
+//
+//                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
