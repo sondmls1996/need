@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.easyandroidanimations.library.SlideInUnderneathAnimation;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.LikeView;
+import com.facebook.share.widget.ShareButton;
 import com.needfood.kh.Adapter.ProductDetail.CommentAdapter;
 import com.needfood.kh.Adapter.ProductDetail.OftenAdapter;
 import com.needfood.kh.Adapter.ProductDetail.QuanAdapter;
@@ -99,14 +103,17 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ImageView img_comment;
     RecyclerView re_comment;
     String comment;
+
     String cmt, time, iduser, fullnameus;
     ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+
         TextView txt = (TextView)findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
+
         khaibao();
 
         getProductDT();
@@ -399,6 +406,15 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                     JSONObject jo = new JSONObject(response);
                     JSONObject prd = jo.getJSONObject("Product");
+                    LikeView likeView = (LikeView) findViewById(R.id.btnlike);
+                    likeView.setObjectIdAndType(
+                           prd.getString("linkFacebook"),
+                            LikeView.ObjectType.OPEN_GRAPH);
+                    ShareLinkContent content = new ShareLinkContent.Builder()
+                            .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
+                            .build();
+                    ShareButton shareButton = (ShareButton)findViewById(R.id.btnshare);
+                    shareButton.setShareContent(content);
                     cata = prd.getJSONArray("category").toString();
                     tvnameprd.setText(prd.getString("title"));
                     String tym = prd.getString("typeMoneyId");

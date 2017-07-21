@@ -114,7 +114,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
+        <provider android:authorities="com.facebook.app.FacebookContentProvider144493206000726"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
         <activity
             android:name=".Maps.MapsActivity"
             android:label="@string/title_activity_maps" />
