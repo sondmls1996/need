@@ -97,7 +97,6 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         }
 
 
-        viewHolder.cb.setChecked(ip.isSelected());
         viewHolder.cb.setTag(ip);
         viewHolder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -125,13 +124,10 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         public void afterTextChanged(Editable s) {
                             if(viewHolder.edo.getText().toString().equals("")){
                                 viewHolder.edo.setText("1");
-                                if(arrcheck.size()==1){
-                                    arrcheck.get(position-1).setQuanli(viewHolder.edo.getText().toString());
-                                    arrcheck.get(position-1).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
-                                }else{
+
                                     arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
                                     arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
-                                }
+
                             }else {
                                 if(arrcheck.size()==1){
                                     arrcheck.get(position-1).setQuanli(viewHolder.edo.getText().toString());
@@ -151,7 +147,13 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     viewHolder.edo.setEnabled(false);
                     viewHolder.edo.removeTextChangedListener(viewHolder.textWatcher);
                     viewHolder.edo.setText(null);
-                    arrcheck.remove(ip);
+                    if(arrcheck.size()==1){
+                        arrcheck.clear();
+                    }else{
+                        arrcheck.remove(position);
+                    }
+
+                    Log.d("ARRSIZE",arrcheck.size()+"");
                 }
             }
         });
