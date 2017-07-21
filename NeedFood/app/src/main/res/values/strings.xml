@@ -120,6 +120,7 @@
     <string name="linksavecmpr">http://needfood.webmantan.com/saveCommentProductAPI</string>
     <string name="linkgetcmpr">http://needfood.webmantan.com/getCommentProductAPI</string>
     <string name="linkgetselleraround">http://needfood.webmantan.com/getSellerAroundAPI</string>
+    <string name="linkhiscoin">http://needfood.webmantan.com/getHistoryCoinAPI</string>
 
     <string name="logout">Logout</string>
     <string name="tiengviet">Vietnamese</string>

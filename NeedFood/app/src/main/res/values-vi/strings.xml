@@ -120,6 +120,7 @@
     <string name="linksavecm">http://needfood.webmantan.com/saveCommentProductAPI</string>
     <string name="linkgetcm">http://needfood.webmantan.com/getCommentProductAPI</string>
     <string name="linkgetselleraround">http://needfood.webmantan.com/getSellerAroundAPI</string>
+    <string name="linkhiscoin">http://needfood.webmantan.com/getHistoryCoinAPI</string>
 
     <string name="logout">Đăng xuất</string>
     <string name="ssor">Đặt hàng thành công</string>

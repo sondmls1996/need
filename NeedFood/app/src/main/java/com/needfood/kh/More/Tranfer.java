@@ -33,20 +33,21 @@ import java.util.Map;
 public class Tranfer extends AppCompatActivity {
     Button btnsend;
     Session ses;
-    EditText edphone,edcoin;
+    EditText edphone, edcoin;
     DataHandle db;
     List<InfoConstructor> list;
     String acc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tranfer);
         db = new DataHandle(this);
         list = db.getAllInfor();
-        acc = list.get(list.size()-1).getAccesstoken();
-        btnsend = (Button)findViewById(R.id.btnsend);
-        edphone = (EditText)findViewById(R.id.edrephone);
-        edcoin = (EditText)findViewById(R.id.edcoin);
+        acc = list.get(list.size() - 1).getAccesstoken();
+        btnsend = (Button) findViewById(R.id.btnsend);
+        edphone = (EditText) findViewById(R.id.edrephone);
+        edcoin = (EditText) findViewById(R.id.edcoin);
         btnsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,41 +61,44 @@ public class Tranfer extends AppCompatActivity {
         String coin = edcoin.getText().toString();
         String link = getResources().getString(R.string.linktranf);
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
-        if(phone.equals("")||coin.equals("")){
+        if (phone.equals("") || coin.equals("")) {
             pro.dismiss();
-            Toast.makeText(getApplicationContext(),getResources().getString(R.string.wrreg),Toast.LENGTH_SHORT).show();
-        }else{
-            Map<String,String> map = new HashMap<>();
-            map.put("accessToken",acc);
-            map.put("coin",coin);
-            map.put("fone",phone);
-            Response.Listener<String> response = new  Response.Listener<String>(){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
+
+
+        } else {
+            Map<String, String> map = new HashMap<>();
+            map.put("accessToken", acc);
+            map.put("coin", coin);
+            map.put("fone", phone);
+            Response.Listener<String> response = new Response.Listener<String>() {
 
                 @Override
                 public void onResponse(String response) {
-                    Log.d("COIN",response);
+                    Log.d("COIN", response);
                     try {
                         JSONObject jo = new JSONObject(response);
                         String code = jo.getString("code");
                         pro.dismiss();
-                        if(code.equals("0")){
-                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.transuc),Toast.LENGTH_SHORT).show();
-                        }else if(code.equals("-1")){
+                        if (code.equals("0")) {
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.transuc), Toast.LENGTH_SHORT).show();
+                        } else if (code.equals("-1")) {
                             AlertDialog alertDialog = taoMotAlertDialog();
                             alertDialog.show();
-                        }else {
-                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.er),Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             };
-            PostCL post = new PostCL(link,map,response);
+            PostCL post = new PostCL(link, map, response);
             RequestQueue que = Volley.newRequestQueue(getApplicationContext());
             que.add(post);
         }
     }
+
     private AlertDialog taoMotAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //Thiết lập tiêu đề hiển thị
