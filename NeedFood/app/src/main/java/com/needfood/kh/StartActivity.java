@@ -41,6 +41,7 @@ import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.SearchConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Hotdeal.Hotdeal;
+import com.needfood.kh.Maps.MapsActivity;
 import com.needfood.kh.More.More;
 import com.needfood.kh.News.TabFragment;
 import com.needfood.kh.Notif.Notif;
@@ -283,6 +284,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 Intent it = new Intent(getApplicationContext(), QRCamera.class);
                 startActivity(it);
                 break;
+            case R.id.mark:
+                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(i);
+                break;
         }
         return true;
     }
@@ -338,7 +343,14 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             permissionsNeeded.add("Camera");
         if (!addPermission(permissionsList, Manifest.permission.READ_CALENDAR))
             permissionsNeeded.add("Calendar");
-
+        if (!addPermission(permissionsList, android.Manifest.permission.ACCESS_FINE_LOCATION))
+            permissionsNeeded.add("GPS");
+        if (!addPermission(permissionsList, android.Manifest.permission.ACCESS_COARSE_LOCATION))
+            permissionsNeeded.add("GPS-LOCAL");
+        if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            permissionsNeeded.add("Write Storage");
+        if (!addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE))
+            permissionsNeeded.add("Read Storage");
         if (permissionsList.size() > 0) {
             if (permissionsNeeded.size() > 0) {
                 // hien thi tắt
@@ -389,8 +401,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());//Update the config
 
     }
-
-    //Save locale method in preferences
 
 
 }
