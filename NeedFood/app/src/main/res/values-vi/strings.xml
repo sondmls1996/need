@@ -88,9 +88,11 @@
     <string name="contact">Danh bạ</string>
     <string name="shiptime">Thời gian vận chuyển</string>
     <string name="tranhis">Lịch sử chuyển khoản</string>
+    <string name="note">Ghi chú</string>
     <string name="howtou">Cách sử dụng?</string>
     <string name="transuc">Chuyển khoản thành công</string>
     <string name="prddetail">Chi tiết sản phẩm</string>
+    <string name="aro">Tìm xung quanh</string>
     <string name="search">Tìm kiếm...</string>
     <string name="ok">Đồng ý</string>
     <string name="action_settings">Cài đặt</string>

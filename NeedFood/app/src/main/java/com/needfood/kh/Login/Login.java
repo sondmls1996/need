@@ -51,6 +51,9 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
         dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
+
+        TextView txt = (TextView)findViewById(R.id.titletxt);
+        txt.setText(getResources().getString(R.string.login));
         db = new DataHandle(getApplicationContext());
         ses = new Session(getApplicationContext());
         edus = (EditText) findViewById(R.id.edus);

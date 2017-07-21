@@ -2,8 +2,8 @@ package com.needfood.kh.Maps;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,11 +22,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.needfood.kh.Brand.BrandDetail;
-import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.MapConstructor;
 import com.needfood.kh.R;
 import com.needfood.kh.SupportClass.GPSTracker;
-import com.needfood.kh.SupportClass.GetCL;
 import com.needfood.kh.SupportClass.PostCL;
 
 import org.json.JSONArray;
@@ -51,6 +49,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        TextView txt = (TextView)findViewById(R.id.titletxt);
+        txt.setText(getResources().getString(R.string.aro));
         list = new ArrayList<>();
         tracker = new GPSTracker(this);
         if (!tracker.canGetLocation()) {

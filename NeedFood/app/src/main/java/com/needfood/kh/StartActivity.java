@@ -41,7 +41,6 @@ import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.SearchConstructor;
 import com.needfood.kh.Database.DataHandle;
-import com.needfood.kh.Hotdeal.Hotdeal;
 import com.needfood.kh.Maps.MapsActivity;
 import com.needfood.kh.More.More;
 import com.needfood.kh.News.TabFragment;

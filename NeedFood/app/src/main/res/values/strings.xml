@@ -28,7 +28,7 @@
     <string name="paym">Payment</string>
     <string name="changepass">Change Password</string>
     <string name="more">More</string>
-    <string name="yourin">Your Infomation</string>
+    <string name="yourin">Your Information</string>
     <string name="buynow">Buy Now</string>
     <string name="precart">Preview And Edit The Cart</string>
     <string name="fruits">Fruits</string>
@@ -58,6 +58,7 @@
     <string name="login">Login</string>
     <string name="lan">Language</string>
     <string name="regis">Register</string>
+    <string name="aro">Find around</string>
     <string name="forget">Forgot password</string>
     <string name="Deal">Deal</string>
     <string name="fb_login_protocol_scheme">fb144493206000726</string>
@@ -88,6 +89,7 @@
     <string name="shiptime">Shipping time</string>
     <string name="howtou">How to use?</string>
     <string name="prddetail">Product detail</string>
+    <string name="note">Note</string>
     <string name="search">Search...</string>
     <string name="tranhis">Transfer history</string>
     <string name="action_settings">Settings</string>
@@ -106,6 +108,7 @@
     <string name="linkmn">http://needfood.webmantan.com/getTypeMoneyAPI</string>
     <string name="linkprdsell">http://needfood.webmantan.com/getProductSellerAPI</string>
     <string name="linklogout">http://needfood.webmantan.com/checkLogoutUseronlAPI</string>
+
     <string name="linkprdcata">http://needfood.webmantan.com/getProductCategoryAPI</string>
     <string name="linksavecmt">http://needfood.webmantan.com/saveCommentSellerAPI</string>
     <string name="linkgetcmt">http://needfood.webmantan.com/getCommentSellerAPI</string>

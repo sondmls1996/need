@@ -1,5 +1,6 @@
 package com.needfood.kh.Product;
 
+<<<<<<< HEAD
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,10 @@ import android.text.Spannable;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
+=======
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+>>>>>>> 78b26598c29e4cfb93c24d839f43915f316965f4
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -37,6 +42,7 @@ public class Howtouse extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_howtouse);
+<<<<<<< HEAD
         Intent intent = getIntent();
         idprd = intent.getStringExtra("idp");
         getProductDT();
@@ -93,5 +99,9 @@ public class Howtouse extends AppCompatActivity {
         PostCL get = new PostCL(link, map, response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(get);
+=======
+        TextView txt = (TextView)findViewById(R.id.titletxt);
+        txt.setText(getResources().getString(R.string.howtou));
+>>>>>>> 78b26598c29e4cfb93c24d839f43915f316965f4
     }
 }

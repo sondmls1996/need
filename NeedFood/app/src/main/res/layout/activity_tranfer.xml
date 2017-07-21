@@ -12,27 +12,11 @@
         android:id="@+id/t"
         ></include>
     <LinearLayout
-        android:padding="10dp"
+        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/t"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_marginBottom="5dp"
-            android:textColor="@color/black"
-            android:text="@string/coins"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:hint="@string/entercoin"
-            android:padding="5dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/edcoin"
-            android:background="@drawable/commentedt"
-            android:inputType="number"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,6 +31,33 @@
             android:background="@drawable/commentedt"
             android:id="@+id/edrephone"
             android:hint="@string/phonenum"
+            android:inputType="number"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/black"
+            android:text="@string/coins"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="@string/entercoin"
+            android:padding="5dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/edcoin"
+            android:background="@drawable/commentedt"
+            android:inputType="number"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="top"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/commentedt"
+            android:id="@+id/edcont"
+            android:hint="@string/note"
             android:inputType="number"/>
         <Button
             android:layout_width="match_parent"
