@@ -103,12 +103,13 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     viewHolder.edo.setEnabled(true);
-                    viewHolder.edo.setText("1");
-                    arrcheck.add(new CheckConstructor(viewHolder.edo.getText().toString(),
+
+                    arrcheck.add(new CheckConstructor("1",
                             ip.getPrize(),"false",null,null,ip.getBar(),ip.getCode(),
-                            ip.getName(),Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"",
+                            ip.getName(),Integer.parseInt(ip.getPrize())*1+"",
                             ip.getNote(),ip.getId()
                     ));
+                    viewHolder.edo.setText("1");
                     viewHolder.textWatcher = new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -129,13 +130,10 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                     arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
 
                             }else {
-                                if(arrcheck.size()==1){
-                                    arrcheck.get(position-1).setQuanli(viewHolder.edo.getText().toString());
-                                    arrcheck.get(position-1).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
-                                }else{
+
                                     arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
                                     arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
-                                }
+
 
                             }
                         }
