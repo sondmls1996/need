@@ -119,6 +119,7 @@
     <string name="linkhotdeal">http://needfood.webmantan.com/getHotDealProductAPI</string>
     <string name="linksavecm">http://needfood.webmantan.com/saveCommentProductAPI</string>
     <string name="linkgetcm">http://needfood.webmantan.com/getCommentProductAPI</string>
+    <string name="linkgetselleraround">http://needfood.webmantan.com/getSellerAroundAPI</string>
 
     <string name="logout">Đăng xuất</string>
     <string name="ssor">Đặt hàng thành công</string>
@@ -135,4 +136,5 @@
     <string name="price">Giá: \u0020</string>
     <string name="timeship">Thời gian giao/nhận: \u0020</string>
     <string name="buyer">Người mua: \u0020</string>
+    <string name="addr">Địa chỉ: \u0020</string>
 </resources>

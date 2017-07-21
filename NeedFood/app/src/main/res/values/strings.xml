@@ -119,6 +119,7 @@
     <string name="linkhotdeal">http://needfood.webmantan.com/getHotDealProductAPI</string>
     <string name="linksavecmpr">http://needfood.webmantan.com/saveCommentProductAPI</string>
     <string name="linkgetcmpr">http://needfood.webmantan.com/getCommentProductAPI</string>
+    <string name="linkgetselleraround">http://needfood.webmantan.com/getSellerAroundAPI</string>
 
     <string name="logout">Logout</string>
     <string name="tiengviet">Vietnamese</string>
@@ -135,4 +136,6 @@
     <string name="price">Price: \u0020</string>
     <string name="timeship">Time ship/receive: \u0020</string>
     <string name="buyer">Buyer: \u0020</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="addr">Address: \u0020</string>
 </resources>
