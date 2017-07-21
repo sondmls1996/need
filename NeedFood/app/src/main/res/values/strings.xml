@@ -14,11 +14,15 @@
     <string name="address">Address contact\u0020</string>
     <string name="save">Save</string>
     <string name="change">Change</string>
+    <string name="ok">Ok</string>
     <string name="thefree">The free food will ship in\u0020</string>
     <string name="adm">Add more</string>
     <string name="viewmore">View more</string>
     <string name="ypr">Your property</string>
     <string name="ypr2">Your property:\u0020</string>
+    <string name="transuc">Transfer successful</string>
+    <string name="send">Send</string>
+    <string name="entercoin">Enter coins</string>
     <string name="enamout">Enter amount of coin using</string>
     <string name="coins">Coins</string>
     <string name="paym">Payment</string>
@@ -89,6 +93,7 @@
     <string name="hisord">Order history</string>
     <string name="ssor">Order Success</string>
 
+    <string name="linktranf">http://needfood.webmantan.com/changeCoinAPI</string>
     <string name="linkorder">http://needfood.webmantan.com/saveOrderAPI</string>
     <string name="linksug">http://needfood.webmantan.com/getProductSuggestionAPI</string>
     <string name="linkspch">http://needfood.webmantan.com/getProductManufacturerAPI</string>
@@ -122,6 +127,8 @@
     <string name="topdeall">Top Deal</string>
     <string name="CoinTran">Coin Transfer</string>
     <string name="his">History</string>
+    <string name="sento">Send to:</string>
+
     <string name="Pwu">Partner with us</string>
     <string name="loginn">Login</string>
     <string name="yhl">You have not login</string>

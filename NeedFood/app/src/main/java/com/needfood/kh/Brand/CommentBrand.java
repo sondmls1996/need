@@ -1,8 +1,11 @@
 package com.needfood.kh.Brand;
 
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,6 +26,7 @@ import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.ProductDetail.CommentConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
+import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
 
@@ -106,9 +110,24 @@ public class CommentBrand extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.d("SendCMT",response);
-                        edcmt.setText(null);
-                        getComment();
+                        try {
+
+                            JSONObject ja = new JSONObject(response);
+                            String code = null;
+                            code = ja.getString("code");
+                            if (code.equals("0")) {
+                                edcmt.setText("");
+                                getComment();
+                            } else if (code.equals("-1")) {
+                                AlertDialog alertDialog = taoMotAlertDialog();
+                                alertDialog.show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 };
                 PostCL get = new PostCL(link,map,response);
@@ -117,8 +136,54 @@ public class CommentBrand extends Fragment {
             }
 
         }else{
-
+            AlertDialog alertDialog = taoMotAlertDialog2();
+            alertDialog.show();
         }
+    }
+
+    private AlertDialog taoMotAlertDialog2() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        //Thiết lập tiêu đề hiển thị
+        builder.setTitle(getResources().getString(R.string.er));
+        //Thiết lập thông báo hiển thị
+
+        builder.setMessage(getResources().getString(R.string.yhl));
+        builder.setCancelable(false);
+        //Tạo nút Chu hang
+        builder.setNegativeButton(getResources().getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        return dialog;
+    }
+    // hoi xoa
+    private AlertDialog taoMotAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        //Thiết lập tiêu đề hiển thị
+        builder.setTitle(getResources().getString(R.string.er));
+        //Thiết lập thông báo hiển thị
+
+        builder.setMessage(getResources().getString(R.string.lostss));
+        builder.setCancelable(false);
+        //Tạo nút Chu hang
+        builder.setNegativeButton(getResources().getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        db.deleteInfo();
+                        ses = new Session(getActivity());
+                        ses.setLoggedin(false);
+                        Intent i = new Intent(getActivity(), StartActivity.class);
+                        startActivity(i);
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        return dialog;
     }
 
     private void getComment() {

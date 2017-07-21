@@ -334,7 +334,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("fullName",fullname);
             map.put("address",adr);
             map.put("fone",phone);
-            map.put("idUseronl",idu);
+           // map.put("idUseronl",idu);
             map.put("idSeller",idsl);
             map.put("note",edghichu.getText().toString());
             Response.Listener<String> response = new Response.Listener<String>() {
@@ -348,7 +348,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         if(code.equals("0")){
                             Toast.makeText(getApplicationContext(),getResources().getString(R.string.ssor),Toast.LENGTH_SHORT).show();
                         }else if(code.equals("-1")){
-                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.lostss),Toast.LENGTH_SHORT).show();
+                            AlertDialog alertDialog = taoMotAlertDialog();
+                            alertDialog.show();
+                          //  Toast.makeText(getApplicationContext(),getResources().getString(R.string.lostss),Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(getApplicationContext(),getResources().getString(R.string.er),Toast.LENGTH_SHORT).show();
                         }
@@ -363,7 +365,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             que.add(get);
         } else {
             pro.dismiss();
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.yhl), Toast.LENGTH_SHORT).show();
+            AlertDialog alertDialog = taoMotAlertDialog2();
+            alertDialog.show();
         }
 
     }
@@ -558,7 +561,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         comment = txt_comment.getText().toString();
         if (comment.isEmpty()) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-        } else {
+        }else if(!ses.loggedin()){
+            AlertDialog alertDialog = taoMotAlertDialog2();
+            alertDialog.show();
+        }else {
 
             Map<String, String> map = new HashMap<>();
             map.put("accessToken", access);
@@ -656,18 +662,36 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             saveComment();
         }
     }
+    private AlertDialog taoMotAlertDialog2() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Thiết lập tiêu đề hiển thị
+        builder.setTitle(getResources().getString(R.string.er));
+        //Thiết lập thông báo hiển thị
 
+        builder.setMessage(getResources().getString(R.string.yhl));
+        builder.setCancelable(false);
+        //Tạo nút Chu hang
+        builder.setNegativeButton(getResources().getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        return dialog;
+    }
     // hoi xoa
     private AlertDialog taoMotAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //Thiết lập tiêu đề hiển thị
-        builder.setTitle("Lỗi đăng nhập");
+        builder.setTitle(getResources().getString(R.string.er));
         //Thiết lập thông báo hiển thị
 
-        builder.setMessage("Tài khoản đã được đăng nhập ở điện thoại khác");
+        builder.setMessage(getResources().getString(R.string.lostss));
         builder.setCancelable(false);
         //Tạo nút Chu hang
-        builder.setNegativeButton("Đồng ý",
+        builder.setNegativeButton(getResources().getString(R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

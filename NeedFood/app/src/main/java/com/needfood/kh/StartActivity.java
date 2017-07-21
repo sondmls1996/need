@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -40,7 +41,6 @@ import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.SearchConstructor;
 import com.needfood.kh.Database.DataHandle;
-import com.needfood.kh.Hotdeal.Hotdeal;
 import com.needfood.kh.More.More;
 import com.needfood.kh.News.TabFragment;
 import com.needfood.kh.Notif.Notif;
@@ -65,9 +65,10 @@ import static com.needfood.kh.R.menu.main;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
     private final int SPLASH_DISPLAY_LENGTH = 2000;
-    ImageView img0, imgnewss, imgsug, imgnotif, imgmore;
+    LinearLayout imgnewss, imgsug, imgnotif, imgmore;
     Class fragmentClass;
     DataHandle db;
+    ImageView img0;
     List<ListMN> list;
     String mns;
     EditText edsearch;
@@ -130,21 +131,11 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             }
         });
         img0 = (ImageView) findViewById(R.id.dod);
-        imgnewss = (ImageView) findViewById(R.id.imgnewstart);
-        imgsug = (ImageView) findViewById(R.id.sug);
-        imgnotif = (ImageView) findViewById(R.id.notif);
-        imgmore = (ImageView) findViewById(R.id.more);
-
-        db = new DataHandle(this);
-        if (db.isMoneyEmpty()) {
-            getMoney();
-        }
+        imgnewss = (LinearLayout) findViewById(R.id.imgnewstart);
+        imgsug = (LinearLayout) findViewById(R.id.sug);
+        imgnotif = (LinearLayout) findViewById(R.id.notif);
+        imgmore = (LinearLayout) findViewById(R.id.more);
         insertDummyContactWrapper();
-        img0 = (ImageView) findViewById(R.id.dod);
-        imgnewss = (ImageView) findViewById(R.id.imgnewstart);
-        imgsug = (ImageView) findViewById(R.id.sug);
-        imgnotif = (ImageView) findViewById(R.id.notif);
-        imgmore = (ImageView) findViewById(R.id.more);
 
         img0.setOnClickListener(this);
         imgnewss.setOnClickListener(this);
@@ -203,8 +194,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     private void searchSP(String s) {
         lvs.setVisibility(View.VISIBLE);
-
-
         String link = getResources().getString(R.string.linksearch);
         Map<String, String> map = new HashMap<>();
         map.put("page", "1");
@@ -314,7 +303,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 ReplaceFrag(fragmentClass);
                 break;
             case R.id.deal0:
-
+                TabFragment.tabHost.setCurrentTab(1);
                 break;
             case R.id.notif:
                 fragmentClass = Notif.class;

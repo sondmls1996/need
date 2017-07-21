@@ -30,7 +30,7 @@ import java.util.List;
 public class More extends Fragment implements View.OnClickListener {
     ImageView imgavt;
 
-    LinearLayout lnself,lnset,lnhis;
+    LinearLayout lntranf,lnself,lnset,lnhis;
 
 
 
@@ -65,10 +65,10 @@ public class More extends Fragment implements View.OnClickListener {
             lnhis.setOnClickListener(this);
             lnself =(LinearLayout)v.findViewById(R.id.lnself);
             lnset = (LinearLayout)v.findViewById(R.id.lnset);
-
+            lntranf =(LinearLayout)v.findViewById(R.id.lntran);
             lnset.setOnClickListener(this);
             lnself.setOnClickListener(this);
-
+            lntranf.setOnClickListener(this);
             nameus.setText(name);
             Picasso.with(getContext()).load("http://1.bp.blogspot.com/-FV7Q-KHHA18/UhF4m4WOG9I/AAAAAAAABHE/vQD803G1MuQ/s1600/avatar-boy-hoat-hinh-5.jpg").transform(new TransImage()).into(imgavt);
         }else{
@@ -86,6 +86,9 @@ public class More extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         int id = view.getId();
         switch (id){
+            case R.id.lntran:
+
+                break;
             case R.id.lnself:
                 Intent it = new Intent(getContext(),MoreContanct.class);
                 startActivity(it);
