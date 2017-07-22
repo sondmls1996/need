@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +49,7 @@ import com.needfood.kh.Notif.Notif;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.Sugges.SuggessFrag;
 import com.needfood.kh.SupportClass.GetCL;
+import com.needfood.kh.SupportClass.NetworkCheck;
 import com.needfood.kh.SupportClass.PostCL;
 
 import org.json.JSONArray;
@@ -62,7 +64,7 @@ import java.util.Map;
 
 import static com.needfood.kh.R.menu.main;
 
-public class StartActivity extends AppCompatActivity implements View.OnClickListener {
+public class StartActivity extends AppCompatActivity implements View.OnClickListener{
     private final int SPLASH_DISPLAY_LENGTH = 2000;
     LinearLayout imgnewss, imgsug, imgnotif, imgmore;
     Class fragmentClass;
@@ -80,13 +82,15 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     SearchAdapter adapter;
     TextView nf, su, no, mo;
     TextView se;
-
+    CoordinatorLayout activity_news;
+    NetworkCheck networkCheck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        activity_news = (CoordinatorLayout) findViewById(R.id.activity_news);
         edsearch = (EditText) findViewById(R.id.edsearch);
         edsearch.setInputType(InputType.TYPE_NULL);
         edsearch.requestFocus();
@@ -144,7 +148,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         fragmentClass = TabFragment.class;
         ReplaceFrag(fragmentClass);
-
 
     }
 
@@ -388,6 +391,5 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());//Update the config
 
     }
-
 
 }
