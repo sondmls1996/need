@@ -1,6 +1,5 @@
 package com.needfood.kh.Product;
 
-<<<<<<< HEAD
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,13 +10,22 @@ import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 
-=======
->>>>>>> 13afc899257cfb11887cd1236c5e9b46bdfbf731
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.needfood.kh.R;
+import com.needfood.kh.SupportClass.PostCL;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Howtouse extends AppCompatActivity {
     String idprd, idsl, namesl, access, idu, fullname, phone, bar, cata;
@@ -28,7 +36,7 @@ public class Howtouse extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_howtouse);
-<<<<<<< HEAD
+
         Intent intent = getIntent();
         idprd = intent.getStringExtra("idp");
         getProductDT();
@@ -85,8 +93,6 @@ public class Howtouse extends AppCompatActivity {
         PostCL get = new PostCL(link, map, response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(get);
-=======
->>>>>>> 13afc899257cfb11887cd1236c5e9b46bdfbf731
         TextView txt = (TextView)findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.howtou));
     }
