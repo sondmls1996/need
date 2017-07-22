@@ -126,6 +126,8 @@
     <string name="linkgetselleraround">http://needfood.webmantan.com/getSellerAroundAPI</string>
     <string name="linkhiscoin">http://needfood.webmantan.com/getHistoryCoinAPI</string>
     <string name="linksavetoken">http://needfood.webmantan.com/saveTokenDeviceAPI</string>
+    <string name="linkgetinfo">http://needfood.webmantan.com/getInfoUserAPI</string>
+
     <string name="logout">Logout</string>
     <string name="tiengviet">Vietnamese</string>
     <string name="tienganh">English</string>
@@ -150,4 +152,5 @@
     <string name="time">Time: \u0020</string>
     <string name="pr">Property: \u0020</string>
     <string name="mess">Message: \u0020 </string>
+    <string name="can">You do not have enough coins to transfer </string>
 </resources>

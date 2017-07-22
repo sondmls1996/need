@@ -11,6 +11,7 @@ import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.SupportClass.DBHandle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class DataHandle extends SQLiteOpenHelper {
     public static final String ADDRESS = "address";
     public static final String IDINFO = "idin";
     public static final String ACCESSTK = "accessToken";
+    public static final String COIN = "coin";
 
     public static final String CHECK_LAN = "language";
     public static final String ID_LANGUAGE = "id_language";
@@ -60,7 +62,8 @@ public class DataHandle extends SQLiteOpenHelper {
                         PASS + " TEXT NOT NULL," +
                         ADDRESS + " TEXT NOT NULL," +
                         IDINFO + " TEXT NOT NULL PRIMARY KEY," +
-                        ACCESSTK + " TEXT NOT NULL" +
+                        ACCESSTK + " TEXT NOT NULL," +
+                        COIN + " TEXT NOT NULL" +
                         ");";
         String CREATE_TABLE_LAN =
                 "CREATE TABLE " + CHECK_LAN + "(" +
@@ -104,6 +107,7 @@ public class DataHandle extends SQLiteOpenHelper {
         values.put(ADDRESS, in.getAddress()); // Contact Address
         values.put(IDINFO, in.getId()); // Contact id
         values.put(ACCESSTK, in.getAccesstoken()); // Contact accessToken
+        values.put(COIN, in.getCoin());
         db.insert(INFO, null, values);
         db.close(); // Closing database connection
     }
@@ -160,6 +164,7 @@ public class DataHandle extends SQLiteOpenHelper {
                 contact.setAddress(cursor.getString(4));
                 contact.setId(cursor.getString(5));
                 contact.setAccesstoken(cursor.getString(6));
+                contact.setCoin(cursor.getString(7));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -218,16 +223,13 @@ public class DataHandle extends SQLiteOpenHelper {
         return contactList;
     }
 
-    public boolean updateinfo(String name, String email, String fone, String pass, String addr, String id, String token) {
+    public boolean updateinfo(String name, String email, String addr, String id, String coin) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(FULLNAME, name);
         values.put(EMAIL, email);
-        values.put(PHONE, fone);
-        values.put(PASS, pass);
         values.put(ADDRESS, addr);
-        values.put(IDINFO, id);
-        values.put(ACCESSTK, token);
+        values.put(COIN, coin);
         db.update(INFO, values, IDINFO + " = ?", new String[]{id});
         return true;
     }

@@ -52,7 +52,7 @@ public class Login extends AppCompatActivity {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
         dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
 
-        TextView txt = (TextView)findViewById(R.id.titletxt);
+        TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.login));
         db = new DataHandle(getApplicationContext());
         ses = new Session(getApplicationContext());
@@ -106,15 +106,18 @@ public class Login extends AppCompatActivity {
                                     progressDialog.dismiss();
                                     ses.setLoggedin(true);
                                     JSONObject js = jo.getJSONObject("Useronl");
-                                    String fullname = js.getString("fullName");
-                                    String email = js.getString("email");
-                                    String fone = js.getString("fone");
-                                    String pass = js.getString("pass");
-                                    String address = js.getString("address");
+//                                    String fullname = jo.getString("fullName");
+//                                    String email = jo.getString("email");
+//                                    String fone = jo.getString("fone");
+//                                    String address = jo.getString("address");
+//                                    String coin = jo.getString("coin");
                                     String id = js.getString("id");
                                     String accesstoken = js.getString("accessToken");
+//                                    String pass = jo.getString("pass");
+
                                     postToken(accesstoken);
-                                    db.addInfo(new InfoConstructor(fullname, email, fone, pass, address, id, accesstoken));
+
+                                    addInfo(accesstoken, id, "");
                                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                                     startActivity(it);
                                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
@@ -122,11 +125,13 @@ public class Login extends AppCompatActivity {
                                 } else {
                                     progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "demo", Toast.LENGTH_SHORT).show();
 
                                 }
                             } catch (JSONException e) {
                                 progressDialog.dismiss();
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
                         }
@@ -157,6 +162,38 @@ public class Login extends AppCompatActivity {
                 // App code
             }
         });
+    }
+
+    private void addInfo(final String token, final String id, final String pass) {
+        String linkk = getResources().getString(R.string.linkgetinfo);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", token);
+        map.put("idUseronl", id);
+        Response.Listener<String> response = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d("LOGA", response);
+                    JSONObject js = new JSONObject(response);
+                    JSONObject jo = js.getJSONObject("Useronl");
+                    String fullname = jo.getString("fullName");
+                    String email = jo.getString("email");
+                    String fone = jo.getString("fone");
+                    String address = jo.getString("address");
+                    String coin = jo.getString("coin");
+                    Log.d("ABCLOG", fullname + "-" + email + "-" + fone + "-" + "" + "-" + address + "-" + id + "-" + token + "-" + coin);
+                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        PostCL post = new PostCL(linkk, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(post);
+
     }
 
     private void postToken(String tokent) {

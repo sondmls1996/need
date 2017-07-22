@@ -125,6 +125,7 @@
     <string name="linkgetselleraround">http://needfood.webmantan.com/getSellerAroundAPI</string>
     <string name="linkhiscoin">http://needfood.webmantan.com/getHistoryCoinAPI</string>
     <string name="linksavetoken">http://needfood.webmantan.com/saveTokenDeviceAPI</string>
+    <string name="linkgetinfo">http://needfood.webmantan.com/getInfoUserAPI</string>
 
     <string name="logout">Đăng xuất</string>
     <string name="ssor">Đặt hàng thành công</string>
@@ -148,4 +149,5 @@
 
     <string name="time">Thời gian: \u0020</string>
     <string name="mess">Tin nhắn: \u0020 </string>
+    <string name="can">Bạn không đủ tiền xu để chuyển </string>
 </resources>
