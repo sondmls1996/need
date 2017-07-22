@@ -63,6 +63,7 @@ public class Tranfer extends AppCompatActivity {
     private void sendCoin() {
         String phone = edphone.getText().toString();
         String coin = edcoin.getText().toString();
+        String note = ednote.getText().toString();
         String link = getResources().getString(R.string.linktranf);
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (phone.equals("") || coin.equals("")) {
@@ -74,6 +75,7 @@ public class Tranfer extends AppCompatActivity {
             map.put("accessToken", acc);
             map.put("coin", coin);
             map.put("fone", phone);
+            map.put("note", note);
             Response.Listener<String> response = new Response.Listener<String>() {
 
                 @Override
