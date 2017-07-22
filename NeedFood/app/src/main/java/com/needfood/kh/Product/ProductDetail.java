@@ -171,18 +171,18 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
          likeView = (LikeView) findViewById(R.id.btnlike);
         imglike = (ImageView)findViewById(R.id.imglike);
         imgshare = (ImageView)findViewById(R.id.imgshare);
-        imgshare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareButton.performClick();
-            }
-        });
-        imglike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                likeView.performClick();
-            }
-        });
+//        imgshare.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                shareButton.performClick();
+//            }
+//        });
+//        imglike.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                likeView.performClick();
+//            }
+//        });
         likeView.setOnErrorListener(new LikeView.OnErrorListener() {
             @Override
             public void onError(FacebookException e) {
