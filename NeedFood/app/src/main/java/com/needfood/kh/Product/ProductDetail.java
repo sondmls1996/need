@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.easyandroidanimations.library.SlideInUnderneathAnimation;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.LikeView;
+import com.facebook.share.widget.ShareButton;
 import com.needfood.kh.Adapter.ProductDetail.CommentAdapter;
 import com.needfood.kh.Adapter.ProductDetail.OftenAdapter;
 import com.needfood.kh.Adapter.ProductDetail.QuanAdapter;
@@ -90,26 +97,43 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ArrayList<OftenConstructor> arrof, arrof2;
     ArrayList<QuanConstructor> arrq;
     QuanAdapter quanadapter;
-    LinearLayout lnby;
+    LinearLayout lnby,lnf;
     List<ListMN> list;
     List<InfoConstructor> listu;
     DataHandle db;
     String idprd, idsl, namesl, access, idu, fullname, phone, bar;
     EditText txt_comment;
-    ImageView img_comment;
+    ImageView img_comment,imglike,imgshare;
     RecyclerView re_comment;
     String comment;
+    CallbackManager callbackManager;
+    LikeView likeView;
     String cmt, time, iduser, fullnameus;
     ImageView imageView;
+    ShareButton shareButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_product_detail);
+
         TextView txt = (TextView)findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
-        khaibao();
 
-        getProductDT();
+        khaibao();
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getProductDT();
+                    }
+                });
+            }
+        });
+        th.start();
+
 
 
     }
@@ -143,6 +167,28 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         month2 = c.get(Calendar.MONTH);
         year2 = c.get(Calendar.YEAR);
         bn = (Button) findViewById(R.id.bn);
+         shareButton = (ShareButton)findViewById(R.id.btnshare);
+         likeView = (LikeView) findViewById(R.id.btnlike);
+        imglike = (ImageView)findViewById(R.id.imglike);
+        imgshare = (ImageView)findViewById(R.id.imgshare);
+//        imgshare.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                shareButton.performClick();
+//            }
+//        });
+//        imglike.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                likeView.performClick();
+//            }
+//        });
+        likeView.setOnErrorListener(new LikeView.OnErrorListener() {
+            @Override
+            public void onError(FacebookException e) {
+                Log.e("LIKEVIEW", e.getMessage(), e);
+            }
+        });
         hour = c.get(Calendar.HOUR_OF_DAY);
         minitus = c.get(Calendar.MINUTE);
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -155,6 +201,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         view1 = (LinearLayout) findViewById(R.id.v1);
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
+        lnf = (LinearLayout)findViewById(R.id.lnfb);
+
         edadrs = (EditText) findViewById(R.id.edadrship);
         Log.d("PRODUCTID",idprd);
         //edpick ngay
@@ -384,7 +432,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void getProductDT() {
+    public void getProductDT() {
         final String link = getResources().getString(R.string.linkprdde);
         Map<String, String> map = new HashMap<>();
         map.put("idProduct", idprd);
@@ -399,6 +447,22 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                     JSONObject jo = new JSONObject(response);
                     JSONObject prd = jo.getJSONObject("Product");
+                    if(!prd.getString("linkFacebook").equals("")){
+                        lnf.setVisibility(View.VISIBLE);
+
+                        likeView.setEnabled(true);
+                        likeView.setAuxiliaryViewPosition(LikeView.AuxiliaryViewPosition.INLINE);
+                        likeView.setObjectIdAndType(
+                                prd.getString("linkFacebook"),
+                                LikeView.ObjectType.DEFAULT);
+                        ShareLinkContent content = new ShareLinkContent.Builder()
+                                .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
+                                .build();
+
+                        shareButton.setShareContent(content);
+                    }
+
+
                     cata = prd.getJSONArray("category").toString();
                     tvnameprd.setText(prd.getString("title"));
                     String tym = prd.getString("typeMoneyId");

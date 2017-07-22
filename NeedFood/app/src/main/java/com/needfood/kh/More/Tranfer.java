@@ -34,7 +34,7 @@ import java.util.Map;
 public class Tranfer extends AppCompatActivity {
     Button btnsend;
     Session ses;
-    EditText edphone, edcoin;
+    EditText edphone, edcoin,ednote;
     DataHandle db;
     List<InfoConstructor> list;
     String acc;
@@ -51,6 +51,7 @@ public class Tranfer extends AppCompatActivity {
         btnsend = (Button) findViewById(R.id.btnsend);
         edphone = (EditText) findViewById(R.id.edrephone);
         edcoin = (EditText) findViewById(R.id.edcoin);
+        ednote = (EditText)findViewById(R.id.edcont);
         btnsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +63,7 @@ public class Tranfer extends AppCompatActivity {
     private void sendCoin() {
         String phone = edphone.getText().toString();
         String coin = edcoin.getText().toString();
+        String note = ednote.getText().toString();
         String link = getResources().getString(R.string.linktranf);
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (phone.equals("") || coin.equals("")) {
@@ -73,6 +75,7 @@ public class Tranfer extends AppCompatActivity {
             map.put("accessToken", acc);
             map.put("coin", coin);
             map.put("fone", phone);
+            map.put("note", note);
             Response.Listener<String> response = new Response.Listener<String>() {
 
                 @Override

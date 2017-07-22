@@ -17,6 +17,7 @@ import com.needfood.kh.Constructor.TranfConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.SupportClass.ChangeDatetoTimestamp;
+import com.needfood.kh.SupportClass.ChangeTimestamp;
 import com.needfood.kh.SupportClass.DBHandle;
 import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.PostCL;
@@ -37,7 +38,7 @@ public class TransferHistory extends AppCompatActivity {
     List<InfoConstructor> list;
     String token;
     String time, mess, coin, idu, id;
-    ChangeDatetoTimestamp chan;
+    ChangeTimestamp chan;
     List<TranfConstructor> arr;
     TranfHisAdapter adapter;
 
@@ -46,7 +47,7 @@ public class TransferHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_history);
         db = new DataHandle(this);
-        chan = new ChangeDatetoTimestamp();
+        chan = new ChangeTimestamp();
         lv = (ListView) findViewById(R.id.lvtran);
         list = db.getAllInfor();
         for (InfoConstructor ic : list) {
@@ -60,7 +61,7 @@ public class TransferHistory extends AppCompatActivity {
 
     public void getHisTran() {
         final ProgressDialog progressDialog = DialogUtils.show(TransferHistory.this, getResources().getString(R.string.wait));
-        String link = getResources().getString(R.string.linkorhis);
+        String link = getResources().getString(R.string.linkhiscoin);
         Map<String, String> map = new HashMap<String, String>();
         map.put("accessToken", token);
         map.put("page", page + "");
@@ -69,7 +70,7 @@ public class TransferHistory extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("IMGG", response);
+                    Log.d("IMGGA", response);
                     progressDialog.dismiss();
 
                     JSONArray jo = new JSONArray(response);
@@ -82,7 +83,7 @@ public class TransferHistory extends AppCompatActivity {
                         mess = order.getString("mess");
                         coin = order.getString("coin");
                         idu = order.getString("idUseronl");
-                        String timedate = chan.main(time);
+                        String timedate = chan.getDateCurrentTimeZone(Long.parseLong(time));
 
                         arr.add(new TranfConstructor(id, mess, timedate, coin, idu, ""));
                     }

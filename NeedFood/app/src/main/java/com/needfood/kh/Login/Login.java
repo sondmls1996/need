@@ -59,11 +59,6 @@ public class Login extends AppCompatActivity {
         edus = (EditText) findViewById(R.id.edus);
         edpass = (EditText) findViewById(R.id.edpas);
         lgb = (LoginButton) findViewById(R.id.login_button);
-        lg = (Button) findViewById(R.id.btnlg);
-        tvreg = (TextView) findViewById(R.id.tvreg);
-        edus = (EditText) findViewById(R.id.edus);
-        edpass = (EditText) findViewById(R.id.edpas);
-        lgb = (LoginButton) findViewById(R.id.login_button);
         tvfor = (TextView) findViewById(R.id.tvfogot);
         tvfor.setOnClickListener(new View.OnClickListener() {
             @Override

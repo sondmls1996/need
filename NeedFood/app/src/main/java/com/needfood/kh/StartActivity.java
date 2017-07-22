@@ -49,8 +49,6 @@ import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.Sugges.SuggessFrag;
 import com.needfood.kh.SupportClass.GetCL;
 import com.needfood.kh.SupportClass.PostCL;
-import com.needfood.kh.SupportClass.TransImage;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -143,7 +141,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         imgsug.setOnClickListener(this);
         imgnotif.setOnClickListener(this);
         imgmore.setOnClickListener(this);
-        Picasso.with(getApplicationContext()).load(R.drawable.deald).transform(new TransImage()).into(img0);
+
         fragmentClass = TabFragment.class;
         ReplaceFrag(fragmentClass);
 
