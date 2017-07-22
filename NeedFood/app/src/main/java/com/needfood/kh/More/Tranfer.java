@@ -34,7 +34,7 @@ import java.util.Map;
 public class Tranfer extends AppCompatActivity {
     Button btnsend;
     Session ses;
-    EditText edphone, edcoin;
+    EditText edphone, edcoin,ednote;
     DataHandle db;
     List<InfoConstructor> list;
     String acc;
@@ -51,6 +51,7 @@ public class Tranfer extends AppCompatActivity {
         btnsend = (Button) findViewById(R.id.btnsend);
         edphone = (EditText) findViewById(R.id.edrephone);
         edcoin = (EditText) findViewById(R.id.edcoin);
+        ednote = (EditText)findViewById(R.id.edcont);
         btnsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

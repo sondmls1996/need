@@ -82,6 +82,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Session ses;
     String uadr;
     private SimpleDateFormat dateFormatter, timeformat;
+
     Calendar c;
     int day, month2, year2, hour, minitus;
     public DatePickerDialog fromDatePickerDialog;
@@ -95,7 +96,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ArrayList<OftenConstructor> arrof, arrof2;
     ArrayList<QuanConstructor> arrq;
     QuanAdapter quanadapter;
-    LinearLayout lnby;
+    LinearLayout lnby,lnf;
     List<ListMN> list;
     List<InfoConstructor> listu;
     DataHandle db;
@@ -163,6 +164,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         view1 = (LinearLayout) findViewById(R.id.v1);
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
+        lnf = (LinearLayout)findViewById(R.id.lnfb);
+
         edadrs = (EditText) findViewById(R.id.edadrship);
         Log.d("PRODUCTID",idprd);
         //edpick ngay
@@ -407,17 +410,21 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                     JSONObject jo = new JSONObject(response);
                     JSONObject prd = jo.getJSONObject("Product");
-                    LikeView likeView = (LikeView) findViewById(R.id.btnlike);
+                    if(!prd.getString("linkFacebook").equals("")){
+                        lnf.setVisibility(View.VISIBLE);
+                        LikeView likeView = (LikeView) findViewById(R.id.btnlike);
 
-                    likeView.setAuxiliaryViewPosition(LikeView.AuxiliaryViewPosition.INLINE);
-                    likeView.setObjectIdAndType(
-                            prd.getString("linkFacebook"),
-                            LikeView.ObjectType.OPEN_GRAPH);
-                    ShareLinkContent content = new ShareLinkContent.Builder()
-                            .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
-                            .build();
-                    ShareButton shareButton = (ShareButton)findViewById(R.id.btnshare);
-                    shareButton.setShareContent(content);
+                        likeView.setAuxiliaryViewPosition(LikeView.AuxiliaryViewPosition.INLINE);
+                        likeView.setObjectIdAndType(
+                                prd.getString("linkFacebook"),
+                                LikeView.ObjectType.OPEN_GRAPH);
+                        ShareLinkContent content = new ShareLinkContent.Builder()
+                                .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
+                                .build();
+                        ShareButton shareButton = (ShareButton)findViewById(R.id.btnshare);
+                        shareButton.setShareContent(content);
+                    }
+
 
                     cata = prd.getJSONArray("category").toString();
                     tvnameprd.setText(prd.getString("title"));
