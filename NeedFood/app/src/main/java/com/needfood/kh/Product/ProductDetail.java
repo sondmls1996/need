@@ -35,6 +35,8 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.easyandroidanimations.library.SlideInUnderneathAnimation;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.LikeView;
 import com.facebook.share.widget.ShareButton;
@@ -82,7 +84,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Session ses;
     String uadr;
     private SimpleDateFormat dateFormatter, timeformat;
-
     Calendar c;
     int day, month2, year2, hour, minitus;
     public DatePickerDialog fromDatePickerDialog;
@@ -102,23 +103,37 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     DataHandle db;
     String idprd, idsl, namesl, access, idu, fullname, phone, bar;
     EditText txt_comment;
-    ImageView img_comment;
+    ImageView img_comment,imglike,imgshare;
     RecyclerView re_comment;
     String comment;
     CallbackManager callbackManager;
+    LikeView likeView;
     String cmt, time, iduser, fullnameus;
     ImageView imageView;
+    ShareButton shareButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_product_detail);
 
         TextView txt = (TextView)findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
 
         khaibao();
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getProductDT();
+                    }
+                });
+            }
+        });
+        th.start();
 
-        getProductDT();
 
 
     }
@@ -152,6 +167,28 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         month2 = c.get(Calendar.MONTH);
         year2 = c.get(Calendar.YEAR);
         bn = (Button) findViewById(R.id.bn);
+         shareButton = (ShareButton)findViewById(R.id.btnshare);
+         likeView = (LikeView) findViewById(R.id.btnlike);
+        imglike = (ImageView)findViewById(R.id.imglike);
+        imgshare = (ImageView)findViewById(R.id.imgshare);
+        imgshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareButton.performClick();
+            }
+        });
+        imglike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                likeView.performClick();
+            }
+        });
+        likeView.setOnErrorListener(new LikeView.OnErrorListener() {
+            @Override
+            public void onError(FacebookException e) {
+                Log.e("LIKEVIEW", e.getMessage(), e);
+            }
+        });
         hour = c.get(Calendar.HOUR_OF_DAY);
         minitus = c.get(Calendar.MINUTE);
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -395,7 +432,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void getProductDT() {
+    public void getProductDT() {
         final String link = getResources().getString(R.string.linkprdde);
         Map<String, String> map = new HashMap<>();
         map.put("idProduct", idprd);
@@ -412,16 +449,16 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     JSONObject prd = jo.getJSONObject("Product");
                     if(!prd.getString("linkFacebook").equals("")){
                         lnf.setVisibility(View.VISIBLE);
-                        LikeView likeView = (LikeView) findViewById(R.id.btnlike);
 
+                        likeView.setEnabled(true);
                         likeView.setAuxiliaryViewPosition(LikeView.AuxiliaryViewPosition.INLINE);
                         likeView.setObjectIdAndType(
                                 prd.getString("linkFacebook"),
-                                LikeView.ObjectType.OPEN_GRAPH);
+                                LikeView.ObjectType.DEFAULT);
                         ShareLinkContent content = new ShareLinkContent.Builder()
                                 .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
                                 .build();
-                        ShareButton shareButton = (ShareButton)findViewById(R.id.btnshare);
+
                         shareButton.setShareContent(content);
                     }
 

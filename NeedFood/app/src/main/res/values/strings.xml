@@ -108,7 +108,7 @@
     <string name="linkmn">http://needfood.webmantan.com/getTypeMoneyAPI</string>
     <string name="linkprdsell">http://needfood.webmantan.com/getProductSellerAPI</string>
     <string name="linklogout">http://needfood.webmantan.com/checkLogoutUseronlAPI</string>
-
+    <string name="linkshare">http://needfood.webmantan.com/saveShareHotDealAPI</string>
     <string name="linkprdcata">http://needfood.webmantan.com/getProductCategoryAPI</string>
     <string name="linksavecmt">http://needfood.webmantan.com/saveCommentSellerAPI</string>
     <string name="linkgetcmt">http://needfood.webmantan.com/getCommentSellerAPI</string>

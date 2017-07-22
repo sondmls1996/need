@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.easyandroidanimations.library.ScaleInAnimation;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.NewsConstructor;
 import com.needfood.kh.Database.DataHandle;
@@ -85,7 +84,7 @@ public class NewsAdapter extends
                                                  int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.customtop, viewGroup, false);
-        new ScaleInAnimation(itemView).animate();
+   //     new ScaleInAnimation(itemView).animate();
         return new RecyclerViewHolder(itemView);
     }
 

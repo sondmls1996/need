@@ -16,6 +16,7 @@ import com.needfood.kh.Adapter.NewsAdapter;
 import com.needfood.kh.Constructor.NewsConstructor;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
+import com.needfood.kh.SupportClass.EndlessScroll;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.RecyclerItemClickListener;
 
@@ -30,8 +31,8 @@ import java.util.Map;
 public class News extends AppCompatActivity {
     RecyclerView lv;
     ArrayList<NewsConstructor> arr;
+    EndlessScroll endlessScroll;
 
-    int page = 1;
     LinearLayoutManager layoutManager;
     NewsAdapter adapter;
     @Override
@@ -48,8 +49,14 @@ public class News extends AppCompatActivity {
         lv.setLayoutManager(layoutManager);
         adapter = new NewsAdapter(this, arr);
         lv.setAdapter(adapter);
-
-        getData();
+        endlessScroll = new EndlessScroll(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                page++;
+                getData(page);
+            }
+        };
+        getData(1);
         lv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
@@ -63,42 +70,10 @@ public class News extends AppCompatActivity {
                     }
                 })
         );
-  /*      lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent it = new Intent(getApplicationContext(), ProductDetail.class);
-                it.putExtra("idprd",arr.get(i).getIdprd());
-                startActivity(it);
-            }
-        });*/
-     /*   lv.setOnScrollListener(new AbsListView.OnScrollListener() {
-            int mLastFirstVisibleItem = 0;
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-                if (absListView.getId() == lv.getId()) {
-                    final int currentFirstVisibleItem = lv.getFirstVisiblePosition();
-
-                    if (currentFirstVisibleItem > mLastFirstVisibleItem) {
-                        getSupportActionBar().hide();
-                        getSupportActionBar().hide();
-                    } else if (currentFirstVisibleItem < mLastFirstVisibleItem) {
-                        // getSherlockActivity().getSupportActionBar().show();
-                        getSupportActionBar().show();
-                    }
-
-                    mLastFirstVisibleItem = currentFirstVisibleItem;
-                }
-            }
-        });*/
 
     }
 
-    private void getData() {
+    private void getData(int page) {
         final String link = getResources().getString(R.string.linknew);
         final Map<String,String> map = new HashMap<>();
         map.put("page",page+"");

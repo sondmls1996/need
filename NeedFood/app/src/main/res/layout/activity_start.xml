@@ -141,7 +141,7 @@
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginBottom="9dp"
-        android:background="@drawable/cicbor"
+       android:src="@drawable/dimg"
         app:layout_anchor="@id/deal0"
         app:layout_anchorGravity="center|top" />
 
