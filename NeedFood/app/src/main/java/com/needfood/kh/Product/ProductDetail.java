@@ -34,6 +34,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.easyandroidanimations.library.SlideInUnderneathAnimation;
+import com.facebook.CallbackManager;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.LikeView;
 import com.facebook.share.widget.ShareButton;
@@ -103,7 +104,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ImageView img_comment;
     RecyclerView re_comment;
     String comment;
-
+    CallbackManager callbackManager;
     String cmt, time, iduser, fullnameus;
     ImageView imageView;
     @Override
@@ -407,14 +408,17 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     JSONObject jo = new JSONObject(response);
                     JSONObject prd = jo.getJSONObject("Product");
                     LikeView likeView = (LikeView) findViewById(R.id.btnlike);
+
+                    likeView.setAuxiliaryViewPosition(LikeView.AuxiliaryViewPosition.INLINE);
                     likeView.setObjectIdAndType(
-                           prd.getString("linkFacebook"),
+                            prd.getString("linkFacebook"),
                             LikeView.ObjectType.OPEN_GRAPH);
                     ShareLinkContent content = new ShareLinkContent.Builder()
                             .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
                             .build();
                     ShareButton shareButton = (ShareButton)findViewById(R.id.btnshare);
                     shareButton.setShareContent(content);
+
                     cata = prd.getJSONArray("category").toString();
                     tvnameprd.setText(prd.getString("title"));
                     String tym = prd.getString("typeMoneyId");
