@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import com.needfood.kh.Hotdeal.Hotdeal;
 import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
 

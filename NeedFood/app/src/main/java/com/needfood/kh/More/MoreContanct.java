@@ -197,7 +197,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                     String fone = jo.getString("fone");
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
-                    pro.setText(coin);
+                    pro.setText(coin+" coins");
                     db.updateinfo(fullname, email, address, id, coin);
                 } catch (JSONException e) {
                     e.printStackTrace();

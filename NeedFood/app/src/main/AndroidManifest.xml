@@ -105,7 +105,7 @@
         <activity android:name=".Product.Preview" />
         <activity android:name=".More.History.MoreHistory" />
         <activity android:name=".More.History.OrderHistory" />
-        <activity android:name=".Hotdeal.Hotdeal" />
+        <activity android:name=".News.Hotdeal" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
