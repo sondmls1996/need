@@ -34,30 +34,38 @@ import java.util.Map;
 public class Tranfer extends AppCompatActivity {
     Button btnsend;
     Session ses;
-    EditText edphone, edcoin,ednote;
+    EditText edphone, edcoin, ednote;
     DataHandle db;
     List<InfoConstructor> list;
-    String acc;
+    String acc, coinn, idu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tranfer);
-        TextView txt = (TextView)findViewById(R.id.titletxt);
+        TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.tranhis));
         db = new DataHandle(this);
         list = db.getAllInfor();
         acc = list.get(list.size() - 1).getAccesstoken();
+        idu = list.get(list.size() - 1).getId();
+        addInfo();
         btnsend = (Button) findViewById(R.id.btnsend);
         edphone = (EditText) findViewById(R.id.edrephone);
         edcoin = (EditText) findViewById(R.id.edcoin);
-        ednote = (EditText)findViewById(R.id.edcont);
+        ednote = (EditText) findViewById(R.id.edcont);
         btnsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendCoin();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addInfo();
     }
 
     private void sendCoin() {
@@ -69,8 +77,12 @@ public class Tranfer extends AppCompatActivity {
         if (phone.equals("") || coin.equals("")) {
             pro.dismiss();
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
+        } else if (Double.parseDouble(coin) > Double.parseDouble(coinn)) {
+            pro.dismiss();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.can), Toast.LENGTH_SHORT).show();
+        } else
 
-        } else {
+        {
             Map<String, String> map = new HashMap<>();
             map.put("accessToken", acc);
             map.put("coin", coin);
@@ -102,6 +114,38 @@ public class Tranfer extends AppCompatActivity {
             RequestQueue que = Volley.newRequestQueue(getApplicationContext());
             que.add(post);
         }
+
+    }
+
+    private void addInfo() {
+        String linkk = getResources().getString(R.string.linkgetinfo);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", acc);
+        map.put("idUseronl", idu);
+        Response.Listener<String> response = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d("LOGA", response);
+                    JSONObject js = new JSONObject(response);
+                    JSONObject jo = js.getJSONObject("Useronl");
+                    String fullname = jo.getString("fullName");
+                    String email = jo.getString("email");
+                    String fone = jo.getString("fone");
+                    String address = jo.getString("address");
+                    coinn = jo.getString("coin");
+                    db.updateinfo(fullname, email, address, idu, coinn);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        PostCL post = new PostCL(linkk, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(post);
+
     }
 
     private AlertDialog taoMotAlertDialog() {

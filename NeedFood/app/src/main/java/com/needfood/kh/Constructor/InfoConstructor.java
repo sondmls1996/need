@@ -12,11 +12,12 @@ public class InfoConstructor {
     String address;
     String id;
     String accesstoken;
+    String coin;
 
     public InfoConstructor() {
     }
 
-    public InfoConstructor(String fullname, String email, String fone, String pass, String address, String id, String accesstoken) {
+    public InfoConstructor(String fullname, String email, String fone, String pass, String address, String id, String accesstoken, String coin) {
         this.fullname = fullname;
         this.email = email;
         this.fone = fone;
@@ -24,6 +25,7 @@ public class InfoConstructor {
         this.address = address;
         this.id = id;
         this.accesstoken = accesstoken;
+        this.coin = coin;
     }
 
     public String getFullname() {
@@ -80,5 +82,13 @@ public class InfoConstructor {
 
     public void setAccesstoken(String accesstoken) {
         this.accesstoken = accesstoken;
+    }
+
+    public String getCoin() {
+        return coin;
+    }
+
+    public void setCoin(String coin) {
+        this.coin = coin;
     }
 }

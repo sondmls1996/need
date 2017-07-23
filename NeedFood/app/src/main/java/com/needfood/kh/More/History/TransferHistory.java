@@ -34,8 +34,11 @@ public class TransferHistory extends AppCompatActivity {
     DataHandle db;
     List<InfoConstructor> list;
     String token;
+
     long time = 0;
     String  mess, coin, idu, id;
+
+
     ChangeTimestamp chan;
     List<TranfConstructor> arr;
     TranfHisAdapter adapter;
@@ -68,7 +71,7 @@ public class TransferHistory extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("IMGG", response);
+                    Log.d("IMGGA", response);
                     progressDialog.dismiss();
 
                     JSONArray jo = new JSONArray(response);
@@ -82,6 +85,7 @@ public class TransferHistory extends AppCompatActivity {
                         coin = order.getString("coin");
                         idu = order.getString("idUseronl");
                         String timedate = chan.getDateCurrentTimeZone(time);
+
 
                         arr.add(new TranfConstructor(id, mess, timedate, coin, idu, ""));
                     }
