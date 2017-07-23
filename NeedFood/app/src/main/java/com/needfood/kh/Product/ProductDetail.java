@@ -76,6 +76,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String maniid, idsel;
     LinearLayout view1;
     ProgressBar pr1;
+
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
     ImageView imgprd;
@@ -96,7 +97,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ArrayList<OftenConstructor> arrof, arrof2;
     ArrayList<QuanConstructor> arrq;
     QuanAdapter quanadapter;
-    LinearLayout lnby,lnf;
+    LinearLayout lnby,lnf,htu;
     List<ListMN> list;
     List<InfoConstructor> listu;
     DataHandle db;
@@ -107,6 +108,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String comment;
     CallbackManager callbackManager;
     LikeView likeView;
+    StringBuilder howto,simg;
     String cmt, time, iduser, fullnameus;
     ImageView imageView;
     ShareButton shareButton;
@@ -172,8 +174,17 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         imglike = (ImageView)findViewById(R.id.imglike);
         imgshare = (ImageView)findViewById(R.id.imgshare);
      likeView.setLikeViewStyle(LikeView.Style.STANDARD);
-
-
+        htu = (LinearLayout)findViewById(R.id.htu);
+        htu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent (getApplicationContext(),Howtouse.class);
+                it.putExtra("htu",howto.toString());
+                it.putExtra("img",simg.toString());
+                it.putExtra("tit",titl);
+                startActivity(it);
+            }
+        });
        // likeView.callOnClick();
         hour = c.get(Calendar.HOUR_OF_DAY);
         minitus = c.get(Calendar.MINUTE);
@@ -444,7 +455,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         shareButton.setShareContent(content);
                     }
 
-
+                    howto = new StringBuilder(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
                     tvnameprd.setText(prd.getString("title"));
                     String tym = prd.getString("typeMoneyId");
@@ -472,6 +483,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                     dess.setText(prd.getString("description"));
                     JSONArray ja = prd.getJSONArray("images");
+                    simg = new StringBuilder("http://needfood.webmantan.com" + ja.getString(0));
                     Picasso.with(getApplicationContext()).load("http://needfood.webmantan.com" + ja.getString(0)).into(imgprd);
 
                     getPrdDK();
