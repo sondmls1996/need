@@ -3,9 +3,12 @@ package com.needfood.kh.More;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -39,11 +42,13 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
     List<InfoConstructor> list;
     String fname, fone, address, id, token, pass;
     Session ses;
+    Class fragmentClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_contanct);
+
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.yourin));
         db = new DataHandle(getApplicationContext());
@@ -84,6 +89,18 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         save.setOnClickListener(this);
         save.setVisibility(View.GONE);
 
+
+    }
+
+    public void ReplaceFrag(Class fragmentClass) {
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.contentContainer, fragment).commit();
     }
 
     @Override

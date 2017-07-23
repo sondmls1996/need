@@ -14,18 +14,16 @@ import com.needfood.kh.R;
 
 public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
     private String TAG = "Registration";
+
     @Override
     public void onTokenRefresh() {
         super.onTokenRefresh();
-        String token= FirebaseInstanceId.getInstance().getToken();
+        String token = FirebaseInstanceId.getInstance().getToken();
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(getString(R.string.F_CM),token);
+        editor.putString(getString(R.string.F_CM), token);
         editor.commit();
-        Log.d(TAG,token);
-
-
-
+        Log.d(TAG, token);
 
     }
 

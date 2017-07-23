@@ -6,6 +6,9 @@ import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.TimeZone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.provider.Settings;
@@ -15,12 +18,18 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.needfood.kh.Constructor.NotiConstructor;
+import com.needfood.kh.Database.DataHandle;
+import com.needfood.kh.More.History.TransferHistory;
 import com.needfood.kh.R;
+import com.needfood.kh.SupportClass.ChangeTimestamp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -33,19 +42,36 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public String id, name;
     public String idUser;
     Intent it;
+    ChangeTimestamp changeTimestamp;
+    DataHandle db;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-
+        changeTimestamp = new ChangeTimestamp();
+        db = new DataHandle(getApplicationContext());
         Random random = new Random();
         int m = random.nextInt(9999 - 1000) + 1000;
 
         if (remoteMessage.getData().size() > 0) {
-            //Log.e(TAG, remoteMessage.getData().toString());
+            Log.e(TAG, remoteMessage.getData() + "");
+
             JSONObject jobj = new JSONObject(remoteMessage.getData());
+            try {
+                if (jobj.has("title")) {
+                    title = jobj.getString("title");
+                    savedata(title);
+                }
+
+                notif = jobj.getString("functionCall");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
 
+            if (notif.equals("changeCoinAPI")) {
+                it = new Intent(this, TransferHistory.class);
+            }
         }
 
 
@@ -53,7 +79,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, it, PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setContentTitle(title);
-        builder.setContentText("Mantan Manager");
+        builder.setContentText("Need Food");
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         builder.setVibrate(new long[]{0, 500});
         builder.setSound(uri);
@@ -66,6 +92,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         manager.notify(m, builder.build());
         checkNotificationSetting();
         isNLServiceCrashed();
+    }
+
+    public void savedata(String title) {
+        DateFormat df = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        df.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
+        String date = df.format(Calendar.getInstance().getTime());
+        db.addNoti(new NotiConstructor(title, "", date));
+        Log.d(TAG, title + "-" + date);
     }
 
     private boolean checkNotificationSetting() {

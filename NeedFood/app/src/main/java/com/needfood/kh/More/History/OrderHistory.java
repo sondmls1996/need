@@ -1,9 +1,12 @@
 package com.needfood.kh.More.History;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,6 +46,7 @@ public class OrderHistory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
+
         TextView txt = (TextView)findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.hisord));
         db = new DataHandle(getApplicationContext());
@@ -72,6 +76,7 @@ public class OrderHistory extends AppCompatActivity {
                 totalItemCount = totalItemCountt;
             }
         });
+
     }
 
     public void getOrderHistory() {

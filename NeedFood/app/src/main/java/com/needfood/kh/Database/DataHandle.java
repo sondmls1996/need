@@ -10,6 +10,7 @@ import android.util.Log;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Constructor.ListMN;
+import com.needfood.kh.Constructor.NotiConstructor;
 import com.needfood.kh.SupportClass.DBHandle;
 
 import java.util.ArrayList;
@@ -43,6 +44,11 @@ public class DataHandle extends SQLiteOpenHelper {
     public static final String CHECK_LAN = "language";
     public static final String ID_LANGUAGE = "id_language";
 
+    public static final String TABLE_NOTI = "tbnoti";
+    public static final String TIT_NOTI ="idnoti";
+    public static final String IMAGE_NOTI ="imgnoti";
+    public static final String TIME_NOTI = "timenoti";
+
     public DataHandle(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -69,10 +75,17 @@ public class DataHandle extends SQLiteOpenHelper {
                 "CREATE TABLE " + CHECK_LAN + "(" +
                         ID_LANGUAGE + " TEXT" +
                         ");";
+        String CREATE_TABLE_NOTI =
 
+                "CREATE TABLE " + TABLE_NOTI + "(" +
+                        TIT_NOTI + " TEXT NOT NULL," +
+                        IMAGE_NOTI + " TEXT NOT NULL," +
+                        TIME_NOTI + " TEXT NOT NULL" +
+                        ");";
         db.execSQL(CREATE_TABLE_USER);
         db.execSQL(CREATE_TABLE_INFO);
         db.execSQL(CREATE_TABLE_LAN);
+        db.execSQL(CREATE_TABLE_NOTI);
         Log.d("TAG", TAG);
 
     }
@@ -82,6 +95,7 @@ public class DataHandle extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS" + MONEYTB);
         db.execSQL("DROP TABLE IF EXISTS" + INFO);
         db.execSQL("DROP TABLE IF EXISTS" + CHECK_LAN);
+        db.execSQL("DROP TABLE IF EXISTS" + TABLE_NOTI);
         onCreate(db);
     }
 
@@ -119,7 +133,40 @@ public class DataHandle extends SQLiteOpenHelper {
         db.insert(CHECK_LAN, null, values);
         db.close();
     }
+    public void addNoti(NotiConstructor noti) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TIT_NOTI, noti.getTitle());
+        values.put(IMAGE_NOTI, noti.getImg());
+        values.put(TIME_NOTI, noti.getTime());
+        db.insert(TABLE_NOTI, null, values);
+        db.close();
+    }
+    public List<NotiConstructor> getNoti() {
+        List<NotiConstructor> contactList = new ArrayList<NotiConstructor>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_NOTI;
 
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                NotiConstructor contact = new NotiConstructor();
+                contact.setTitle(cursor.getString(0));
+                contact.setImg(cursor.getString(1));
+                contact.setTime(cursor.getString(2));
+
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        // return contact list　
+        return contactList;
+    }
     public List<ListMN> getMNid(String id) {
         List<ListMN> contactList = new ArrayList<ListMN>();
         // Select All Query

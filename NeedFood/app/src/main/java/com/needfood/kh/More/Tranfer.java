@@ -4,8 +4,11 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -38,11 +41,13 @@ public class Tranfer extends AppCompatActivity {
     DataHandle db;
     List<InfoConstructor> list;
     String acc, coinn, idu;
+    Class fragmentClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tranfer);
+
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.tranhis));
         db = new DataHandle(this);
@@ -60,6 +65,18 @@ public class Tranfer extends AppCompatActivity {
                 sendCoin();
             }
         });
+
+    }
+
+    public void ReplaceFrag(Class fragmentClass) {
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.contentContainer, fragment).commit();
     }
 
     @Override
