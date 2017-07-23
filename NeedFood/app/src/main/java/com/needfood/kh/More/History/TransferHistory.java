@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -15,13 +18,10 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Adapter.TranfHisAdapter;
 import com.needfood.kh.Constructor.InfoConstructor;
-import com.needfood.kh.Constructor.OrderHisConstructor;
 import com.needfood.kh.Constructor.TranfConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
-import com.needfood.kh.SupportClass.ChangeDatetoTimestamp;
 import com.needfood.kh.SupportClass.ChangeTimestamp;
-import com.needfood.kh.SupportClass.DBHandle;
 import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.PostCL;
 
@@ -40,7 +40,11 @@ public class TransferHistory extends AppCompatActivity {
     DataHandle db;
     List<InfoConstructor> list;
     String token;
-    String time, mess, coin, idu, id;
+
+    long time = 0;
+    String  mess, coin, idu, id;
+
+
     ChangeTimestamp chan;
     List<TranfConstructor> arr;
     TranfHisAdapter adapter;
@@ -84,11 +88,12 @@ public class TransferHistory extends AppCompatActivity {
                         JSONObject js = jo.getJSONObject(i);
                         JSONObject order = js.getJSONObject("History");
                         id = order.getString("id");
-                        time = order.getString("time");
+                        time = order.getLong("time");
                         mess = order.getString("mess");
                         coin = order.getString("coin");
                         idu = order.getString("idUseronl");
-                        String timedate = chan.getDateCurrentTimeZone(Long.parseLong(time));
+                        String timedate = chan.getDateCurrentTimeZone(time);
+
 
                         arr.add(new TranfConstructor(id, mess, timedate, coin, idu, ""));
                     }

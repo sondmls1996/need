@@ -34,8 +34,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.needfood.kh.R.id.proper;
+
 public class MoreContanct extends AppCompatActivity implements View.OnClickListener {
-    TextView change, changepass, save, proper;
+
+    TextView change, changepass, save,pro;
+
     EditText name_id, email_id, phone_id, pay, tvName, addr;
     DataHandle db;
     String id_name, email, phone, coin;
@@ -67,9 +71,13 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         name_id = (EditText) findViewById(R.id.acc_id);
         email_id = (EditText) findViewById(R.id.email_id);
         phone_id = (EditText) findViewById(R.id.fone_id);
+
+        pro = (TextView) findViewById(proper);
+//        pay = (EditText) findViewById(R.id.pay);
+
         change = (TextView) findViewById(R.id.change);
         save = (TextView) findViewById(R.id.save);
-        proper = (TextView) findViewById(R.id.proper);
+
         changepass = (TextView) findViewById(R.id.changepass);
         addr = (EditText) findViewById(R.id.address_id);
         addInfo();
@@ -101,12 +109,15 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.contentContainer, fragment).commit();
+
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
         addInfo();
+
 
     }
 
@@ -203,7 +214,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                     String fone = jo.getString("fone");
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
-                    proper.setText(coin);
+                    pro.setText(coin+" coins");
                     db.updateinfo(fullname, email, address, id, coin);
                 } catch (JSONException e) {
                     e.printStackTrace();

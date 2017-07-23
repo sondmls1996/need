@@ -1,20 +1,14 @@
-package com.needfood.kh.Hotdeal;
+package com.needfood.kh.News;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,16 +18,12 @@ import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.NewsConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Login.Login;
-import com.needfood.kh.More.History.MoreHistory;
-import com.needfood.kh.More.MoreContanct;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
-import com.needfood.kh.Setting.Setting;
+import com.needfood.kh.SupportClass.EndlessScroll;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.RecyclerItemClickListener;
 import com.needfood.kh.SupportClass.Session;
-import com.needfood.kh.SupportClass.TransImage;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,13 +42,13 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
     View v;
     ListView lv;
     RecyclerView lvb;
-    int page = 1;
+
     ArrayList<NewsConstructor> arr;
     NewsAdapter adapter;
     LinearLayoutManager layoutManager;
     String token;
     List<InfoConstructor> list;
-
+    EndlessScroll endlessScroll;
     public Hotdeal() {
         // Required empty public constructor
     }
@@ -84,7 +74,15 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
             lvb.setLayoutManager(layoutManager);
             adapter = new NewsAdapter(getApplicationContext(), arr);
             lvb.setAdapter(adapter);
-            getData();
+            endlessScroll = new EndlessScroll(layoutManager) {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    page++;
+                    getData(page);
+                }
+            };
+            getData(1);
+
             lvb.addOnItemTouchListener(
                     new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                         @Override
@@ -120,7 +118,7 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private void getData() {
+    private void getData(int page) {
         final String link = getResources().getString(R.string.linkhotdeal);
         final Map<String, String> map = new HashMap<>();
         map.put("accessToken", token);

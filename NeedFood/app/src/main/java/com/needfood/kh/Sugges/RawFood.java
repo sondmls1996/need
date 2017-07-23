@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -15,6 +16,7 @@ import com.needfood.kh.Adapter.NewsAdapter;
 import com.needfood.kh.Constructor.NewsConstructor;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
+import com.needfood.kh.SupportClass.EndlessScroll;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.RecyclerItemClickListener;
 
@@ -33,6 +35,8 @@ public class RawFood extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     int page = 1;
     String namep="rawFood";
+    EndlessScroll endlessScroll;
+    TextView nop;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +45,18 @@ public class RawFood extends AppCompatActivity {
         arr=new ArrayList<>();
         layoutManager = new LinearLayoutManager(this);
         lv.setLayoutManager(layoutManager);
+        nop = (TextView)findViewById(R.id.nop);
         adapter = new NewsAdapter(getApplicationContext(),arr);
         lv.setAdapter(adapter);
+        endlessScroll = new EndlessScroll(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                page++;
+                getData(page);
+            }
+        };
+        getData(1);
+
         lv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
@@ -56,10 +70,10 @@ public class RawFood extends AppCompatActivity {
                     }
                 })
         );
-       getData();
+
     }
 
-    private void getData() {
+    private void getData(int page) {
         final String link = getResources().getString(R.string.linksug);
         final Map<String,String> map = new HashMap<>();
         map.put("page",page+"");
@@ -70,17 +84,28 @@ public class RawFood extends AppCompatActivity {
 
                 try {
                     Log.d("sugest",response);
+
                     JSONArray ja = new JSONArray(response);
-                    for (int i =0;i<ja.length();i++){
-                        JSONObject j1 = ja.getJSONObject(i);
-                        JSONObject prd = j1.getJSONObject("Product");
-                        JSONArray imgs = prd.getJSONArray("images");
-                        arr.add(new NewsConstructor("http://needfood.webmantan.com"+imgs.getString(0),prd.getString("id"),
-                                prd.getString("idSeller"),
-                                prd.getString("title"),prd.getString("nameSeller"),prd.getString("price")
-                                ,"",prd.getString("priceOther"),prd.getString("vote"),prd.getString("nameUnit"),prd.getString("typeMoneyId")));
+                    if(ja.length()==0){
+                        if(arr.size()==0){
+                            nop.setVisibility(View.VISIBLE);
+                        }else{
+                            nop.setVisibility(View.GONE);
+                        }
+                    }else{
+                        nop.setVisibility(View.GONE);
+                        for (int i =0;i<ja.length();i++){
+                            JSONObject j1 = ja.getJSONObject(i);
+                            JSONObject prd = j1.getJSONObject("Product");
+                            JSONArray imgs = prd.getJSONArray("images");
+                            arr.add(new NewsConstructor("http://needfood.webmantan.com"+imgs.getString(0),prd.getString("id"),
+                                    prd.getString("idSeller"),
+                                    prd.getString("title"),prd.getString("nameSeller"),prd.getString("price")
+                                    ,"",prd.getString("priceOther"),prd.getString("vote"),prd.getString("nameUnit"),prd.getString("typeMoneyId")));
+                        }
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -15,6 +15,7 @@ import com.needfood.kh.R;
 
 public class MoreHistory extends AppCompatActivity implements View.OnClickListener {
     LinearLayout lno, histr;
+
     Class cl;
 
     @Override
@@ -22,13 +23,18 @@ public class MoreHistory extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_history);
 
+
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.his));
+
+
         lno = (LinearLayout) findViewById(R.id.hiso);
         lno.setOnClickListener(this);
+
         histr = (LinearLayout) findViewById(R.id.histr);
         histr.setOnClickListener(this);
     }
+
     public void ReplaceFrag(Class fragmentClass) {
         Fragment fragment = null;
         try {
@@ -39,6 +45,7 @@ public class MoreHistory extends AppCompatActivity implements View.OnClickListen
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.contentContainer, fragment).commit();
     }
+
 
     @Override
     public void onClick(View v) {

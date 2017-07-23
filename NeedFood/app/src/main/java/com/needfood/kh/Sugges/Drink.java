@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,6 +31,7 @@ public class Drink extends AppCompatActivity {
     NewsAdapter adapter;
     ArrayList<NewsConstructor> arr;
     RecyclerView lv;
+    TextView nop;
     LinearLayoutManager layoutManager;
     int page = 1;
     String namep="drinks";
@@ -40,6 +42,7 @@ public class Drink extends AppCompatActivity {
         lv = (RecyclerView)findViewById(R.id.lvdrink);
         arr=new ArrayList<>();
         layoutManager = new LinearLayoutManager(this);
+        nop = (TextView)findViewById(R.id.nop4);
         lv.setLayoutManager(layoutManager);
         adapter = new NewsAdapter(getApplicationContext(),arr);
         lv.setAdapter(adapter);
@@ -71,17 +74,25 @@ public class Drink extends AppCompatActivity {
                 try {
                     Log.d("sugest",response);
                     JSONArray ja = new JSONArray(response);
-                    for (int i =0;i<ja.length();i++){
-                        JSONObject j1 = ja.getJSONObject(i);
-                        JSONObject prd = j1.getJSONObject("Product");
-                        JSONArray imgs = prd.getJSONArray("images");
-                        arr.add(new NewsConstructor("http://needfood.webmantan.com"+imgs.getString(0),prd.getString("id"),
-                                prd.getString("idSeller"),
-                                prd.getString("title"),prd.getString("nameSeller"),prd.getString("price")
-                                ,"",prd.getString("priceOther"),prd.getString("vote"),prd.getString("nameUnit"),prd.getString("typeMoneyId")));
+                    if(ja.length()==0){
+                        if(arr.size()==0){
+                            nop.setVisibility(View.VISIBLE);
+                        }else{
+                            nop.setVisibility(View.GONE);
+                        }
+                    }else {
+                        nop.setVisibility(View.GONE);
+                        for (int i = 0; i < ja.length(); i++) {
+                            JSONObject j1 = ja.getJSONObject(i);
+                            JSONObject prd = j1.getJSONObject("Product");
+                            JSONArray imgs = prd.getJSONArray("images");
+                            arr.add(new NewsConstructor("http://needfood.webmantan.com" + imgs.getString(0), prd.getString("id"),
+                                    prd.getString("idSeller"),
+                                    prd.getString("title"), prd.getString("nameSeller"), prd.getString("price")
+                                    , "", prd.getString("priceOther"), prd.getString("vote"), prd.getString("nameUnit"), prd.getString("typeMoneyId")));
+                        }
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

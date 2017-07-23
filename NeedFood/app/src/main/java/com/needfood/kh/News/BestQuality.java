@@ -15,6 +15,7 @@ import com.needfood.kh.Adapter.NewsAdapter;
 import com.needfood.kh.Constructor.NewsConstructor;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
+import com.needfood.kh.SupportClass.EndlessScroll;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.RecyclerItemClickListener;
 
@@ -28,8 +29,9 @@ import java.util.Map;
 
 public class BestQuality extends AppCompatActivity {
     RecyclerView lvb;
-    int page = 1;
+
     ArrayList<NewsConstructor> arr;
+    EndlessScroll endlessScroll;
     NewsAdapter adapter;
     LinearLayoutManager layoutManager;
     @Override
@@ -43,7 +45,15 @@ public class BestQuality extends AppCompatActivity {
         lvb.setLayoutManager(layoutManager);
         adapter = new NewsAdapter(this, arr);
         lvb.setAdapter(adapter);
-        getData();
+        endlessScroll = new EndlessScroll(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                page++;
+                getData(page);
+            }
+        };
+        getData(1);
+
         lvb.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
@@ -57,7 +67,7 @@ public class BestQuality extends AppCompatActivity {
                 })
         );
     }
-    private void getData() {
+    private void getData(int page) {
         final String link = getResources().getString(R.string.linkbest);
         final Map<String,String> map = new HashMap<>();
         map.put("page",page+"");
