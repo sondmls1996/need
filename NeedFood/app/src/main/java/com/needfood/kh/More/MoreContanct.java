@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MoreContanct extends AppCompatActivity implements View.OnClickListener {
-    TextView change, changepass, save;
+    TextView change, changepass, save,pro;
     EditText name_id, email_id, phone_id, pay, tvName, addr;
     DataHandle db;
     String id_name, email, phone;
@@ -55,6 +55,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         name_id = (EditText) findViewById(R.id.acc_id);
         email_id = (EditText) findViewById(R.id.email_id);
         phone_id = (EditText) findViewById(R.id.fone_id);
+        pro = (TextView) findViewById(R.id.proper);
 //        pay = (EditText) findViewById(R.id.pay);
         change = (TextView) findViewById(R.id.change);
         save = (TextView) findViewById(R.id.save);
@@ -75,6 +76,11 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         changepass.setOnClickListener(this);
         save.setOnClickListener(this);
         save.setVisibility(View.GONE);
+        getCoin();
+    }
+
+    private void getCoin() {
+
     }
 
     @Override

@@ -35,7 +35,6 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.easyandroidanimations.library.SlideInUnderneathAnimation;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.LikeView;
@@ -114,7 +113,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
+            FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_product_detail);
 
         TextView txt = (TextView)findViewById(R.id.titletxt);
@@ -127,7 +127,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        getProductDT();
+                       getProductDT();
                     }
                 });
             }
@@ -171,24 +171,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
          likeView = (LikeView) findViewById(R.id.btnlike);
         imglike = (ImageView)findViewById(R.id.imglike);
         imgshare = (ImageView)findViewById(R.id.imgshare);
-//        imgshare.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                shareButton.performClick();
-//            }
-//        });
-//        imglike.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                likeView.performClick();
-//            }
-//        });
-        likeView.setOnErrorListener(new LikeView.OnErrorListener() {
-            @Override
-            public void onError(FacebookException e) {
-                Log.e("LIKEVIEW", e.getMessage(), e);
-            }
-        });
+     likeView.setLikeViewStyle(LikeView.Style.STANDARD);
+
+
+       // likeView.callOnClick();
         hour = c.get(Calendar.HOUR_OF_DAY);
         minitus = c.get(Calendar.MINUTE);
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -450,11 +436,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     if(!prd.getString("linkFacebook").equals("")){
                         lnf.setVisibility(View.VISIBLE);
 
-                        likeView.setEnabled(true);
-                        likeView.setAuxiliaryViewPosition(LikeView.AuxiliaryViewPosition.INLINE);
-                        likeView.setObjectIdAndType(
-                                prd.getString("linkFacebook"),
-                                LikeView.ObjectType.DEFAULT);
+
                         ShareLinkContent content = new ShareLinkContent.Builder()
                                 .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
                                 .build();
@@ -776,6 +758,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         AlertDialog dialog = builder.create();
         return dialog;
     }
+
+
+
     // hoi xoa
     private AlertDialog taoMotAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -800,5 +785,26 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 });
         AlertDialog dialog = builder.create();
         return dialog;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == RESULT_OK) {
+            // verify we're returning from like action
+            if ("com.facebook.platform.action.request.LIKE_DIALOG".equals(data.getStringExtra("com.facebook.platform.protocol.PROTOCOL_ACTION"))) {
+                // get action results
+                Bundle bundle = data.getExtras().getBundle("com.facebook.platform.protocol.RESULT_ARGS");
+                if (bundle != null) {
+                    bundle.getBoolean("object_is_liked"); // liked/unliked
+                    bundle.getInt("didComplete");
+                    bundle.getInt("like_count"); // object like count
+                    bundle.getString("like_count_string");
+                    bundle.getString("social_sentence");
+                    bundle.getString("completionGesture"); // liked/cancel/unliked
+                }
+            }
+        }
+
     }
 }

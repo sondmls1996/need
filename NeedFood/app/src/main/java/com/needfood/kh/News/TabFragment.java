@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.needfood.kh.Hotdeal.Hotdeal;
 import com.needfood.kh.R;
+import com.needfood.kh.StartActivity;
 
 import static android.R.id.tabhost;
 
@@ -72,11 +73,10 @@ public class TabFragment extends Fragment {
                 }
 
                 tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.darkred)); // selected
-                TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
 
             }
         });
-        tabHost.setCurrentTab(0);
+        tabHost.setCurrentTab(StartActivity.pg);
         return v;
     }
 

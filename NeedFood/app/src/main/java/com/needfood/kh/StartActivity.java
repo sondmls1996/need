@@ -67,6 +67,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     LinearLayout imgnewss, imgsug, imgnotif, imgmore;
     Class fragmentClass;
     DataHandle db;
+    public static int pg = 0;
     ImageView img0;
     List<ListMN> list;
     String mns;
@@ -297,16 +298,17 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             case R.id.imgnewstart:
                 fragmentClass = TabFragment.class;
                 ReplaceFrag(fragmentClass);
+                pg=0;
                 break;
             case R.id.dod:
-                TabFragment.tabHost.setCurrentTab(1);
+                fragmentClass = TabFragment.class;
+                ReplaceFrag(fragmentClass);
+               pg = 1;
                 break;
             case R.id.sug:
+
                 fragmentClass = SuggessFrag.class;
                 ReplaceFrag(fragmentClass);
-                break;
-            case R.id.deal0:
-                TabFragment.tabHost.setCurrentTab(1);
                 break;
             case R.id.notif:
                 fragmentClass = Notif.class;
