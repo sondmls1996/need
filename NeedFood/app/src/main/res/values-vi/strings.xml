@@ -154,4 +154,6 @@
     <string name="time">Thời gian: \u0020</string>
     <string name="mess">Tin nhắn: \u0020 </string>
     <string name="can">Bạn không đủ tiền xu để chuyển </string>
+    <string name="nohis">Không có lịch sử để hiển thị</string>
+    <string name="nonoti">Không có thông báo để hiển thị</string>
 </resources>

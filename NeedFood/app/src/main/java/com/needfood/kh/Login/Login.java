@@ -125,13 +125,11 @@ public class Login extends AppCompatActivity {
                                 } else {
                                     progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(getApplicationContext(), "demo", Toast.LENGTH_SHORT).show();
 
                                 }
                             } catch (JSONException e) {
                                 progressDialog.dismiss();
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-                                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
                         }

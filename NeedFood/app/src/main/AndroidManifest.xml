@@ -70,7 +70,6 @@
         -->
 
         <activity android:name=".Cart.ListCart" />
-        <activity android:name=".Notif.ReplyNotif" />
         <activity android:name=".More.MoreContanct" />
         <activity
             android:name=".Setting.Setting"

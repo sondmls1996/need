@@ -7,7 +7,15 @@
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".News.Hotdeal">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/noprd"
+        android:id="@+id/nop6"
+        android:visibility="gone"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:gravity="center"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lvhostdeal"
         android:layout_width="match_parent"

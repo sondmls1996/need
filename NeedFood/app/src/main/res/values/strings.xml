@@ -158,4 +158,6 @@
     <string name="pr">Property: \u0020</string>
     <string name="mess">Message: \u0020 </string>
     <string name="can">You do not have enough coins to transfer </string>
+    <string name="nohis">No History to display</string>
+    <string name="nonoti">No Notication to display</string>
 </resources>

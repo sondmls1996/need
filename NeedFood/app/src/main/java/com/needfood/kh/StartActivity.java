@@ -104,7 +104,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         }
         lt = db.getLan();
         if (lt.size() > 0) {
-            Toast.makeText(getApplicationContext(), lt.get(lt.size() - 1).getId(), Toast.LENGTH_SHORT).show();
+
             String a = "en";
             if (lt.get(lt.size() - 1).getId().equals("1")) {
                 a = "en";

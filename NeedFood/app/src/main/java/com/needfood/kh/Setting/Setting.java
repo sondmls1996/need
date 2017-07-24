@@ -146,7 +146,7 @@ public class Setting extends AppCompatActivity {
 
                 String lang = "vi";
                 String a = ngonngu[position];
-                Toast.makeText(getApplicationContext(), a, Toast.LENGTH_SHORT).show();
+
                 if (a == "Tiếng Anh") {
                     lang = "en";
                     db.addCheckLan(new Language("1"));

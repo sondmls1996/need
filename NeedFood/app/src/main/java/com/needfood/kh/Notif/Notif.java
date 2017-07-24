@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.needfood.kh.Adapter.NotifAdapter;
@@ -20,16 +21,18 @@ import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Notif extends Fragment{
+public class Notif extends Fragment {
 
     ListView lv;
     NotifAdapter adapter;
     List<NotiConstructor> arr;
+    TextView nop;
 
     public Notif() {
         // Required empty public constructor
@@ -45,25 +48,25 @@ public class Notif extends Fragment{
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_notif, container, false);
         lv = (ListView) v.findViewById(R.id.lvnotif);
+        nop = (TextView) v.findViewById(R.id.nop8);
         db = new DataHandle(getActivity());
         arr = new ArrayList<>();
+        adapter = new NotifAdapter(getContext(), arr);
+        lv.setAdapter(adapter);
         arr = db.getNoti();
         for (NotiConstructor nc : arr) {
             a = nc.getTitle();
             c = nc.getTime();
         }
-        Toast.makeText(getActivity(), arr.size() + "", Toast.LENGTH_SHORT).show();
-        adapter = new NotifAdapter(getContext(), arr);
-        lv.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        Collections.reverse(arr);
 
-//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent it = new Intent(getContext(), ReplyNotif.class);
-//                startActivity(it);
-//            }
-//        });
+        if (arr.size() == 0) {
+            nop.setVisibility(View.VISIBLE);
+        } else {
+            nop.setVisibility(View.GONE);
+
+            adapter.notifyDataSetChanged();
+        }
         return v;
     }
 
@@ -72,6 +75,7 @@ public class Notif extends Fragment{
         super.onResume();
         loadagain();
     }
+
     public void loadagain() {
         arr.clear();
         arr = db.getNoti();
