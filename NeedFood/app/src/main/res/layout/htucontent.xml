@@ -9,9 +9,8 @@ app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
     >
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -25,13 +24,17 @@ app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:textSize="16sp"
         android:id="@+id/txtht"
         android:textColor="@color/black"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        android:text="sádsấđâsđá"
-        android:gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/nom"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:text="@string/nomal"
+            android:gravity="center"/>
+
 </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>

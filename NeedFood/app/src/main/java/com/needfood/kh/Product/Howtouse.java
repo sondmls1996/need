@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +16,7 @@ public class Howtouse extends AppCompatActivity {
     String htu, simg;
     String priceprd, prdcode, titl;
     String maniid, info;
-    TextView txtht,txts;
+    TextView txtht,txts,nom;
     ImageView img;
 
     @Override
@@ -29,9 +30,16 @@ public class Howtouse extends AppCompatActivity {
         titl = intent.getStringExtra("tit");
         simg = intent.getStringExtra("img");
         txtht = (TextView)findViewById(R.id.txtht);
+        nom = (TextView)findViewById(R.id.nom);
         txts = (TextView)findViewById(R.id.txtsp);
         img = (ImageView)findViewById(R.id.imgsp);
-        txtht.setText(Html.fromHtml(Html.fromHtml(htu).toString()));
+        if(htu.equals("")){
+            nom.setVisibility(View.VISIBLE);
+        }else{
+            nom.setVisibility(View.GONE);
+            txtht.setText(Html.fromHtml(Html.fromHtml(htu).toString()));
+        }
+
         Picasso.with(getApplicationContext()).load(simg).into(img);
         txts.setText(titl);
     }
