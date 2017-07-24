@@ -100,6 +100,7 @@
     <string name="hisord">Order history</string>
     <string name="ssor">Order Success</string>
 
+    <string name="linklogfb">http://needfood.webmantan.com/checkRegisterFacebookAPI</string>
     <string name="linktranf">http://needfood.webmantan.com/changeCoinAPI</string>
     <string name="linkgetcoin">http://needfood.webmantan.com/getInfoUserAPI</string>
     <string name="linkorder">http://needfood.webmantan.com/saveOrderAPI</string>
@@ -125,7 +126,6 @@
     <string name="linktypecode">http://needfood.webmantan.com/sendPassUseronlAPI</string>
     <string name="linkupdate">http://needfood.webmantan.com/updateInfoUseronlAPI</string>
     <string name="linkorhis">http://needfood.webmantan.com/getHistoryOrderAPI</string>
-
     <string name="linkhotdeal">http://needfood.webmantan.com/getHotDealProductAPI</string>
     <string name="linksavecmpr">http://needfood.webmantan.com/saveCommentProductAPI</string>
     <string name="linkgetcmpr">http://needfood.webmantan.com/getCommentProductAPI</string>

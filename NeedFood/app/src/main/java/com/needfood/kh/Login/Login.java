@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,8 @@ import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.needfood.kh.Constructor.InfoConstructor;
@@ -32,6 +35,7 @@ import com.needfood.kh.SupportClass.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +47,7 @@ public class Login extends AppCompatActivity {
     Session ses;
     EditText edus, edpass;
     DataHandle db;
+    String fullname,idfb,email,fone,adr;
     String dvtoken;
 
     @Override
@@ -51,7 +56,13 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
         dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
-
+        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        imgb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.login));
         db = new DataHandle(getApplicationContext());
@@ -59,6 +70,9 @@ public class Login extends AppCompatActivity {
         edus = (EditText) findViewById(R.id.edus);
         edpass = (EditText) findViewById(R.id.edpas);
         lgb = (LoginButton) findViewById(R.id.login_button);
+
+        lgb.setReadPermissions(Arrays.asList(
+                "public_profile", "email", "user_birthday", "user_friends"));
         tvfor = (TextView) findViewById(R.id.tvfogot);
         tvfor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,10 +158,34 @@ public class Login extends AppCompatActivity {
         lgb.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                ses.setLoggedin(true);
-                Intent it = new Intent(getApplicationContext(), StartActivity.class);
-                startActivity(it);
-                finish();
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                final JSONObject json = response.getJSONObject();
+                                Log.d("JSRE",json.toString());
+
+//                                try {
+//                                    if(json != null){
+//
+//                                        Log.e("NAME", json.getString("name"));
+//                                        Log.e("MAIL", json.getString("email"));
+//                                        Log.e("ID", json.getString("id"));
+//                                        //web.loadData(text, "text/html", "UTF-8");
+//
+//                                    }
+//
+//
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender,birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
             }
 
             @Override

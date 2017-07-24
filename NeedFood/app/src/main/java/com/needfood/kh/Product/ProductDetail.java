@@ -342,8 +342,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 j1.put("quantity", quan);
                 j1.put("price", priceprd);
                 j1.put("tickKM", "false");
-                j1.put("tickKM_percent", null);
-                j1.put("tickKM_money", null);
+                j1.put("tickKM_percent", "");
+                j1.put("tickKM_money", "");
                 j1.put("barcode", idprd);
                 j1.put("code", prdcode);
                 j1.put("title", titl);
@@ -393,11 +393,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             Map<String,String> map = new HashMap<>();
             map.put("accessToken",access);
             map.put("listProduct",jsonArray.toString());
-
             map.put("money",money+"");
             map.put("totalMoneyProduct",(money*1.1)+"");
             map.put("moneyShip",strship.toString());
-
             map.put("timeShiper",year2+"/"+month2+"/"+day+" "+edpickgio.getText().toString());
             map.put("fullName",fullname);
             map.put("address",adr);
@@ -405,6 +403,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
            // map.put("idUseronl",idu);
             map.put("idSeller",idsl);
             map.put("note",edghichu.getText().toString());
+
             Response.Listener<String> response = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -570,7 +569,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             mn = lu.getMn();
                         }
                         arrof.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
+                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
                                 "", prd.getString("id")));
                     }
 
