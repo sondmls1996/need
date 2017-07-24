@@ -158,4 +158,6 @@
     <string name="nonoti">Không có thông báo để hiển thị</string>
     <string name="histran">Lịch sử chuyển khoản</string>
     <string name="hiset">Lịch sử đặt hàng</string>
+    <string name="checkfon">Số điện thoại không hợp lệ</string>
+    <string name="coinn">Xu: \u0020</string>
 </resources>

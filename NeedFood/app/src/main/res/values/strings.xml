@@ -162,4 +162,6 @@
     <string name="nonoti">No Notication to display</string>
     <string name="histran">History Transfer</string>
     <string name="hiset">History Order</string>
+    <string name="checkfon"> Phone number not valid</string>
+    <string name="coinn">Coins: \u0020</string>
 </resources>

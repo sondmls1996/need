@@ -77,6 +77,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             if (notif.equals("changeCoinAPI")) {
                 it = new Intent(this, TransferHistory.class);
             }
+            if (notif.equals("infoOrder")) {
+                it = new Intent(this, TransferHistory.class);
+            }
         }
 
 

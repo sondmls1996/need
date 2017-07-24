@@ -127,15 +127,4 @@ public class TransferHistory extends AppCompatActivity {
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(post);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // handle arrow click here
-        if (item.getItemId() == android.R.id.home) {
-            Intent i = new Intent(getApplicationContext(),MoreHistory.class);
-            startActivity(i);
-            finish();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
