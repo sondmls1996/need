@@ -25,6 +25,13 @@ app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:textSize="16sp"
         android:id="@+id/txtht"
         android:textColor="@color/black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text="sádsấđâsđá"
+        android:gravity="center"/>
 </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>

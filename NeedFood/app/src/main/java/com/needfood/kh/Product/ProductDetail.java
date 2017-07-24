@@ -455,7 +455,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         shareButton.setShareContent(content);
                     }
 
-                    howto = new StringBuilder(prd.getString("info"));
+                    howto = new StringBuilder("");
+                    howto.append(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
                     tvnameprd.setText(prd.getString("title"));
                     String tym = prd.getString("typeMoneyId");
