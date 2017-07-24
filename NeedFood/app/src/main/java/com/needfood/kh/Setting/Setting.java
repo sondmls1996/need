@@ -121,6 +121,7 @@ public class Setting extends AppCompatActivity {
                 if (currentAccessToken == null) {
                     //write your code here what to do when user clicks on facebook logout
                     ses.setLoggedin(false);
+                    db.deleteInfo();
                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                     startActivity(it);
                     finish();
