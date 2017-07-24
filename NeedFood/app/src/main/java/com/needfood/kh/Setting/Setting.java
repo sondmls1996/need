@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -84,11 +83,11 @@ public class Setting extends AppCompatActivity {
             token = it.getAccesstoken();
             type = it.getType();
         }
-        if(type.equals("0")){
-            lgb.setVisibility(View.GONE);
-        }else{
-            logout.setVisibility(View.GONE);
-        }
+//        if(type.equals("0")){
+//            lgb.setVisibility(View.GONE);
+//        }else{
+//            logout.setVisibility(View.GONE);
+//        }
         lt = db.getLan();
         sharedPreferences = getSharedPreferences(Locale_Preference, Activity.MODE_PRIVATE);
         editor = sharedPreferences.edit();
