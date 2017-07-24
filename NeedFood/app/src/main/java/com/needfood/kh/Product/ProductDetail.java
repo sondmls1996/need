@@ -368,28 +368,30 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 e.printStackTrace();
             }
 
+            if(OftenAdapter.arrcheck.size()>0){
+                for (int i = 0; i < OftenAdapter.arrcheck.size(); i++) {
 
-            for (int i = 0; i < OftenAdapter.arrcheck.size(); i++) {
+                    JSONObject jo = new JSONObject();
 
-                JSONObject jo = new JSONObject();
-
-                try {
-                    jo.put("quantity", OftenAdapter.arrcheck.get(i).getQuanli() + "");
-                    jo.put("price", OftenAdapter.arrcheck.get(i).getPrice() + "");
-                    jo.put("tickKM", OftenAdapter.arrcheck.get(i).getTickkm() + "");
-                    jo.put("tickKM_percent", OftenAdapter.arrcheck.get(i).getTickkm2() + "");
-                    jo.put("tickKM_money", OftenAdapter.arrcheck.get(i).getTickkm3() + "");
-                    jo.put("barcode", OftenAdapter.arrcheck.get(i).getBarcode() + "");
-                    jo.put("code", OftenAdapter.arrcheck.get(i).getCode() + "");
-                    jo.put("title", OftenAdapter.arrcheck.get(i).getTitle() + "");
-                    jo.put("money", OftenAdapter.arrcheck.get(i).getMoney() + "");
-                    jo.put("note", OftenAdapter.arrcheck.get(i).getNote() + "");
-                    jo.put("id", OftenAdapter.arrcheck.get(i).getId() + "");
-                    jsonArray.put(jo);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    try {
+                        jo.put("quantity", OftenAdapter.arrcheck.get(i).getQuanli() + "");
+                        jo.put("price", OftenAdapter.arrcheck.get(i).getPrice() + "");
+                        jo.put("tickKM", OftenAdapter.arrcheck.get(i).getTickkm() + "");
+                        jo.put("tickKM_percent", OftenAdapter.arrcheck.get(i).getTickkm2() + "");
+                        jo.put("tickKM_money", OftenAdapter.arrcheck.get(i).getTickkm3() + "");
+                        jo.put("barcode", OftenAdapter.arrcheck.get(i).getBarcode() + "");
+                        jo.put("code", OftenAdapter.arrcheck.get(i).getCode() + "");
+                        jo.put("title", OftenAdapter.arrcheck.get(i).getTitle() + "");
+                        jo.put("money", OftenAdapter.arrcheck.get(i).getMoney() + "");
+                        jo.put("note", OftenAdapter.arrcheck.get(i).getNote() + "");
+                        jo.put("id", OftenAdapter.arrcheck.get(i).getId() + "");
+                        jsonArray.put(jo);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+
                 Log.d("HAJAR",jsonArray.toString());
 
             int money = 0;
