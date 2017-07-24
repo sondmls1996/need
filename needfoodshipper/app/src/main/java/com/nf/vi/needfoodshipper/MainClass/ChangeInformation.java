@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +53,12 @@ public class ChangeInformation extends AppCompatActivity {
             facebook = nu.getFacebook();
             description = nu.getDescription();
         }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvTitle.setText(getString(R.string.ifchangetoobar));
         progressDialog = new ProgressDialog(this);
 
         tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -94,7 +101,7 @@ public class ChangeInformation extends AppCompatActivity {
 
         String link = getResources().getString(R.string.updateInfoShiperAPI);
 
-        if (fullname1.matches("") || email1.matches("") || address1.matches("") || brithday1.matches("") || skype1.matches("") || facebook1.matches("") || description1.matches("")) {
+        if (fullname1.matches("")  || address1.matches("")  ) {
 //            progressDialog.dismiss();
             Toast.makeText(getApplication(), "Nhập thiếu thông tin", Toast.LENGTH_SHORT).show();
         } else {

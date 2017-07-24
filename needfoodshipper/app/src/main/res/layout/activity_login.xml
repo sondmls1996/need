@@ -14,7 +14,7 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
 
-        android:src="@drawable/logoapp" />
+        android:src="@drawable/logoappc" />
 
     <LinearLayout
         android:id="@+id/ln0"

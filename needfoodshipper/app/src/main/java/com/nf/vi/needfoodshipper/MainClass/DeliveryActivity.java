@@ -67,7 +67,7 @@ public class DeliveryActivity extends AppCompatActivity {
     private Date date;
     private String timest, timestgh, timeleft, tk, note;
     private int time, ngay, thang, nam, gio, phut;
-    private long timesttl, giocl, phutcl;
+    private long timesttl, giocl, phutcl, tinhgio, ngaycl;
     private RelativeLayout rtButton;
 
 
@@ -109,7 +109,7 @@ public class DeliveryActivity extends AppCompatActivity {
 
 
         tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvTitle.setText("Delevery(1)");
+        tvTitle.setText(getString(R.string.dltoobar));
 
         Intent data = getIntent();
         id = data.getStringExtra("id");
@@ -160,29 +160,53 @@ public class DeliveryActivity extends AppCompatActivity {
         gio = cal.get(Calendar.HOUR_OF_DAY);
         phut = cal.get(Calendar.MINUTE);
         String ngaythang = ngay + "/" + (thang + 1) + "/" + nam + " " + gio + ":" + phut;
-        timest = change.main(ngaythang);
+        if (tl.equals("")) {
+            timeleftc = "";
+            tvTimeleft.setText("");
+        } else {
+            timest = change.main(ngaythang);
 
-        timestgh = change.main("20/7/2017 23:00");
-        timesttl = Long.parseLong(timestgh) - Long.parseLong(timest);
-        Log.d("timest", timesttl + "");
+
+            timestgh = change.main(tl);
+//        Toast.makeText(getApplication(),timestgh+"",Toast.LENGTH_LONG).show();
+            timesttl = Long.parseLong(timestgh) - Long.parseLong(timest);
+            Log.d("timest", timesttl + "");
 
 
 //        timeleft = changetime.times(timesttl);
-        //  Toast.makeText(getApplication(), timeleft+"", Toast.LENGTH_LONG).show();
-        new CountDownTimer(timesttl * 1000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                giocl = millisUntilFinished / 3600000;
-                phutcl = (millisUntilFinished % 3600000) / 60000;
-                timeleftc = String.valueOf(giocl) + "h" + String.valueOf(phutcl);
-                tvTimeleft.setText(timeleftc);
+//          Toast.makeText(getApplication(), timesttl+"", Toast.LENGTH_LONG).show();
+            if (timesttl < 0) {
+                tinhgio = -timesttl;
+                imgstt.setImageResource(R.drawable.reddot);
+                textstt.setText(this.getResources().getString(R.string.wait));
+//            textstt.setTextColor(this.getResources().R.color.greenL));
+//            textstt.setTextColor(getResources().getColor(R.color.greenL));
+                textstt.setTextColor(getResources().getColor(R.color.red));
+            } else {
+                tinhgio = timesttl;
             }
+            new CountDownTimer(tinhgio * 1000, 1000) {
 
-            public void onFinish() {
+                public void onTick(long millisUntilFinished) {
+                    ngaycl = millisUntilFinished / (3600000 * 24);
+                    giocl = (millisUntilFinished % (3600000 * 24)) / 3600000;
+                    phutcl = (millisUntilFinished % 3600000) / 60000;
+                    timeleftc = String.valueOf(ngaycl) + "day " + String.valueOf(giocl) + "h " + String.valueOf(phutcl) + "m";
+//                Toast.makeText(getApplication(),timeleftc,Toast.LENGTH_LONG).show();
+                    if (timesttl < 0) {
+                        tvTimeleft.setText(getResources().getString(R.string.late) + " " + timeleftc);
+                    } else {
+                        tvTimeleft.setText(timeleftc);
+                    }
+//                tvTimeleft.setText(timeleftc);
+                }
 
-            }
+                public void onFinish() {
 
-        }.start();
+                }
+
+            }.start();
+        }
 
 
     }
@@ -209,13 +233,18 @@ public class DeliveryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 rfDialog.setVisibility(View.VISIBLE);
+                btnDCancel1.setEnabled(false);
                 btnDFinish.setEnabled(false);
                 btnDFinish.setBackgroundColor(getResources().getColor(R.color.gray));
+                btnDCancel1.setBackgroundColor(getResources().getColor(R.color.gray));
+                btnDFinish.setVisibility(View.GONE);
+                btnDCancel1.setVisibility(View.GONE);
             }
         });
         btnDCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 rfDialog.setVisibility(View.GONE);
                 btnDFinish.setEnabled(true);
                 btnDFinish.setBackgroundResource(R.drawable.custombt);
@@ -224,6 +253,7 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Toast.makeText(getApplication(), "aaa", Toast.LENGTH_LONG).show();
                 stt2 = "cancel";
                 sendSV();
                 dialog.dismiss();
@@ -239,8 +269,8 @@ public class DeliveryActivity extends AppCompatActivity {
     private void sendSV() {
         note = edfedd.getText().toString();
 
-        //  String link = getResources().getString(R.string.saveStatusOrderAPI);
-        String link = "http://needfood.webmantan.com/saveStatusOrderAPI";
+        String link = getResources().getString(R.string.saveStatusOrderAPI);
+//        String link = "http://needfood.webmantan.com/c";
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -251,8 +281,9 @@ public class DeliveryActivity extends AppCompatActivity {
                     Log.d("CODEAA", code);
 
                     if (code.equals("0")) {
-//                            Intent i = new Intent(SentPassEmail.this, DangNhapActivity.class);
-//                            startActivity(i);
+                        Toast.makeText(getApplication(), "Thành công", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
                     } else {
 //                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_SHORT).show();
                     }

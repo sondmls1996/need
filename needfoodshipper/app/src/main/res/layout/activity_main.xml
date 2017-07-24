@@ -22,6 +22,8 @@
         app:headerLayout="@layout/nav_header_main">
 
         <LinearLayout
+            android:background="@color/red"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="300dp"
@@ -38,15 +40,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_action_name" />
+                    android:src="@drawable/infomation" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:text="Your Information"
-                    android:textColor="@color/black" />
+                    android:text="@string/hthongtin"
+                    android:textSize="16sp"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
@@ -61,15 +64,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/history" />
+                    android:src="@drawable/history1" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:text="History"
-                    android:textColor="@color/black" />
+                    android:text="@string/hlichsu"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"/>
 
             </LinearLayout>
 
@@ -84,15 +88,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/setting" />
+                    android:src="@drawable/setting1" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:text="Settings"
-                    android:textColor="@color/black" />
+                    android:text="@string/hcaidat"
+                    android:textSize="16sp"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
         </LinearLayout>

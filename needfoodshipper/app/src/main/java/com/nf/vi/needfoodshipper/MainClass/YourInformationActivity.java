@@ -50,7 +50,7 @@ public class YourInformationActivity extends AppCompatActivity implements View.O
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
         tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvTitle.setText("YOUR INFORMATION");
+        tvTitle.setText(getString(R.string.iftoobar));
 
         tvChangPass = (TextView) findViewById(R.id.tvChangPass);
         tvEmail = (TextView) findViewById(R.id.tvEmail);

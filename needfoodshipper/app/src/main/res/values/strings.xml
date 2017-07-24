@@ -27,6 +27,7 @@
     //login
     <string name="loginhinsodienthoai">Nhập số điện thoại</string>
     <string name="loginhinmatkhau">Nhập mật khẩu</string>
+    <string name="late">Muộn</string>
     <string name="logindangnhap">Đăng nhập</string>
     <string name="loginquenmatkhau">Quên mật khẩu?</string>
     //thongtin
@@ -60,17 +61,50 @@
     <string name="cttongtien">Tổng tiền:</string>
     <string name="ctbtnnhan">Nhận </string>
     <string name="ctbtnhuy">Hủy</string>
-    <string name="ctbtnhuy2">Hủy</string>
+    <string name="ctbtnhuy2">Hủy Đơn</string>
     <string name="strnew">Đơn mới</string>
     <string name="ctphanhoi">Lý do hủy</string>
     <string name="ctbtngui">Gửi</string>
     //deliveri
     <string name="ctbtnhoanthanh">Hoàn thành</string>
     <string name="dltext1">Đánh giá thái độ của khách hàng</string>
-    <string name="dltext2">Để lại một lý do nếu bạn có thể hóa đơn</string>
-    <string name="dlcode">Code:</string>
-    <string name="dlmoneyship">Phí Ship:</string>
-    <string name="dltimeleft">Còn Lại:</string>
+    <string name="dltext2">Để lại một lý do nếu bạn hủy đơn</string>
+    <string name="dlcode">Mã đơn:</string>
+    <string name="dlmoneyship">Phí ship:</string>
+    <string name="dltimeleft">Còn lại:</string>
+    <string name="dlbtnhoanthanh">Kết thúc</string>
+    <string name="dlbtnchiduowng">Chỉ đường</string>
+    <string name="dltoobar">Chi tiết</string>
+    //home
+    <string name="hnew">Đơn mới</string>
+    <string name="hdandoi">Đang chờ</string>
+    <string name="hhome">Trang chủ</string>
+    <string name="hthongtin">Thông tin</string>
+    <string name="hlichsu">Lịch sử</string>
+    <string name="hcaidat">Cài đặt</string>
+    //History
+    <string name="lstoobar">Lịch sử</string>
+    <string name="lscode">Mã đơn:</string>
+    <string name="lstime">Giờ nhận:</string>
+    <string name="lstimeleft">Còn lại:</string>
+    <string name="lsreason">Lý do:</string>
+    <string name="lskeolen">Kéo lên để mở bộ lọc</string>
+    <string name="lskeoxuong">Kéo xuống để đóng bộ lọc</string>
+    <string name="lstu">Từ</string>
+    <string name="lsden">Đến</string>
+    <string name="lsbtloc">Lọc</string>
+    <string name="lsedt">Nhập mã hoặc số điện thoại</string>
+    //ìnormation
+    <string name="iftoobar">Thông tin</string>
+    <string name="ifchangetoobar">Sửa thông tin</string>
+    <string name="ifchangepasstoobar">Sửa mật khẩu</string>
+    <string name="lcngonngu">Cài đặt ngôn ngữ</string>
+    //bnt
+    <string name="btnsingout">Đăng xuất</string>
+    <string name="done">Đã xong</string>
+    <string name="cancell">Đã hủy</string>
+    <string name="cdtoobar">Cài đặt</string>
+
 
 
 </resources>

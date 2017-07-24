@@ -147,8 +147,8 @@ public class SearchActivity extends AppCompatActivity {
             }
         };
 
-        SearchRequest loginRequest = new SearchRequest(page, accessToken, key, link, response);
+//        SearchRequest loginRequest = new SearchRequest(page, accessToken, key, link, response);
         RequestQueue queue = Volley.newRequestQueue(SearchActivity.this);
-        queue.add(loginRequest);
+//        queue.add(loginRequest);
     }
 }

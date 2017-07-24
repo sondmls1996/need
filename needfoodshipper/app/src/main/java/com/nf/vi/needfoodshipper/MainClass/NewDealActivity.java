@@ -1,19 +1,26 @@
 package com.nf.vi.needfoodshipper.MainClass;
 
+import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,6 +32,7 @@ import com.nf.vi.needfoodshipper.Constructor.ListUserContructor;
 import com.nf.vi.needfoodshipper.Constructor.MainConstructor;
 import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.OrderRequest;
+import com.nf.vi.needfoodshipper.SupportClass.EndlessScroll;
 import com.nf.vi.needfoodshipper.database.DBHandle;
 
 import org.json.JSONArray;
@@ -41,11 +49,12 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
     private TextView tvTitle, tvTenShiper;
     MainAdapter adapter;
     ArrayList<MainConstructor> arr;
-
+    int check = 0;
     private List<MainConstructor> ld;
     RecyclerView rc;
     private DBHandle db;
     private List<ListUserContructor> list;
+    private EndlessScroll scrollListener;
     String fullName, accessToken;
     SwipeRefreshLayout swipeRefresh;
 
@@ -56,36 +65,53 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
     GoogleApiClient client;
     LocationManager locationManager;
     Location l2;
+    LinearLayoutManager linearLayoutManager;
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_deal);
         db = new DBHandle(this);
         list = db.getAllUser();
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         for (ListUserContructor nu : list) {
             fullName = nu.getFullName();
             accessToken = nu.getAccessToken();
 
         }
 
-        swipeRefresh = (SwipeRefreshLayout)findViewById(R.id.SwipeRefresh);
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.SwipeRefresh);
 
         rc = (RecyclerView) findViewById(R.id.rcv);
         ld = new ArrayList<>();
         adapter = new MainAdapter(getApplicationContext(), ld);
         rc.setAdapter(adapter);
-        rc.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rc.setLayoutManager(linearLayoutManager);
         swipeRefresh.setOnRefreshListener(this);
-        order();
+        scrollListener = new EndlessScroll(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                page++;
+                order(page);
+            }
+        };
+        order(1);
+        // Adds the scroll listener to RecyclerView
+        rc.addOnScrollListener(scrollListener);
+
     }
-    private void order() {
-//        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
-//        dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
-        String page = "1";
+    private void order(int page) {
+
+
         final String link = getResources().getString(R.string.getListOrderShiperAPI);
 
+
+
         Response.Listener<String> response = new Response.Listener<String>() {
+
             @Override
             public void onResponse(String response) {
                 try {
@@ -136,7 +162,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
             }
         };
 
-        OrderRequest loginRequest = new OrderRequest(page, accessToken, link, response);
+        OrderRequest loginRequest = new OrderRequest(page+"", accessToken, link, response);
         RequestQueue queue = Volley.newRequestQueue(NewDealActivity.this);
         queue.add(loginRequest);
     }
@@ -144,6 +170,37 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
     @Override
     public void onRefresh() {
         ld.clear();
-        order();
+        order(1);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        check++;
+        if(check==1) {
+            Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
+        }
+        if (check == 2) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(NewDealActivity.this);
+            alertDialogBuilder.setTitle("ManMo");
+            alertDialogBuilder
+                    .setMessage("Bạn thực sự muốn thoát ứng dụng ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Không", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                            check = 0;
+                        }
+                    })
+                    .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            moveTaskToBack(true);
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                            System.exit(0);
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
     }
 }

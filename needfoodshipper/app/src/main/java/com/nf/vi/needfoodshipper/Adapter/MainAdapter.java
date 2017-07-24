@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.nf.vi.needfoodshipper.Constructor.ListUserContructor;
 import com.nf.vi.needfoodshipper.Constructor.MainConstructor;
 import com.nf.vi.needfoodshipper.MainClass.DeliveryActivity;
+import com.nf.vi.needfoodshipper.MainClass.MainActivity;
 import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.TrangThaiRequest;
 import com.nf.vi.needfoodshipper.database.DBHandle;
@@ -162,11 +163,14 @@ public class MainAdapter extends
         viewHolder.btnacc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent it1 = new Intent(context, MainActivity.class);
+                it1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(it1);
                 viewHolder.lnb.setVisibility(View.GONE);
                 viewHolder.imgstt.setImageDrawable(context.getResources().getDrawable(R.drawable.grdot));
                 viewHolder.textstt.setText(context.getResources().getString(R.string.wait));
                 viewHolder.textstt.setTextColor(context.getResources().getColor(R.color.greenL));
-                Toast.makeText(context, "ACC", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "ACC", Toast.LENGTH_SHORT).show();
                 note = "";
                 stt = "waiting";
                 sendSV();
@@ -197,6 +201,7 @@ public class MainAdapter extends
 
 
                     if (code.equals("0")) {
+                        Toast.makeText(context, "Thành Công", Toast.LENGTH_SHORT).show();
 //                            Intent i = new Intent(SentPassEmail.this, DangNhapActivity.class);
 //                            startActivity(i);
                     } else {

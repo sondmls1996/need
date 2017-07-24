@@ -27,11 +27,11 @@ import java.util.List;
 
 public class ChangePassActivity extends AppCompatActivity {
     private TextView tvTitle;
-    private EditText edtPassold,edtPassnew,edtPassnew2;
+    private EditText edtPassold, edtPassnew, edtPassnew2;
     private Button btnSavePass;
     private DBHandle db;
     private List<ListUserContructor> list;
-   private String token,passold,pass,repass;
+    private String token, passold, pass, repass, passdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class ChangePassActivity extends AppCompatActivity {
         for (ListUserContructor nu : list) {
 
             token = nu.getAccessToken();
-
+            passdb = nu.getPass();
         }
 //        setTitle("Change Password");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -50,14 +50,14 @@ public class ChangePassActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
-        tvTitle=(TextView) findViewById(R.id.tvTitle) ;
-        tvTitle.setText("Change Password");
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvTitle.setText(getString(R.string.ifchangepasstoobar));
 
-        edtPassold=(EditText)findViewById(R.id.edtPassold);
-        edtPassnew=(EditText)findViewById(R.id.edtPassnew);
+        edtPassold = (EditText) findViewById(R.id.edtPassold);
+        edtPassnew = (EditText) findViewById(R.id.edtPassnew);
 //        edtPassnew2=(EditText)findViewById(R.id.edtPassnew2);
-        edtPassnew2=(EditText)findViewById(R.id.edtPassnew2);
-        btnSavePass=(Button)findViewById(R.id.btnSavePass);
+        edtPassnew2 = (EditText) findViewById(R.id.edtPassnew2);
+        btnSavePass = (Button) findViewById(R.id.btnSavePass);
 
         btnSavePass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,34 +72,42 @@ public class ChangePassActivity extends AppCompatActivity {
     }
 
     private void savepasss() {
-        passold=edtPassold.getText().toString();
-        pass=edtPassnew.getText().toString();
-        repass=edtPassnew2.getText().toString();
+        passold = edtPassold.getText().toString();
+        pass = edtPassnew.getText().toString();
+        repass = edtPassnew2.getText().toString();
 
         String link = getResources().getString(R.string.changePassShiperAPI);
-        Response.Listener<String> response = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    Log.d("CODE", response);
-                    JSONObject json = new JSONObject(response);
-                    String code = json.getString("code");
+        if ( pass.equals(repass)&&!pass.equals("")&&!repass.equals("")) {
+            Response.Listener<String> response = new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        Log.d("CODE", response);
+                        JSONObject json = new JSONObject(response);
+                        String code = json.getString("code");
 
 
-                    if (code.equals("0")) {
-                       Toast.makeText(getApplicationContext(), "Gửi thành công", Toast.LENGTH_SHORT).show();
+                        if (code.equals("0")) {
+                            Toast.makeText(getApplicationContext(), "Gửi thành công", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                           startActivity(i);
-                    } else {
-//                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_SHORT).show();
+                            startActivity(i);
+                        } else if(code.equals("1")) {
+                       Toast.makeText(getApplicationContext(), "Mật khẩu cũ không đúng", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        };
-        ChangePassRequest save = new ChangePassRequest(token, passold, pass,repass, link, response);
-        RequestQueue qe = Volley.newRequestQueue(getApplicationContext());
-        qe.add(save);
+            };
+            ChangePassRequest save = new ChangePassRequest(token, passold, pass, repass, link, response);
+            RequestQueue qe = Volley.newRequestQueue(getApplicationContext());
+            qe.add(save);
+        } else if (!pass.equals(repass)) {
+            Toast.makeText(getApplicationContext(), "Mật khẩu xác nhận không đúng", Toast.LENGTH_SHORT).show();
+        }
+        else if (pass.equals("")&&repass.equals("")) {
+            Toast.makeText(getApplicationContext(), "Nhập thiếu trường dữ liệu", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

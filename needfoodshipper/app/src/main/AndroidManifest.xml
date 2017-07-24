@@ -2,11 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nf.vi.needfoodshipper">
 
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
-    -->
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,6 +12,14 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 
     <application
         android:name="android.support.multidex.MultiDexApplication"
@@ -90,9 +94,13 @@
             android:name=".MainClass.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".MainClass.OrderActivity" />
-        <activity android:name=".MainClass.ChangeInformation" />
+        <activity
+            android:name=".MainClass.ChangeInformation"
+            android:parentActivityName=".MainClass.YourInformationActivity" />
         <activity android:name=".MainClass.NewDealActivity" />
-        <activity android:name=".MainClass.WaittingActivity"></activity>
+        <activity
+            android:name=".MainClass.WaittingActivity"
+            android:parentActivityName=".MainClass.NewDealActivity"></activity>
     </application>
 
 </manifest>

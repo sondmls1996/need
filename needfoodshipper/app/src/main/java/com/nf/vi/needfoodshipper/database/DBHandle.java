@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class DBHandle extends SQLiteOpenHelper {
     public static final String TAG = DBHandle.class.getSimpleName();
-    public static final String DB_NAME = "mytest.db";
+    public static final String DB_NAME = "mydata.db";
     public static final int DB_VERSION = 2;
 
     public static final String USER_TABLE = "user";

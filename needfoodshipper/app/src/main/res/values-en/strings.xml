@@ -7,6 +7,7 @@
     <string name="loginquenmatkhau">forget password</string>
     //thongtin
     <string name="ttmanhanvien">Account ID      </string>
+    <string name="late">Late</string>
     <string name="tthoten">Full Name       </string>
     <string name="ttngaysinh">Brithday          </string>
     <string name="wait">Waiting..</string>
@@ -28,10 +29,10 @@
     //customitem
     <string name="ctdonship">NEW DEAL</string>
     <string name="cttenhang">Order:\u0020</string>
-    <string name="ctdiachi">Location:\u0020</string>
+    <string name="ctdiachi">Address:\u0020</string>
     <string name="ctlienhe">Contact:\u0020</string>
     <string name="ctkhachhang">Recipients:\u0020</string>
-    <string name="ctthoigiannhan">Time left:\u0020</string>
+    <string name="ctthoigiannhan">Time:\u0020</string>
     <string name="cttongtien">Payment:\u0020</string>
     <string name="ctbtnnhan">Accept</string>
     <string name="ctbtnhuy">Deny</string>
@@ -40,10 +41,44 @@
     <string name="ctphanhoi">Leave a feedback</string>
     <string name="ctbtngui">Send</string>
     //deliveri
-    <string name="ctbtnhoanthanh">Hoàn thành</string>
+    <string name="ctbtnhoanthanh">Finish</string>
     <string name="dltext1">Customer Attitude Evaluation</string>
     <string name="dltext2">Leave a reason if you can the bil</string>
     <string name="dlcode">Code</string>
     <string name="dlmoneyship">Money Ship</string>
     <string name="dltimeleft">Time Left</string>
+    <string name="dlbtnhoanthanh">Finish</string>
+    <string name="dlbtnchiduowng">Direct</string>
+    <string name="dltoobar">Detail</string>
+    //home
+    <string name="hnew">New</string>
+    <string name="hdandoi">Waiting</string>
+    <string name="hhome">Home</string>
+    <string name="hthongtin">Your Information</string>
+    <string name="hlichsu">History</string>
+    <string name="hcaidat">Setting</string>
+    //History
+    <string name="lstoobar">History</string>
+    <string name="cdtoobar">Setting</string>
+    <string name="lscode">Code:</string>
+    <string name="lstime">Time:</string>
+    <string name="lstimeleft">Time left:</string>
+    <string name="lsreason">Reason:</string>
+    <string name="lskeolen">Scroll up to open the filter</string>
+    <string name="lskeoxuong">Scroll down to close the filter</string>
+    <string name="lstu">From</string>
+    <string name="lsden">To</string>
+    <string name="lsbtloc">Filter</string>
+    <string name="lsedt">Input the code or phone number</string>
+    //ìnormation
+    <string name="iftoobar">Information</string>
+    <string name="ifchangetoobar">Change information</string>
+    <string name="ifchangepasstoobar">Change password</string>
+    <string name="lcngonngu">Language setting</string>
+    //btn
+    <string name="btnsingout">Sign out</string>
+    <string name="done">Finish</string>
+    <string name="cancell">Cancel</string>
+
+
 </resources>
