@@ -58,7 +58,8 @@ public class Register extends AppCompatActivity {
                 if (name.matches("") || fone.matches("") || mail.matches("") || pass.matches("") || pass2.matches("") || adr.equals("")) {
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
-                } else if (fone.length() < 10 || fone.length() > 13 || fone.matches(regexStr) == false) {
+                } else if (fone.length() < 10) {
+                    progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.checkfon), Toast.LENGTH_SHORT).show();
                 } else if (!pass.equals(pass2)) {
                     progressDialog.dismiss();
