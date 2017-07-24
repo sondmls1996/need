@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,13 +50,21 @@ public class TransferHistory extends AppCompatActivity {
     ChangeTimestamp chan;
     List<TranfConstructor> arr;
     TranfHisAdapter adapter;
-    TextView nop;
+    TextView nop,tit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_history);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarr);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         nop = (TextView) findViewById(R.id.nop9);
+        tit = (TextView) findViewById(R.id.titletxt);
+        tit.setText(getResources().getString(R.string.histran));
         db = new DataHandle(this);
         chan = new ChangeTimestamp();
         lv = (ListView) findViewById(R.id.lvtran);
@@ -117,5 +126,16 @@ public class TransferHistory extends AppCompatActivity {
         PostCL post = new PostCL(link, map, response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(post);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            Intent i = new Intent(getApplicationContext(),MoreHistory.class);
+            startActivity(i);
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

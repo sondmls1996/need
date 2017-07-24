@@ -156,4 +156,6 @@
     <string name="can">Bạn không đủ tiền xu để chuyển </string>
     <string name="nohis">Không có lịch sử để hiển thị</string>
     <string name="nonoti">Không có thông báo để hiển thị</string>
+    <string name="histran">Lịch sử chuyển khoản</string>
+    <string name="hiset">Lịch sử đặt hàng</string>
 </resources>

@@ -160,7 +160,6 @@
         <activity
             android:name=".More.History.TransferHistory"
             android:parentActivityName=".More.History.MoreHistory"></activity>
-        <activity android:name=".More.History.TransferHistory" />
 
         <receiver
             android:name=".Service.ConnectivityReceiver"
