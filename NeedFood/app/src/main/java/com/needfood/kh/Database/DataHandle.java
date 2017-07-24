@@ -112,7 +112,6 @@ public class DataHandle extends SQLiteOpenHelper {
 
     public void addInfo(InfoConstructor in) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(FULLNAME, in.getFullname()); // Contact Name
         values.put(EMAIL, in.getEmail()); // Contact Email

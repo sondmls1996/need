@@ -36,7 +36,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".News.TopDeal" />
         <activity android:name=".News.BestQuality" />
         <activity android:name=".Sugges.RawFood" />
         <activity android:name=".Sugges.Food" />
@@ -94,17 +93,18 @@
         <activity android:name=".Login.Register" />
         <activity
             android:name=".Login.GetCode"
-            android:parentActivityName=".Login.Login" />
+            android:parentActivityName=".Login.GetPass" />
         <activity
             android:name=".Login.GetPass"
-            android:parentActivityName=".Login.GetCode" />
+            android:parentActivityName=".StartActivity" />
         <activity
             android:name=".Login.ChangePass"
             android:parentActivityName=".More.MoreContanct" />
         <activity android:name=".QRCamera" />
         <activity android:name=".Product.Preview" />
         <activity android:name=".More.History.MoreHistory" />
-        <activity android:name=".More.History.OrderHistory" />
+        <activity android:name=".More.History.OrderHistory"
+            android:parentActivityName=".More.History.MoreHistory"/>
         <activity android:name=".News.Hotdeal" />
 
         <!--
@@ -125,9 +125,11 @@
 
         <activity
             android:name=".Maps.MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".More.Tranfer" />
-        <activity android:name=".Product.Howtouse" />
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".StartActivity"/>
+        <activity android:name=".More.Tranfer"/>
+        <activity android:name=".Product.Howtouse"
+            android:parentActivityName=".Product.ProductDetail"/>
 
         <service
             android:name=".Service.MyFirebaseInstanceIdService"
@@ -145,7 +147,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".More.History.TransferHistory"></activity>
+        <activity android:name=".More.History.TransferHistory"
+            android:parentActivityName=".More.History.MoreHistory"></activity>
         <receiver
             android:name=".Service.ConnectivityReceiver"
             android:enabled="true">

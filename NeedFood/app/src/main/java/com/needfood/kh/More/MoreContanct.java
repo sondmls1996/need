@@ -73,8 +73,6 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         phone_id = (EditText) findViewById(R.id.fone_id);
 
         pro = (TextView) findViewById(proper);
-//        pay = (EditText) findViewById(R.id.pay);
-
         change = (TextView) findViewById(R.id.change);
         save = (TextView) findViewById(R.id.save);
 
