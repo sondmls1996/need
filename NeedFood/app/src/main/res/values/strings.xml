@@ -46,6 +46,7 @@
     <string name="menu">Menu</string>
     <string name="cancel">Cancel</string>
     <string name="oldp">Old password</string>
+    <string name="shipmn">Money ship</string>
     <string name="newp">New password</string>
     <string name="conpass">Confirm password</string>
     <string name="comment">Comment</string>

@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:id="@+id/toolbarr"
     android:layout_width="match_parent"
     android:background="@color/red"
     app:navigationIcon="@drawable/backw"
-    app:layout_collapseMode="pin"
-    android:layout_height="wrap_content">
+
+    android:layout_height="?attr/actionBarSize">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:id="@+id/immgb"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/backw"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:textAlignment="center"
+        app:layout_collapseMode="pin"
         android:layout_marginRight="32dp"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:id="@+id/titletxt"
         android:text="sdsdasd"/>
-</android.support.v7.widget.Toolbar>
+</LinearLayout>

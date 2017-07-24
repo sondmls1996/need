@@ -93,7 +93,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Button prev, bn;
     OftenAdapter adapterof1, adapterof2;
     TextView tvco, tvcodes, tvprize;
-    TextView tvpr, namesel, tvnameprd, tvgia1, tvgia2, dess, tvdv1, tvdv2;
+    TextView tvpr, namesel, tvnameprd,shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
     ArrayList<OftenConstructor> arrof, arrof2;
     ArrayList<QuanConstructor> arrq;
     QuanAdapter quanadapter;
@@ -108,7 +108,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String comment;
     CallbackManager callbackManager;
     LikeView likeView;
-    StringBuilder howto,simg;
+    StringBuilder howto,simg,strship;
     String cmt, time, iduser, fullnameus;
     ImageView imageView;
     ShareButton shareButton;
@@ -121,7 +121,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         TextView txt = (TextView)findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
-
+        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        imgb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         khaibao();
         Thread th = new Thread(new Runnable() {
             @Override
@@ -247,6 +253,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         tvcodes = (TextView) findViewById(R.id.tvcodes);
         tvprize = (TextView) findViewById(R.id.tvprize);
         tvdv1 = (TextView) findViewById(R.id.donvi1);
+        shipm = (TextView)findViewById(R.id.shipmn);
         tvdv2 = (TextView) findViewById(R.id.donvi2);
         imgprd = (ImageView) findViewById(R.id.imgnews);
         arr = new ArrayList<>();
@@ -389,7 +396,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
             map.put("money",money+"");
             map.put("totalMoneyProduct",(money*1.1)+"");
-            map.put("moneyShip","");
+            map.put("moneyShip",strship.toString());
 
             map.put("timeShiper",year2+"/"+month2+"/"+day+" "+edpickgio.getText().toString());
             map.put("fullName",fullname);
@@ -457,7 +464,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                         shareButton.setShareContent(content);
                     }
-
+                    strship = new StringBuilder(prd.getString("moneyShip"));
+                    shipm.setText(strship+" VND");
                     howto = new StringBuilder("");
                     howto.append(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
