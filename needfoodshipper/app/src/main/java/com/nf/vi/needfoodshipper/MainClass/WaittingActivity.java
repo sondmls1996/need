@@ -1,12 +1,15 @@
 package com.nf.vi.needfoodshipper.MainClass;
 
+import android.content.DialogInterface;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,7 +36,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
     private TextView tvTitle, tvTenShiper;
     WaittingAdapter adapter;
     ArrayList<MainConstructor> arr;
-
+    int check = 0;
     private List<WaittingContructor> ld;
     RecyclerView rc;
     private DBHandle db;
@@ -53,7 +56,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
         }
 
-        swipeRefresh = (SwipeRefreshLayout)findViewById(R.id.SwipeRefreshwaitting);
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.SwipeRefreshwaitting);
 
         rc = (RecyclerView) findViewById(R.id.rcvwaitting);
         ld = new ArrayList<>();
@@ -63,6 +66,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
         swipeRefresh.setOnRefreshListener(this);
         order();
     }
+
     private void order() {
 //        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
 //        dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
@@ -106,7 +110,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
                         String code = Order.getString("code");
 
                         Log.d("hh", fullName);
-                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"),infoOrder.getString("moneyShip"),status,code));
+                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code));
 
 
                     }
@@ -130,5 +134,33 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
     public void onRefresh() {
         ld.clear();
         order();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
+        check++;
+        if (check == 2) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(WaittingActivity.this);
+            alertDialogBuilder.setTitle("ManMo");
+            alertDialogBuilder
+                    .setMessage("Bạn thực sự muốn thoát ứng dụng Manmo ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Không", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                            check = 0;
+                        }
+                    })
+                    .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            moveTaskToBack(true);
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                            System.exit(0);
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
     }
 }

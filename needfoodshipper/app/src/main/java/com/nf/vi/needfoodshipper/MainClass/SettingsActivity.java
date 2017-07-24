@@ -35,37 +35,37 @@ import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
     private Spinner spthang;
-    public String[] Dsthang = {"Viet Nam","English" };
+    public String[] Dsthang = {"Viet Nam", "English"};
     private String ketqua = "";
     private TextView tvTitle;
     private Button btnSignout;
     private ProgressDialog progressDialog;
-   String lang;
+    String lang;
 
     DBHandle db;
     Session ses;
     String token, iddb, lang1;
     List<ListUserContructor> list;
-    List<ListLangContructor>list1;
+    List<ListLangContructor> list1;
     private Locale myLocale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
 
 
         db = new DBHandle(getApplicationContext());
         ses = new Session(getApplicationContext());
         list = db.getAllUser();
-        list1=db.getAllLang();
+        list1 = db.getAllLang();
         for (ListUserContructor nu : list) {
             iddb = nu.getId();
             token = nu.getAccessToken();
 
         }
-        for (ListLangContructor nl:list1){
+        for (ListLangContructor nl : list1) {
             lang1 = nl.getLang();
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -74,7 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         btnSignout = (Button) findViewById(R.id.btnSignout);
-        tvTitle.setText("SETTINGS");
+        tvTitle.setText(getString(R.string.cdtoobar));
         spthang = (Spinner) findViewById(R.id.spthang);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, Dsthang);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
@@ -95,24 +95,28 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-//                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 ketqua = Dsthang[position];
                 String lang = "";
                 if (ketqua == "Viet Nam") {
                     lang = "vi"; // your language
+
                 } else if
                         (ketqua == "English") {
                     lang = "en"; // your language
+
                 }
                 changeLang(lang);
                 db.updateinfo1(iddb, ketqua);
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 //               ketqua = "";
+
             }
+
+
         });
 
 
@@ -127,7 +131,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void logout() {
         final String link = getResources().getString(R.string.checkLogoutShiperAPI);
-            progressDialog.setMessage("Đang đăng xuất");
+        progressDialog.setMessage("Đang đăng xuất");
         String it = token;
         Log.d("CODELOG", it);
         Response.Listener<String> response = new Response.Listener<String>() {
@@ -197,38 +201,9 @@ public class SettingsActivity extends AppCompatActivity {
         android.content.res.Configuration config = new android.content.res.Configuration();
         config.locale = myLocale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-//        updateTexts();
     }
 
-    //    private void updateTexts()
-//    {
-//        txt_hello.setText(R.string.hello_world);
-//        btn_en.setText(R.string.btn_en);
-//        btn_ru.setText(R.string.btn_ru);
-//        btn_fr.setText(R.string.btn_fr);
-//        btn_de.setText(R.string.btn_de);
-//    }
-//    @Override
-//    public void onClick(View v) {
-//        String lang = "en";
-//        switch (v.getId()) {
-//            case R.id.btn_en:
-//                lang = "en";
-//                break;
-//            case R.id.btn_ru:
-//                lang = "ru";
-//                break;
-//            case R.id.btn_de:
-//                lang = "de";
-//                break;
-//            case R.id.btn_fr:
-//                lang = "fr";
-//                break;
-//            default:
-//                break;
-//        }
-//        changeLang(lang);
-//    }
+
     @Override
     public void onConfigurationChanged(android.content.res.Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

@@ -58,9 +58,9 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
 
-        <meta-data android:name="com.facebook.sdk.ApplicationName"
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationName"
             android:value="@string/app_name" />
-
 
         <!--
                <activity android:name="com.facebook.FacebookActivity"
@@ -70,8 +70,9 @@
         -->
 
         <activity android:name=".Cart.ListCart" />
-        <activity android:name=".More.MoreContanct"
-            android:parentActivityName=".StartActivity"/>
+        <activity
+            android:name=".More.MoreContanct"
+            android:parentActivityName=".StartActivity" />
         <activity
             android:name=".Setting.Setting"
             android:parentActivityName=".StartActivity" />
@@ -88,8 +89,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Setting.ChangeLanguage" />
-        <activity android:name=".Login.Login"
-            android:parentActivityName=".StartActivity"/>
+        <activity
+            android:name=".Login.Login"
+            android:parentActivityName=".StartActivity" />
         <activity android:name=".News.News" />
         <activity android:name=".Login.Register" />
         <activity
@@ -103,10 +105,12 @@
             android:parentActivityName=".More.MoreContanct" />
         <activity android:name=".QRCamera" />
         <activity android:name=".Product.Preview" />
-        <activity android:name=".More.History.MoreHistory"
-            android:parentActivityName=".StartActivity"/>
-        <activity android:name=".More.History.OrderHistory"
-            android:parentActivityName=".More.History.MoreHistory"/>
+        <activity
+            android:name=".More.History.MoreHistory"
+            android:parentActivityName=".StartActivity" />
+        <activity
+            android:name=".More.History.OrderHistory"
+            android:parentActivityName=".More.History.MoreHistory" />
         <activity android:name=".News.Hotdeal" />
 
         <!--
@@ -120,6 +124,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider144493206000726"
@@ -128,11 +133,13 @@
         <activity
             android:name=".Maps.MapsActivity"
             android:label="@string/title_activity_maps"
-            android:parentActivityName=".StartActivity"/>
-        <activity android:name=".More.Tranfer"
-            android:parentActivityName=".StartActivity"/>
-        <activity android:name=".Product.Howtouse"
-            android:parentActivityName=".Product.ProductDetail"/>
+            android:parentActivityName=".StartActivity" />
+        <activity
+            android:name=".More.Tranfer"
+            android:parentActivityName=".StartActivity" />
+        <activity
+            android:name=".Product.Howtouse"
+            android:parentActivityName=".Product.ProductDetail" />
 
         <service
             android:name=".Service.MyFirebaseInstanceIdService"
@@ -150,8 +157,11 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".More.History.TransferHistory"
+        <activity
+            android:name=".More.History.TransferHistory"
             android:parentActivityName=".More.History.MoreHistory"></activity>
+        <activity android:name=".More.History.TransferHistory" />
+
         <receiver
             android:name=".Service.ConnectivityReceiver"
             android:enabled="true">
@@ -160,6 +170,8 @@
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".Product.LikeWebview"></activity>
     </application>
 
 </manifest>

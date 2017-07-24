@@ -71,10 +71,12 @@ public class TabFragment extends Fragment {
                     tv.setTextColor(Color.parseColor("#ffffff"));
                 }
 
-                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.darkred)); // selected
+                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab() ).setBackgroundColor(getResources().getColor(R.color.darkred)); // selected
 
             }
         });
+        tabHost.getTabWidget().getChildAt(StartActivity.pg).setBackgroundColor(getResources().getColor(R.color.darkred)); // selected
+
         tabHost.setCurrentTab(StartActivity.pg);
         return v;
     }

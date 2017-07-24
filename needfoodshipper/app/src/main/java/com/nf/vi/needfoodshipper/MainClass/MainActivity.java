@@ -3,6 +3,7 @@ package com.nf.vi.needfoodshipper.MainClass;
 import android.Manifest;
 import android.app.LocalActivityManager;
 import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +41,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.nf.vi.needfoodshipper.Adapter.MainAdapter;
 import com.nf.vi.needfoodshipper.Constructor.ListUserContructor;
 import com.nf.vi.needfoodshipper.Constructor.MainConstructor;
@@ -60,9 +63,9 @@ import java.util.List;
 import static android.R.id.tabhost;
 
 public class MainActivity extends TabActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+        implements View.OnClickListener, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private ImageView imgShipper;
-
+    int check = 0;
     private TextView tvTitle, tvTenShiper;
     MainAdapter adapter;
     ArrayList<MainConstructor> arr;
@@ -87,7 +90,9 @@ public class MainActivity extends TabActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvTitle.setText(getString(R.string.hhome));
         db = new DBHandle(this);
         list = db.getAllUser();
         for (ListUserContructor nu : list) {
@@ -95,13 +100,33 @@ public class MainActivity extends TabActivity
             accessToken = nu.getAccessToken();
 
         }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        View header = navigationView.getHeaderView(0);
+        imgShipper = (ImageView) header.findViewById(R.id.imgShipper);
+        tvTenShiper = (TextView) header.findViewById(R.id.tvTenShpper);
+        tvTenShiper.setText(fullName);
+        imgShipper.setImageResource(R.drawable.logoappc);
+        lnYourInformation = (LinearLayout) findViewById(R.id.lnYourInformation);
+        lnHistory = (LinearLayout) findViewById(R.id.lnHistory);
+        lnSettings = (LinearLayout) findViewById(R.id.lnSettings);
+        lnYourInformation.setOnClickListener(this);
+        lnHistory.setOnClickListener(this);
+        lnSettings.setOnClickListener(this);
 
         final TabHost host = (TabHost) findViewById(tabhost);
         host.setup();
 
         //Tab 1
         TabHost.TabSpec spec1 = host.newTabSpec("Tab One");
-        spec1.setIndicator("Chi tiết");
+        spec1.setIndicator(getResources().getString(R.string.hnew));
+
 
         Intent it = new Intent(this, NewDealActivity.class);
         spec1.setContent(it);
@@ -110,13 +135,12 @@ public class MainActivity extends TabActivity
         //Tab 2
         TabHost.TabSpec spec = host.newTabSpec("Tab Two");
 
-        spec.setIndicator("Chỉ đường");
+        spec.setIndicator(getResources().getString(R.string.hdandoi));
         Intent it1 = new Intent(this, WaittingActivity.class);
         spec.setContent(it1);
-//        TextView tv = (TextView) host.getTabWidget().findViewById(android.R.id.title); //Unselected Tabs
-//        tv.setTextColor(Color.parseColor("#ffffff"));
-
         host.addTab(spec);
+        host.getTabWidget().getChildAt(0).setBackgroundColor(getResources().getColor(R.color.darkred)); // selected
+
         host.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
@@ -133,35 +157,7 @@ public class MainActivity extends TabActivity
             }
         });
         host.setCurrentTab(0);
-//        swipeRefresh = (SwipeRefreshLayout)findViewById(R.id.SwipeRefresh);
-//
-//        rc = (RecyclerView) findViewById(R.id.rcv);
-//        ld = new ArrayList<>();
-//        adapter = new MainAdapter(getApplicationContext(), ld);
-//        rc.setAdapter(adapter);
-//        rc.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//        rc.addOnItemTouchListener(
-//                new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
-//                    @Override public void onItemClick(View view, int position) {
-//
-//                        Intent it = new Intent(getApplicationContext(), DeliveryActivity.class);
-////                        it.putExtra("id",ld.get(position).getId());
-////                        it.putExtra("order",ld.get(position).getOrder());
-////                        it.putExtra("lc",ld.get(position).getLc());
-////                        it.putExtra("ct",ld.get(position).getCt());
-////                        it.putExtra("re",ld.get(position).getRe());
-////                        it.putExtra("tl",ld.get(position).getTl());
-////                        it.putExtra("pay",ld.get(position).getPay());
-////                        it.putExtra("stt",ld.get(position).getStt());
-//                        startActivity(it);
-////                      Toast.makeText(getApplicationContext(), ld.get(position).getOrder(), Toast.LENGTH_SHORT).show();
-//                        // TODO Handle item click
-//                    }
-//                })
-//        );
 
-//        swipeRefresh.setOnRefreshListener(this);
-//        order();
         buildAPI();
         if (client != null) {
             client.connect();
@@ -174,62 +170,36 @@ public class MainActivity extends TabActivity
 
             return;
         }
-        //chinh thoi gian cap nhat toa do
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, this);
-
-        lnYourInformation = (LinearLayout) findViewById(R.id.lnYourInformation);
-        lnHistory = (LinearLayout) findViewById(R.id.lnHistory);
-        lnSettings = (LinearLayout) findViewById(R.id.lnSettings);
-
-
-
-
-
-//        arr.add(new MainConstructor("3kg Rau", "102 Nguyen Chi Thanh - Ha Noi", "0123456789", "Nguyen Van A", "30 mins", "No"));
-//        arr.add(new MainConstructor("3kg Rau", "102 Nguyen Chi Thanh - Ha Noi", "0123456789", "Nguyen Van A", "30 mins", "No"));
-//        arr.add(new MainConstructor("3kg Rau", "102 Nguyen Chi Thanh - Ha Noi", "0123456789", "Nguyen Van A", "30 mins", "No"));
-//        arr.add(new MainConstructor("3kg Rau", "102 Nguyen Chi Thanh - Ha Noi", "0123456789", "Nguyen Van A", "30 mins", "No"));
-//        arr.add(new MainConstructor("3kg Rau", "102 Nguyen Chi Thanh - Ha Noi", "0123456789", "Nguyen Van A", "30 mins", "No"));
-//        adapter.notifyDataSetChanged();
-
-        lnYourInformation.setOnClickListener(this);
-        lnHistory.setOnClickListener(this);
-        lnSettings.setOnClickListener(this);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvTitle.setText("Home");
-//        setSupportActionBar(toolbar);
-//        toolbar.
-//        setTitle("Home");
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View header = navigationView.getHeaderView(0);
-        imgShipper = (ImageView) header.findViewById(R.id.imgShipper);
-        tvTenShiper = (TextView) header.findViewById(R.id.tvTenShpper);
-        tvTenShiper.setText(fullName);
-        Picasso.with(getApplicationContext()).load(R.drawable.daidien).transform(new TransImage()).into(imgShipper);
-
-
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Log.d("rrrrrr", "AAAAAA");
+//        Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
+//        check++;
+//        if (check == 2) {
+//            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+//            alertDialogBuilder.setTitle("ManMo");
+//            alertDialogBuilder
+//                    .setMessage("Bạn thực sự muốn thoát ứng dụng Manmo ?")
+//                    .setCancelable(false)
+//                    .setPositiveButton("Không", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            dialog.cancel();
+//                            check = 0;
+//                        }
+//                    })
+//                    .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            moveTaskToBack(true);
+//                            android.os.Process.killProcess(android.os.Process.myPid());
+//                            System.exit(0);
+//                        }
+//                    });
+//            AlertDialog alertDialog = alertDialogBuilder.create();
+//            alertDialog.show();
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -253,108 +223,27 @@ public class MainActivity extends TabActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        }
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     @Override
     public void onClick(View v) {
-        if (v == lnYourInformation) {
+        int id = v.getId();
+        if (id == R.id.lnYourInformation) {
             startActivity(new Intent(getApplicationContext(), YourInformationActivity.class));
-        }
-        if (v == lnHistory) {
+        } else if (id == R.id.lnHistory) {
             startActivity(new Intent(getApplicationContext(), HistoryActivity.class));
-        }
-        if (v == lnSettings) {
+        } else if (id == R.id.lnSettings) {
             startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
         }
 
     }
 
-//    private void order() {
-////        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
-////        dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
-//        String page = "1";
-//        final String link = getResources().getString(R.string.getListOrderShiperAPI);
-//
-//        Response.Listener<String> response = new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                try {
-//                   Log.d("GG", response);
-//                    JSONArray arr = new JSONArray(response);
-//                    for (int i = 0; i < arr.length(); i++) {
-//                        StringBuilder sb = new StringBuilder();
-//                        String money;
-//                        JSONObject json = arr.getJSONObject(i);
-//                        JSONObject Order = json.getJSONObject("Order");
-//
-//                        JSONObject listProduct = Order.getJSONObject("listProduct");
-//                        JSONObject infoOrder = Order.getJSONObject("infoOrder");
-//                        JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
-//
-//
-//                        Iterator<String> ite = listProduct.keys();
-//
-//                        while (ite.hasNext()) {
-//                            String key = ite.next();
-//
-//                            JSONObject idx = listProduct.getJSONObject(key);
-//                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
-//
-//
-//                        }
-//                        String timeShiper = infoOrder.getString("timeShiper");
-//
-//                        String fullName = infoCustomer.getString("fullName");
-//                        String fone = infoCustomer.getString("fone");
-//                        String address = infoCustomer.getString("address");
-//                        String id = Order.getString("id");
-//                        String status = Order.getString("status");
-//
-//                        Log.d("hh", fullName);
-//                        ld.add(new MainConstructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"),status));
-//
-//
-//                    }
-//                    adapter.notifyDataSetChanged();
-//                    swipeRefresh.setRefreshing(false);
-//
-//                } catch (JSONException e1) {
-//                    e1.printStackTrace();
-//                }
-//
-//            }
-//        };
-//
-//        OrderRequest loginRequest = new OrderRequest(page, accessToken, link, response);
-//        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-//        queue.add(loginRequest);
-//    }
 
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
             la = location.getLatitude();
             lo = location.getLongitude();
-//            Toast.makeText(getApplicationContext(), "Location change" + "\n" + "la: " + la + "\n" + "lo: " + lo, Toast.LENGTH_SHORT).show();
-//            String code = edtcode.getText().toString();
+
             guitoado();
 
 
@@ -454,13 +343,6 @@ public class MainActivity extends TabActivity
         RequestQueue qe = Volley.newRequestQueue(getApplicationContext());
         qe.add(save);
     }
-
-//    @Override
-//    public void onRefresh() {
-//        ld.clear();
-//        order();
-//    }
-
 
 }
 

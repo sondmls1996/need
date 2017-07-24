@@ -18,44 +18,27 @@
             android:id="@+id/handleimg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/red"
             android:orientation="horizontal"
             android:padding="5dp">
+
             <ImageView
 
                 android:id="@+id/imgflit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:src="@drawable/upb" />
 
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textflit"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="Hà Nội"
-                    android:textAlignment="center"
-
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/textflit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="Kéo lên để mở bộ lọc"
-                    android:textAlignment="center"
-                    android:textColor="@color/grayDark" />
-
-            </LinearLayout>
+                android:layout_gravity="center_vertical"
+                android:text="@string/lskeolen"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
 
 
         </LinearLayout>
@@ -73,97 +56,71 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+        <EditText
+            android:id="@+id/edtSearch1"
+            android:hint="@string/lsedt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_edittextsearch"
+            android:padding="5dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="Bán kính: "
-                android:textSize="16sp" />
+                android:layout_margin="5dp"
+                android:padding="5dp"
+
+                android:text="@string/lstu" />
 
             <TextView
-                android:id="@+id/pric0"
-                android:layout_width="match_parent"
+                android:id="@+id/tvngaydi"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp" />
-        </LinearLayout>
 
+                android:layout_margin="5dp"
+                android:background="@drawable/custom_edittextsearch"
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:max="10"
-            android:progress="0" />
+                android:gravity="center"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                android:padding="5dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="Mức giá: "
-                android:textSize="16sp" />
+
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:text="@string/lsden" />
 
             <TextView
-                android:id="@+id/pric1"
-                android:layout_width="match_parent"
+                android:id="@+id/tvngayden"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp" />
+                android:layout_margin="5dp"
+                android:background="@drawable/custom_edittextsearch"
+
+                android:gravity="center"
+
+                android:padding="5dp" />
+
         </LinearLayout>
 
-        <SeekBar
-            android:id="@+id/seekBar1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="500000" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:text="Tiện ích"
-            android:textSize="16sp" />
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-
-
-
-
-
-
-
-
-
-            </LinearLayout>
-        </HorizontalScrollView>
         <Button
             android:id="@+id/btnflitter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="Lọc"
+            android:background="@drawable/custombt"
+            android:text="@string/lsbtloc"
             android:textColor="@color/white" />
     </LinearLayout>
 </com.nf.vi.needfoodshipper.SupportClass.WrapSliding>

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nf.vi.needfoodshipper.Constructor.HistoryConstructor;
@@ -40,6 +41,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Recycler
         holder.time.setText(ip.getTime());
         holder.timeleft.setText(ip.getTimeleft());
         holder.reason.setText(ip.getReason());
+        if(ip.getStt().equals("done")){
+            holder.imghand.setImageDrawable(context.getResources().getDrawable(R.drawable.bldot));
+            holder.thongbao.setText(context.getResources().getString(R.string.done));
+            holder.thongbao.setTextColor(context.getResources().getColor(R.color.dacam));
+        }else if(ip.getStt().equals("cancel")){
+            holder.imghand.setImageDrawable(context.getResources().getDrawable(R.drawable.reddot));
+            holder.thongbao.setText(context.getResources().getString(R.string.cancell));
+            holder.thongbao.setTextColor(context.getResources().getColor(R.color.red));
+        }
     }
 
     @Override
@@ -52,7 +62,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Recycler
         public TextView bcode;
         public TextView time;
         public TextView timeleft;
-        public TextView reason;
+        public TextView reason,thongbao;
+        public ImageView imghand;
         public RecyclerViewHolder(View itemView) {
             super(itemView);
 
@@ -60,6 +71,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Recycler
             time=(TextView)itemView.findViewById(R.id.tvTime);
             timeleft=(TextView)itemView.findViewById(R.id.tvTimeLeft);
             reason=(TextView)itemView.findViewById(R.id.tvReason);
+            thongbao = (TextView) itemView.findViewById(R.id.tvStt);
+            imghand = (ImageView) itemView.findViewById(R.id.imgStt);
         }
     }
     public void removeItem(int position) {

@@ -12,11 +12,12 @@
 
 
     <LinearLayout
+        android:id="@+id/lntop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lntop"
-        android:padding="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,11 +28,11 @@
                 android:id="@+id/tvre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Lê Văn Lương"
                 android:layout_weight="1"
+                android:text="Lê Văn Lương"
                 android:textColor="@color/red"
-                android:textStyle="bold"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,22 +40,25 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:orientation="horizontal">
+
                 <ImageView
-                    android:layout_width="10dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_height="10dp"
                     android:id="@+id/imgstt"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/graydot"/>
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/graydot" />
+
                 <TextView
+                    android:id="@+id/textstt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textstt"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/strnew"/>
+                    android:text="@string/strnew" />
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,16 +66,18 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:text="@string/cttenhang"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvod"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="3kg Cá hồi + 4kg Rau cải"
                 android:textColor="@color/black" />
 
@@ -84,8 +90,9 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:text="@string/ctdiachi"
 
                 android:textColor="@color/black"
@@ -93,8 +100,9 @@
 
             <TextView
                 android:id="@+id/tvloc"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="3kg Cá hồi + 4kg Rau cải"
                 android:textColor="@color/black" />
 
@@ -107,8 +115,9 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:text="@string/ctlienhe"
 
                 android:textColor="@color/black"
@@ -116,13 +125,13 @@
 
             <TextView
                 android:id="@+id/tvct"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="3kg Cá hồi + 4kg Rau cải"
                 android:textColor="@color/black" />
 
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -132,8 +141,9 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:text="@string/ctthoigiannhan"
 
                 android:textColor="@color/black"
@@ -141,8 +151,9 @@
 
             <TextView
                 android:id="@+id/tvtm"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="3kg Cá hồi + 4kg Rau cải"
                 android:textColor="@color/black" />
 
@@ -152,12 +163,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:text="@string/cttongtien"
 
                 android:textColor="@color/black"
@@ -165,8 +177,9 @@
 
             <TextView
                 android:id="@+id/tvpay"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="3kg Cá hồi + 4kg Rau cải"
                 android:textColor="@color/black" />
 
