@@ -90,6 +90,7 @@ public class BestQuality extends AppCompatActivity {
                             nop.setVisibility(View.GONE);
                         }
                     } else {
+                        nop.setVisibility(View.GONE);
                         for (int i = 0; i < ja.length(); i++) {
                             JSONObject j1 = ja.getJSONObject(i);
                             JSONObject prd = j1.getJSONObject("Product");
