@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -42,18 +43,19 @@ public class TransferHistory extends AppCompatActivity {
     String token;
 
     long time = 0;
-    String  mess, coin, idu, id;
+    String mess, coin, idu, id;
 
 
     ChangeTimestamp chan;
     List<TranfConstructor> arr;
     TranfHisAdapter adapter;
+    TextView nop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_history);
-
+        nop = (TextView) findViewById(R.id.nop9);
         db = new DataHandle(this);
         chan = new ChangeTimestamp();
         lv = (ListView) findViewById(R.id.lvtran);
@@ -83,21 +85,28 @@ public class TransferHistory extends AppCompatActivity {
                     progressDialog.dismiss();
 
                     JSONArray jo = new JSONArray(response);
-                    Log.d("id", jo.length() + "");
-                    for (int i = 0; i < jo.length(); i++) {
-                        JSONObject js = jo.getJSONObject(i);
-                        JSONObject order = js.getJSONObject("History");
-                        id = order.getString("id");
-                        time = order.getLong("time");
-                        mess = order.getString("mess");
-                        coin = order.getString("coin");
-                        idu = order.getString("idUseronl");
-                        String timedate = chan.getDateCurrentTimeZone(time);
-
-
-                        arr.add(new TranfConstructor(id, mess, timedate, coin, idu, ""));
+                    if (jo.length() == 0) {
+                        if (arr.size() == 0) {
+                            nop.setVisibility(View.VISIBLE);
+                        } else {
+                            nop.setVisibility(View.GONE);
+                        }
+                    } else {
+                        nop.setVisibility(View.GONE);
+                        Log.d("id", jo.length() + "");
+                        for (int i = 0; i < jo.length(); i++) {
+                            JSONObject js = jo.getJSONObject(i);
+                            JSONObject order = js.getJSONObject("History");
+                            id = order.getString("id");
+                            time = order.getLong("time");
+                            mess = order.getString("mess");
+                            coin = order.getString("coin");
+                            idu = order.getString("idUseronl");
+                            String timedate = chan.getDateCurrentTimeZone(time);
+                            arr.add(new TranfConstructor(id, mess, timedate, coin, idu, ""));
+                        }
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();

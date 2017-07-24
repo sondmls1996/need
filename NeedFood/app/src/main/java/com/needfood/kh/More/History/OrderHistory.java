@@ -41,13 +41,14 @@ public class OrderHistory extends AppCompatActivity {
     List<OrderHisConstructor> ls;
     ListView lv;
     int page = 1;
+    TextView nop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
-
-        TextView txt = (TextView)findViewById(R.id.titletxt);
+        nop = (TextView) findViewById(R.id.nop10);
+        TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.hisord));
         db = new DataHandle(getApplicationContext());
         ls = new ArrayList<>();
@@ -85,40 +86,48 @@ public class OrderHistory extends AppCompatActivity {
         String link = getResources().getString(R.string.linkorhis);
         Map<String, String> map = new HashMap<String, String>();
         map.put("accessToken", token);
-        map.put("page", page+"");
+        map.put("page", page + "");
         Response.Listener<String> response = new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("IMGG",response);
+                    Log.d("IMGG", response);
                     progressDialog.dismiss();
 
                     JSONArray jo = new JSONArray(response);
-                    Log.d("id", jo.length() + "");
-                    for (int i = 0; i < jo.length(); i++) {
-                        JSONObject js = jo.getJSONObject(i);
-                        JSONObject order = js.getJSONObject("Order");
-                        id = order.getString("id");
-                        status = order.getString("status");
-
-                        JSONArray lp = order.getJSONArray("listProduct");
-                        Log.d("size", lp.length() + "");
-                        for (int j = 0; j < lp.length(); j++) {
-                            JSONObject jaa = lp.getJSONObject(j);
-                            title = jaa.getString("title");
-                            price = jaa.getString("money");
-
+                    if (jo.length() == 0) {
+                        if (ls.size() == 0) {
+                            nop.setVisibility(View.VISIBLE);
+                        } else {
+                            nop.setVisibility(View.GONE);
                         }
-                        JSONObject ic = order.getJSONObject("infoCustomer");
-                        fullname = ic.getString("fullName");
-                        fone = ic.getString("fone");
-                        address = ic.getString("address");
-                        Log.d("ABCCA", id + "-" + fullname + "-" + fone + "-" + address);
-                        ls.add(new OrderHisConstructor(id, title, price, status, fullname, fone, address,",",""));
-                    }
+                    } else {
+                        nop.setVisibility(View.GONE);
+                        Log.d("id", jo.length() + "");
+                        for (int i = 0; i < jo.length(); i++) {
+                            JSONObject js = jo.getJSONObject(i);
+                            JSONObject order = js.getJSONObject("Order");
+                            id = order.getString("id");
+                            status = order.getString("status");
 
-                    adapter.notifyDataSetChanged();
+                            JSONArray lp = order.getJSONArray("listProduct");
+                            Log.d("size", lp.length() + "");
+                            for (int j = 0; j < lp.length(); j++) {
+                                JSONObject jaa = lp.getJSONObject(j);
+                                title = jaa.getString("title");
+                                price = jaa.getString("money");
+
+                            }
+                            JSONObject ic = order.getJSONObject("infoCustomer");
+                            fullname = ic.getString("fullName");
+                            fone = ic.getString("fone");
+                            address = ic.getString("address");
+                            ls.add(new OrderHisConstructor(id, title, price, status, fullname, fone, address, ",", ""));
+                        }
+
+                        adapter.notifyDataSetChanged();
+                    }
                 } catch (JSONException e) {
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
