@@ -134,8 +134,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void run() {
                        getProductDT();
-                        getPrdDK();
-                        getCommen();
+
                     }
                 });
             }
@@ -510,7 +509,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     simg = new StringBuilder("http://needfood.webmantan.com" + ja.getString(0));
                     Picasso.with(getApplicationContext()).load("http://needfood.webmantan.com" + ja.getString(0)).into(imgprd);
 
-
+                    getPrdDK();
+                    getCommen();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
