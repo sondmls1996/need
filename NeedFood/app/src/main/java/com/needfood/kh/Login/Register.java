@@ -26,6 +26,7 @@ import java.util.Map;
 public class Register extends AppCompatActivity {
     TextView tvname, tvfone, tvmail, tvpass, tvpass2, tvadr;
     Button btnokay;
+    String fullname,email,adr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

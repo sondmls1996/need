@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
     Session ses;
     EditText edus, edpass;
     DataHandle db;
-    String fullname,idfb,email,fone,adr;
+    String fullname,idfb,email,fone="",adr;
     String dvtoken;
 
     @Override
@@ -72,7 +72,7 @@ public class Login extends AppCompatActivity {
         lgb = (LoginButton) findViewById(R.id.login_button);
 
         lgb.setReadPermissions(Arrays.asList(
-                "public_profile", "email", "user_birthday", "user_friends"));
+                "public_profile", "email", "user_birthday", "user_location"));
         tvfor = (TextView) findViewById(R.id.tvfogot);
         tvfor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +131,7 @@ public class Login extends AppCompatActivity {
 
                                     postToken(accesstoken);
 
-                                    addInfo(accesstoken, id, "");
+                                    addInfo(accesstoken, id, "0");
                                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                                     startActivity(it);
                                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
@@ -166,24 +166,25 @@ public class Login extends AppCompatActivity {
                                 final JSONObject json = response.getJSONObject();
                                 Log.d("JSRE",json.toString());
 
-//                                try {
-//                                    if(json != null){
-//
-//                                        Log.e("NAME", json.getString("name"));
-//                                        Log.e("MAIL", json.getString("email"));
-//                                        Log.e("ID", json.getString("id"));
-//                                        //web.loadData(text, "text/html", "UTF-8");
-//
-//                                    }
-//
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
+                                try {
+                                 fullname = json.getString("name");
+                                    idfb = json.getString("id");
+                                    email = json.getString("email");
+                                    JSONObject loc = json.getJSONObject("location");
+                                    adr = loc.getString("name");
+                                    regisFB();
+//                                    Intent it = new Intent(getApplicationContext(),Register.class);
+//                                    it.putExtra("fullname",fullname);
+//                                    it.putExtra("email",email);
+//                                    it.putExtra("adr",adr);
+//                                    startActivity(it);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,birthday");
+                parameters.putString("fields", "id,name,email,gender,location");
                 request.setParameters(parameters);
                 request.executeAsync();
             }
@@ -200,7 +201,54 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    private void addInfo(final String token, final String id, final String pass) {
+    private void regisFB() {
+        final ProgressDialog progressDialog = DialogUtils.show(Login.this, getResources().getString(R.string.wait));
+        String linkk = getResources().getString(R.string.linklogfb);
+        Map<String, String> map = new HashMap<>();
+        map.put("fullName", fullname);
+        map.put("idFacebook", idfb);
+        map.put("email", email);
+        map.put("fone", fone);
+        map.put("address", adr);
+        Response.Listener<String> response = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+
+                try {
+                    progressDialog.dismiss();
+                    ses.setLoggedin(true);
+                    JSONObject jo = new JSONObject(response);
+                     JSONObject js = jo.getJSONObject("Useronl");
+//                                    String fullname = jo.getString("fullName");
+//                                    String email = jo.getString("email");
+//                                    String fone = jo.getString("fone");
+//                                    String address = jo.getString("address");
+//                                    String coin = jo.getString("coin");
+                    String id = js.getString("id");
+                    String accesstoken = js.getString("accessToken");
+//                                    String pass = jo.getString("pass");
+
+                    postToken(accesstoken);
+
+                    addInfo(accesstoken, id, "1");
+                    Intent it = new Intent(getApplicationContext(), StartActivity.class);
+                    startActivity(it);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        };
+        PostCL post = new PostCL(linkk, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(post);
+    }
+
+
+    private void addInfo(final String token, final String id, final String type) {
         String linkk = getResources().getString(R.string.linkgetinfo);
         Map<String, String> map = new HashMap<>();
         map.put("accessToken", token);
@@ -219,7 +267,7 @@ public class Login extends AppCompatActivity {
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
                     Log.d("ABCLOG", fullname + "-" + email + "-" + fone + "-" + "" + "-" + address + "-" + id + "-" + token + "-" + coin);
-                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin,"0"));
+                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin,type));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
