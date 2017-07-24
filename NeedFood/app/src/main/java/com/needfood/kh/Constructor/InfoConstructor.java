@@ -13,19 +13,9 @@ public class InfoConstructor {
     String id;
     String accesstoken;
     String coin;
+    String type;
 
     public InfoConstructor() {
-    }
-
-    public InfoConstructor(String fullname, String email, String fone, String pass, String address, String id, String accesstoken, String coin) {
-        this.fullname = fullname;
-        this.email = email;
-        this.fone = fone;
-        this.pass = pass;
-        this.address = address;
-        this.id = id;
-        this.accesstoken = accesstoken;
-        this.coin = coin;
     }
 
     public String getFullname() {
@@ -90,5 +80,25 @@ public class InfoConstructor {
 
     public void setCoin(String coin) {
         this.coin = coin;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public InfoConstructor(String fullname, String email, String fone, String pass, String address, String id, String accesstoken, String coin, String type) {
+        this.fullname = fullname;
+        this.email = email;
+        this.fone = fone;
+        this.pass = pass;
+        this.address = address;
+        this.id = id;
+        this.accesstoken = accesstoken;
+        this.coin = coin;
+        this.type = type;
     }
 }

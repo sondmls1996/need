@@ -210,15 +210,16 @@ Nestled in the quiet town of Warm River, in Southeastern Idaho, the ranch is sur
                     android:layout_width="match_parent"
                     android:id="@+id/lnfb"
                     android:visibility="visible"
+                    android:layout_margin="10dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
                     <com.facebook.share.widget.LikeView
                         android:id="@+id/btnlike"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"></com.facebook.share.widget.LikeView>
                     <com.facebook.share.widget.ShareButton
                         android:layout_width="wrap_content"
-
+                        android:layout_marginLeft="5dp"
                         android:id="@+id/btnshare"
                         android:layout_height="wrap_content" />
 
