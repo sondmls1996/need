@@ -160,4 +160,6 @@
     <string name="can">You do not have enough coins to transfer </string>
     <string name="nohis">No History to display</string>
     <string name="nonoti">No Notication to display</string>
+    <string name="histran">History Transfer</string>
+    <string name="hiset">History Order</string>
 </resources>

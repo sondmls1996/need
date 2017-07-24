@@ -161,7 +161,6 @@
             android:name=".More.History.TransferHistory"
             android:parentActivityName=".More.History.MoreHistory"></activity>
 
-
         <receiver
             android:name=".Service.ConnectivityReceiver"
             android:enabled="true">
