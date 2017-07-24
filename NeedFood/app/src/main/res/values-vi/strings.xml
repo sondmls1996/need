@@ -88,9 +88,10 @@
     <string name="shortpass">Mật khẩu phải có 6 ký tự trở lên</string>
     <string name="contact">Danh bạ</string>
     <string name="shiptime">Thời gian vận chuyển</string>
+    <string name="nomal">Không có hướng dẫn sử dụng</string>
     <string name="tranhis">Lịch sử chuyển khoản</string>
     <string name="note">Ghi chú</string>
-    <string name="howtou">Cách sử dụng?</string>
+    <string name="howtou">Hướng dẫn sử dụng</string>
     <string name="transuc">Chuyển khoản thành công</string>
     <string name="prddetail">Chi tiết sản phẩm</string>
     <string name="aro">Tìm xung quanh</string>

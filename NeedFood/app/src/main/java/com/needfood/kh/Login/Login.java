@@ -183,7 +183,7 @@ public class Login extends AppCompatActivity {
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
                     Log.d("ABCLOG", fullname + "-" + email + "-" + fone + "-" + "" + "-" + address + "-" + id + "-" + token + "-" + coin);
-                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin));
+                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin,"0"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

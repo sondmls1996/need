@@ -33,6 +33,7 @@ public class DataHandle extends SQLiteOpenHelper {
 
     public static final String INFO = "infomation";
     public static final String FULLNAME = "fullName";
+    public static final String TYPE = "type";
     public static final String EMAIL = "email";
     public static final String PHONE = "fone";
     public static final String PASS = "pass";
@@ -69,7 +70,8 @@ public class DataHandle extends SQLiteOpenHelper {
                         ADDRESS + " TEXT NOT NULL," +
                         IDINFO + " TEXT NOT NULL PRIMARY KEY," +
                         ACCESSTK + " TEXT NOT NULL," +
-                        COIN + " TEXT NOT NULL" +
+                        COIN + " TEXT NOT NULL," +
+                        TYPE + " TEXT NOT NULL" +
                         ");";
         String CREATE_TABLE_LAN =
                 "CREATE TABLE " + CHECK_LAN + "(" +
@@ -121,6 +123,7 @@ public class DataHandle extends SQLiteOpenHelper {
         values.put(IDINFO, in.getId()); // Contact id
         values.put(ACCESSTK, in.getAccesstoken()); // Contact accessToken
         values.put(COIN, in.getCoin());
+        values.put(TYPE, in.getType());
         db.insert(INFO, null, values);
         db.close(); // Closing database connection
     }
@@ -211,6 +214,7 @@ public class DataHandle extends SQLiteOpenHelper {
                 contact.setId(cursor.getString(5));
                 contact.setAccesstoken(cursor.getString(6));
                 contact.setCoin(cursor.getString(7));
+                contact.setType(cursor.getString(8));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

@@ -50,7 +50,8 @@ public class Setting extends AppCompatActivity {
     TextView logout;
     DataHandle db;
     List<InfoConstructor> list;
-    String token;
+    String type,token;
+
     String ngonngu[] = {"Tiếng Anh", "Tiếng Việt"};
     Spinner sp;
     Locale myLocale;
@@ -74,6 +75,12 @@ public class Setting extends AppCompatActivity {
         list = db.getAllInfor();
         for (InfoConstructor it : list) {
             token = it.getAccesstoken();
+            type = it.getType();
+        }
+        if(type.equals("0")){
+            lgb.setVisibility(View.GONE);
+        }else{
+            logout.setVisibility(View.GONE);
         }
         lt = db.getLan();
         sharedPreferences = getSharedPreferences(Locale_Preference, Activity.MODE_PRIVATE);
