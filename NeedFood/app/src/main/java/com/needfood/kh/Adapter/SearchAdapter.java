@@ -55,7 +55,7 @@ public class SearchAdapter extends ArrayAdapter<SearchConstructor> {
             ImageView imageView = (ImageView)view.findViewById(R.id.imgsearch);
 
             if (p.linkimg == null) {
-                Picasso.with(getContext()).load(R.drawable.txt1).into(imageView);
+               // Picasso.with(getContext()).load(R.drawable.txt1).into(imageView);
             } else{
                 Picasso.with(getContext()).load("http://needfood.webmantan.com"+p.linkimg).into(imageView);
             }

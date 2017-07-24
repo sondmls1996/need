@@ -70,7 +70,7 @@ public class More extends Fragment implements View.OnClickListener {
             lnself.setOnClickListener(this);
             lntranf.setOnClickListener(this);
             nameus.setText(name);
-            Picasso.with(getContext()).load("http://1.bp.blogspot.com/-FV7Q-KHHA18/UhF4m4WOG9I/AAAAAAAABHE/vQD803G1MuQ/s1600/avatar-boy-hoat-hinh-5.jpg").transform(new TransImage()).into(imgavt);
+            Picasso.with(getContext()).load(R.drawable.logo).transform(new TransImage()).into(imgavt);
         }else{
              v = inflater.inflate(R.layout.fragment_frag_log, container, false);
             btnlog = (Button)v.findViewById(R.id.btnlog);
