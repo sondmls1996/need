@@ -116,7 +116,7 @@ public class NewsAdapter extends
   //      ImageView imga = (ImageView)view.findViewById(R.id.imgau);
 
         if (p.linkimg == null) {
-            Picasso.with(context).load(R.drawable.txt1).into(viewHolder.imageView);
+
         } else{
             Picasso.with(context).load(p.linkimg).into(viewHolder.imageView);
         }
