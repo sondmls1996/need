@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.needfood.kh.Brand.BrandDetail;
 import com.needfood.kh.Constructor.MapConstructor;
 import com.needfood.kh.R;
+import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.GPSTracker;
 import com.needfood.kh.SupportClass.PostCL;
 
@@ -49,7 +51,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        TextView txt = (TextView)findViewById(R.id.titletxt);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarr);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), StartActivity.class);
+                startActivity(i);
+            }
+        });
+        TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.aro));
         list = new ArrayList<>();
         tracker = new GPSTracker(this);

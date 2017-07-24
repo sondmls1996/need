@@ -54,7 +54,7 @@ public class Tranfer extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         TextView txt = (TextView) findViewById(R.id.titletxt);
-        txt.setText(getResources().getString(R.string.tranhis));
+        txt.setText(getResources().getString(R.string.trancoin));
         db = new DataHandle(this);
         list = db.getAllInfor();
         acc = list.get(list.size() - 1).getAccesstoken();
