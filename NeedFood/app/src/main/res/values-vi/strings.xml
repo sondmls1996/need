@@ -162,4 +162,12 @@
     <string name="checkfon">Số điện thoại không hợp lệ</string>
     <string name="coinn">Xu: \u0020</string>
     <string name="trancoin">Chuyển xu</string>
+    <string name="bc">Bởi Customer</string>
+    <string name="bn">Bởi NeedFood</string>
+    <string name="pz">Có giá trị: \u0020</string>
+    <string name="cs">Mã cửa hàng:\u0020 </string>
+    <string name="cb">Co/Brand: \u0020</string>
+    <string name="rate">Tỉ lệ: \u0020</string>
+    <string name="pd">Sản xuất ngày: \u0020</string>
+    <string name="exp">Điểm số: \u0020</string>
 </resources>

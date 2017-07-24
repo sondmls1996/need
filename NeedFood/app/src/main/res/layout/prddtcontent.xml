@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Co/Brand:"
+                    android:text="@string/cb"
                     android:textColor="@color/grayDark" />
 
                 <TextView
@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Code shop:"
+                    android:text="@string/cs"
                     android:textColor="@color/grayDark" />
 
                 <TextView
@@ -108,7 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Prize:"
+                    android:text="@string/pz"
                     android:textColor="@color/grayDark" />
 
                 <TextView
@@ -129,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Rate:"
+                    android:text="@string/rate"
                     android:textColor="@color/grayDark" />
 
                 <LinearLayout
@@ -152,7 +152,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="by NeedFood"
+                            android:text="@string/bn"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -191,7 +191,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="by Customer"
+                            android:text="@string/bc"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -236,7 +236,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="P.Day: "
+                    android:text="@string/pd"
                     android:textColor="@color/grayDark" />
 
                 <TextView
@@ -257,7 +257,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Exp: "
+                    android:text="@string/exp"
                     android:textColor="@color/grayDark" />
 
                 <TextView

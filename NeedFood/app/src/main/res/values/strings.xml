@@ -166,4 +166,13 @@
     <string name="checkfon"> Phone number not valid</string>
     <string name="coinn">Coins: \u0020</string>
     <string name="trancoin">Coins transfer</string>
+    <string name="bc">by Customer</string>
+    <string name="bn">by NeedFood</string>
+    <string name="pz">Prize: \u0020</string>
+    <string name="cs">Code shop:\u0020 </string>
+    <string name="cb">Co/Brand: \u0020</string>
+    <string name="rate">Rate: \u0020</string>
+    <string name="pd">P.Day: \u0020</string>
+    <string name="exp">Exp: \u0020</string>
+
 </resources>

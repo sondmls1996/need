@@ -88,7 +88,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Setting.ChangeLanguage" />
         <activity
             android:name=".Login.Login"
             android:parentActivityName=".StartActivity" />
@@ -104,7 +103,6 @@
             android:name=".Login.ChangePass"
             android:parentActivityName=".More.MoreContanct" />
         <activity android:name=".QRCamera" />
-        <activity android:name=".Product.Preview" />
         <activity
             android:name=".More.History.MoreHistory"
             android:parentActivityName=".StartActivity" />
@@ -124,7 +122,6 @@
 
         <activity
             android:name=".Maps.MapsActivity"
-            android:label="@string/title_activity_maps"
             android:parentActivityName=".StartActivity" />
         <activity
             android:name=".More.Tranfer"
@@ -161,7 +158,6 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Product.LikeWebview"></activity>
     </application>
 
 </manifest>
