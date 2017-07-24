@@ -444,7 +444,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                     JSONObject jo = new JSONObject(response);
                     JSONObject prd = jo.getJSONObject("Product");
-                    if(!prd.getString("linkFacebook").equals("")){
+                    if(prd.has("linkFacebook")){
                         lnf.setVisibility(View.VISIBLE);
 
 
