@@ -56,6 +56,7 @@ public class Tranfer extends AppCompatActivity {
             }
         });
 
+
         db = new DataHandle(this);
         list = db.getAllInfor();
         acc = list.get(list.size() - 1).getAccesstoken();

@@ -134,6 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@color/red"
+                android:visibility="gone"
                 android:text="@string/precart"
                 android:textColor="@color/white" />
 

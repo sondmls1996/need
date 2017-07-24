@@ -52,7 +52,7 @@ public class Setting extends AppCompatActivity {
     List<InfoConstructor> list;
     String type,token;
 
-    String ngonngu[] = {"Tiếng Anh", "Tiếng Việt"};
+    String ngonngu[] = {getResources().getString(R.string.tienganh), getResources().getString(R.string.tiengviet)};
     Spinner sp;
     Locale myLocale;
     List<Language> lt;
@@ -84,11 +84,11 @@ public class Setting extends AppCompatActivity {
             token = it.getAccesstoken();
             type = it.getType();
         }
-//        if(type.equals("0")){
-//            lgb.setVisibility(View.GONE);
-//        }else{
-//            logout.setVisibility(View.GONE);
-//        }
+        if(type.equals("0")){
+            lgb.setVisibility(View.GONE);
+        }else{
+            logout.setVisibility(View.GONE);
+        }
         lt = db.getLan();
         sharedPreferences = getSharedPreferences(Locale_Preference, Activity.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -154,7 +154,7 @@ public class Setting extends AppCompatActivity {
                 String lang = "vi";
                 String a = ngonngu[position];
 
-                if (a == "Tiếng Anh") {
+                if (a == "English") {
                     lang = "en";
                     db.addCheckLan(new Language("1"));
 

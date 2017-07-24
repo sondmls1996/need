@@ -52,7 +52,7 @@ public class BrandDetail extends AppCompatActivity {
         viewPager= (ViewPager)findViewById(R.id.vpage);
         viewAdapter = new ViewAdapter(getSupportFragmentManager());
         viewAdapter.addFragment(new MenuBrand(),"Menu");
-        viewAdapter.addFragment(new Shipto(),"Ship to");
+
         viewAdapter.addFragment(new CommentBrand(),"Comment");
 
         viewPager.setAdapter(viewAdapter);
