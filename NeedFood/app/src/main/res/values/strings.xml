@@ -165,4 +165,5 @@
     <string name="hiset">History Order</string>
     <string name="checkfon"> Phone number not valid</string>
     <string name="coinn">Coins: \u0020</string>
+    <string name="trancoin">Coins transfer</string>
 </resources>

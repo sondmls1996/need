@@ -195,8 +195,13 @@ public class GPSTracker implements LocationListener {
         // Showing Alert Message
         alertDialog.show();
     }
+
     @Override
     public void onLocationChanged(Location location) {
+        if (location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
     }
 
     @Override
