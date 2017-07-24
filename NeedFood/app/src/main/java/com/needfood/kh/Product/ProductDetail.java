@@ -34,12 +34,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.easyandroidanimations.library.SlideInUnderneathAnimation;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.LikeView;
 import com.facebook.share.widget.ShareButton;
@@ -178,22 +174,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
          likeView = (LikeView) findViewById(R.id.btnlike);
         imglike = (ImageView)findViewById(R.id.imglike);
         imgshare = (ImageView)findViewById(R.id.imgshare);
-        likeView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new GraphRequest(
-                        AccessToken.getCurrentAccessToken(),
-                        "/1045956692208168/likes",
-                        null,
-                        HttpMethod.POST,
-                        new GraphRequest.Callback() {
-                            public void onCompleted(GraphResponse response) {
-            /* handle the result */
-                            }
-                        }
-                ).executeAsync();
-            }
-        });
+
         htu = (LinearLayout)findViewById(R.id.htu);
         htu.setOnClickListener(new View.OnClickListener() {
             @Override
