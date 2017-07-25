@@ -11,12 +11,12 @@
     <string name="food">Đồ ăn</string>
     <string name="acid">Mã tài khoản</string>
     <string name="emailc">Email</string>
-    <string name="phone">Số điện thoại:\u0020</string>
+    <string name="phone">Số điện thoại\u0020</string>
     <string name="order">Đặt hàng</string>
     <string name="conor">Xác nhận đơn hàng</string>
     <string name="rein">Thông tin người nhận</string>
     <string name="name">Tên:\u0020</string>
-    <string name="address">Địa chỉ:\u0020</string>
+    <string name="address">Địa chỉ\u0020</string>
     <string name="save">Lưu</string>
     <string name="change">Thay đổi</string>
     <string name="thefree">Thức ăn miễn phí sẽ được gửi đến</string>
@@ -64,7 +64,7 @@
     <string name="promo2">Mã khuyến mãi</string>
     <string name="login">Đăng nhập</string>
     <string name="lan">Ngôn ngữ</string>
-    <string name="regis">Đăng ký</string>
+    <string name="regiss">Đăng ký</string>
     <string name="forget">Quên mật khẩu</string>
     <string name="Deal">Thỏa thuận</string>
     <string name="fb_login_protocol_scheme">fb144493206000726</string>
@@ -173,7 +173,7 @@
     <string name="trancoin">Chuyển xu</string>
     <string name="bc">Bởi Customer</string>
     <string name="bn">Bởi NeedFood</string>
-    <string name="pz">Có giá trị: \u0020</string>
+    <string name="pz">Giá: \u0020</string>
     <string name="cs">Mã cửa hàng:\u0020 </string>
     <string name="cb">Mã sản phẩm: \u0020</string>
     <string name="rate">Tỉ lệ: \u0020</string>
@@ -181,4 +181,15 @@
     <string name="exp">Điểm số: \u0020</string>
     <string name="lf">Suất</string>
     <string name="prcode">Nhập mã khuyến mại</string>
+    <string name="det">Chi tiết</string>
+    <string name="canc">Đóng</string>
+    <string name="loc">Vị trí của bạn</string>
+    <string name="fn">Họ và tên</string>
+    <string name="em">Email</string>
+    <string name="pa">Mật khẩu</string>
+    <string name="cpas">Xác nhận lại mật khẩu</string>
+    <string name="ad">Địa chỉ</string>
+    <string name="cust">Khách hàng</string>
+    <string name="cha">Bạn cần nhập hơn 6 kí tự</string>
+    <string name="paw">Mật khẩu không trùng nhau</string>
 </resources>

@@ -89,7 +89,7 @@
             android:textStyle="italic"
             android:id="@+id/tvreg"
             android:textColor="@color/black"
-            android:text="@string/regis"/>
+            android:text="@string/regiss"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

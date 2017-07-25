@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.needfood.kh.Brand.BrandDetail;
@@ -51,12 +53,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarr);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
+        imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), StartActivity.class);
-                startActivity(i);
+                finish();
             }
         });
         TextView txt = (TextView) findViewById(R.id.titletxt);
@@ -91,21 +92,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(sydney)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                .title("Vị trí của bạn"));
+                .title(getResources().getString(R.string.loc)));
         CameraPosition update = new CameraPosition.Builder().target(sydney).zoom(14).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(update));
-
-        for (int j = 0; j < list.size(); j++) {
-            mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(Double.parseDouble(list.get(j).getLat()), Double.parseDouble(list.get(j).getLo())))
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                    .title(list.get(j).getBrandname().toString()));
-        }
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(final Marker marker) {
+                // loc du lieu
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getBrandname().toString().equals(marker.getTitle().toString())) {
+                        linkbrand = list.get(i).getBrandname();
+                        linkadd = list.get(i).getAddress();
+                        linkfone = list.get(i).getFone();
+                        linkid = list.get(i).getId();
+                        linkname = list.get(i).getFullname();
+                        Log.d("LATLONG", linkbrand + "-" + linkadd);
+                        LatLng yourlocal = new LatLng(marker.getPosition().latitude, marker.getPosition().longitude);
+                        CameraPosition cameraPosition = new CameraPosition.Builder().target(yourlocal).zoom(16).build();
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                        showDialog();
+                    }
+                }
+                return true;
+            }
+        });
+//        for (int j = 0; j < list.size(); j++) {
+//            mMap.addMarker(new MarkerOptions()
+//                    .position(new LatLng(Double.parseDouble(list.get(j).getLat()), Double.parseDouble(list.get(j).getLo())))
+//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+//                    .title(list.get(j).getBrandname().toString()));
+//        }
+//        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//            @Override
+//            public boolean onMarkerClick(Marker marker) {
+//                for (int i = 0; i < list.size(); i++) {
+//
+//                }
+//
+//                return true;
+//            }
+//        });
     }
 
     private void getMoney() {
@@ -131,7 +162,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         lat = jo3.getString("lat");
                         lo = jo3.getString("long");
                         list.add(new MapConstructor(id, brandName, fullName, fone, address, lat, lo));
-                        //db.addMN(new ListMN(jo2.getString("id"), jo2.getString("name")));
+                        Log.d("ABCC", id + "-" + brandName + "-" + fullName + "-" + fone + "-" + address + "-" + lat + "-" + lo);
 
                     }
                     showMap(latitude, longitude);
@@ -148,32 +179,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void showMap(Double latitude, Double longitude) {
         LatLng yourlocal = new LatLng(latitude, longitude);
         mMap.clear();
-        mMap.addMarker(new MarkerOptions().position(yourlocal).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title("Vị trí của bạn")).showInfoWindow();
+        mMap.addMarker(new MarkerOptions().position(yourlocal).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(getResources().getString(R.string.loc))).showInfoWindow();
         CameraPosition cameraPosition = new CameraPosition.Builder().target(yourlocal).zoom(14).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         for (int j = 0; j < list.size(); j++) {
-            Log.d("LATLONG", list.get(j).getLat() + "-" + list.get(j).getLo());
+
             mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(Double.parseDouble(list.get(j).getLat()), Double.parseDouble(list.get(j).getLo())))
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                     .title(list.get(j).getBrandname().toString()));
         }
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                for (int i = 0; i < list.size(); i++) {
-                    linkbrand = list.get(i).getBrandname();
-                    linkadd = list.get(i).getAddress();
-                    linkfone = list.get(i).getFone();
-                    linkid = list.get(i).getId();
-                    linkname = list.get(i).getFullname();
 
-                }
-                showDialog();
-                return true;
-            }
-        });
     }
 
     // show dialog
@@ -187,7 +204,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         tv2.setText(linkadd);
         Button btn2 = (Button) dialog.findViewById(R.id.detail);
         Button btn3 = (Button) dialog.findViewById(R.id.quit);
-
+        Log.d("LATLONG", linkbrand + "-" + linkadd);
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -52,7 +52,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/lowblue"
+                android:background="@color/blue"
                 android:padding="5dp">
 
                 <TextView
@@ -96,8 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:background="@android:color/transparent"
-                    android:gravity="center" />
+                    android:background="@android:color/transparent" />
 
 
             </LinearLayout>
@@ -121,35 +120,10 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="3"
                     android:background="@android:color/transparent"
-                    android:gravity="center"
                      />
 
 
             </LinearLayout>
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:padding="5dp">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/textView4"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="6"-->
-                    <!--android:text="@string/paym" />-->
-
-                <!--<EditText-->
-                    <!--android:id="@+id/pay"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="3"-->
-                    <!--android:background="@android:color/transparent"-->
-                    <!--android:gravity="center" />-->
-
-
-            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -165,7 +139,6 @@
                     android:text="@string/phone" />
 
                 <EditText
-                    android:gravity="center"
                     android:id="@+id/fone_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -188,7 +161,6 @@
                     android:text="@string/emailc" />
 
                 <EditText
-                    android:gravity="center"
                     android:id="@+id/email_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -210,7 +182,6 @@
                     android:text="@string/address" />
 
                 <EditText
-                    android:gravity="center"
                     android:id="@+id/address_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -221,6 +192,7 @@
             </LinearLayout>
 
             <TextView
+                android:gravity="center"
                 android:id="@+id/changepass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

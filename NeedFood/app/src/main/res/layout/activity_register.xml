@@ -33,7 +33,7 @@
                 android:drawablePadding="5dp"
                 android:drawableLeft="@drawable/us"
                 android:layout_marginBottom="10dp"
-                android:hint="Full name"
+                android:hint="@string/fn"
                 />
             <EditText
                 android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                 android:maxLength="11"
                 android:drawableLeft="@drawable/phone"
                 android:layout_marginBottom="10dp"
-                android:hint="Phone"
+                android:hint="@string/phone"
                 />
             <EditText
                 android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                 android:drawablePadding="5dp"
                 android:drawableLeft="@drawable/lock"
                 android:layout_marginBottom="10dp"
-                android:hint="Password"
+                android:hint="@string/pa"
                 />
             <EditText
                 android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                 android:inputType="textPassword"
                 android:drawableLeft="@drawable/lock"
                 android:layout_marginBottom="10dp"
-                android:hint="Confirm password"
+                android:hint="@string/cpas"
                 />
             <EditText
                 android:layout_width="match_parent"
@@ -98,7 +98,7 @@
                 android:drawablePadding="5dp"
                 android:drawableLeft="@drawable/adr"
                 android:layout_marginBottom="10dp"
-                android:hint="Adress"
+                android:hint="@string/ad"
                 />
             <Button
                 android:layout_width="match_parent"
@@ -106,7 +106,7 @@
                 android:id="@+id/btnreg"
                 android:background="@drawable/cusbtnred"
                 android:textColor="@color/white"
-                android:text="Register"/>
+                android:text="@string/regiss"/>
 
         </LinearLayout>
         </ScrollView>

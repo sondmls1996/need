@@ -80,7 +80,7 @@ public class BestQuality extends AppCompatActivity {
         final Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("aa", response + "");
+                Log.d("aaza", response + "");
                 try {
                     JSONArray ja = new JSONArray(response);
                     if (ja.length() == 0) {

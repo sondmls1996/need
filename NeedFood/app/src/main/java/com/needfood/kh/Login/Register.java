@@ -40,7 +40,7 @@ public class Register extends AppCompatActivity {
             }
         });
         TextView txt = (TextView) findViewById(R.id.titletxt);
-        txt.setText(getResources().getString(R.string.regis));
+        txt.setText(getResources().getString(R.string.regiss));
         final String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         final String regexStr = "^[0-9]$";
         tvname = (TextView) findViewById(R.id.tvfn);

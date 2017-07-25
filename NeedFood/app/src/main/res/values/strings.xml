@@ -62,7 +62,7 @@
     <string name="promo2">Promotion Code</string>
     <string name="login">Login</string>
     <string name="lan">Language</string>
-    <string name="regis">Register</string>
+    <string name="regiss">Register</string>
     <string name="aro">Find around</string>
     <string name="forget">Forgot password</string>
     <string name="Deal">Deal</string>
@@ -72,7 +72,7 @@
     <string name="inven2">Inventory:\u0020</string>
     <string name="usname">User name</string>
     <string name="pass">Password</string>
-    <string name="quanlity">Quanlity</string>
+    <string name="quanlity">Quantity</string>
     <string name="quanlity2">Quanlity:\u0020</string>
     <string name="total">Total:\u0020</string>
     <string name="facebook_app_id">144493206000726</string>
@@ -184,4 +184,15 @@
     <string name="exp">Exp: \u0020</string>
     <string name="lf">Left</string>
     <string name="prcode">Enter promotion code</string>
+    <string name="det">Detail</string>
+    <string name="canc">Close</string>
+    <string name="loc">Your Location</string>
+    <string name="fn">Full Name</string>
+    <string name="em">Email</string>
+    <string name="pa">Password</string>
+    <string name="cpas">Confirm Password</string>
+    <string name="ad">Address</string>
+    <string name="cust">Customer</string>
+    <string name="cha">You need to enter more than 6 characters</string>
+    <string name="paw">Passwords do not match</string>
 </resources>

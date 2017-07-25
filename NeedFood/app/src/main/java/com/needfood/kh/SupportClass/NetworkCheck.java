@@ -19,7 +19,8 @@ public class NetworkCheck {
     public static int TYPE_MOBILE = 2;
     public static int TYPE_NOT_CONNECTED = 0;
 
-
+    ConnectivityManager connectivityManager;
+    NetworkInfo wifiInfo, mobileInfo;
     public static int getConnectivityStatus(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -50,6 +51,24 @@ public class NetworkCheck {
                 return true;
             }
         }
+        return false;
+    }
+    public Boolean checkNow(Context con){
+
+        try{
+            connectivityManager = (ConnectivityManager) con.getSystemService(Context.CONNECTIVITY_SERVICE);
+            wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            if(wifiInfo.isConnected() || mobileInfo.isConnected())
+            {
+                return true;
+            }
+        }
+        catch(Exception e){
+            System.out.println("CheckConnectivity Exception: " + e.getMessage());
+        }
+
         return false;
     }
     public static String getConnectivityStatusString(Context context) {

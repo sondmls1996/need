@@ -2,8 +2,10 @@ package com.needfood.kh.Setting;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -31,6 +33,7 @@ import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
+import com.needfood.kh.SupportClass.LocaleHelper;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
 
@@ -51,12 +54,13 @@ public class Setting extends AppCompatActivity {
     LinearLayout logout;
     DataHandle db;
     List<InfoConstructor> list;
-    String type,token;
+    String type, token;
 
     String ngonngu[] = {"English", "Vietnamese"};
     Spinner sp;
     Locale myLocale;
     List<Language> lt;
+    LocaleHelper localeHelper;
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
     private static final String Locale_Preference = "Locale Preference";
@@ -66,15 +70,16 @@ public class Setting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        TextView txt = (TextView)findViewById(R.id.titletxt);
+        TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.action_settings));
+        localeHelper = new LocaleHelper();
         ses = new Session(getApplicationContext());
         lgb = (LoginButton) findViewById(R.id.loginset);
         logout = (LinearLayout) findViewById(R.id.logout);
@@ -85,9 +90,9 @@ public class Setting extends AppCompatActivity {
             token = it.getAccesstoken();
             type = it.getType();
         }
-        if(type.equals("0")){
+        if (type.equals("0")) {
             lgb.setVisibility(View.GONE);
-        }else{
+        } else {
             logout.setVisibility(View.GONE);
         }
         lt = db.getLan();
@@ -160,12 +165,12 @@ public class Setting extends AppCompatActivity {
                     lang = "en";
                     db.addCheckLan(new Language("1"));
 
-                } else if (a==
-                        "Vietnamese"){
+                } else if (a == "Vietnamese") {
                     lang = "vi";
                     db.addCheckLan(new Language("0"));
 
                 }
+                LocaleHelper.setLocale(getApplicationContext(), lang);
                 changeLang(lang);
                 loadLocale();
 
@@ -200,12 +205,12 @@ public class Setting extends AppCompatActivity {
                     String code = jo.getString("code");
                     Log.d("CODELOG", code);
 
-                        progressDialog.dismiss();
-                        db.deleteInfo();
-                        ses.setLoggedin(false);
-                        Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-                        startActivity(intent);
-                        finish();
+                    progressDialog.dismiss();
+                    db.deleteInfo();
+                    ses.setLoggedin(false);
+                    Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                    startActivity(intent);
+                    finish();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -254,7 +259,8 @@ public class Setting extends AppCompatActivity {
             getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
         }
     }
-    public void resetActivity(){
+
+    public void resetActivity() {
         Intent intent = getIntent();
         finish();
         startActivity(intent);

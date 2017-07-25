@@ -43,14 +43,14 @@ public class ChangePass extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pass);
-        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        TextView txt = (TextView)findViewById(R.id.titletxt);
+        TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.changepass));
         db = new DataHandle(getApplicationContext());
         list = db.getAllInfor();
@@ -78,6 +78,12 @@ public class ChangePass extends AppCompatActivity {
         if (passold.matches("") || passnew.matches("") || passagain.matches("")) {
             progressDialog.dismiss();
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
+        } else if (passold.length() < 6 || passnew.length() < 6 || passagain.length() < 6) {
+            progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.cha), Toast.LENGTH_SHORT).show();
+        } else if (!passnew.equals(passagain)) {
+            progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.paw), Toast.LENGTH_SHORT).show();
         } else {
             map.put("accessToken", token);
             map.put("oldPass", passold);

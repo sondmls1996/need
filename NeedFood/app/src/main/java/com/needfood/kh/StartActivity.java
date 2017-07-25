@@ -93,7 +93,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         networkCheck = new NetworkCheck();
-        if (networkCheck.checkConnection(getApplicationContext())) {
+        Boolean conn = networkCheck.checkNow(getApplicationContext());
+        if (conn == true) {
+
         } else {
             startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
         }
@@ -113,7 +115,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             String a = "en";
             if (lt.get(lt.size() - 1).getId().equals("1")) {
                 a = "en";
-
                 edsearch.setHint("Search....");
                 nf = (TextView) findViewById(R.id.nf);
                 su = (TextView) findViewById(R.id.su);
@@ -123,6 +124,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 su.setText("Suggestion");
                 no.setText("Notification");
                 mo.setText("More");
+                changeLocale(a);
             } else {
                 a = "vi";
             }

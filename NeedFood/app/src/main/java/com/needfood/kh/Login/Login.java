@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
     Session ses;
     EditText edus, edpass;
     DataHandle db;
-    String fullname,idfb,email,fone="",adr;
+    String fullname, idfb, email, fone = "", adr;
     String dvtoken;
 
     @Override
@@ -56,7 +56,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
         dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
-        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,10 +164,10 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 final JSONObject json = response.getJSONObject();
-                                Log.d("JSRE",json.toString());
+                                Log.d("JSRE", json.toString());
 
                                 try {
-                                 fullname = json.getString("name");
+                                    fullname = json.getString("name");
                                     idfb = json.getString("id");
                                     email = json.getString("email");
                                     JSONObject loc = json.getJSONObject("location");
@@ -220,7 +220,7 @@ public class Login extends AppCompatActivity {
                     progressDialog.dismiss();
                     ses.setLoggedin(true);
                     JSONObject jo = new JSONObject(response);
-                     JSONObject js = jo.getJSONObject("Useronl");
+                    JSONObject js = jo.getJSONObject("Useronl");
 //                                    String fullname = jo.getString("fullName");
 //                                    String email = jo.getString("email");
 //                                    String fone = jo.getString("fone");
@@ -267,7 +267,7 @@ public class Login extends AppCompatActivity {
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
                     Log.d("ABCLOG", fullname + "-" + email + "-" + fone + "-" + "" + "-" + address + "-" + id + "-" + token + "-" + coin);
-                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin,type));
+                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin, type));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
