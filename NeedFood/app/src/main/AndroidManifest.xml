@@ -75,6 +75,7 @@
             android:parentActivityName=".StartActivity" />
         <activity
             android:name=".Setting.Setting"
+            android:configChanges="locale"
             android:parentActivityName=".StartActivity" />
         <activity
             android:name="com.facebook.CustomTabActivity"

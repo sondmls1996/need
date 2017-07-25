@@ -16,6 +16,7 @@ import com.needfood.kh.Adapter.NewsAdapter;
 import com.needfood.kh.Constructor.NewsConstructor;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
+import com.needfood.kh.SupportClass.EndlessScroll;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.RecyclerItemClickListener;
 
@@ -33,25 +34,28 @@ public class Drink extends AppCompatActivity {
     RecyclerView lv;
     TextView nop;
     LinearLayoutManager layoutManager;
-    int page = 1;
-    String namep="drinks";
+    EndlessScroll endlessScroll;
+    int page;
+    String namep = "drinks";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drink);
-        lv = (RecyclerView)findViewById(R.id.lvdrink);
-        arr=new ArrayList<>();
+        lv = (RecyclerView) findViewById(R.id.lvdrink);
+        arr = new ArrayList<>();
         layoutManager = new LinearLayoutManager(this);
-        nop = (TextView)findViewById(R.id.nop4);
+        nop = (TextView) findViewById(R.id.nop4);
         lv.setLayoutManager(layoutManager);
-        adapter = new NewsAdapter(getApplicationContext(),arr);
+        adapter = new NewsAdapter(getApplicationContext(), arr);
         lv.setAdapter(adapter);
         lv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
+                    @Override
+                    public void onItemClick(View view, int position) {
 
                         Intent it = new Intent(getApplicationContext(), ProductDetail.class);
-                        it.putExtra("idprd",arr.get(position).getIdprd());
+                        it.putExtra("idprd", arr.get(position).getIdprd());
 
                         startActivity(it);
 
@@ -59,28 +63,36 @@ public class Drink extends AppCompatActivity {
                     }
                 })
         );
+        endlessScroll = new EndlessScroll(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                page++;
+                getData(page);
+            }
+        };
 
-        getData();
+        getData(1);
     }
-    private void getData() {
+
+    private void getData(int page) {
         final String link = getResources().getString(R.string.linksug);
-        final Map<String,String> map = new HashMap<>();
-        map.put("page",page+"");
-        map.put("suggestion",namep);
-        final Response.Listener<String> response= new Response.Listener<String>() {
+        final Map<String, String> map = new HashMap<>();
+        map.put("page", page + "");
+        map.put("suggestion", namep);
+        final Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 try {
-                    Log.d("sugest",response);
+                    Log.d("sugest", response);
                     JSONArray ja = new JSONArray(response);
-                    if(ja.length()==0){
-                        if(arr.size()==0){
+                    if (ja.length() == 0) {
+                        if (arr.size() == 0) {
                             nop.setVisibility(View.VISIBLE);
-                        }else{
+                        } else {
                             nop.setVisibility(View.GONE);
                         }
-                    }else {
+                    } else {
                         nop.setVisibility(View.GONE);
                         for (int i = 0; i < ja.length(); i++) {
                             JSONObject j1 = ja.getJSONObject(i);
@@ -100,7 +112,7 @@ public class Drink extends AppCompatActivity {
             }
 
         };
-        PostCL post = new PostCL(link,map,response);
+        PostCL post = new PostCL(link, map, response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(post);
     }

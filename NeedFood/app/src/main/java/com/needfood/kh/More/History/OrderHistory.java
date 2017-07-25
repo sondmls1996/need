@@ -39,7 +39,7 @@ public class OrderHistory extends AppCompatActivity {
     OrderHisAdapter adapter;
     List<OrderHisConstructor> ls;
     ListView lv;
-    int page = 1;
+    int page;
     TextView nop;
 
     @Override
@@ -65,7 +65,7 @@ public class OrderHistory extends AppCompatActivity {
         lv = (ListView) findViewById(R.id.lvhisorr);
         adapter = new OrderHisAdapter(getApplicationContext(), ls);
         lv.setAdapter(adapter);
-        getOrderHistory();
+        getOrderHistory(1);
         lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             int firstVisibleItem, visibleItemCount, totalItemCount;
 
@@ -73,7 +73,7 @@ public class OrderHistory extends AppCompatActivity {
                 final int lastItem = firstVisibleItem + visibleItemCount;
                 if (lastItem == totalItemCount && scrollState == SCROLL_STATE_IDLE) {
                     page++;
-                    getOrderHistory();
+                    getOrderHistory(page);
                 }
             }
 
@@ -86,7 +86,7 @@ public class OrderHistory extends AppCompatActivity {
 
     }
 
-    public void getOrderHistory() {
+    public void getOrderHistory(int page) {
 
         final ProgressDialog progressDialog = DialogUtils.show(OrderHistory.this, getResources().getString(R.string.wait));
         String link = getResources().getString(R.string.linkorhis);

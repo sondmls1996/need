@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,7 +34,7 @@ import java.util.Map;
 
 public class TransferHistory extends AppCompatActivity {
     ListView lv;
-    int page = 1;
+    int page;
     DataHandle db;
     List<InfoConstructor> list;
     String token;
@@ -75,11 +76,29 @@ public class TransferHistory extends AppCompatActivity {
         arr = new ArrayList<>();
         adapter = new TranfHisAdapter(getApplicationContext(), arr);
         lv.setAdapter(adapter);
-        getHisTran();
+        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            int firstVisibleItem, visibleItemCount, totalItemCount;
+
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                final int lastItem = firstVisibleItem + visibleItemCount;
+                if (lastItem == totalItemCount && scrollState == SCROLL_STATE_IDLE) {
+                    page++;
+                    getHisTran(page);
+                }
+            }
+
+            public void onScroll(AbsListView view, int firstVisibleItemm, int visibleItemCountt, int totalItemCountt) {
+                firstVisibleItem = firstVisibleItemm;
+                visibleItemCount = visibleItemCountt;
+                totalItemCount = totalItemCountt;
+            }
+        });
+
+        getHisTran(1);
 
     }
 
-    public void getHisTran() {
+    public void getHisTran(int page) {
         final ProgressDialog progressDialog = DialogUtils.show(TransferHistory.this, getResources().getString(R.string.wait));
         String link = getResources().getString(R.string.linkhiscoin);
         Map<String, String> map = new HashMap<String, String>();

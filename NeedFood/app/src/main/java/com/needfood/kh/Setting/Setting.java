@@ -168,6 +168,7 @@ public class Setting extends AppCompatActivity {
                 }
                 changeLang(lang);
                 loadLocale();
+
             }
 
             @Override
@@ -240,7 +241,7 @@ public class Setting extends AppCompatActivity {
         android.content.res.Configuration config = new android.content.res.Configuration();
         config.locale = myLocale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-//        updateTexts();
+//        resetActivity();
     }
 
 
@@ -252,5 +253,10 @@ public class Setting extends AppCompatActivity {
             Locale.setDefault(myLocale);
             getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
         }
+    }
+    public void resetActivity(){
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 }
