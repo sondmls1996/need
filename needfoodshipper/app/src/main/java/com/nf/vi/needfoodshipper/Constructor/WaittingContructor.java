@@ -15,8 +15,15 @@ public class WaittingContructor {
     public String moneyship;
     public String stt;
     public String code;
+    public String soluong;
+    public String sanpham;
+    public String dongia;
+    public String thanhtien;
 
-    public WaittingContructor(String id, String order, String lc, String ct, String re, String tl, String pay, String moneyship, String stt, String code) {
+    public WaittingContructor() {
+    }
+
+    public WaittingContructor(String id, String order, String lc, String ct, String re, String tl, String pay, String moneyship, String stt, String code, String soluong, String sanpham, String dongia, String thanhtien) {
         this.id = id;
         this.order = order;
         this.lc = lc;
@@ -27,9 +34,10 @@ public class WaittingContructor {
         this.moneyship = moneyship;
         this.stt = stt;
         this.code = code;
-    }
-
-    public WaittingContructor() {
+        this.soluong = soluong;
+        this.sanpham = sanpham;
+        this.dongia = dongia;
+        this.thanhtien = thanhtien;
     }
 
     public String getId() {
@@ -111,5 +119,36 @@ public class WaittingContructor {
     public void setCode(String code) {
         this.code = code;
     }
-}
 
+    public String getSoluong() {
+        return soluong;
+    }
+
+    public void setSoluong(String soluong) {
+        this.soluong = soluong;
+    }
+
+    public String getSanpham() {
+        return sanpham;
+    }
+
+    public void setSanpham(String sanpham) {
+        this.sanpham = sanpham;
+    }
+
+    public String getDongia() {
+        return dongia;
+    }
+
+    public void setDongia(String dongia) {
+        this.dongia = dongia;
+    }
+
+    public String getThanhtien() {
+        return thanhtien;
+    }
+
+    public void setThanhtien(String thanhtien) {
+        this.thanhtien = thanhtien;
+    }
+}

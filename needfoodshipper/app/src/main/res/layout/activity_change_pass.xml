@@ -7,33 +7,40 @@
     android:orientation="vertical"
     tools:context=".MainClass.ChangePassActivity">
     <include layout="@layout/custom_toobar" />
+    <ImageView
+        android:layout_marginTop="30dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+android:layout_marginBottom="30dp"
+        android:src="@drawable/logoappc" />
     <EditText
         android:id="@+id/edtPassold"
-        android:background="@drawable/customtext"
+        android:background="@drawable/custom_edittextsearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_gravity="center"
         android:inputType="textPassword"
         android:padding="5dp"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:hint="@string/cspmatkhaucu"
         />
     <EditText
         android:id="@+id/edtPassnew"
-        android:background="@drawable/customtext"
+        android:background="@drawable/custom_edittextsearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_gravity="center"
         android:inputType="textPassword"
         android:padding="5dp"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:hint="@string/cspmatkhaumoi"
         />
     <EditText
         android:id="@+id/edtPassnew2"
-        android:background="@drawable/customtext"
+        android:background="@drawable/custom_edittextsearch"
         android:layout_width="match_parent"
         android:inputType="textPassword"
         android:layout_height="wrap_content"
@@ -41,7 +48,7 @@
         android:layout_gravity="center"
 
         android:padding="5dp"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:hint="@string/cspnhaplai"
         />
     <Button

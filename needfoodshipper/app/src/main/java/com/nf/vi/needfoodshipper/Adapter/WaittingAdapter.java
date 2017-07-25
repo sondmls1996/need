@@ -22,6 +22,7 @@ import com.nf.vi.needfoodshipper.Constructor.ListUserContructor;
 import com.nf.vi.needfoodshipper.Constructor.MainConstructor;
 import com.nf.vi.needfoodshipper.Constructor.WaittingContructor;
 import com.nf.vi.needfoodshipper.MainClass.DeliveryActivity;
+import com.nf.vi.needfoodshipper.MainClass.MainActivity;
 import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.TrangThaiRequest;
 import com.nf.vi.needfoodshipper.database.DBHandle;
@@ -42,6 +43,7 @@ public class WaittingAdapter extends
     private List<WaittingContructor> listData = new ArrayList<>();
     Context context;
     DBHandle db;
+    String id2;
     List<ListUserContructor> list;
 
     public WaittingAdapter(Context context, List<WaittingContructor> listData) {
@@ -97,7 +99,7 @@ public class WaittingAdapter extends
     }
 
     @Override
-    public WaittingAdapter.RecyclerViewHolder onCreateViewHolder(ViewGroup viewGroup,
+    public RecyclerViewHolder onCreateViewHolder(ViewGroup viewGroup,
                                                                  int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.customwaitting, viewGroup, false);
@@ -132,6 +134,10 @@ public class WaittingAdapter extends
                 intent.putExtra("moneyship", ip.getMoneyship());
                 intent.putExtra("stt", ip.getStt());
                 intent.putExtra("code", ip.getCode());
+                intent.putExtra("soluong", ip.getSoluong());
+                intent.putExtra("sanpham", ip.getSanpham());
+                intent.putExtra("dongia", ip.getDongia());
+                intent.putExtra("thanhtien", ip.getThanhtien());
                 context.startActivity(intent);
             }
         });
@@ -166,6 +172,7 @@ public class WaittingAdapter extends
 //                Toast.makeText(context, "ACC", Toast.LENGTH_SHORT).show();
 //                note = "";
 //                stt = "waiting";
+//                id2 = ip.getId();
 //                sendSV();
 //            }
 //        });
@@ -173,6 +180,7 @@ public class WaittingAdapter extends
 //            @Override
 //            public void onClick(View v) {
 //                note = viewHolder.edfedd.getText().toString();
+//                id2 = ip.getId();
 //                stt = "cancel";
 //                sendSV();
 //                viewHolder.rl.setVisibility(View.GONE);
@@ -194,17 +202,18 @@ public class WaittingAdapter extends
 //
 //
 //                    if (code.equals("0")) {
-////                            Intent i = new Intent(SentPassEmail.this, DangNhapActivity.class);
-////                            startActivity(i);
+//                        Intent i = new Intent(context, MainActivity.class);
+//                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        context.startActivity(i);
 //                    } else {
-////                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "Lỗi", Toast.LENGTH_SHORT).show();
 //                    }
 //                } catch (JSONException e) {
 //                    e.printStackTrace();
 //                }
 //            }
 //        };
-//        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt, id, link, response);
+//        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt, id2, "", link, response);
 //        RequestQueue qe = Volley.newRequestQueue(context);
 //        qe.add(save);
 //

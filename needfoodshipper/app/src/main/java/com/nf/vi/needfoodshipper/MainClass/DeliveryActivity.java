@@ -3,6 +3,7 @@ package com.nf.vi.needfoodshipper.MainClass;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,12 +51,12 @@ import static android.R.id.tabhost;
 public class DeliveryActivity extends AppCompatActivity {
 
     private Button btnFinish, btnDirect;
-    private TextView tvTitle, tvre, tvStt, tvCode, tvod, tvloc, tvct, tvtm, tvpay, textstt, tvMoneyShiper, tvTimeleft;
+    private TextView tvTitle, tvre, tvStt, tvCode, tvod, tvloc, tvct, tvtm, tvpay, textstt, tvMoneyShiper, tvTimeleft,tvSanpham,tvSoluong,tvDongia,tvThanhtien;
     private Dialog dialog;
     private ImageView imgstt;
     SimpleDateFormat dateFormatter;
     private Calendar cal, cal1;
-    private String a, id, order, lc, ct, re, tl, pay, moneyship, stt, code, stt2;
+    private String a, id, order, lc, ct, re, tl, pay, moneyship, stt, code, stt2,sanpham,soluong;
     private Button btnDFinish, btnDCancel1, btnDSend, btnDCancel;
     private RelativeLayout rfDialog;
     ChangeDatetoTimestamp change;
@@ -65,7 +66,7 @@ public class DeliveryActivity extends AppCompatActivity {
     EditText edfedd;
     List<ListUserContructor> list;
     private Date date;
-    private String timest, timestgh, timeleft, tk, note;
+    private String timest, timestgh, timeleft, tk, note,dongia,thanhtien;
     private int time, ngay, thang, nam, gio, phut;
     private long timesttl, giocl, phutcl, tinhgio, ngaycl;
     private RelativeLayout rtButton;
@@ -97,15 +98,20 @@ public class DeliveryActivity extends AppCompatActivity {
         tvStt = (TextView) findViewById(R.id.tvStt);
         tvCode = (TextView) findViewById(R.id.tvCode);
         tvre = (TextView) findViewById(R.id.tvre);
-        tvod = (TextView) findViewById(R.id.tvod);
+//        tvod = (TextView) findViewById(R.id.tvod);
         tvloc = (TextView) findViewById(R.id.tvloc);
         tvct = (TextView) findViewById(R.id.tvct);
         tvtm = (TextView) findViewById(R.id.tvtm);
         tvpay = (TextView) findViewById(R.id.tvpay);
         tvMoneyShiper = (TextView) findViewById(R.id.tvMoneyShip);
         tvTimeleft = (TextView) findViewById(R.id.tvTimeLeft);
+        tvSanpham=(TextView)findViewById(R.id.tvSanpham);
+        tvSoluong=(TextView)findViewById(R.id.tvSoluong);
+        tvDongia=(TextView)findViewById(R.id.tvDongia) ;
+        tvThanhtien=(TextView)findViewById(R.id.tvThanhtien);
         btnFinish = (Button) findViewById(R.id.btnFinish);
         rtButton = (RelativeLayout) findViewById(R.id.rlButton);
+        btnDirect=(Button)findViewById(R.id.btnDirect);
 
 
         tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -122,6 +128,10 @@ public class DeliveryActivity extends AppCompatActivity {
         moneyship = data.getStringExtra("moneyship");
         code = data.getStringExtra("code");
         stt = data.getStringExtra("stt");
+        sanpham=data.getStringExtra("sanpham");
+        soluong=data.getStringExtra("soluong");
+        dongia=data.getStringExtra("dongia");
+        thanhtien=data.getStringExtra("thanhtien");
 
         if (stt.equals("waiting")) {
             rtButton.setVisibility(View.VISIBLE);
@@ -139,17 +149,29 @@ public class DeliveryActivity extends AppCompatActivity {
 
         tvre.setText(re);
         tvCode.setText(code);
-        tvod.setText(order);
+//        tvod.setText(order);
         tvloc.setText(lc);
         tvct.setText(ct);
         tvtm.setText(tl);
         tvpay.setText(pay + " đ");
         tvMoneyShiper.setText(moneyship + " đ");
+        tvSoluong.setText(soluong);
+        tvSanpham.setText(sanpham);
+        tvDongia.setText(dongia);
+        tvThanhtien.setText(thanhtien);
 
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showdialogdelivery();
+            }
+        });
+        btnDirect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + myla + "," + mylo+"&daddr="+ hotella + "," + hotello ));
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+"&daddr="+lc ));
+                startActivity(intent);
             }
         });
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -224,9 +246,11 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Toast.makeText(getApplication(), "được k", Toast.LENGTH_LONG).show();
+                note = edfedd.getText().toString();
                 stt2 = "done";
                 sendSV();
-                dialog.dismiss();
+
             }
         });
         btnDCancel1.setOnClickListener(new View.OnClickListener() {
@@ -253,13 +277,19 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getApplication(), "aaa", Toast.LENGTH_LONG).show();
+                note = edfedd.getText().toString();
+
                 stt2 = "cancel";
-                sendSV();
-                dialog.dismiss();
-                rfDialog.setVisibility(View.GONE);
-                btnDFinish.setEnabled(true);
-                btnDFinish.setBackgroundResource(R.drawable.custombt);
+                if(note.equals("")){
+                    Toast.makeText(getApplicationContext(),"Lý do không được đươc để trống",Toast.LENGTH_SHORT).show();
+                }else{
+                    sendSV();
+                }
+
+
+//                rfDialog.setVisibility(View.GONE);
+//                btnDFinish.setEnabled(true);
+//                btnDFinish.setBackgroundResource(R.drawable.custombt);
 
             }
         });
@@ -267,7 +297,7 @@ public class DeliveryActivity extends AppCompatActivity {
     }
 
     private void sendSV() {
-        note = edfedd.getText().toString();
+
 
         String link = getResources().getString(R.string.saveStatusOrderAPI);
 //        String link = "http://needfood.webmantan.com/c";
@@ -281,6 +311,7 @@ public class DeliveryActivity extends AppCompatActivity {
                     Log.d("CODEAA", code);
 
                     if (code.equals("0")) {
+                        dialog.dismiss();
                         Toast.makeText(getApplication(), "Thành công", Toast.LENGTH_LONG).show();
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);

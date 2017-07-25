@@ -172,34 +172,7 @@ public class MainActivity extends TabActivity
         }
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        Log.d("rrrrrr", "AAAAAA");
-//        Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
-//        check++;
-//        if (check == 2) {
-//            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-//            alertDialogBuilder.setTitle("ManMo");
-//            alertDialogBuilder
-//                    .setMessage("Bạn thực sự muốn thoát ứng dụng Manmo ?")
-//                    .setCancelable(false)
-//                    .setPositiveButton("Không", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            dialog.cancel();
-//                            check = 0;
-//                        }
-//                    })
-//                    .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            moveTaskToBack(true);
-//                            android.os.Process.killProcess(android.os.Process.myPid());
-//                            System.exit(0);
-//                        }
-//                    });
-//            AlertDialog alertDialog = alertDialogBuilder.create();
-//            alertDialog.show();
-//        }
-//    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -243,7 +216,8 @@ public class MainActivity extends TabActivity
         if (location != null) {
             la = location.getLatitude();
             lo = location.getLongitude();
-
+            Toast.makeText(getApplicationContext(), "Location Connected" + "\n" + "la: " + la + "\n" + "lo: " + lo, Toast.LENGTH_SHORT).show();
+            Log.d("TOADO2", String.valueOf(la)+"\n"+String.valueOf(lo));
             guitoado();
 
 
@@ -286,7 +260,7 @@ public class MainActivity extends TabActivity
         if (l2 != null) {
             la = l2.getLatitude();
             lo = l2.getLongitude();
-//           Toast.makeText(getApplicationContext(), "Location Connected" + "\n" + "la: " + la + "\n" + "lo: " + lo, Toast.LENGTH_SHORT).show();
+//          Toast.makeText(getApplicationContext(), "Location Connected" + "\n" + "la: " + la + "\n" + "lo: " + lo, Toast.LENGTH_SHORT).show();
 //            Log.d("TOADO", String.valueOf(la)+"\n"+String.valueOf(lo));
             guitoado();
 

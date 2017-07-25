@@ -51,7 +51,7 @@
     <string name="cspnhaplai">Nhập lại mật khẩu mới</string>
     //customitem
     <string name="ctdonship">ĐƠN SHIP</string>
-    <string name="cttenhang">Tên hàng:\u0020</string>
+    <string name="cttenhang">Hàng ship:\u0020</string>
     <string name="ctdiachi">Địa chỉ:\u0020</string>
     <string name="ctlienhe">Liên hệ:\u0020</string>
     <string name="ctkhachhang">Khách hàng:\u0020</string>

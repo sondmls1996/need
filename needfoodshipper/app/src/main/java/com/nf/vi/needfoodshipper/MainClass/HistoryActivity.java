@@ -3,6 +3,7 @@ package com.nf.vi.needfoodshipper.MainClass;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,7 @@ import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.HisoryRequest;
 import com.nf.vi.needfoodshipper.Request.SearchRequest;
 import com.nf.vi.needfoodshipper.Request.WaittingRequest;
+import com.nf.vi.needfoodshipper.SupportClass.EndlessRecyclerViewScrollListener;
 import com.nf.vi.needfoodshipper.SupportClass.EndlessScroll;
 import com.nf.vi.needfoodshipper.SupportClass.WrapSliding;
 import com.nf.vi.needfoodshipper.database.DBHandle;
@@ -70,9 +72,13 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
     SwipeRefreshLayout swipeRefresh;
     Button btnflitter;
     Calendar cal;
+    String note;
+    boolean checktime = false;
     Date date;
-    private EndlessScroll scrollListener;
+
+    private EndlessRecyclerViewScrollListener scrollListener;
     LinearLayoutManager linearLayoutManager;
+    CountDownTimer ctime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +110,10 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
         listht = new ArrayList<>();
         adapter = new HistoryAdapter(getApplicationContext(), listht);
         rcvHistory.setAdapter(adapter);
+        order(1);
         rcvHistory.setLayoutManager(linearLayoutManager);
         swipeRefresh.setOnRefreshListener(this);
-        scrollListener = new EndlessScroll(linearLayoutManager) {
+        scrollListener = new  EndlessRecyclerViewScrollListener (linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
@@ -116,10 +123,10 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
 
             }
         };
-        order(1);
+
         // Adds the scroll listener to RecyclerView
         rcvHistory.addOnScrollListener(scrollListener);
-        swipeRefresh.setOnRefreshListener(this);
+
 
 
         wrap.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
@@ -166,6 +173,9 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
             public void onResponse(String response) {
                 try {
                     Log.d("GG", response);
+                    if (checktime == true) {
+                        ctime.cancel();
+                    }
                     JSONArray arr = new JSONArray(response);
                     for (int i = 0; i < arr.length(); i++) {
                         StringBuilder sb = new StringBuilder();
@@ -196,8 +206,13 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
                         String id = Order.getString("id");
                         String status = Order.getString("status");
                         String code = Order.getString("code");
-                        String timeLeftShip = Order.getString("timeLeftShip");
-                        String note = Order.getString("noteShiper");
+                        if (Order.has("timeLeftShip")) {
+                            timeLeftShip = Order.getString("timeLeftShip");
+                        }
+                        if (Order.has("noteShiper")) {
+                             note = Order.getString("noteShiper");
+                        }
+
 //                        Toast.makeText(getApplication(), note, Toast.LENGTH_LONG).show();
 
                         Log.d("hh", fullName);
@@ -300,6 +315,8 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
             public void onResponse(String response) {
                 try {
                     Log.d("GG", response);
+
+
                     JSONArray arr = new JSONArray(response);
                     for (int i = 0; i < arr.length(); i++) {
                         StringBuilder sb = new StringBuilder();
@@ -334,7 +351,9 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
                             timeLeftShip = Order.getString("timeLeftShip");
                         }
 
-                        String note = Order.getString("note");
+                        if (Order.has("noteShiper")) {
+                             note = Order.getString("noteShiper");
+                        }
 
                         Log.d("111111", fullName);
                         listht.add(new HistoryConstructor(status, code, timeShiper, timeLeftShip, note));
@@ -359,7 +378,21 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
     @Override
     public void onRefresh() {
         listht.clear();
-        order(1);
+        ctime = new CountDownTimer(15000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                checktime = true;
+                order(1);
+            }
+
+            @Override
+            public void onFinish() {
+                swipeRefresh.setRefreshing(false);
+                Toast.makeText(getApplicationContext(), "Lỗi kết nối", Toast.LENGTH_SHORT).show();
+            }
+
+        };
+        ctime.start();
 
     }
 }

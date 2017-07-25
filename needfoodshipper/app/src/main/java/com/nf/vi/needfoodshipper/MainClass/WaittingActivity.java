@@ -1,6 +1,7 @@
 package com.nf.vi.needfoodshipper.MainClass;
 
 import android.content.DialogInterface;
+import android.os.CountDownTimer;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.nf.vi.needfoodshipper.Constructor.WaittingContructor;
 import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.OrderRequest;
 import com.nf.vi.needfoodshipper.Request.WaittingRequest;
+import com.nf.vi.needfoodshipper.SupportClass.EndlessRecyclerViewScrollListener;
 import com.nf.vi.needfoodshipper.database.DBHandle;
 
 import org.json.JSONArray;
@@ -36,13 +38,19 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
     private TextView tvTitle, tvTenShiper;
     WaittingAdapter adapter;
     ArrayList<MainConstructor> arr;
+    CountDownTimer ctime;
+    boolean checktime = false;
     int check = 0;
+
     private List<WaittingContructor> ld;
     RecyclerView rc;
     private DBHandle db;
     private List<ListUserContructor> list;
     String fullName, accessToken;
     SwipeRefreshLayout swipeRefresh;
+    private EndlessRecyclerViewScrollListener scrollListener;
+    LinearLayoutManager linearLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,21 +64,38 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
         }
 
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.SwipeRefreshwaitting);
 
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.SwipeRefreshwaitting);
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         rc = (RecyclerView) findViewById(R.id.rcvwaitting);
         ld = new ArrayList<>();
         adapter = new WaittingAdapter(getApplicationContext(), ld);
         rc.setAdapter(adapter);
-        rc.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        rc.setLayoutManager(linearLayoutManager);
+
         swipeRefresh.setOnRefreshListener(this);
-        order();
+
+
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                page++;
+                order(page);
+            }
+        };
+        order(1);
+        // Adds the scroll listener to RecyclerView
+        rc.addOnScrollListener(scrollListener);
     }
 
-    private void order() {
+    private void order(int page) {
+
 //        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
 //        dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
-        String page = "1";
+//        String page = "1";
         final String link = getResources().getString(R.string.getListOrderWaitingShiperAPI);
 
         Response.Listener<String> response = new Response.Listener<String>() {
@@ -78,9 +103,16 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
             public void onResponse(String response) {
                 try {
                     Log.d("GG", response);
+                    if (checktime == true) {
+                        ctime.cancel();
+                    }
                     JSONArray arr = new JSONArray(response);
                     for (int i = 0; i < arr.length(); i++) {
                         StringBuilder sb = new StringBuilder();
+                        StringBuilder soluong = new StringBuilder();
+                        StringBuilder sanpham = new StringBuilder();
+                        StringBuilder dongia = new StringBuilder();
+                        StringBuilder thanhtien = new StringBuilder();
                         String money;
                         JSONObject json = arr.getJSONObject(i);
                         JSONObject Order = json.getJSONObject("Order");
@@ -97,8 +129,10 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
                             JSONObject idx = listProduct.getJSONObject(key);
                             sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
-
-
+                            soluong.append(idx.getString("quantity") + "\n");
+                            sanpham.append(idx.getString("title") + "\n");
+                            dongia.append(idx.getString("price") + "\n");
+                            thanhtien.append(idx.getString("money") + "\n");
                         }
                         String timeShiper = infoOrder.getString("timeShiper");
 
@@ -110,7 +144,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
                         String code = Order.getString("code");
 
                         Log.d("hh", fullName);
-                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code));
+                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code,soluong.toString(),sanpham.toString(),dongia.toString(),thanhtien.toString()));
 
 
                     }
@@ -124,7 +158,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
             }
         };
 
-        WaittingRequest loginRequest = new WaittingRequest(page, accessToken, link, response);
+        WaittingRequest loginRequest = new WaittingRequest(page+"", accessToken, link, response);
         RequestQueue queue = Volley.newRequestQueue(WaittingActivity.this);
         queue.add(loginRequest);
     }
@@ -133,7 +167,22 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
     @Override
     public void onRefresh() {
         ld.clear();
-        order();
+
+        ctime = new CountDownTimer(15000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                checktime = true;
+                order(1);
+            }
+
+            @Override
+            public void onFinish() {
+                swipeRefresh.setRefreshing(false);
+                Toast.makeText(getApplicationContext(), "Lỗi kết nối", Toast.LENGTH_SHORT).show();
+            }
+
+        };
+        ctime.start();
     }
 
     @Override
@@ -142,9 +191,9 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
         check++;
         if (check == 2) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(WaittingActivity.this);
-            alertDialogBuilder.setTitle("ManMo");
+            alertDialogBuilder.setTitle("Needfood");
             alertDialogBuilder
-                    .setMessage("Bạn thực sự muốn thoát ứng dụng Manmo ?")
+                    .setMessage("Bạn thực sự muốn thoát ứng dụng ?")
                     .setCancelable(false)
                     .setPositiveButton("Không", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {

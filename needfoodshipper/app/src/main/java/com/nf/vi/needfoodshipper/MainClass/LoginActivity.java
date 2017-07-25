@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.nf.vi.needfoodshipper.Constructor.ListUserContructor;
 import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.LoginRequest;
 import com.nf.vi.needfoodshipper.Request.PostTokenRequest;
+import com.nf.vi.needfoodshipper.SupportClass.Networks;
 import com.nf.vi.needfoodshipper.database.DBHandle;
 import com.nf.vi.needfoodshipper.database.Session;
 
@@ -78,6 +80,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         changeLang(lang);
         loadLocale();
 
+
         edtSdt = (EditText) findViewById(R.id.edtSdt);
         edtPass = (EditText) findViewById(R.id.edtPass);
         forgetpass = (TextView) findViewById(R.id.forgetpass);
@@ -93,7 +96,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
             @Override
             public void onClick(View v) {
 
-                login();
+                ckeckmang();
 
 //                Toast.makeText(getApplication(), sdt , Toast.LENGTH_SHORT).show();
 ////                startActivity(new Intent(getBaseContext(), MainActivity.class));
@@ -277,35 +280,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 //        updateTexts();
     }
 
-    //    private void updateTexts()
-//    {
-//        txt_hello.setText(R.string.hello_world);
-//        btn_en.setText(R.string.btn_en);
-//        btn_ru.setText(R.string.btn_ru);
-//        btn_fr.setText(R.string.btn_fr);
-//        btn_de.setText(R.string.btn_de);
-//    }
-//    @Override
-//    public void onClick(View v) {
-//        String lang = "en";
-//        switch (v.getId()) {
-//            case R.id.btn_en:
-//                lang = "en";
-//                break;
-//            case R.id.btn_ru:
-//                lang = "ru";
-//                break;
-//            case R.id.btn_de:
-//                lang = "de";
-//                break;
-//            case R.id.btn_fr:
-//                lang = "fr";
-//                break;
-//            default:
-//                break;
-//        }
-//        changeLang(lang);
-//    }
+
     @Override
     public void onConfigurationChanged(android.content.res.Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -313,6 +288,17 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
             newConfig.locale = myLocale;
             Locale.setDefault(myLocale);
             getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
+        }
+    }
+    public void ckeckmang(){
+        Networks networks = new Networks();
+        Boolean conn = networks.checkNow(this.getApplicationContext());
+        if(conn ==true){
+            login();
+        }else{
+            Toast.makeText(LoginActivity.this, "Bạn vui lòng bật kết nối Internet", Toast.LENGTH_SHORT).show();
+
+            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
         }
     }
 }

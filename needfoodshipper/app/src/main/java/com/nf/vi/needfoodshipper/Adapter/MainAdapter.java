@@ -42,6 +42,7 @@ public class MainAdapter extends
     private List<MainConstructor> listData = new ArrayList<>();
     Context context;
     DBHandle db;
+    public String id1;
     List<ListUserContructor> list;
 
     public MainAdapter(Context context, List<MainConstructor> listData) {
@@ -110,7 +111,7 @@ public class MainAdapter extends
 
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final RecyclerViewHolder viewHolder, final int position) {
         final MainConstructor ip = listData.get(position);
         id = ip.getId();
         stt1 = ip.getStt();
@@ -136,6 +137,10 @@ public class MainAdapter extends
                 it.putExtra("moneyship", ip.getMoneyship());
                 it.putExtra("stt", ip.getStt());
                 it.putExtra("code", ip.getCode());
+                it.putExtra("soluong", ip.getSoluong());
+                it.putExtra("sanpham", ip.getSanpham());
+                it.putExtra("dongia", ip.getDongia());
+                it.putExtra("thanhtien", ip.getThanhtien());
                 context.startActivity(it);
             }
         });
@@ -163,17 +168,21 @@ public class MainAdapter extends
         viewHolder.btnacc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it1 = new Intent(context, MainActivity.class);
-                it1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(it1);
-                viewHolder.lnb.setVisibility(View.GONE);
-                viewHolder.imgstt.setImageDrawable(context.getResources().getDrawable(R.drawable.grdot));
-                viewHolder.textstt.setText(context.getResources().getString(R.string.wait));
-                viewHolder.textstt.setTextColor(context.getResources().getColor(R.color.greenL));
-//                Toast.makeText(context, "ACC", Toast.LENGTH_SHORT).show();
                 note = "";
                 stt = "waiting";
+                Log.d("IDD2", ip.getId());
+                id1 = ip.getId();
                 sendSV();
+//                Intent it1 = new Intent(context, MainActivity.class);
+//                it1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(it1);
+//                viewHolder.lnb.setVisibility(View.GONE);
+//                viewHolder.imgstt.setImageDrawable(context.getResources().getDrawable(R.drawable.grdot));
+//                viewHolder.textstt.setText(context.getResources().getString(R.string.wait));
+//                viewHolder.textstt.setTextColor(context.getResources().getColor(R.color.greenL));
+////                Toast.makeText(context, "ACC", Toast.LENGTH_SHORT).show();
+
+
             }
         });
         viewHolder.btnSend.setOnClickListener(new View.OnClickListener() {
@@ -181,15 +190,23 @@ public class MainAdapter extends
             public void onClick(View v) {
                 note = viewHolder.edfedd.getText().toString();
                 stt = "cancel";
-                sendSV();
-                viewHolder.rl.setVisibility(View.GONE);
+                id1 = ip.getId();
+                if (note.equals("")) {
+                    Toast.makeText(context, "Lý do không được đươc để trống", Toast.LENGTH_SHORT).show();
+                } else {
+                    sendSV();
+                }
+//                Intent it1 = new Intent(context, MainActivity.class);
+//                it1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(it1);
+//                viewHolder.lnb.setVisibility(View.GONE);
             }
         });
     }
 
     private void sendSV() {
 
-        //  String link = getResources().getString(R.string.saveStatusOrderAPI);
+        //   String link = getResources().getString(R.string.saveStatusOrderAPI);
         String link = "http://needfood.webmantan.com/saveStatusOrderAPI";
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
@@ -202,8 +219,10 @@ public class MainAdapter extends
 
                     if (code.equals("0")) {
                         Toast.makeText(context, "Thành Công", Toast.LENGTH_SHORT).show();
-//                            Intent i = new Intent(SentPassEmail.this, DangNhapActivity.class);
-//                            startActivity(i);
+                        Intent i = new Intent(context, MainActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(i);
+//
                     } else {
 //                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_SHORT).show();
                     }
@@ -212,7 +231,7 @@ public class MainAdapter extends
                 }
             }
         };
-        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt, id,"", link, response);
+        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt, id1, "", link, response);
         RequestQueue qe = Volley.newRequestQueue(context);
         qe.add(save);
 

@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +34,7 @@ import com.nf.vi.needfoodshipper.Constructor.ListUserContructor;
 import com.nf.vi.needfoodshipper.Constructor.MainConstructor;
 import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.OrderRequest;
+import com.nf.vi.needfoodshipper.SupportClass.EndlessRecyclerViewScrollListener;
 import com.nf.vi.needfoodshipper.SupportClass.EndlessScroll;
 import com.nf.vi.needfoodshipper.database.DBHandle;
 
@@ -45,7 +48,7 @@ import java.util.List;
 
 public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private ImageView imgShipper;
-
+    CountDownTimer ctime;
     private TextView tvTitle, tvTenShiper;
     MainAdapter adapter;
     ArrayList<MainConstructor> arr;
@@ -53,8 +56,9 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
     private List<MainConstructor> ld;
     RecyclerView rc;
     private DBHandle db;
+    boolean checktime = false;
     private List<ListUserContructor> list;
-    private EndlessScroll scrollListener;
+    private EndlessRecyclerViewScrollListener scrollListener;
     String fullName, accessToken;
     SwipeRefreshLayout swipeRefresh;
 
@@ -89,7 +93,10 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
         rc.setAdapter(adapter);
         rc.setLayoutManager(linearLayoutManager);
         swipeRefresh.setOnRefreshListener(this);
-        scrollListener = new EndlessScroll(linearLayoutManager) {
+
+
+
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
@@ -116,9 +123,17 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
             public void onResponse(String response) {
                 try {
                     Log.d("GG", response);
+                    if(checktime==true){
+                        ctime.cancel();
+                    }
                     JSONArray arr = new JSONArray(response);
+
                     for (int i = 0; i < arr.length(); i++) {
                         StringBuilder sb = new StringBuilder();
+                        StringBuilder soluong = new StringBuilder();
+                        StringBuilder sanpham = new StringBuilder();
+                        StringBuilder dongia = new StringBuilder();
+                        StringBuilder thanhtien = new StringBuilder();
                         String money;
                         JSONObject json = arr.getJSONObject(i);
                         JSONObject Order = json.getJSONObject("Order");
@@ -126,31 +141,29 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
                         JSONObject listProduct = Order.getJSONObject("listProduct");
                         JSONObject infoOrder = Order.getJSONObject("infoOrder");
                         JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
-
-
                         Iterator<String> ite = listProduct.keys();
 
                         while (ite.hasNext()) {
                             String key = ite.next();
-
                             JSONObject idx = listProduct.getJSONObject(key);
                             sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
-
-
+                            soluong.append(idx.getString("quantity") + "\n");
+                            sanpham.append(idx.getString("title") + "\n");
+                            dongia.append(idx.getString("price") + "\n");
+                            thanhtien.append(idx.getString("money") + "\n");
                         }
-                        String timeShiper = infoOrder.getString("timeShiper");
 
+                        String timeShiper = infoOrder.getString("timeShiper");
                         String fullName = infoCustomer.getString("fullName");
                         String fone = infoCustomer.getString("fone");
                         String address = infoCustomer.getString("address");
                         String id = Order.getString("id");
+                        Log.d("IDD",Order.getString("id"));
                         String status = Order.getString("status");
                         String code = Order.getString("code");
 
                         Log.d("hh", fullName);
-                        ld.add(new MainConstructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"),infoOrder.getString("moneyShip"),status,code));
-
-
+                        ld.add(new MainConstructor(id, sb.toString(), address, fone, fullName,timeShiper, infoOrder.getString("totalMoneyProduct"),infoOrder.getString("moneyShip"),status,code,soluong.toString(),sanpham.toString(),dongia.toString(),thanhtien.toString()));
                     }
                     adapter.notifyDataSetChanged();
                     swipeRefresh.setRefreshing(false);
@@ -170,7 +183,23 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
     @Override
     public void onRefresh() {
         ld.clear();
-        order(1);
+
+        ctime = new CountDownTimer(15000,1000) {
+            @Override
+
+            public void onTick(long millisUntilFinished) {
+                checktime = true;
+                order(1);
+            }
+
+            @Override
+            public void onFinish() {
+                    swipeRefresh.setRefreshing(false);
+                Toast.makeText(getApplicationContext(),"Lỗi kết nối",Toast.LENGTH_SHORT).show();
+            }
+
+        };
+        ctime.start();
     }
 
     @Override
@@ -182,7 +211,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
         }
         if (check == 2) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(NewDealActivity.this);
-            alertDialogBuilder.setTitle("ManMo");
+                alertDialogBuilder.setTitle("Needfood");
             alertDialogBuilder
                     .setMessage("Bạn thực sự muốn thoát ứng dụng ?")
                     .setCancelable(false)
