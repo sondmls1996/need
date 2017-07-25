@@ -22,7 +22,8 @@ import static android.R.id.tabhost;
  */
 public class TabFragment extends Fragment {
     LocalActivityManager mlam;
-    public  static  TabHost tabHost;
+    public static TabHost tabHost;
+
     public TabFragment() {
         // Required empty public constructor
     }
@@ -32,9 +33,9 @@ public class TabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_tab,container,false);
+        View v = inflater.inflate(R.layout.fragment_tab, container, false);
         mlam = new LocalActivityManager(getActivity(), false);
-         tabHost = (TabHost) v.findViewById(tabhost);
+        tabHost = (TabHost) v.findViewById(tabhost);
 
         mlam.dispatchCreate(savedInstanceState);
         tabHost.setup(mlam);
@@ -49,12 +50,12 @@ public class TabFragment extends Fragment {
         taba.setIndicator(getString(R.string.new_));
         tab1.setIndicator(getString(R.string.topdeall));
 
-        taba.setContent(new Intent(getActivity(),News.class));
+        taba.setContent(new Intent(getActivity(), News.class));
 
-        tab1.setContent(new Intent(getActivity(),Hotdeal.class));
+        tab1.setContent(new Intent(getActivity(), Hotdeal.class));
 
         tab2.setIndicator(getString(R.string.besqua));
-        tab2.setContent(new Intent(getActivity(),BestQuality.class));
+        tab2.setContent(new Intent(getActivity(), BestQuality.class));
 
         /** Add the tabs  to the TabHost to display. */
         tabHost.addTab(taba);
@@ -71,7 +72,7 @@ public class TabFragment extends Fragment {
                     tv.setTextColor(Color.parseColor("#ffffff"));
                 }
 
-                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab() ).setBackgroundColor(getResources().getColor(R.color.darkred)); // selected
+                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.darkred)); // selected
 
             }
         });
