@@ -111,7 +111,7 @@
             android:parentActivityName=".More.History.MoreHistory" />
         <activity android:name=".News.Hotdeal" />
 
-         <meta-data
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
@@ -148,7 +148,8 @@
 
         <activity
             android:name=".More.History.TransferHistory"
-            android:parentActivityName=".More.History.MoreHistory"></activity>
+            android:parentActivityName=".More.History.MoreHistory" />
+
         <receiver
             android:name=".Service.ConnectivityReceiver"
             android:enabled="true">
@@ -157,7 +158,6 @@
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

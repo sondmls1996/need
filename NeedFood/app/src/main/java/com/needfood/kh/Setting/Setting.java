@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -47,12 +48,12 @@ public class Setting extends AppCompatActivity {
     Session ses;
     LoginManager loginManager;
     CallbackManager callbackManager;
-    TextView logout;
+    LinearLayout logout;
     DataHandle db;
     List<InfoConstructor> list;
     String type,token;
 
-    String ngonngu[] = {getResources().getString(R.string.tienganh), getResources().getString(R.string.tiengviet)};
+    String ngonngu[] = {"English", "Vietnamese"};
     Spinner sp;
     Locale myLocale;
     List<Language> lt;
@@ -76,7 +77,7 @@ public class Setting extends AppCompatActivity {
         txt.setText(getResources().getString(R.string.action_settings));
         ses = new Session(getApplicationContext());
         lgb = (LoginButton) findViewById(R.id.loginset);
-        logout = (TextView) findViewById(R.id.logout);
+        logout = (LinearLayout) findViewById(R.id.logout);
         callbackManager = CallbackManager.Factory.create();
         db = new DataHandle(getApplicationContext());
         list = db.getAllInfor();
@@ -120,6 +121,7 @@ public class Setting extends AppCompatActivity {
                 if (currentAccessToken == null) {
                     //write your code here what to do when user clicks on facebook logout
                     ses.setLoggedin(false);
+                    db.deleteInfo();
                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                     startActivity(it);
                     finish();
@@ -158,7 +160,8 @@ public class Setting extends AppCompatActivity {
                     lang = "en";
                     db.addCheckLan(new Language("1"));
 
-                } else if (a=="Tiếng Việt"){
+                } else if (a==
+                        "Vietnamese"){
                     lang = "vi";
                     db.addCheckLan(new Language("0"));
 

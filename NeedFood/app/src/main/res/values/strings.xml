@@ -55,6 +55,7 @@
     <string name="shipto">Ship to</string>
     <string name="promo">Promotion Code / Coins</string>
     <string name="phonenum">Phone number</string>
+    <string name="email">Email:\u0020</string>
     <string name="concode">Confirmation code</string>
     <string name="next">Next</string>
     <string name="vericode">Confirmation code has been sent to your email</string>
@@ -72,6 +73,8 @@
     <string name="usname">User name</string>
     <string name="pass">Password</string>
     <string name="quanlity">Quanlity</string>
+    <string name="quanlity2">Quanlity:\u0020</string>
+    <string name="total">Total:\u0020</string>
     <string name="facebook_app_id">144493206000726</string>
     <string name="newfeed">New Feed</string>
     <string name="lostss">The login session has ended, please log in again</string>
@@ -85,14 +88,19 @@
     <string name="notif">Notification</string>
     <string name="succ">Success</string>
     <string name="emailwr">Email invalidate</string>
+    <string name="order">Order</string>
+    <string name="name">Name:\u0020</string>
+    <string name="phonenum2">Phone:\u0020</string>
     <string name="wait">Waiting...</string>
     <string name="wrreg">Can not be empty</string>
     <string name="wrpass">Confirm password don\'t match</string>
     <string name="shortpass">Password must be 6 characters or more</string>
     <string name="contact">Contact</string>
     <string name="shiptime">Shipping time</string>
+    <string name="rein">Receiver\'s information</string>
     <string name="howtou">How to use?</string>
     <string name="prddetail">Product detail</string>
+    <string name="conor">Confirm the order</string>
     <string name="note">Note</string>
     <string name="search">Search...</string>
     <string name="tranhis">Transfer history</string>

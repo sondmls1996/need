@@ -12,6 +12,10 @@
     <string name="acid">Mã tài khoản</string>
     <string name="emailc">Email</string>
     <string name="phone">Số điện thoại:\u0020</string>
+    <string name="order">Đặt hàng</string>
+    <string name="conor">Xác nhận đơn hàng</string>
+    <string name="rein">Thông tin người nhận</string>
+    <string name="name">Tên:\u0020</string>
     <string name="address">Địa chỉ:\u0020</string>
     <string name="save">Lưu</string>
     <string name="change">Thay đổi</string>
@@ -24,6 +28,8 @@
     <string name="coins">Coins</string>
     <string name="paym">Thanh toán</string>
     <string name="changepass">Đổi mật khẩu</string>
+    <string name="quanlity2">Số lượng:\u0020</string>
+    <string name="total">Tổng:\u0020</string>
     <string name="more">Thêm</string>
     <string name="shipmn">Tiền ship</string>
     <string name="yourin">Thông tin của bạn</string>
@@ -48,8 +54,10 @@
     <string name="prd">Sản phẩm\u0020</string>
     <string name="er">Lỗi</string>
     <string name="shipto">Chuyển đến</string>
+    <string name="email">Email:\u0020</string>
     <string name="promo">Mã khuyến mại / Coins</string>
     <string name="phonenum">Số điện thoại</string>
+    <string name="phonenum2">Số điện thoại:\u0020</string>
     <string name="concode">Mã xác nhận</string>
     <string name="next">Tiếp theo</string>
     <string name="vericode">Mã xác nhận đã được gửi đến email của bạn</string>
