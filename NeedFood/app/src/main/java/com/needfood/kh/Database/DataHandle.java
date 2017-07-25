@@ -46,9 +46,10 @@ public class DataHandle extends SQLiteOpenHelper {
     public static final String ID_LANGUAGE = "id_language";
 
     public static final String TABLE_NOTI = "tbnoti";
-    public static final String TIT_NOTI ="idnoti";
-    public static final String IMAGE_NOTI ="imgnoti";
+    public static final String TIT_NOTI = "titnoti";
+    public static final String IMAGE_NOTI = "imgnoti";
     public static final String TIME_NOTI = "timenoti";
+    public static final String ID_NOTI = "idnoti";
 
     public DataHandle(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -80,6 +81,7 @@ public class DataHandle extends SQLiteOpenHelper {
         String CREATE_TABLE_NOTI =
 
                 "CREATE TABLE " + TABLE_NOTI + "(" +
+                        ID_NOTI + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         TIT_NOTI + " TEXT NOT NULL," +
                         IMAGE_NOTI + " TEXT NOT NULL," +
                         TIME_NOTI + " TEXT NOT NULL" +
@@ -114,7 +116,6 @@ public class DataHandle extends SQLiteOpenHelper {
 
     public void addInfo(InfoConstructor in) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(FULLNAME, in.getFullname()); // Contact Name
         values.put(EMAIL, in.getEmail()); // Contact Email
@@ -136,15 +137,17 @@ public class DataHandle extends SQLiteOpenHelper {
         db.insert(CHECK_LAN, null, values);
         db.close();
     }
-    public void addNoti(NotiConstructor noti) {
+
+    public void addNoti(String tit,String img,String time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(TIT_NOTI, noti.getTitle());
-        values.put(IMAGE_NOTI, noti.getImg());
-        values.put(TIME_NOTI, noti.getTime());
+        values.put(TIT_NOTI, tit);
+        values.put(IMAGE_NOTI, img);
+        values.put(TIME_NOTI, time);
         db.insert(TABLE_NOTI, null, values);
         db.close();
     }
+
     public List<NotiConstructor> getNoti() {
         List<NotiConstructor> contactList = new ArrayList<NotiConstructor>();
         // Select All Query
@@ -157,9 +160,10 @@ public class DataHandle extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 NotiConstructor contact = new NotiConstructor();
-                contact.setTitle(cursor.getString(0));
-                contact.setImg(cursor.getString(1));
-                contact.setTime(cursor.getString(2));
+                contact.setId(cursor.getString(0));
+                contact.setTitle(cursor.getString(1));
+                contact.setImg(cursor.getString(2));
+                contact.setTime(cursor.getString(3));
 
                 // Adding contact to list
                 contactList.add(contact);
@@ -170,6 +174,7 @@ public class DataHandle extends SQLiteOpenHelper {
         // return contact list　
         return contactList;
     }
+
     public List<ListMN> getMNid(String id) {
         List<ListMN> contactList = new ArrayList<ListMN>();
         // Select All Query
@@ -284,7 +289,14 @@ public class DataHandle extends SQLiteOpenHelper {
         db.update(INFO, values, IDINFO + " = ?", new String[]{id});
         return true;
     }
-
+    public int getNotesCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_NOTI;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
     public boolean isMoneyEmpty() {
         boolean empty = false;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -305,7 +317,13 @@ public class DataHandle extends SQLiteOpenHelper {
         db.delete(INFO, null, null);
         db.close();
     }
+    public void deleteNote(int  id) {
 
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NOTI, ID_NOTI + " = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
+    }
     public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(MONEYTB, null, null);

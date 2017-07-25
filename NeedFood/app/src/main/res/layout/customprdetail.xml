@@ -60,8 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="25sp"
-                    android:maxLength="20"
-                    android:id="@+id/tvname2"
+                          android:id="@+id/tvname2"
                     android:text="SEA FOOD"
                     android:textColor="@color/red"/>
 
@@ -163,10 +162,7 @@ Nestled in the quiet town of Warm River, in Southeastern Idaho, the ranch is sur
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/grayDark"/>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -210,16 +206,17 @@ Nestled in the quiet town of Warm River, in Southeastern Idaho, the ranch is sur
                     android:layout_width="match_parent"
                     android:id="@+id/lnfb"
                     android:visibility="visible"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <com.facebook.share.widget.LikeView
                         android:id="@+id/btnlike"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"></com.facebook.share.widget.LikeView>
                     <com.facebook.share.widget.ShareButton
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="5dp"
+
                         android:id="@+id/btnshare"
                         android:layout_height="wrap_content" />
 

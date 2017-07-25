@@ -87,7 +87,7 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:background="@drawable/cusbtnred"
-            android:text="Chi tiết"
+            android:text="@string/det"
             android:textColor="@color/white" />
 
         <Button
@@ -97,7 +97,7 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:background="@drawable/cusbtnred"
-            android:text="Hủy"
+            android:text="@string/canc"
             android:textColor="@color/white" />
 
     </LinearLayout>

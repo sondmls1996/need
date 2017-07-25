@@ -55,7 +55,7 @@ public class Food extends AppCompatActivity {
                 getData(page);
             }
         };
-        getData(1);
+        getData(page);
 
         lv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {

@@ -2,17 +2,20 @@ package com.needfood.kh.Setting;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,6 +33,7 @@ import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
+import com.needfood.kh.SupportClass.LocaleHelper;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
 
@@ -47,15 +51,16 @@ public class Setting extends AppCompatActivity {
     Session ses;
     LoginManager loginManager;
     CallbackManager callbackManager;
-    TextView logout;
+    LinearLayout logout;
     DataHandle db;
     List<InfoConstructor> list;
-    String type,token;
+    String type, token;
 
-    String ngonngu[] = {"Tiếng Anh", "Tiếng Việt"};
+    String ngonngu[] = {"English", "Vietnamese"};
     Spinner sp;
     Locale myLocale;
     List<Language> lt;
+    LocaleHelper localeHelper;
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
     private static final String Locale_Preference = "Locale Preference";
@@ -65,11 +70,19 @@ public class Setting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        TextView txt = (TextView)findViewById(R.id.titletxt);
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
+        imgb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.action_settings));
+        localeHelper = new LocaleHelper();
         ses = new Session(getApplicationContext());
         lgb = (LoginButton) findViewById(R.id.loginset);
-        logout = (TextView) findViewById(R.id.logout);
+        logout = (LinearLayout) findViewById(R.id.logout);
         callbackManager = CallbackManager.Factory.create();
         db = new DataHandle(getApplicationContext());
         list = db.getAllInfor();
@@ -77,9 +90,9 @@ public class Setting extends AppCompatActivity {
             token = it.getAccesstoken();
             type = it.getType();
         }
-        if(type.equals("0")){
+        if (type.equals("0")) {
             lgb.setVisibility(View.GONE);
-        }else{
+        } else {
             logout.setVisibility(View.GONE);
         }
         lt = db.getLan();
@@ -113,6 +126,7 @@ public class Setting extends AppCompatActivity {
                 if (currentAccessToken == null) {
                     //write your code here what to do when user clicks on facebook logout
                     ses.setLoggedin(false);
+                    db.deleteInfo();
                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                     startActivity(it);
                     finish();
@@ -146,18 +160,20 @@ public class Setting extends AppCompatActivity {
 
                 String lang = "vi";
                 String a = ngonngu[position];
-                Toast.makeText(getApplicationContext(), a, Toast.LENGTH_SHORT).show();
-                if (a == "Tiếng Anh") {
+
+                if (a == "English") {
                     lang = "en";
                     db.addCheckLan(new Language("1"));
 
-                } else if (a=="Tiếng Việt"){
+                } else if (a == "Vietnamese") {
                     lang = "vi";
                     db.addCheckLan(new Language("0"));
 
                 }
+                LocaleHelper.setLocale(getApplicationContext(), lang);
                 changeLang(lang);
                 loadLocale();
+
             }
 
             @Override
@@ -189,12 +205,12 @@ public class Setting extends AppCompatActivity {
                     String code = jo.getString("code");
                     Log.d("CODELOG", code);
 
-                        progressDialog.dismiss();
-                        db.deleteInfo();
-                        ses.setLoggedin(false);
-                        Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-                        startActivity(intent);
-                        finish();
+                    progressDialog.dismiss();
+                    db.deleteInfo();
+                    ses.setLoggedin(false);
+                    Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                    startActivity(intent);
+                    finish();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -230,7 +246,7 @@ public class Setting extends AppCompatActivity {
         android.content.res.Configuration config = new android.content.res.Configuration();
         config.locale = myLocale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-//        updateTexts();
+//        resetActivity();
     }
 
 
@@ -242,5 +258,11 @@ public class Setting extends AppCompatActivity {
             Locale.setDefault(myLocale);
             getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
         }
+    }
+
+    public void resetActivity() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 }

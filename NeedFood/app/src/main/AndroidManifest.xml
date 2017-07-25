@@ -70,11 +70,13 @@
         -->
 
         <activity android:name=".Cart.ListCart" />
-        <activity android:name=".Notif.ReplyNotif" />
-        <activity android:name=".More.MoreContanct" />
+        <activity
+            android:name=".More.MoreContanct"
+            android:parentActivityName=".StartActivity" />
         <activity
             android:name=".Setting.Setting"
-            android:parentActivityName=".More.MoreContanct" />
+            android:configChanges="locale"
+            android:parentActivityName=".StartActivity" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -87,33 +89,29 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Setting.ChangeLanguage" />
-        <activity android:name=".Login.Login" />
+        <activity
+            android:name=".Login.Login"
+            android:parentActivityName=".StartActivity" />
         <activity android:name=".News.News" />
         <activity android:name=".Login.Register" />
         <activity
             android:name=".Login.GetCode"
-            android:parentActivityName=".Login.Login" />
+            android:parentActivityName=".Login.GetPass" />
         <activity
             android:name=".Login.GetPass"
-            android:parentActivityName=".Login.GetCode" />
+            android:parentActivityName=".StartActivity" />
         <activity
             android:name=".Login.ChangePass"
             android:parentActivityName=".More.MoreContanct" />
         <activity android:name=".QRCamera" />
-        <activity android:name=".Product.Preview" />
-        <activity android:name=".More.History.MoreHistory" />
-        <activity android:name=".More.History.OrderHistory" />
+        <activity
+            android:name=".More.History.MoreHistory"
+            android:parentActivityName=".StartActivity" />
+        <activity
+            android:name=".More.History.OrderHistory"
+            android:parentActivityName=".More.History.MoreHistory" />
         <activity android:name=".News.Hotdeal" />
 
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
-        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -125,9 +123,13 @@
 
         <activity
             android:name=".Maps.MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".More.Tranfer" />
-        <activity android:name=".Product.Howtouse" />
+            android:parentActivityName=".StartActivity" />
+        <activity
+            android:name=".More.Tranfer"
+            android:parentActivityName=".StartActivity" />
+        <activity
+            android:name=".Product.Howtouse"
+            android:parentActivityName=".Product.ProductDetail" />
 
         <service
             android:name=".Service.MyFirebaseInstanceIdService"
@@ -145,7 +147,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".More.History.TransferHistory" />
+        <activity
+            android:name=".More.History.TransferHistory"
+            android:parentActivityName=".More.History.MoreHistory" />
 
         <receiver
             android:name=".Service.ConnectivityReceiver"
@@ -155,8 +159,6 @@
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
-
-        <activity android:name=".Product.LikeWebview"></activity>
     </application>
 
 </manifest>

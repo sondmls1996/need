@@ -8,7 +8,15 @@
     tools:context="com.needfood.kh.More.History.TransferHistory">
 
     <include layout="@layout/toolbar"></include>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/nohis"
+        android:id="@+id/nop9"
+        android:visibility="gone"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:gravity="center"/>
     <ListView
         android:id="@+id/lvtran"
         android:layout_width="match_parent"

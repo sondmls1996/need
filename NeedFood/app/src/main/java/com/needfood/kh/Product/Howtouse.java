@@ -25,6 +25,13 @@ public class Howtouse extends AppCompatActivity {
         setContentView(R.layout.activity_howtouse);
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.howtou));
+        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        imgb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         Intent intent = getIntent();
         htu = intent.getStringExtra("htu");
         titl = intent.getStringExtra("tit");

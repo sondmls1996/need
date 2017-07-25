@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +52,13 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_contanct);
-
+        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        imgb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.yourin));
         db = new DataHandle(getApplicationContext());
@@ -72,8 +79,6 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         phone_id = (EditText) findViewById(R.id.fone_id);
 
         pro = (TextView) findViewById(proper);
-//        pay = (EditText) findViewById(R.id.pay);
-
         change = (TextView) findViewById(R.id.change);
         save = (TextView) findViewById(R.id.save);
 

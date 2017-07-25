@@ -44,6 +44,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     Intent it;
     ChangeTimestamp changeTimestamp;
     DataHandle db;
+    List<NotiConstructor> list;
+    int idd = 0;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -52,7 +54,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         db = new DataHandle(getApplicationContext());
         Random random = new Random();
         int m = random.nextInt(9999 - 1000) + 1000;
-
+        list = db.getNoti();
+        if (list.size() > 0) {
+            idd = Integer.parseInt(list.get(0).getId());
+        }
         if (remoteMessage.getData().size() > 0) {
             Log.e(TAG, remoteMessage.getData() + "");
 
@@ -70,6 +75,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
             if (notif.equals("changeCoinAPI")) {
+                it = new Intent(this, TransferHistory.class);
+            }
+            if (notif.equals("infoOrder")) {
                 it = new Intent(this, TransferHistory.class);
             }
         }
@@ -98,7 +106,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         DateFormat df = new SimpleDateFormat("HH:mm dd-MM-yyyy");
         df.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
         String date = df.format(Calendar.getInstance().getTime());
-        db.addNoti(new NotiConstructor(title, "", date));
+        int count = db.getNotesCount();
+        if (count <= 15) {
+            Log.d("DEMSO", count + "");
+            db.addNoti(title, "", date);
+        } else {
+            db.deleteNote(idd);
+            db.addNoti(title, "", date);
+        }
+
         Log.d(TAG, title + "-" + date);
     }
 

@@ -3,7 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Notif.Notif">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/nonoti"
+        android:id="@+id/nop8"
+        android:visibility="gone"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:gravity="center"/>
     <ListView
         android:id="@+id/lvnotif"
         android:layout_width="match_parent"

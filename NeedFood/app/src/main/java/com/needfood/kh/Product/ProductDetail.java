@@ -34,24 +34,18 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.easyandroidanimations.library.SlideInUnderneathAnimation;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.LikeView;
 import com.facebook.share.widget.ShareButton;
 import com.needfood.kh.Adapter.ProductDetail.CommentAdapter;
 import com.needfood.kh.Adapter.ProductDetail.OftenAdapter;
-import com.needfood.kh.Adapter.ProductDetail.QuanAdapter;
 import com.needfood.kh.Brand.BrandDetail;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.ProductDetail.CommentConstructor;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
-import com.needfood.kh.Constructor.ProductDetail.QuanConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
@@ -77,7 +71,7 @@ import java.util.Map;
 public class ProductDetail extends AppCompatActivity implements View.OnClickListener {
     RecyclerView rc, rcof, rcof2, rcquan;
     ArrayList<CommentConstructor> arr;
-    String maniid, idsel;
+    String maniid, idsel, mnid;
     LinearLayout view1;
     ProgressBar pr1;
 
@@ -97,35 +91,42 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Button prev, bn;
     OftenAdapter adapterof1, adapterof2;
     TextView tvco, tvcodes, tvprize;
-    TextView tvpr, namesel, tvnameprd, tvgia1, tvgia2, dess, tvdv1, tvdv2;
+    TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
     ArrayList<OftenConstructor> arrof, arrof2;
-    ArrayList<QuanConstructor> arrq;
-    QuanAdapter quanadapter;
-    LinearLayout lnby,lnf,htu;
+    ArrayList<OftenConstructor> arrq;
+    OftenAdapter quanadapter;
+    LinearLayout lnby, lnf, htu;
     List<ListMN> list;
     List<InfoConstructor> listu;
     DataHandle db;
     String idprd, idsl, namesl, access, idu, fullname, phone, bar;
     EditText txt_comment;
-    ImageView img_comment,imglike,imgshare;
+    ImageView img_comment, imglike, imgshare;
     RecyclerView re_comment;
     String comment;
     CallbackManager callbackManager;
     LikeView likeView;
-    StringBuilder howto,simg;
+    StringBuilder howto, simg, strship;
     String cmt, time, iduser, fullnameus;
     ImageView imageView;
     ShareButton shareButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            FacebookSdk.sdkInitialize(getApplicationContext());
+        FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_product_detail);
 
-        TextView txt = (TextView)findViewById(R.id.titletxt);
+        TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
-
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
+        imgb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         khaibao();
         Thread th = new Thread(new Runnable() {
             @Override
@@ -133,15 +134,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                       getProductDT();
-                        getPrdDK();
-                        getCommen();
+                        getProductDT();
+
                     }
                 });
             }
         });
         th.start();
-
+        getCommen();
 
 
     }
@@ -175,38 +175,23 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         month2 = c.get(Calendar.MONTH);
         year2 = c.get(Calendar.YEAR);
         bn = (Button) findViewById(R.id.bn);
-         shareButton = (ShareButton)findViewById(R.id.btnshare);
-         likeView = (LikeView) findViewById(R.id.btnlike);
-        imglike = (ImageView)findViewById(R.id.imglike);
-        imgshare = (ImageView)findViewById(R.id.imgshare);
-        likeView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new GraphRequest(
-                        AccessToken.getCurrentAccessToken(),
-                        "/1045956692208168/likes",
-                        null,
-                        HttpMethod.POST,
-                        new GraphRequest.Callback() {
-                            public void onCompleted(GraphResponse response) {
-            /* handle the result */
-                            }
-                        }
-                ).executeAsync();
-            }
-        });
-        htu = (LinearLayout)findViewById(R.id.htu);
+        shareButton = (ShareButton) findViewById(R.id.btnshare);
+        likeView = (LikeView) findViewById(R.id.btnlike);
+        imglike = (ImageView) findViewById(R.id.imglike);
+        imgshare = (ImageView) findViewById(R.id.imgshare);
+
+        htu = (LinearLayout) findViewById(R.id.htu);
         htu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent (getApplicationContext(),Howtouse.class);
-                it.putExtra("htu",howto.toString());
-                it.putExtra("img",simg.toString());
-                it.putExtra("tit",titl);
+                Intent it = new Intent(getApplicationContext(), Howtouse.class);
+                it.putExtra("htu", howto.toString());
+                it.putExtra("img", simg.toString());
+                it.putExtra("tit", titl);
                 startActivity(it);
             }
         });
-       // likeView.callOnClick();
+        // likeView.callOnClick();
         hour = c.get(Calendar.HOUR_OF_DAY);
         minitus = c.get(Calendar.MINUTE);
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -219,10 +204,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         view1 = (LinearLayout) findViewById(R.id.v1);
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
-        lnf = (LinearLayout)findViewById(R.id.lnfb);
+        lnf = (LinearLayout) findViewById(R.id.lnfb);
 
         edadrs = (EditText) findViewById(R.id.edadrship);
-        Log.d("PRODUCTID",idprd);
+        Log.d("PRODUCTID", idprd);
         //edpick ngay
         edpickngay = (EditText) findViewById(R.id.pickngay);
         edpickngay.setInputType(InputType.TYPE_NULL);
@@ -259,7 +244,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             idu = listu.get(listu.size() - 1).getId();
             fullname = listu.get(listu.size() - 1).getFullname();
             phone = listu.get(listu.size() - 1).getFone();
-            uadr =  listu.get(listu.size() - 1).getAddress();
+            uadr = listu.get(listu.size() - 1).getAddress();
             edadrs.setText(uadr);
 
         }
@@ -267,6 +252,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         tvcodes = (TextView) findViewById(R.id.tvcodes);
         tvprize = (TextView) findViewById(R.id.tvprize);
         tvdv1 = (TextView) findViewById(R.id.donvi1);
+        shipm = (TextView) findViewById(R.id.shipmn);
         tvdv2 = (TextView) findViewById(R.id.donvi2);
         imgprd = (ImageView) findViewById(R.id.imgnews);
         arr = new ArrayList<>();
@@ -301,14 +287,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 startActivity(it);
             }
         });
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),Howtouse.class);
-                intent.putExtra("idp",idprd);
-                startActivity(intent);
-            }
-        });
+
         rcquan = (RecyclerView) findViewById(R.id.rcquan);
         rc = (RecyclerView) findViewById(R.id.recycm);
         rcof = (RecyclerView) findViewById(R.id.rcprd);
@@ -317,7 +296,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         adapter = new CommentAdapter(getApplicationContext(), arr);
         adapterof1 = new OftenAdapter(getApplicationContext(), arrof);
         adapterof2 = new OftenAdapter(getApplicationContext(), arrof2);
-        quanadapter = new QuanAdapter(getApplicationContext(), arrq);
+        quanadapter = new OftenAdapter(getApplicationContext(), arrq);
 
         rcof.setAdapter(adapterof1);
         rcof2.setAdapter(adapterof2);
@@ -342,21 +321,21 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
             String quan;
-            if(edquan.equals("")){
-                quan="1";
-            }else{
-                quan=edquan.getText().toString();
+            if (edquan.equals("")) {
+                quan = "1";
+            } else {
+                quan = edquan.getText().toString();
             }
-            int money1 = Integer.parseInt(quan)*Integer.parseInt(priceprd);
-                JSONArray jsonArray = new JSONArray();
+            int money1 = Integer.parseInt(quan) * Integer.parseInt(priceprd);
+            JSONArray jsonArray = new JSONArray();
             JSONObject j1 = new JSONObject();
 
             try {
                 j1.put("quantity", quan);
                 j1.put("price", priceprd);
                 j1.put("tickKM", "false");
-                j1.put("tickKM_percent", null);
-                j1.put("tickKM_money", null);
+                j1.put("tickKM_percent", "");
+                j1.put("tickKM_money", "");
                 j1.put("barcode", idprd);
                 j1.put("code", prdcode);
                 j1.put("title", titl);
@@ -368,85 +347,111 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 e.printStackTrace();
             }
 
+            if (OftenAdapter.arrcheck.size() > 0) {
+                for (int i = 0; i < OftenAdapter.arrcheck.size(); i++) {
 
-            for (int i = 0; i < OftenAdapter.arrcheck.size(); i++) {
+                    JSONObject jo = new JSONObject();
 
-                JSONObject jo = new JSONObject();
-
-                try {
-                    jo.put("quantity", OftenAdapter.arrcheck.get(i).getQuanli() + "");
-                    jo.put("price", OftenAdapter.arrcheck.get(i).getPrice() + "");
-                    jo.put("tickKM", OftenAdapter.arrcheck.get(i).getTickkm() + "");
-                    jo.put("tickKM_percent", OftenAdapter.arrcheck.get(i).getTickkm2() + "");
-                    jo.put("tickKM_money", OftenAdapter.arrcheck.get(i).getTickkm3() + "");
-                    jo.put("barcode", OftenAdapter.arrcheck.get(i).getBarcode() + "");
-                    jo.put("code", OftenAdapter.arrcheck.get(i).getCode() + "");
-                    jo.put("title", OftenAdapter.arrcheck.get(i).getTitle() + "");
-                    jo.put("money", OftenAdapter.arrcheck.get(i).getMoney() + "");
-                    jo.put("note", OftenAdapter.arrcheck.get(i).getNote() + "");
-                    jo.put("id", OftenAdapter.arrcheck.get(i).getId() + "");
-                    jsonArray.put(jo);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-                Log.d("HAJAR",jsonArray.toString());
-
-            int money = 0;
-            String adr = edadrs.getText().toString();
-            if(OftenAdapter.arrcheck.size()>0){
-                for (int i = 0; i<OftenAdapter.arrcheck.size();i++){
-                    money= Integer.parseInt(OftenAdapter.arrcheck.get(i).getMoney())+money;
-                }
-            }
-
-            money = money+money1;
-            Map<String,String> map = new HashMap<>();
-            map.put("accessToken",access);
-            map.put("listProduct",jsonArray.toString());
-
-            map.put("money",money+"");
-            map.put("totalMoneyProduct",(money*1.1)+"");
-            map.put("moneyShip","");
-
-            map.put("timeShiper",year2+"/"+month2+"/"+day+" "+edpickgio.getText().toString());
-            map.put("fullName",fullname);
-            map.put("address",adr);
-            map.put("fone",phone);
-           // map.put("idUseronl",idu);
-            map.put("idSeller",idsl);
-            map.put("note",edghichu.getText().toString());
-            Response.Listener<String> response = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-
-                    pro.dismiss();
                     try {
-                    JSONObject jo = new JSONObject(response);
-                        String code = jo.getString("code");
-                        if(code.equals("0")){
-                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.ssor),Toast.LENGTH_SHORT).show();
-                        }else if(code.equals("-1")){
-                            AlertDialog alertDialog = taoMotAlertDialog();
-                            alertDialog.show();
-                          //  Toast.makeText(getApplicationContext(),getResources().getString(R.string.lostss),Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.er),Toast.LENGTH_SHORT).show();
-                        }
+                        jo.put("quantity", OftenAdapter.arrcheck.get(i).getQuanli() + "");
+                        jo.put("price", OftenAdapter.arrcheck.get(i).getPrice() + "");
+                        jo.put("tickKM", OftenAdapter.arrcheck.get(i).getTickkm() + "");
+                        jo.put("tickKM_percent", OftenAdapter.arrcheck.get(i).getTickkm2() + "");
+                        jo.put("tickKM_money", OftenAdapter.arrcheck.get(i).getTickkm3() + "");
+                        jo.put("barcode", OftenAdapter.arrcheck.get(i).getBarcode() + "");
+                        jo.put("code", OftenAdapter.arrcheck.get(i).getCode() + "");
+                        jo.put("title", OftenAdapter.arrcheck.get(i).getTitle() + "");
+                        jo.put("money", OftenAdapter.arrcheck.get(i).getMoney() + "");
+                        jo.put("note", OftenAdapter.arrcheck.get(i).getNote() + "");
+                        jo.put("id", OftenAdapter.arrcheck.get(i).getId() + "");
+                        jsonArray.put(jo);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
-            };
-            PostCL get = new PostCL(link, map, response);
-            RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-            que.add(get);
+            }
+
+            Log.d("HAJAR", jsonArray.toString());
+
+            int money = 0;
+            String adr = edadrs.getText().toString();
+            if (OftenAdapter.arrcheck.size() > 0) {
+                for (int i = 0; i < OftenAdapter.arrcheck.size(); i++) {
+                    money = Integer.parseInt(OftenAdapter.arrcheck.get(i).getMoney()) + money;
+                }
+            }
+
+            money = money + money1;
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("accessToken", access);
+            map.put("listProduct", jsonArray.toString());
+            map.put("money", money + "");
+            map.put("totalMoneyProduct", (money * 1.1) + "");
+            map.put("moneyShip", strship.toString());
+            map.put("timeShiper", year2 + "/" + month2 + "/" + day + " " + edpickgio.getText().toString());
+            map.put("fullName", fullname);
+            map.put("address", adr);
+            map.put("fone", phone);
+            // map.put("idUseronl",idu);
+            map.put("idSeller", idsl);
+            map.put("note", edghichu.getText().toString());
+            Intent it = new Intent(getApplicationContext(), Preview.class);
+            it.putExtra("map", map);
+            it.putExtra("min", mnid);
+            startActivity(it);
+            pro.dismiss();
+//            Response.Listener<String> response = new Response.Listener<String>() {
+//                @Override
+//                public void onResponse(String response) {
+//
+//                    pro.dismiss();
+//                    try {
+//                    JSONObject jo = new JSONObject(response);
+//                        String code = jo.getString("code");
+//                        if(code.equals("0")){
+//                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.ssor),Toast.LENGTH_SHORT).show();
+//                        }else if(code.equals("-1")){
+//                            AlertDialog alertDialog = taoMotAlertDialog();
+//                            alertDialog.show();
+//                          //  Toast.makeText(getApplicationContext(),getResources().getString(R.string.lostss),Toast.LENGTH_SHORT).show();
+//                        }else{
+//                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.er),Toast.LENGTH_SHORT).show();
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            };
+//            PostCL get = new PostCL(link, map, response);
+//            RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+//            que.add(get);
         } else {
             pro.dismiss();
             AlertDialog alertDialog = taoMotAlertDialog2();
             alertDialog.show();
         }
+
+    }
+
+    private void dialogbuy() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialogbuy);
+        dialog.show();
+        EditText edtFn = (EditText) dialog.findViewById(R.id.fn);
+        EditText edtFone = (EditText) dialog.findViewById(R.id.fone);
+
+        Button btnclonse = (Button) dialog.findViewById(R.id.clo);
+        btnclonse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                dialog.cancel();
+            }
+        });
+
 
     }
 
@@ -465,7 +470,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                     JSONObject jo = new JSONObject(response);
                     JSONObject prd = jo.getJSONObject("Product");
-                    if(prd.has("linkFacebook")){
+                    if (prd.has("linkFacebook")) {
                         lnf.setVisibility(View.VISIBLE);
 
 
@@ -475,7 +480,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                         shareButton.setShareContent(content);
                     }
-
+                    strship = new StringBuilder(prd.getString("moneyShip"));
+                    shipm.setText(strship + " VND");
                     howto = new StringBuilder("");
                     howto.append(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
@@ -494,6 +500,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     tvdv2.setText(dvs);
                     list = db.getMNid(tym);
                     for (ListMN lu : list) {
+                        mnid = lu.getMn();
                         tvgia1.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("price"))) + lu.getMn());
                         tvgia2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("priceOther"))) + lu.getMn(), TextView.BufferType.SPANNABLE);
                         Spannable spannable = (Spannable) tvgia2.getText();
@@ -508,7 +515,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     simg = new StringBuilder("http://needfood.webmantan.com" + ja.getString(0));
                     Picasso.with(getApplicationContext()).load("http://needfood.webmantan.com" + ja.getString(0)).into(imgprd);
 
-
+                    getPrdDK();
+                    getCommen();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -529,7 +537,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(String response) {
 
-                Log.d("AT", response);
+                Log.d("EEE", response);
                 try {
                     JSONArray ja = new JSONArray(response);
                     for (int i = 0; i < ja.length(); i++) {
@@ -537,11 +545,19 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         JSONObject jo = ja.getJSONObject(i);
                         JSONObject prd = jo.getJSONObject("Product");
                         JSONArray jaimg = prd.getJSONArray("images");
-
-                        arrq.add(new QuanConstructor(prd.getString("id"), "http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title")));
-
+                        String typemn = prd.getString("typeMoneyId");
+                        list = db.getMNid(typemn);
+                        for (ListMN lu : list) {
+                            mn = lu.getMn();
+                        }
+                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
+                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
+                                "", prd.getString("id")));
                     }
+
                     quanadapter.notifyDataSetChanged();
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -579,7 +595,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             mn = lu.getMn();
                         }
                         arrof.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
+                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
                                 "", prd.getString("id")));
                     }
 
@@ -612,23 +628,23 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 Log.d("RE", response);
                 try {
                     JSONArray ja = new JSONArray(response);
-                    for (int i = 0;i<ja.length();i++){
+                    for (int i = 0; i < ja.length(); i++) {
                         String mn = "";
                         JSONObject jo = ja.getJSONObject(i);
                         JSONObject prd = jo.getJSONObject("Product");
                         JSONArray jaimg = prd.getJSONArray("images");
-                            String typemn = prd.getString("typeMoneyId");
-                            list = db.getMNid(typemn);
-                            for (ListMN lu : list) {
-                                mn = lu.getMn();
-                            }
+                        String typemn = prd.getString("typeMoneyId");
+                        list = db.getMNid(typemn);
+                        for (ListMN lu : list) {
+                            mn = lu.getMn();
+                        }
 
-                            arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                    prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
-                                    "", prd.getString("id")));
+                        arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
+                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
+                                "", prd.getString("id")));
                     }
                     adapterof2.notifyDataSetChanged();
-                       getAtach();
+                    getAtach();
 //                JSONObject jo = new JSONObject(response);
 //                    String code = jo.getString("code");
 //                    if(code.equals("0")){
@@ -671,10 +687,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         comment = txt_comment.getText().toString();
         if (comment.isEmpty()) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-        }else if(!ses.loggedin()){
+        } else if (!ses.loggedin()) {
             AlertDialog alertDialog = taoMotAlertDialog2();
             alertDialog.show();
-        }else {
+        } else {
 
             Map<String, String> map = new HashMap<>();
             map.put("accessToken", access);
@@ -714,13 +730,20 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.promotiondialog);
         dialog.show();
+        ImageView close = (ImageView) dialog.findViewById(R.id.img_close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                dialog.cancel();
+            }
+        });
+
     }
 
     public void getCommen() {
         arr.clear();
         final String link = getResources().getString(R.string.linkgetcmpr);
-
-
         Map<String, String> map = new HashMap<>();
         map.put("idProduct", idprd);
         Response.Listener<String> response = new Response.Listener<String>() {
@@ -772,6 +795,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             saveComment();
         }
     }
+
     private AlertDialog taoMotAlertDialog2() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //Thiết lập tiêu đề hiển thị
@@ -791,7 +815,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         AlertDialog dialog = builder.create();
         return dialog;
     }
-
 
 
     // hoi xoa

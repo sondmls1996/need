@@ -1,16 +1,14 @@
 package com.needfood.kh.More.History;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -36,24 +34,38 @@ import java.util.Map;
 
 public class TransferHistory extends AppCompatActivity {
     ListView lv;
-    int page = 1;
+    int page;
     DataHandle db;
     List<InfoConstructor> list;
     String token;
 
     long time = 0;
-    String  mess, coin, idu, id;
+    String mess, coin, idu, id;
 
 
     ChangeTimestamp chan;
     List<TranfConstructor> arr;
     TranfHisAdapter adapter;
+    TextView nop,tit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_history);
-
+        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        imgb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+        nop = (TextView) findViewById(R.id.nop9);
+        tit = (TextView) findViewById(R.id.titletxt);
+        tit.setText(getResources().getString(R.string.histran));
         db = new DataHandle(this);
         chan = new ChangeTimestamp();
         lv = (ListView) findViewById(R.id.lvtran);
@@ -64,11 +76,29 @@ public class TransferHistory extends AppCompatActivity {
         arr = new ArrayList<>();
         adapter = new TranfHisAdapter(getApplicationContext(), arr);
         lv.setAdapter(adapter);
-        getHisTran();
+        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            int firstVisibleItem, visibleItemCount, totalItemCount;
+
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                final int lastItem = firstVisibleItem + visibleItemCount;
+                if (lastItem == totalItemCount && scrollState == SCROLL_STATE_IDLE) {
+                    page++;
+                    getHisTran(page);
+                }
+            }
+
+            public void onScroll(AbsListView view, int firstVisibleItemm, int visibleItemCountt, int totalItemCountt) {
+                firstVisibleItem = firstVisibleItemm;
+                visibleItemCount = visibleItemCountt;
+                totalItemCount = totalItemCountt;
+            }
+        });
+
+        getHisTran(1);
 
     }
 
-    public void getHisTran() {
+    public void getHisTran(int page) {
         final ProgressDialog progressDialog = DialogUtils.show(TransferHistory.this, getResources().getString(R.string.wait));
         String link = getResources().getString(R.string.linkhiscoin);
         Map<String, String> map = new HashMap<String, String>();
@@ -83,21 +113,28 @@ public class TransferHistory extends AppCompatActivity {
                     progressDialog.dismiss();
 
                     JSONArray jo = new JSONArray(response);
-                    Log.d("id", jo.length() + "");
-                    for (int i = 0; i < jo.length(); i++) {
-                        JSONObject js = jo.getJSONObject(i);
-                        JSONObject order = js.getJSONObject("History");
-                        id = order.getString("id");
-                        time = order.getLong("time");
-                        mess = order.getString("mess");
-                        coin = order.getString("coin");
-                        idu = order.getString("idUseronl");
-                        String timedate = chan.getDateCurrentTimeZone(time);
-
-
-                        arr.add(new TranfConstructor(id, mess, timedate, coin, idu, ""));
+                    if (jo.length() == 0) {
+                        if (arr.size() == 0) {
+                            nop.setVisibility(View.VISIBLE);
+                        } else {
+                            nop.setVisibility(View.GONE);
+                        }
+                    } else {
+                        nop.setVisibility(View.GONE);
+                        Log.d("id", jo.length() + "");
+                        for (int i = 0; i < jo.length(); i++) {
+                            JSONObject js = jo.getJSONObject(i);
+                            JSONObject order = js.getJSONObject("History");
+                            id = order.getString("id");
+                            time = order.getLong("time");
+                            mess = order.getString("mess");
+                            coin = order.getString("coin");
+                            idu = order.getString("idUseronl");
+                            String timedate = chan.getDateCurrentTimeZone(time);
+                            arr.add(new TranfConstructor(id, mess, timedate, coin, idu, ""));
+                        }
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();

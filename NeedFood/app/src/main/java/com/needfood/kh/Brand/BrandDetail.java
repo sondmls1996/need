@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -32,28 +34,33 @@ public class BrandDetail extends AppCompatActivity {
     ViewPager viewPager;
     ViewAdapter viewAdapter;
     String idsl;
-    public static String idsel ="";
+    public static String idsel = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_detail);
         Intent it = getIntent();
         idsl = it.getStringExtra("ids");
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        tvname = (TextView)findViewById(R.id.brname);
-        NestedScrollView scrollView = (NestedScrollView) findViewById (R.id.nest);
-        scrollView.setFillViewport (true);
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
+        imgb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        tvname = (TextView) findViewById(R.id.brname);
+        NestedScrollView scrollView = (NestedScrollView) findViewById(R.id.nest);
+        scrollView.setFillViewport(true);
 
 
-        tabLayout = (TabLayout)findViewById(R.id.tablayout);
-        viewPager= (ViewPager)findViewById(R.id.vpage);
+        tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        viewPager = (ViewPager) findViewById(R.id.vpage);
         viewAdapter = new ViewAdapter(getSupportFragmentManager());
-        viewAdapter.addFragment(new MenuBrand(),"Menu");
-        viewAdapter.addFragment(new Shipto(),"Ship to");
-        viewAdapter.addFragment(new CommentBrand(),"Comment");
+        viewAdapter.addFragment(new MenuBrand(), getResources().getString(R.string.menu));
+
+        viewAdapter.addFragment(new CommentBrand(), getResources().getString(R.string.comment));
 
         viewPager.setAdapter(viewAdapter);
         viewPager.setOffscreenPageLimit(10);
@@ -61,19 +68,19 @@ public class BrandDetail extends AppCompatActivity {
         viewAdapter.notifyDataSetChanged();
 
         viewAdapter.notifyDataSetChanged();
-        tabLayout.setTabTextColors(getResources().getColor(R.color.black),getResources().getColor(R.color.red));
+        tabLayout.setTabTextColors(getResources().getColor(R.color.black), getResources().getColor(R.color.red));
         getBrand();
 
     }
 
     private void getBrand() {
         final String link = getResources().getString(R.string.linkifsel);
-        Map<String,String> map = new HashMap<>();
-        map.put("idSeller",idsl);
+        Map<String, String> map = new HashMap<>();
+        map.put("idSeller", idsl);
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("SLL",response);
+                Log.d("SLL", response);
                 try {
                     JSONObject jo = new JSONObject(response);
                     JSONObject sl = jo.getJSONObject("Seller");
@@ -84,10 +91,11 @@ public class BrandDetail extends AppCompatActivity {
                 }
             }
         };
-        PostCL get = new PostCL(link,map,response);
+        PostCL get = new PostCL(link, map, response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(get);
     }
+
     public String getMyData() {
         return idsl;
     }
@@ -97,6 +105,7 @@ public class BrandDetail extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return true;

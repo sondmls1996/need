@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,8 @@ import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.needfood.kh.Constructor.InfoConstructor;
@@ -32,6 +35,7 @@ import com.needfood.kh.SupportClass.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +47,7 @@ public class Login extends AppCompatActivity {
     Session ses;
     EditText edus, edpass;
     DataHandle db;
+    String fullname, idfb, email, fone = "", adr;
     String dvtoken;
 
     @Override
@@ -51,7 +56,13 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
         dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
-
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
+        imgb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.login));
         db = new DataHandle(getApplicationContext());
@@ -59,6 +70,9 @@ public class Login extends AppCompatActivity {
         edus = (EditText) findViewById(R.id.edus);
         edpass = (EditText) findViewById(R.id.edpas);
         lgb = (LoginButton) findViewById(R.id.login_button);
+
+        lgb.setReadPermissions(Arrays.asList(
+                "public_profile", "email", "user_birthday", "user_location"));
         tvfor = (TextView) findViewById(R.id.tvfogot);
         tvfor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +131,7 @@ public class Login extends AppCompatActivity {
 
                                     postToken(accesstoken);
 
-                                    addInfo(accesstoken, id, "");
+                                    addInfo(accesstoken, id, "0");
                                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                                     startActivity(it);
                                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
@@ -125,13 +139,11 @@ public class Login extends AppCompatActivity {
                                 } else {
                                     progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(getApplicationContext(), "demo", Toast.LENGTH_SHORT).show();
 
                                 }
                             } catch (JSONException e) {
                                 progressDialog.dismiss();
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-                                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
                         }
@@ -146,10 +158,35 @@ public class Login extends AppCompatActivity {
         lgb.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                ses.setLoggedin(true);
-                Intent it = new Intent(getApplicationContext(), StartActivity.class);
-                startActivity(it);
-                finish();
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                final JSONObject json = response.getJSONObject();
+                                Log.d("JSRE", json.toString());
+
+                                try {
+                                    fullname = json.getString("name");
+                                    idfb = json.getString("id");
+                                    email = json.getString("email");
+                                    JSONObject loc = json.getJSONObject("location");
+                                    adr = loc.getString("name");
+                                    regisFB();
+//                                    Intent it = new Intent(getApplicationContext(),Register.class);
+//                                    it.putExtra("fullname",fullname);
+//                                    it.putExtra("email",email);
+//                                    it.putExtra("adr",adr);
+//                                    startActivity(it);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender,location");
+                request.setParameters(parameters);
+                request.executeAsync();
             }
 
             @Override
@@ -164,7 +201,54 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    private void addInfo(final String token, final String id, final String pass) {
+    private void regisFB() {
+        final ProgressDialog progressDialog = DialogUtils.show(Login.this, getResources().getString(R.string.wait));
+        String linkk = getResources().getString(R.string.linklogfb);
+        Map<String, String> map = new HashMap<>();
+        map.put("fullName", fullname);
+        map.put("idFacebook", idfb);
+        map.put("email", email);
+        map.put("fone", fone);
+        map.put("address", adr);
+        Response.Listener<String> response = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+
+                try {
+                    progressDialog.dismiss();
+                    ses.setLoggedin(true);
+                    JSONObject jo = new JSONObject(response);
+                    JSONObject js = jo.getJSONObject("Useronl");
+//                                    String fullname = jo.getString("fullName");
+//                                    String email = jo.getString("email");
+//                                    String fone = jo.getString("fone");
+//                                    String address = jo.getString("address");
+//                                    String coin = jo.getString("coin");
+                    String id = js.getString("id");
+                    String accesstoken = js.getString("accessToken");
+//                                    String pass = jo.getString("pass");
+
+                    postToken(accesstoken);
+
+                    addInfo(accesstoken, id, "1");
+                    Intent it = new Intent(getApplicationContext(), StartActivity.class);
+                    startActivity(it);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        };
+        PostCL post = new PostCL(linkk, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(post);
+    }
+
+
+    private void addInfo(final String token, final String id, final String type) {
         String linkk = getResources().getString(R.string.linkgetinfo);
         Map<String, String> map = new HashMap<>();
         map.put("accessToken", token);
@@ -183,7 +267,7 @@ public class Login extends AppCompatActivity {
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
                     Log.d("ABCLOG", fullname + "-" + email + "-" + fone + "-" + "" + "-" + address + "-" + id + "-" + token + "-" + coin);
-                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin,"0"));
+                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin, type));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

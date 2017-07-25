@@ -46,6 +46,7 @@
     <string name="menu">Menu</string>
     <string name="cancel">Cancel</string>
     <string name="oldp">Old password</string>
+    <string name="shipmn">Money ship</string>
     <string name="newp">New password</string>
     <string name="conpass">Confirm password</string>
     <string name="comment">Comment</string>
@@ -54,13 +55,14 @@
     <string name="shipto">Ship to</string>
     <string name="promo">Promotion Code / Coins</string>
     <string name="phonenum">Phone number</string>
+    <string name="email">Email:\u0020</string>
     <string name="concode">Confirmation code</string>
     <string name="next">Next</string>
     <string name="vericode">Confirmation code has been sent to your email</string>
     <string name="promo2">Promotion Code</string>
     <string name="login">Login</string>
     <string name="lan">Language</string>
-    <string name="regis">Register</string>
+    <string name="regiss">Register</string>
     <string name="aro">Find around</string>
     <string name="forget">Forgot password</string>
     <string name="Deal">Deal</string>
@@ -70,7 +72,9 @@
     <string name="inven2">Inventory:\u0020</string>
     <string name="usname">User name</string>
     <string name="pass">Password</string>
-    <string name="quanlity">Quanlity</string>
+    <string name="quanlity">Quantity</string>
+    <string name="quanlity2">Quanlity:\u0020</string>
+    <string name="total">Total:\u0020</string>
     <string name="facebook_app_id">144493206000726</string>
     <string name="newfeed">New Feed</string>
     <string name="lostss">The login session has ended, please log in again</string>
@@ -84,14 +88,19 @@
     <string name="notif">Notification</string>
     <string name="succ">Success</string>
     <string name="emailwr">Email invalidate</string>
+    <string name="order">Order</string>
+    <string name="name">Name:\u0020</string>
+    <string name="phonenum2">Phone:\u0020</string>
     <string name="wait">Waiting...</string>
     <string name="wrreg">Can not be empty</string>
     <string name="wrpass">Confirm password don\'t match</string>
     <string name="shortpass">Password must be 6 characters or more</string>
     <string name="contact">Contact</string>
     <string name="shiptime">Shipping time</string>
+    <string name="rein">Receiver\'s information</string>
     <string name="howtou">How to use?</string>
     <string name="prddetail">Product detail</string>
+    <string name="conor">Confirm the order</string>
     <string name="note">Note</string>
     <string name="search">Search...</string>
     <string name="tranhis">Transfer history</string>
@@ -99,6 +108,7 @@
     <string name="hisord">Order history</string>
     <string name="ssor">Order Success</string>
 
+    <string name="linklogfb">http://needfood.webmantan.com/checkRegisterFacebookAPI</string>
     <string name="linktranf">http://needfood.webmantan.com/changeCoinAPI</string>
     <string name="linkgetcoin">http://needfood.webmantan.com/getInfoUserAPI</string>
     <string name="linkorder">http://needfood.webmantan.com/saveOrderAPI</string>
@@ -124,7 +134,6 @@
     <string name="linktypecode">http://needfood.webmantan.com/sendPassUseronlAPI</string>
     <string name="linkupdate">http://needfood.webmantan.com/updateInfoUseronlAPI</string>
     <string name="linkorhis">http://needfood.webmantan.com/getHistoryOrderAPI</string>
-
     <string name="linkhotdeal">http://needfood.webmantan.com/getHotDealProductAPI</string>
     <string name="linksavecmpr">http://needfood.webmantan.com/saveCommentProductAPI</string>
     <string name="linkgetcmpr">http://needfood.webmantan.com/getCommentProductAPI</string>
@@ -134,7 +143,7 @@
     <string name="linkgetinfo">http://needfood.webmantan.com/getInfoUserAPI</string>
 
     <string name="logout">Logout</string>
-    <string name="tiengviet">Vietnamese</string>
+    <string name="tiengviet">Tiếng Việt</string>
     <string name="tienganh">English</string>
     <string name="new_">New</string>
     <string name="topdeall">Top Deal</string>
@@ -158,4 +167,32 @@
     <string name="pr">Property: \u0020</string>
     <string name="mess">Message: \u0020 </string>
     <string name="can">You do not have enough coins to transfer </string>
+    <string name="nohis">No History to display</string>
+    <string name="nonoti">No Notication to display</string>
+    <string name="histran">History Transfer</string>
+    <string name="hiset">History Order</string>
+    <string name="checkfon"> Phone number not valid</string>
+    <string name="coinn">Coins: \u0020</string>
+    <string name="trancoin">Coins transfer</string>
+    <string name="bc">by Customer</string>
+    <string name="bn">by NeedFood</string>
+    <string name="pz">Prize: \u0020</string>
+    <string name="cs">Code shop:\u0020 </string>
+    <string name="cb">Co/Brand: \u0020</string>
+    <string name="rate">Rate: \u0020</string>
+    <string name="pd">P.Day: \u0020</string>
+    <string name="exp">Exp: \u0020</string>
+    <string name="lf">Left</string>
+    <string name="prcode">Enter promotion code</string>
+    <string name="det">Detail</string>
+    <string name="canc">Close</string>
+    <string name="loc">Your Location</string>
+    <string name="fn">Full Name</string>
+    <string name="em">Email</string>
+    <string name="pa">Password</string>
+    <string name="cpas">Confirm Password</string>
+    <string name="ad">Address</string>
+    <string name="cust">Customer</string>
+    <string name="cha">You need to enter more than 6 characters</string>
+    <string name="paw">Passwords do not match</string>
 </resources>

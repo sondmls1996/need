@@ -2,10 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:background="@color/white"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
     tools:context=".Login.Login">
     <include
@@ -91,7 +89,7 @@
             android:textStyle="italic"
             android:id="@+id/tvreg"
             android:textColor="@color/black"
-            android:text="@string/regis"/>
+            android:text="@string/regiss"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

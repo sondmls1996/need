@@ -1,6 +1,7 @@
 package com.needfood.kh.Brand;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,8 +18,10 @@ import com.needfood.kh.Adapter.MenuBrandAdapter;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.MenuBrandConstructor;
 import com.needfood.kh.Database.DataHandle;
+import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
 import com.needfood.kh.SupportClass.PostCL;
+import com.needfood.kh.SupportClass.RecyclerItemClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,10 +64,19 @@ public class MenuBrand extends Fragment {
         adapter1 = new MenuBrandAdapter(getContext(),arr1);
         rc1.setAdapter(adapter1);
         rc1.setLayoutManager(new LinearLayoutManager(getContext()));
+        rc1.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
 
+                        Intent it = new Intent(getApplicationContext(), ProductDetail.class);
+                        it.putExtra("idprd", arr1.get(position).getId());
+                        startActivity(it);
 
-
-
+                        // TODO Handle item click
+                    }
+                })
+        );
         // Inflate the layout for this fragment
         return v;
     }
