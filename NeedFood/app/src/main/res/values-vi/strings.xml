@@ -5,7 +5,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_brand_detail">Chi tiết nhãn hiệu</string>
-    <string name="raw">Thức ăn chưa chế biến</string>
+    <string name="raw">Thực phẩm thô</string>
     <string name="vege">Rau quả</string>
     <string name="dissmiss">Loại bỏ việc sử dụng thời gian vận chuyển</string>
     <string name="food">Đồ ăn</string>
@@ -175,8 +175,10 @@
     <string name="bn">Bởi NeedFood</string>
     <string name="pz">Có giá trị: \u0020</string>
     <string name="cs">Mã cửa hàng:\u0020 </string>
-    <string name="cb">Co/Brand: \u0020</string>
+    <string name="cb">Mã sản phẩm: \u0020</string>
     <string name="rate">Tỉ lệ: \u0020</string>
     <string name="pd">Sản xuất ngày: \u0020</string>
     <string name="exp">Điểm số: \u0020</string>
+    <string name="lf">Suất</string>
+    <string name="prcode">Nhập mã khuyến mại</string>
 </resources>

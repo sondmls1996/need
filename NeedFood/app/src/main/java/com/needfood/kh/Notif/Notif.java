@@ -19,6 +19,7 @@ import com.needfood.kh.Constructor.NotiConstructor;
 import com.needfood.kh.Constructor.NotifConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
+import com.needfood.kh.SupportClass.Session;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +34,7 @@ public class Notif extends Fragment {
     NotifAdapter adapter;
     List<NotiConstructor> arr;
     TextView nop;
+    Session ses;
 
     public Notif() {
         // Required empty public constructor
@@ -47,26 +49,27 @@ public class Notif extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_notif, container, false);
-        lv = (ListView) v.findViewById(R.id.lvnotif);
-        nop = (TextView) v.findViewById(R.id.nop8);
+        ses = new Session(getActivity());
         db = new DataHandle(getActivity());
+        nop = (TextView) v.findViewById(R.id.nop8);
+        lv = (ListView) v.findViewById(R.id.lvnotif);
         arr = new ArrayList<>();
-        adapter = new NotifAdapter(getContext(), arr);
-        lv.setAdapter(adapter);
-        arr = db.getNoti();
-        for (NotiConstructor nc : arr) {
-            a = nc.getTitle();
-            c = nc.getTime();
-        }
-        Collections.reverse(arr);
+            adapter = new NotifAdapter(getContext(), arr);
+            lv.setAdapter(adapter);
+            arr = db.getNoti();
+            for (NotiConstructor nc : arr) {
+                a = nc.getTitle();
+                c = nc.getTime();
+            }
+            Collections.reverse(arr);
+            if (arr.size() == 0) {
+                nop.setVisibility(View.VISIBLE);
+            } else {
+                nop.setVisibility(View.GONE);
 
-        if (arr.size() == 0) {
-            nop.setVisibility(View.VISIBLE);
-        } else {
-            nop.setVisibility(View.GONE);
+                adapter.notifyDataSetChanged();
+            }
 
-            adapter.notifyDataSetChanged();
-        }
         return v;
     }
 

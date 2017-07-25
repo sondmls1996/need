@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:layout_marginRight="10dp"
-                android:text="left "/>
+                android:text="@string/lf"/>
 
         </LinearLayout>
     </LinearLayout>

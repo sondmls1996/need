@@ -30,7 +30,7 @@
         android:layout_marginBottom="10dp"
         android:padding="5dp"
         android:background="@color/white"
-        android:hint="Enter promotion code"/>
+        android:hint="@string/prcode"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

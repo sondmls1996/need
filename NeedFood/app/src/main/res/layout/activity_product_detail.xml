@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="end"
-                    android:text="Promotion code / Coins"
+                    android:text="@string/promo"
                     android:textColor="@color/blue" />
 
             </LinearLayout>

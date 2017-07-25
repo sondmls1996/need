@@ -64,7 +64,7 @@ import java.util.Map;
 
 import static com.needfood.kh.R.menu.main;
 
-public class StartActivity extends AppCompatActivity implements View.OnClickListener{
+public class StartActivity extends AppCompatActivity implements View.OnClickListener {
     private final int SPLASH_DISPLAY_LENGTH = 2000;
     LinearLayout imgnewss, imgsug, imgnotif, imgmore;
     Class fragmentClass;
@@ -85,19 +85,24 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     TextView se;
     CoordinatorLayout activity_news;
     NetworkCheck networkCheck;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        networkCheck = new NetworkCheck();
+        if (networkCheck.checkConnection(getApplicationContext())) {
+        } else {
+            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+        }
         activity_news = (CoordinatorLayout) findViewById(R.id.activity_news);
         edsearch = (EditText) findViewById(R.id.edsearch);
         edsearch.setInputType(InputType.TYPE_NULL);
         edsearch.requestFocus();
         db = new DataHandle(this);
         arrs = new ArrayList<>();
-
         contf = (FrameLayout) findViewById(R.id.contentContainer);
         if (db.isMoneyEmpty()) {
             getMoney();
@@ -301,12 +306,12 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             case R.id.imgnewstart:
                 fragmentClass = TabFragment.class;
                 ReplaceFrag(fragmentClass);
-                pg=0;
+                pg = 0;
                 break;
             case R.id.dod:
                 fragmentClass = TabFragment.class;
                 ReplaceFrag(fragmentClass);
-               pg = 1;
+                pg = 1;
                 break;
             case R.id.sug:
 

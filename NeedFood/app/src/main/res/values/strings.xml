@@ -182,5 +182,6 @@
     <string name="rate">Rate: \u0020</string>
     <string name="pd">P.Day: \u0020</string>
     <string name="exp">Exp: \u0020</string>
-
+    <string name="lf">Left</string>
+    <string name="prcode">Enter promotion code</string>
 </resources>

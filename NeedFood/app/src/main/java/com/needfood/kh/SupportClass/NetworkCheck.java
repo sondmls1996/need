@@ -3,6 +3,7 @@ package com.needfood.kh.SupportClass;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -33,7 +34,24 @@ public class NetworkCheck {
         }
         return TYPE_NOT_CONNECTED;
     }
+    public static boolean checkConnection(Context context) {
+        final ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        NetworkInfo activeNetworkInfo = connMgr.getActiveNetworkInfo();
+
+        if (activeNetworkInfo != null) { // connected to the internet
+            Toast.makeText(context, activeNetworkInfo.getTypeName(), Toast.LENGTH_SHORT).show();
+
+            if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                // connected to wifi
+                return true;
+            } else if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                // connected to the mobile provider's data plan
+                return true;
+            }
+        }
+        return false;
+    }
     public static String getConnectivityStatusString(Context context) {
         int conn = NetworkCheck.getConnectivityStatus(context);
         String status = null;
@@ -46,18 +64,6 @@ public class NetworkCheck {
         }
         return status;
     }
-    public static boolean isInternetWorking() {
-        boolean success = false;
-        try {
-            URL url = new URL("https://google.com");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(10000);
-            connection.connect();
-            success = connection.getResponseCode() == 200;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return success;
-    }
+
 }
 
