@@ -90,7 +90,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     EditText edpickngay, edpickgio, edquan, edadrs, edghichu;
     String cata;
     Button prev, bn;
-    ShareDialog shareDialog;
     OftenAdapter adapterof1, adapterof2;
     TextView tvco, tvcodes, tvprize;
     TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
@@ -113,9 +112,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     StringBuilder howto, simg, strship;
     String cmt, time, iduser, fullnameus;
     ImageView imageView;
-
+    ShareDialog shareDialog;
     ShareButton shareButton;
     String linkfbb;
+    Button sharee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,13 +162,58 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         likeView = (LikeView) findViewById(R.id.btnlike);
         imglike = (ImageView) findViewById(R.id.imglike);
         imgshare = (ImageView) findViewById(R.id.imgshare);
+        sharee = (Button) findViewById(R.id.share);
+        shareDialog = new ShareDialog(ProductDetail.this);
+        shareDialog.registerCallback(callbackManager, shareCallBack);
         shareButton.setEnabled(true);
+
 //        imgshare.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                shareDialog.show(content);
 //            }
 //        });
+
+        sharee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareOnFB();
+//                ShareDialog shareDialog = new ShareDialog(ProductDetail.this);
+//                if (ShareDialog.canShow(SharePhotoContent.class)) {
+//                    shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+//                        @Override
+//                        public void onSuccess(Sharer.Result result) {
+//                            if(result.getPostId()!=null){
+//                                Toast.makeText(getApplicationContext(),result.toString(),Toast.LENGTH_LONG).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancel() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onError(FacebookException exception) {
+//
+//                            Log.e("DEBUG", "Share: " + exception.getMessage());
+//                            exception.printStackTrace();
+//                        }
+//                    });
+//
+//                    ShareLinkContent content = new ShareLinkContent.Builder()
+//                            .setContentUrl(Uri.parse(linkfbb))
+//                            .setShareHashtag(new ShareHashtag.Builder()
+//                                    .setHashtag("#NeedFood")
+//                                    .build())
+//                            .build();
+//
+//                    shareDialog.show(content);
+//                }
+            }
+        });
+
+
         htu = (LinearLayout) findViewById(R.id.htu);
         htu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,6 +319,38 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
         rcquan.setLayoutManager(mStaggeredVerticalLayoutManager);
 
+    }
+
+    public FacebookCallback<Sharer.Result> shareCallBack = new FacebookCallback<Sharer.Result>() {
+
+
+        @Override
+        public void onSuccess(Sharer.Result result) {
+            saveShare();
+        }
+
+        @Override
+        public void onCancel() {
+        }
+
+        @Override
+        public void onError(FacebookException error) {
+            Toast.makeText(getApplicationContext(), error + "", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private void shareOnFB() {
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            ShareLinkContent content = new ShareLinkContent.Builder()
+                    .setContentUrl(Uri.parse(linkfbb))
+                    .setShareHashtag(new ShareHashtag.Builder()
+                            .setHashtag("#NeedFood")
+                            .build())
+                    .build();
+
+
+            shareDialog.show(content);
+        }
     }
 
     private void sendOrder() {
@@ -427,6 +504,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
 
     }
+
     public void getProductDT() {
         final String link = getResources().getString(R.string.linkprdde);
         Map<String, String> map = new HashMap<>();
@@ -534,7 +612,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     protected void share() {
 
-
             ShareLinkContent content = new ShareLinkContent.Builder()
                     .setContentUrl(Uri.parse(linkfbb))
                     .setShareHashtag(new ShareHashtag.Builder()
@@ -542,7 +619,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             .setHashtag("#NeedFood")
                             .build())
                     .build();
-
 
 
 
@@ -560,7 +636,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(String response) {
 
-                Log.d("HAHA", response);
+
+                Log.d("EEEE", response);
+
 //                try {
 //                    JSONArray ja = new JSONArray(response);
 //                    for (int i = 0; i < ja.length(); i++) {
@@ -909,7 +987,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             // verify we're returning from like action
             if ("com.facebook.platform.action.request.LIKE_DIALOG".equals(data.getStringExtra("com.facebook.platform.protocol.PROTOCOL_ACTION"))) {
