@@ -44,7 +44,7 @@ public class NewsAdapter extends
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvname,tvdv,tvdv2,namea,price,price2,vote;
+        public TextView tvname,tvdv,tvdv2,namea,price,price2,vote,unv;
         public ImageView imageView,imga;
 
         public RecyclerViewHolder(View itemView) {
@@ -64,6 +64,8 @@ public class NewsAdapter extends
              price2 = (TextView)itemView.findViewById(R.id.pr2);
 
              vote = (TextView)itemView.findViewById(R.id.vt);
+
+            unv= (TextView)itemView.findViewById(R.id.votecount);
 
 
              imageView = (ImageView)itemView.findViewById(R.id.imgnews);
