@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -45,9 +46,10 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class Preview extends AppCompatActivity implements View.OnClickListener{
-    String json,mid,stt,mnship;
+    String json,mid,stt,mnship,idsl,acess;
     RecyclerView lv;
     private SimpleDateFormat dateFormatter, timeformat;
     ArrayList<PreConstructor> arr;
@@ -59,7 +61,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
     HashMap<String, String> hashMap;
     EditText edname,edadr,edphome,edemail,edghichu,edpickngay,edpickgio;
     Calendar c;
-    int day, month2, year2, hour, minitus;
+    int day, month2, year2, hour, minitus,numshare;
     public DatePickerDialog fromDatePickerDialog;
     public TimePickerDialog timepicker;
     PreAdapter adapter;
@@ -81,8 +83,13 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
         Intent intent = getIntent();
          hashMap = (HashMap<String, String>)intent.getSerializableExtra("map");
         json = hashMap.get("listProduct");
+        idsl = hashMap.get("idSeller");
         mnship = hashMap.get("moneyShip");
         stt = intent.getStringExtra("stt");
+        if(intent.hasExtra("num")){
+            numshare = intent.getIntExtra("num",0);
+
+        }
         btno = (Button)findViewById(R.id.btno); 
         mid = intent.getStringExtra("min");
         edadr = (EditText)findViewById(R.id.edadrship);
@@ -128,8 +135,10 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
             edname.setText(lu.getFullname());
             edadr.setText(lu.getAddress());
             edphome.setText(lu.getFone());
+            acess = lu.getAccesstoken();
 
         }
+        getNumberShare();
         lv = (RecyclerView) findViewById(R.id.lvpre);
         arr = new ArrayList<>();
         adapter = new PreAdapter(getApplicationContext(),arr);
@@ -152,9 +161,30 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
             e.printStackTrace();
         }
     }
-
+    private void  getNumberShare(){
+        String link = getResources().getString(R.string.linkgetnum);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", acess);
+        map.put("idSeller", idsl);
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                int a2 = Integer.parseInt(response);
+                Log.d("TTT",a2+"");
+                if(a2<numshare){
+                    btno.setEnabled(false);
+                    btno.setBackgroundColor(R.color.gray2);
+                }else{
+                    btno.setEnabled(true);
+                }
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
+    }
     private void sendSever() {
-
+        btno.setEnabled(false);
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         String link = getResources().getString(R.string.linkorder);
 
@@ -178,12 +208,18 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
                 @Override
                 public void onResponse(String response) {
                     try {
-                        pro.dismiss();
+
                         JSONObject jo = new JSONObject(response);
                         String code = jo.getString("code");
                         if(code.equals("0")){
+                            if(stt.equals("deal")){
+                                saveShare();
+                            }
+                            pro.dismiss();
+                            finish();
                             Toast.makeText(getApplicationContext(),getResources().getString(R.string.ssor),Toast.LENGTH_SHORT).show();
                         }else if(code.equals("-1")){
+                            pro.dismiss();
                             taoMotAlertDialog();
                         }
                     } catch (JSONException e) {
@@ -200,6 +236,26 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
 
 
 
+    }
+    public void saveShare() {
+        final String link = getResources().getString(R.string.linksaveShare);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", acess);
+        map.put("idSeller", idsl);
+        map.put("numberShare", -numshare+"");
+
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+               getNumberShare();
+
+
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
     }
 
     private DatePickerDialog.OnDateSetListener datePickerListener

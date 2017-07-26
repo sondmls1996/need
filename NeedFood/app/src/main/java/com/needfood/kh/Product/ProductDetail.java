@@ -75,7 +75,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ArrayList<CommentConstructor> arr;
     String maniid, idsel, mnid;
     LinearLayout view1;
-    int a;
+    int a2;
     int numshare = 0;
     ProgressBar pr1;
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
@@ -204,7 +204,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         deal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                senKM("0","0","deal");
+                senKM2("0","0","deal",numshare);
             }
         });
         bn.setOnClickListener(new View.OnClickListener() {
@@ -301,9 +301,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                 a = Integer.parseInt(response);
-                Log.d("TTT",a+"");
-                if(a>=numshare){
+                 a2 = Integer.parseInt(response);
+                Log.d("TTT",a2+"");
+                if(a2>=numshare){
                     deal.setVisibility(View.VISIBLE);
                 }
             }
@@ -422,8 +422,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
 
     }
-
-    private void senKM(String prices,String ship,String stt) {
+    private void senKM2(String prices,String ship,String stt, int ns) {
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
@@ -472,6 +471,65 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("map", map);
             it.putExtra("min", mnid);
             it.putExtra("stt",stt);
+            it.putExtra("num",ns);
+            startActivity(it);
+            pro.dismiss();
+        } else {
+            pro.dismiss();
+            AlertDialog alertDialog = taoMotAlertDialog2();
+            alertDialog.show();
+        }
+
+    }
+    private void senKM(String mkm) {
+
+        final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
+        if (ses.loggedin()) {
+            String quan = "1";
+
+            int money1 = Integer.parseInt(quan) * Integer.parseInt(priceDiscount);
+            JSONArray jsonArray = new JSONArray();
+            JSONObject j1 = new JSONObject();
+
+            try {
+                j1.put("quantity", "1");
+                j1.put("price", priceDiscount);
+                j1.put("tickKM", "1");
+                j1.put("tickKM_percent", "");
+                j1.put("tickKM_money", Integer.parseInt(priceprd)-Integer.parseInt(priceDiscount));
+                j1.put("barcode", idprd);
+                j1.put("code", prdcode);
+                j1.put("title", titl);
+                j1.put("money", money1 + "");
+                j1.put("note", "Sử dụng mã khuyến mại "+mkm);
+                j1.put("id", idprd);
+                jsonArray.put(j1);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            int money = 0;
+
+
+            money = money + money1;
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("accessToken", access);
+            map.put("listProduct", jsonArray.toString());
+            map.put("money", money + "");
+            map.put("totalMoneyProduct", (money * 1.1) + "");
+            map.put("fullName", "");
+            map.put("moneyShip",strship.toString());
+            map.put("timeShiper", "");
+            map.put("address", "");
+            map.put("note", "");
+            map.put("fone", "");
+            // map.put("idUseronl",idu);
+            map.put("idSeller", idsl);
+
+            Intent it = new Intent(getApplicationContext(), Preview.class);
+            it.putExtra("map", map);
+            it.putExtra("min", mnid);
+            it.putExtra("stt","");
             startActivity(it);
             pro.dismiss();
         } else {
@@ -829,7 +887,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     txt.setVisibility(View.GONE);
                     lnn.setVisibility(View.VISIBLE);
                 } else {
-                    senKM(priceDiscount,strship.toString(),"km");
+                    senKM(a);
                 }
             }
         });
