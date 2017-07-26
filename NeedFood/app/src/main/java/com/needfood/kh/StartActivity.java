@@ -19,6 +19,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -407,7 +408,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         Toast.makeText(getBaseContext(), getResources().getString(R.string.dclick), Toast.LENGTH_SHORT).show();
         check++;
         if (check == 2) {
-            android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(StartActivity.this);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(StartActivity.this);
             alertDialogBuilder.setTitle("ManMo");
             alertDialogBuilder
                     .setMessage(getResources().getString(R.string.exit))
@@ -425,7 +426,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                             System.exit(0);
                         }
                     });
-            android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
     }
