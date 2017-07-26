@@ -26,31 +26,9 @@
 
             <include layout="@layout/bannerbrand"></include>
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/red"
-                app:layout_collapseMode="pin">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    android:id="@+id/immgb"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/backw"/>
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/darkred"
-                    android:drawableLeft="@drawable/search"
-                    android:hint="@string/search"
-                    android:padding="5dp"
-                    android:textColorHint="@color/white" />
-
-
-            </android.support.v7.widget.Toolbar>
+           <include
+               layout="@layout/custoolbar"
+               ></include>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

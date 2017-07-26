@@ -3,6 +3,7 @@ package com.needfood.kh.Sugges;
 
 import android.app.LocalActivityManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ public class SuggessFrag extends Fragment {
         View v = inflater.inflate(R.layout.fragment_suggess, container, false);
 
         mlam = new LocalActivityManager(getActivity(), false);
-        TabHost tabHost = (TabHost) v.findViewById(android.R.id.tabhost);
+        final TabHost tabHost = (TabHost) v.findViewById(android.R.id.tabhost);
         mlam.dispatchCreate(savedInstanceState);
         tabHost.setup(mlam);
         tabHost.getTabWidget().setStripEnabled(true);
@@ -69,6 +70,22 @@ public class SuggessFrag extends Fragment {
         tabHost.addTab(tab2);
         tabHost.addTab(tab3);
         tabHost.addTab(tab4);
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String s) {
+
+                for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(getResources().getColor(R.color.red)); // unselected
+                    TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
+                    tv.setTextColor(Color.parseColor("#ffffff"));
+                }
+
+                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.darkred)); // selected
+
+            }
+        });
+        tabHost.getTabWidget().getChildAt(0).setBackgroundColor(getResources().getColor(R.color.darkred)); // selected
+
         return v;
     }
 

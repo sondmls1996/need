@@ -98,7 +98,9 @@
     <string name="contact">Contact</string>
     <string name="shiptime">Shipping time</string>
     <string name="rein">Receiver\'s information</string>
+    <string name="orif">Order info</string>
     <string name="howtou">How to use?</string>
+    <string name="qrc">Scan product QR code</string>
     <string name="prddetail">Product detail</string>
     <string name="conor">Confirm the order</string>
     <string name="note">Note</string>

@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.text.InputType;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
@@ -22,13 +21,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -154,34 +151,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private DatePickerDialog.OnDateSetListener datePickerListener
-            = new DatePickerDialog.OnDateSetListener() {
-
-        // when dialog box is closed, below method will be called.
-        public void onDateSet(DatePicker view, int year,
-                              int month, int dayOfMonth) {
-            c.set(year, month, dayOfMonth);
-            year2 = year;
-            month2 = month;
-            day = dayOfMonth;
-            edpickngay.setText(dateFormatter.format(c.getTime()));
-
-
-        }
-    };
-    private TimePickerDialog.OnTimeSetListener timepic = new TimePickerDialog.OnTimeSetListener() {
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-            edpickgio.setText(hourOfDay + ":" + minute);
-        }
-    };
-
     private void khaibao() {
-        c = Calendar.getInstance();
-        day = c.get(Calendar.DAY_OF_MONTH);
-        month2 = c.get(Calendar.MONTH);
-        year2 = c.get(Calendar.YEAR);
+
         bn = (Button) findViewById(R.id.bn);
         shareButton = (ShareButton) findViewById(R.id.btnshare);
         likeView = (LikeView) findViewById(R.id.btnlike);
@@ -200,13 +171,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
         // likeView.callOnClick();
-        hour = c.get(Calendar.HOUR_OF_DAY);
-        minitus = c.get(Calendar.MINUTE);
-        dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-        String formattedDate = dateFormatter.format(c.getTime());
-        edghichu = (EditText) findViewById(R.id.ghichu);
-        timeformat = new SimpleDateFormat("HH:mm");
-        String formattime = timeformat.format(c.getTime());
+
         db = new DataHandle(this);
         Intent it = getIntent();
         view1 = (LinearLayout) findViewById(R.id.v1);
@@ -214,23 +179,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         idprd = it.getStringExtra("idprd");
         lnf = (LinearLayout) findViewById(R.id.lnfb);
 
-        edadrs = (EditText) findViewById(R.id.edadrship);
-        Log.d("PRODUCTID", idprd);
-        //edpick ngay
-        edpickngay = (EditText) findViewById(R.id.pickngay);
-        edpickngay.setInputType(InputType.TYPE_NULL);
-        edpickngay.requestFocus();
-        edpickngay.setOnClickListener(this);
-        edpickngay.setText(formattedDate);
-        //edpicgio
-        edpickgio = (EditText) findViewById(R.id.pickgio);
-        edpickgio.setInputType(InputType.TYPE_NULL);
-        edpickgio.requestFocus();
-        edpickgio.setOnClickListener(this);
-        edpickgio.setText(formattime);
 
-        fromDatePickerDialog = new DatePickerDialog(this, datePickerListener, year2, month2, day);
-        timepicker = new TimePickerDialog(this, timepic, hour, minitus, true);
         edquan = (EditText) findViewById(R.id.edquan);
         ses = new Session(this);
         prev = (Button) findViewById(R.id.btnpre);
@@ -253,14 +202,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             fullname = listu.get(listu.size() - 1).getFullname();
             phone = listu.get(listu.size() - 1).getFone();
             uadr = listu.get(listu.size() - 1).getAddress();
-            edadrs.setText(uadr);
+
 
         }
         tvco = (TextView) findViewById(R.id.tvco);
         tvcodes = (TextView) findViewById(R.id.tvcodes);
         tvprize = (TextView) findViewById(R.id.tvprize);
         tvdv1 = (TextView) findViewById(R.id.donvi1);
-        shipm = (TextView) findViewById(R.id.shipmn);
+
         tvdv2 = (TextView) findViewById(R.id.donvi2);
         imgprd = (ImageView) findViewById(R.id.imgnews);
         arr = new ArrayList<>();
@@ -396,45 +345,22 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("listProduct", jsonArray.toString());
             map.put("money", money + "");
             map.put("totalMoneyProduct", (money * 1.1) + "");
-            map.put("moneyShip", strship.toString());
-            map.put("timeShiper", year2 + "/" + month2 + "/" + day + " " + edpickgio.getText().toString());
+
             map.put("fullName", fullname);
-            map.put("address", adr);
+            map.put("moneyShip", strship.toString());
+//            map.put("timeShiper", year2 + "/" + month2 + "/" + day + " " + edpickgio.getText().toString());
+//            map.put("address", adr);
+//            map.put("note", edghichu.getText().toString());
             map.put("fone", phone);
             // map.put("idUseronl",idu);
             map.put("idSeller", idsl);
-            map.put("note", edghichu.getText().toString());
+
             Intent it = new Intent(getApplicationContext(), Preview.class);
             it.putExtra("map", map);
             it.putExtra("min", mnid);
             startActivity(it);
             pro.dismiss();
-//            Response.Listener<String> response = new Response.Listener<String>() {
-//                @Override
-//                public void onResponse(String response) {
-//
-//                    pro.dismiss();
-//                    try {
-//                    JSONObject jo = new JSONObject(response);
-//                        String code = jo.getString("code");
-//                        if(code.equals("0")){
-//                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.ssor),Toast.LENGTH_SHORT).show();
-//                        }else if(code.equals("-1")){
-//                            AlertDialog alertDialog = taoMotAlertDialog();
-//                            alertDialog.show();
-//                          //  Toast.makeText(getApplicationContext(),getResources().getString(R.string.lostss),Toast.LENGTH_SHORT).show();
-//                        }else{
-//                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.er),Toast.LENGTH_SHORT).show();
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//            };
-//            PostCL get = new PostCL(link, map, response);
-//            RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-//            que.add(get);
+
         } else {
             pro.dismiss();
             AlertDialog alertDialog = taoMotAlertDialog2();
@@ -443,25 +369,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void dialogbuy() {
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialogbuy);
-        dialog.show();
-        EditText edtFn = (EditText) dialog.findViewById(R.id.fn);
-        EditText edtFone = (EditText) dialog.findViewById(R.id.fone);
-
-        Button btnclonse = (Button) dialog.findViewById(R.id.clo);
-        btnclonse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                dialog.cancel();
-            }
-        });
-
-
-    }
 
     public void getProductDT() {
         final String link = getResources().getString(R.string.linkprdde);
@@ -484,6 +391,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                         ShareLinkContent content = new ShareLinkContent.Builder()
                                 .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
+
                                 .setShareHashtag(new ShareHashtag.Builder()
                                         .setHashtag("#NeedFood")
                                         .build())
@@ -492,7 +400,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         shareButton.setShareContent(content);
                     }
                     strship = new StringBuilder(prd.getString("moneyShip"));
-                    shipm.setText(strship + " VND");
+
                     howto = new StringBuilder("");
                     howto.append(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
@@ -731,31 +639,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     }
                     adapterof2.notifyDataSetChanged();
                     getAtach();
-//                JSONObject jo = new JSONObject(response);
-//                    String code = jo.getString("code");
-//                    if(code.equals("0")){
-//                        JSONArray ja = jo.getJSONArray("listData");
-//                        for (int i = 0; i < ja.length(); i++) {
-//                            String mn = "";
-//                            JSONObject jo2 = ja.getJSONObject(i);
-//                            JSONObject prd = jo2.getJSONObject("Product");
-//                            JSONArray jaimg = prd.getJSONArray("images");
-//                            String typemn = prd.getString("typeMoneyId");
-//                            list = db.getMNid(typemn);
-//                            for (ListMN lu : list) {
-//                                mn = lu.getMn();
-//                            }
-//
-//                            arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-//                                    prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
-//                                    "", prd.getString("id")));
-//
-//                        }
-//                        adapterof2.notifyDataSetChanged();
-//                        getAtach();
-//                    }else{
-//
-//                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -873,11 +757,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if (v == edpickngay) {
-            fromDatePickerDialog.show();
-        } else if (v == edpickgio) {
-            timepicker.show();
-        } else if (v == img_comment) {
+     if (v == img_comment) {
             saveComment();
         }
     }
