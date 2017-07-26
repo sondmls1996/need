@@ -79,7 +79,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String maniid, idsel, mnid;
     LinearLayout view1;
     ProgressBar pr1;
-
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
     ImageView imgprd;
@@ -102,6 +101,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     OftenAdapter quanadapter;
     LinearLayout lnby, lnf, htu;
     List<ListMN> list;
+    String discount, discountStart, discountEnd, text1, text2, time1, time2, priceDiscount, discountCode;
     List<InfoConstructor> listu;
     DataHandle db;
     String idprd, idsl, namesl, access, idu, fullname, phone, bar;
@@ -117,6 +117,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     ShareButton shareButton;
     String linkfbb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,8 +178,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 it.putExtra("htu", howto.toString());
                 it.putExtra("img", simg.toString());
                 it.putExtra("tit", titl);
-                it.putExtra("idpr",idprd);
-                it.putExtra("idsl",idsl);
+                it.putExtra("idpr", idprd);
+                it.putExtra("idsl", idsl);
                 startActivity(it);
             }
         });
@@ -358,7 +359,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("totalMoneyProduct", (money * 1.1) + "");
             map.put("fullName", "");
             map.put("moneyShip", strship.toString());
-            map.put("timeShiper","");
+            map.put("timeShiper", "");
             map.put("address", "");
             map.put("note", "");
             map.put("fone", "");
@@ -378,7 +379,63 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void senKM() {
 
+        final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
+        if (ses.loggedin()) {
+            String quan = "1";
+
+            int money1 = Integer.parseInt(quan) * Integer.parseInt(priceDiscount);
+            JSONArray jsonArray = new JSONArray();
+            JSONObject j1 = new JSONObject();
+
+            try {
+                j1.put("quantity", "1");
+                j1.put("price", priceDiscount);
+                j1.put("tickKM", "false");
+                j1.put("tickKM_percent", "");
+                j1.put("tickKM_money", "");
+                j1.put("barcode", idprd);
+                j1.put("code", prdcode);
+                j1.put("title", titl);
+                j1.put("money", money1 + "");
+                j1.put("note", "");
+                j1.put("id", idprd);
+                jsonArray.put(j1);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            int money = 0;
+
+
+            money = money + money1;
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("accessToken", access);
+            map.put("listProduct", jsonArray.toString());
+            map.put("money", money + "");
+            map.put("totalMoneyProduct", (money * 1.1) + "");
+            map.put("fullName", "");
+            map.put("moneyShip", strship.toString());
+            map.put("timeShiper", "");
+            map.put("address", "");
+            map.put("note", "");
+            map.put("fone", "");
+            // map.put("idUseronl",idu);
+            map.put("idSeller", idsl);
+
+            Intent it = new Intent(getApplicationContext(), Preview.class);
+            it.putExtra("map", map);
+            it.putExtra("min", mnid);
+            startActivity(it);
+            pro.dismiss();
+        } else {
+            pro.dismiss();
+            AlertDialog alertDialog = taoMotAlertDialog2();
+            alertDialog.show();
+        }
+
+    }
     public void getProductDT() {
         final String link = getResources().getString(R.string.linkprdde);
         Map<String, String> map = new HashMap<>();
@@ -409,7 +466,15 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         shareButton.setShareContent(content);
                     }
                     strship = new StringBuilder(prd.getString("moneyShip"));
-
+                    JSONObject jos = prd.getJSONObject("discount");
+                    JSONObject jos1 = jos.getJSONObject("discountStart");
+                    text1 = jos1.getString("text");
+                    time1 = jos1.getString("time");
+                    JSONObject jos2 = jos.getJSONObject("discountEnd");
+                    text2 = jos2.getString("text");
+                    time2 = jos2.getString("time");
+                    priceDiscount = jos.getString("priceDiscount");
+                    discountCode = jos.getString("discountCode");
                     howto = new StringBuilder("");
                     howto.append(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
@@ -712,13 +777,31 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.promotiondialog);
         dialog.show();
+        final TextView txt = (TextView) dialog.findViewById(R.id.tx_km);
         final EditText edpro = (EditText) dialog.findViewById(R.id.promotion);
-
+        final LinearLayout lnn = (LinearLayout) dialog.findViewById(R.id.lnn);
+        Calendar c = Calendar.getInstance();
+        final double timenow = c.getTimeInMillis();
+        final double a1 = Long.parseLong(time1);
+        final double b = Long.parseLong(time2);
+        if (discountCode.isEmpty()) {
+            txt.setVisibility(View.VISIBLE);
+            lnn.setVisibility(View.GONE);
+        }
         Button clo = (Button) dialog.findViewById(R.id.proc);
         clo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String a = edpro.getText().toString();
+                if (!a.equals(discountCode)) {
+                    txt.setVisibility(View.GONE);
+                    lnn.setVisibility(View.VISIBLE);
+                } else if (a1 < timenow && timenow < b) {
+                    txt.setVisibility(View.GONE);
+                    lnn.setVisibility(View.VISIBLE);
+                } else {
+                    senKM();
+                }
             }
         });
         ImageView close = (ImageView) dialog.findViewById(R.id.img_close);
@@ -778,7 +861,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-     if (v == img_comment) {
+        if (v == img_comment) {
             saveComment();
         }
     }
