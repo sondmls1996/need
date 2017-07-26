@@ -114,6 +114,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     StringBuilder howto, simg, strship;
     String cmt, time, iduser, fullnameus;
     ImageView imageView;
+
     ShareButton shareButton;
 
     @Override
@@ -297,7 +298,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 j1.put("code", prdcode);
                 j1.put("title", titl);
                 j1.put("money", money1 + "");
-                j1.put("note", edghichu.getText().toString());
+                j1.put("note", "");
                 j1.put("id", idprd);
                 jsonArray.put(j1);
             } catch (JSONException e) {
@@ -331,7 +332,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             Log.d("HAJAR", jsonArray.toString());
 
             int money = 0;
-            String adr = edadrs.getText().toString();
+
             if (OftenAdapter.arrcheck.size() > 0) {
                 for (int i = 0; i < OftenAdapter.arrcheck.size(); i++) {
                     money = Integer.parseInt(OftenAdapter.arrcheck.get(i).getMoney()) + money;
@@ -346,12 +347,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("money", money + "");
             map.put("totalMoneyProduct", (money * 1.1) + "");
 
-            map.put("fullName", fullname);
+            map.put("fullName", "");
             map.put("moneyShip", strship.toString());
-//            map.put("timeShiper", year2 + "/" + month2 + "/" + day + " " + edpickgio.getText().toString());
-//            map.put("address", adr);
-//            map.put("note", edghichu.getText().toString());
-            map.put("fone", phone);
+            map.put("timeShiper","");
+            map.put("address", "");
+            map.put("note", "");
+            map.put("fone", "");
             // map.put("idUseronl",idu);
             map.put("idSeller", idsl);
 
