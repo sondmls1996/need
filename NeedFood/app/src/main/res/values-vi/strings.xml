@@ -89,6 +89,7 @@
     <string name="sugg">Gợi ý</string>
     <string name="notif">Thông báo</string>
     <string name="succ">Thành công</string>
+    <string name="buy0">Mua với giá 0đ</string>
     <string name="emailwr">Email không đúng định dạng</string>
     <string name="wait">Vui lòng chờ...</string>
     <string name="wrreg">Không được để trống</string>

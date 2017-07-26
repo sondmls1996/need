@@ -14,6 +14,7 @@
     <string name="address">Address contact\u0020</string>
     <string name="save">Save</string>
     <string name="change">Change</string>
+    <string name="buy0">Buy with 0đ</string>
     <string name="ok">Ok</string>
     <string name="thefree">The free food will ship in\u0020</string>
     <string name="adm">Add more</string>
@@ -183,6 +184,7 @@
     <string name="bc">by Customer</string>
     <string name="bn">by NeedFood</string>
     <string name="pz">Prize: \u0020</string>
+    <string name="bill0">Free bill</string>
     <string name="cs">Code shop:\u0020 </string>
     <string name="cb">Co/Brand: \u0020</string>
     <string name="rate">Rate: \u0020</string>

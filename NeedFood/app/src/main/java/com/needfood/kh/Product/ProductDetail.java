@@ -283,23 +283,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-//    public FacebookCallback<Sharer.Result> shareCallBack = new FacebookCallback<Sharer.Result>() {
-//
-//
-//        @Override
-//        public void onSuccess(Sharer.Result result) {
-//
-//        }
-//
-//        @Override
-//        public void onCancel() {
-//        }
-//
-//        @Override
-//        public void onError(FacebookException error) {
-//            Toast.makeText(getApplicationContext(), error + "", Toast.LENGTH_SHORT).show();
-//        }
-//    };
 
     private void shareOnFB() {
         if (ShareDialog.canShow(ShareLinkContent.class)) {

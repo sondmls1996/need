@@ -129,13 +129,13 @@
 
 
             <Button
-                android:id="@+id/btnpre"
+                android:id="@+id/btndeal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/red"
-                android:visibility="gone"
-                android:text="@string/precart"
+                android:background="@drawable/deald"
+
+                android:text="@string/buy0"
                 android:textColor="@color/white" />
 
             <Button
