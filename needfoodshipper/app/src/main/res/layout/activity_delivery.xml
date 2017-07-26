@@ -104,7 +104,6 @@
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -300,26 +299,26 @@
                     android:textSize="20dp" />
 
             </LinearLayout>
-        <LinearLayout
 
-            android:layout_width="match_parent"
-
-
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <TextView
+            <LinearLayout
 
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Thông tin sản phẩm"
-                android:textColor="@color/red"
-                android:textSize="24sp"
-                android:textStyle="bold" />
 
+
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/dstieude"
+                    android:textColor="@color/red"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -334,7 +333,6 @@
                 android:padding="5dp">
 
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -346,8 +344,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Sản phẩm"
+                        android:text="@string/dssanpham"
                         android:textColor="@color/black"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -357,7 +354,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:text="3kg Cá hồi + 4kg Rau cải"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
@@ -375,7 +371,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Số lượng"
+                        android:text="@string/dssoluong"
                         android:textColor="@color/black"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -390,6 +386,7 @@
                         android:textColor="@color/black"
                         android:textSize="16dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -402,7 +399,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Đơn giá"
+                        android:text="@string/dsdongia"
                         android:textColor="@color/black"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -417,6 +414,7 @@
                         android:textColor="@color/black"
                         android:textSize="16dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -429,7 +427,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="T.tiền"
+                        android:text="@string/dstinhtien"
                         android:textColor="@color/black"
                         android:textSize="18dp"
                         android:textStyle="bold" />

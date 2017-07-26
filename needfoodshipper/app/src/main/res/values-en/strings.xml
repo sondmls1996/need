@@ -44,9 +44,9 @@
     <string name="ctbtnhoanthanh">Finish</string>
     <string name="dltext1">Customer Attitude Evaluation</string>
     <string name="dltext2">Leave a reason if you can the bil</string>
-    <string name="dlcode">Code</string>
-    <string name="dlmoneyship">Money Ship</string>
-    <string name="dltimeleft">Time Left</string>
+    <string name="dlcode">Code:</string>
+    <string name="dlmoneyship">Money Ship:</string>
+    <string name="dltimeleft">Time Left:</string>
     <string name="dlbtnhoanthanh">Finish</string>
     <string name="dlbtnchiduowng">Direct</string>
     <string name="dltoobar">Detail</string>
@@ -79,6 +79,26 @@
     <string name="btnsingout">Sign out</string>
     <string name="done">Finish</string>
     <string name="cancell">Cancel</string>
+    //login
+    <string name="kdata">No orders</string>
+    <string name="diangnhap">Being logged in</string>
+    <string name="disaiten">Wrong phone number or password!</string>
+    <string name="dithieu">Input missing information</string>
+    <string name="diathanhcong">Logged in successfully !</string>
+    //donhang
+    <string name="dhloiketnoi">Connection errors</string>
+    <string name="dhgailan">Press 2 times to exit</string>
+    <string name="dhhoithoat">Do you really want to exit the app?</string>
+    <string name="dhkhong">No</string>
+    <string name="dhdongy">Yes</string>
+    <string name="dstieude">List of products</string>
+    <string name="dssanpham">Products</string>
+    <string name="dssoluong">Quantity</string>
+    <string name="dsdongia">Price</string>
+    <string name="dstinhtien">Money</string>
+    <string name="dsthanhcong">Success</string>
+    <string name="dslydo">Leave feedback can not be empty</string>
+
 
 
 </resources>

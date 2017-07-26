@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
     String token, iddb, lang1;
     List<ListUserContructor> list;
-    List<ListLangContructor>list1;
+    List<ListLangContructor> list1;
     Session ses;
     String dvtoken;
     ProgressDialog progressDialog;
@@ -59,13 +59,13 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         db = new DBHandle(getApplicationContext());
         ses = new Session(getApplicationContext());
         list = db.getAllUser();
-        list1=db.getAllLang();
+        list1 = db.getAllLang();
         for (ListUserContructor nu : list) {
             iddb = nu.getId();
             token = nu.getAccessToken();
 
         }
-        for(ListLangContructor nl :list1){
+        for (ListLangContructor nl : list1) {
             lang1 = nl.getLang();
         }
         String lang = "";
@@ -118,11 +118,11 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         sdt = edtSdt.getText().toString();
         pass = edtPass.getText().toString();
         final String link = getResources().getString(R.string.checkLoginAPI);
-        progressDialog.setMessage("Đang đăng nhập");
+        progressDialog.setMessage(getString(R.string.diangnhap));
         progressDialog.show();
         if (sdt.matches("") || pass.matches("")) {
             progressDialog.dismiss();
-            Toast.makeText(getApplicationContext(), "Nhập thiếu thông tin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.dithieu), Toast.LENGTH_SHORT).show();
         } else {
             Response.Listener<String> response = new Response.Listener<String>() {
                 @Override
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                         JSONObject json = new JSONObject(response);
                         String code = json.getString("code");
                         if (code.equals("0")) {
-                            Toast.makeText(getApplication(), "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), getString(R.string.diathanhcong), Toast.LENGTH_SHORT).show();
                             JSONObject user = json.getJSONObject("user");
                             String fullname = user.getString("fullName");
                             String email1 = user.getString("email");
@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
                             Log.d("ACESS", response);
                             db.addUser(new ListUserContructor(id1, code1, fullname, phone1, email1, address1, birthday1, accessToken1, pass1, skype1, facebook1, description1));
-                            db.addLang(new ListLangContructor(id1,"Viet Nam"));
+                            db.addLang(new ListLangContructor(id1, "Viet Nam"));
                             ses.setLoggedin(true);
                             progressDialog.dismiss();
 
@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                             finish();
                         } else {
                             progressDialog.dismiss();
-                            Toast.makeText(getApplication(), "Sai số điện thoại hoặc mật khẩu !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), getString(R.string.disaiten), Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -290,12 +290,13 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
             getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
         }
     }
-    public void ckeckmang(){
+
+    public void ckeckmang() {
         Networks networks = new Networks();
         Boolean conn = networks.checkNow(this.getApplicationContext());
-        if(conn ==true){
+        if (conn == true) {
             login();
-        }else{
+        } else {
             Toast.makeText(LoginActivity.this, "Bạn vui lòng bật kết nối Internet", Toast.LENGTH_SHORT).show();
 
             startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));

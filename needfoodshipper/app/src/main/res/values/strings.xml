@@ -104,6 +104,32 @@
     <string name="done">Đã xong</string>
     <string name="cancell">Đã hủy</string>
     <string name="cdtoobar">Cài đặt</string>
+    //them
+    <string name="kdata">Không có đơn hàng</string>
+    //Login
+    <string name="diangnhap">Đang đăng nhập</string>
+    <string name="disaiten">Sai số điện thoại hoặc mật khẩu !</string>
+    <string name="dithieu">Nhập thiếu thông tin</string>
+    <string name="diathanhcong">Đăng nhập thành công !</string>
+    //donhang
+    <string name="dhloiketnoi">Lỗi kết nối</string>
+    <string name="dhgailan">Nhấn 2 lần để thoát</string>
+    <string name="dhhoithoat">Bạn thực sự muốn thoát ứng dụng ?</string>
+    <string name="dhkhong">Không</string>
+    <string name="dhdongy">Đồng ý</string>
+    //danh sách sp
+    <string name="dstieude">Danh sách sản phẩm</string>
+    <string name="dssanpham">Sản Phẩm</string>
+    <string name="dssoluong">Số lượng</string>
+    <string name="dsdongia">Đơn giá</string>
+    <string name="dstinhtien">T.tiền</string>
+    <string name="dsthanhcong">Thành công</string>
+    <string name="dslydo">Lý do không được đươc để trống</string>
+
+
+
+
+
 
 
 

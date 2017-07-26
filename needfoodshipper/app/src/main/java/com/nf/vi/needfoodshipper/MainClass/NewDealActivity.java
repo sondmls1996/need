@@ -48,28 +48,29 @@ import java.util.List;
 
 public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private ImageView imgShipper;
-    CountDownTimer ctime;
-    private TextView tvTitle, tvTenShiper;
-    MainAdapter adapter;
-    ArrayList<MainConstructor> arr;
-    int check = 0;
+    private CountDownTimer ctime;
+    private TextView tvTitle, tvTenShiper, tvBao;
+    private MainAdapter adapter;
+    private ArrayList<MainConstructor> arr;
+    private int check = 0;
+
     private List<MainConstructor> ld;
-    RecyclerView rc;
+    private RecyclerView rc;
     private DBHandle db;
     boolean checktime = false;
     private List<ListUserContructor> list;
     private EndlessRecyclerViewScrollListener scrollListener;
-    String fullName, accessToken;
-    SwipeRefreshLayout swipeRefresh;
+    private String fullName, accessToken;
+    private SwipeRefreshLayout swipeRefresh;
 
     private LinearLayout lnYourInformation, lnHistory, lnSettings;
 
-    GoogleMap gg;
+    private GoogleMap gg;
     double la = 0, lo = 0, la2, lo2;
-    GoogleApiClient client;
-    LocationManager locationManager;
-    Location l2;
-    LinearLayoutManager linearLayoutManager;
+    private GoogleApiClient client;
+    private LocationManager locationManager;
+    private Location l2;
+    private LinearLayoutManager linearLayoutManager;
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
@@ -84,6 +85,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
             accessToken = nu.getAccessToken();
 
         }
+        tvBao = (TextView) findViewById(R.id.tvBao);
 
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.SwipeRefresh);
 
@@ -95,14 +97,15 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
         swipeRefresh.setOnRefreshListener(this);
 
 
-
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
                 page++;
-                order(page);
+
+                    order(page);
+
             }
         };
         order(1);
@@ -110,22 +113,28 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
         rc.addOnScrollListener(scrollListener);
 
     }
+
     private void order(int page) {
 
 
         final String link = getResources().getString(R.string.getListOrderShiperAPI);
 
 
-
         Response.Listener<String> response = new Response.Listener<String>() {
+
 
             @Override
             public void onResponse(String response) {
+
                 try {
                     Log.d("GG", response);
-                    if(checktime==true){
+                    if (checktime == true) {
                         ctime.cancel();
                     }
+                    if (response.equals("[]")) {
+                        tvBao.setVisibility(View.VISIBLE);
+                    }
+
                     JSONArray arr = new JSONArray(response);
 
                     for (int i = 0; i < arr.length(); i++) {
@@ -158,13 +167,14 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
                         String fone = infoCustomer.getString("fone");
                         String address = infoCustomer.getString("address");
                         String id = Order.getString("id");
-                        Log.d("IDD",Order.getString("id"));
+                        Log.d("IDD", Order.getString("id"));
                         String status = Order.getString("status");
                         String code = Order.getString("code");
 
                         Log.d("hh", fullName);
-                        ld.add(new MainConstructor(id, sb.toString(), address, fone, fullName,timeShiper, infoOrder.getString("totalMoneyProduct"),infoOrder.getString("moneyShip"),status,code,soluong.toString(),sanpham.toString(),dongia.toString(),thanhtien.toString()));
+                        ld.add(new MainConstructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, soluong.toString(), sanpham.toString(), dongia.toString(), thanhtien.toString()));
                     }
+
                     adapter.notifyDataSetChanged();
                     swipeRefresh.setRefreshing(false);
 
@@ -175,7 +185,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
             }
         };
 
-        OrderRequest loginRequest = new OrderRequest(page+"", accessToken, link, response);
+        OrderRequest loginRequest = new OrderRequest(page + "", accessToken, link, response);
         RequestQueue queue = Volley.newRequestQueue(NewDealActivity.this);
         queue.add(loginRequest);
     }
@@ -183,19 +193,21 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
     @Override
     public void onRefresh() {
         ld.clear();
-
-        ctime = new CountDownTimer(15000,1000) {
+        adapter.notifyDataSetChanged();
+        ctime = new CountDownTimer(15000, 1000) {
             @Override
 
             public void onTick(long millisUntilFinished) {
                 checktime = true;
+
                 order(1);
+
             }
 
             @Override
             public void onFinish() {
-                    swipeRefresh.setRefreshing(false);
-                Toast.makeText(getApplicationContext(),"Lỗi kết nối",Toast.LENGTH_SHORT).show();
+                swipeRefresh.setRefreshing(false);
+                Toast.makeText(getApplicationContext(), getString(R.string.dhloiketnoi), Toast.LENGTH_SHORT).show();
             }
 
         };
@@ -206,22 +218,22 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
     public void onBackPressed() {
 
         check++;
-        if(check==1) {
-            Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
+        if (check == 1) {
+            Toast.makeText(getBaseContext(), getString(R.string.dhgailan), Toast.LENGTH_SHORT).show();
         }
         if (check == 2) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(NewDealActivity.this);
-                alertDialogBuilder.setTitle("Needfood");
+            alertDialogBuilder.setTitle("Needfood");
             alertDialogBuilder
-                    .setMessage("Bạn thực sự muốn thoát ứng dụng ?")
+                    .setMessage(getString(R.string.dhhoithoat))
                     .setCancelable(false)
-                    .setPositiveButton("Không", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getString(R.string.dhkhong), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                             check = 0;
                         }
                     })
-                    .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getString(R.string.dhdongy), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             moveTaskToBack(true);
                             android.os.Process.killProcess(android.os.Process.myPid());

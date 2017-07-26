@@ -6,58 +6,61 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainClass.ChangePassActivity">
+
     <include layout="@layout/custom_toobar" />
+
     <ImageView
-        android:layout_marginTop="30dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-android:layout_marginBottom="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/logoappc" />
+
     <EditText
         android:id="@+id/edtPassold"
-        android:background="@drawable/custom_edittextsearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_gravity="center"
-        android:inputType="textPassword"
-        android:padding="5dp"
         android:layout_margin="10dp"
+        android:background="@drawable/custom_edittextsearch"
+        android:gravity="center"
         android:hint="@string/cspmatkhaucu"
-        />
+        android:inputType="textPassword"
+        android:padding="5dp" />
+
     <EditText
         android:id="@+id/edtPassnew"
-        android:background="@drawable/custom_edittextsearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_gravity="center"
-        android:inputType="textPassword"
-        android:padding="5dp"
         android:layout_margin="10dp"
+        android:background="@drawable/custom_edittextsearch"
+        android:gravity="center"
         android:hint="@string/cspmatkhaumoi"
-        />
+        android:inputType="textPassword"
+        android:padding="5dp" />
+
     <EditText
         android:id="@+id/edtPassnew2"
-        android:background="@drawable/custom_edittextsearch"
         android:layout_width="match_parent"
-        android:inputType="textPassword"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_gravity="center"
-
-        android:padding="5dp"
         android:layout_margin="10dp"
+        android:background="@drawable/custom_edittextsearch"
+        android:gravity="center"
+
         android:hint="@string/cspnhaplai"
-        />
+        android:inputType="textPassword"
+        android:padding="5dp" />
+
     <Button
         android:id="@+id/btnSavePass"
-        android:background="@drawable/custombt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
         android:layout_gravity="center"
-        android:text="@string/ttbtnluu"/>
+        android:background="@drawable/custombt"
+        android:text="@string/ttbtnluu"
+        android:textColor="@color/white" />
 
 </LinearLayout>

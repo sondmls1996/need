@@ -1,6 +1,8 @@
 package com.nf.vi.needfoodshipper.MainClass;
 
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -9,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,23 +38,23 @@ import java.util.Iterator;
 import java.util.List;
 
 public class WaittingActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
-    private TextView tvTitle, tvTenShiper;
-    WaittingAdapter adapter;
-    ArrayList<MainConstructor> arr;
-    CountDownTimer ctime;
-    boolean checktime = false;
-    int check = 0;
+    private WaittingAdapter adapter;
+    private ArrayList<MainConstructor> arr;
+    private CountDownTimer ctime;
+    private boolean checktime = false;
+    private int check = 0;
+    private TextView tvTitle, tvTenShiper, tvBao;
 
     private List<WaittingContructor> ld;
-    RecyclerView rc;
+    private RecyclerView rc;
     private DBHandle db;
     private List<ListUserContructor> list;
-    String fullName, accessToken;
-    SwipeRefreshLayout swipeRefresh;
+    private String fullName, accessToken;
+    private SwipeRefreshLayout swipeRefresh;
     private EndlessRecyclerViewScrollListener scrollListener;
-    LinearLayoutManager linearLayoutManager;
+    private LinearLayoutManager linearLayoutManager;
 
-
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +66,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
             accessToken = nu.getAccessToken();
 
         }
+        tvBao = (TextView) findViewById(R.id.tvBao);
 
 
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.SwipeRefreshwaitting);
@@ -105,6 +109,9 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
                     Log.d("GG", response);
                     if (checktime == true) {
                         ctime.cancel();
+                    }
+                    if (response.equals("[]")) {
+                        tvBao.setVisibility(View.VISIBLE);
                     }
                     JSONArray arr = new JSONArray(response);
                     for (int i = 0; i < arr.length(); i++) {
@@ -167,6 +174,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
     @Override
     public void onRefresh() {
         ld.clear();
+        adapter.notifyDataSetChanged();
 
         ctime = new CountDownTimer(15000, 1000) {
             @Override
@@ -178,7 +186,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
             @Override
             public void onFinish() {
                 swipeRefresh.setRefreshing(false);
-                Toast.makeText(getApplicationContext(), "Lỗi kết nối", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.dhloiketnoi), Toast.LENGTH_SHORT).show();
             }
 
         };
