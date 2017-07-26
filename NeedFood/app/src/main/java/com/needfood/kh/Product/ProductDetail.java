@@ -147,9 +147,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
         th.start();
-        getCommen();
-
-
+      //  getCommen();
     }
 
     private void khaibao() {
@@ -159,10 +157,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
         lnf = (LinearLayout) findViewById(R.id.lnfb);
-        c = Calendar.getInstance();
-        day = c.get(Calendar.DAY_OF_MONTH);
-        month2 = c.get(Calendar.MONTH);
-        year2 = c.get(Calendar.YEAR);
         bn = (Button) findViewById(R.id.bn);
         shareButton = (ShareButton) findViewById(R.id.btnshare);
         likeView = (LikeView) findViewById(R.id.btnlike);
@@ -189,15 +183,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
         // likeView.callOnClick();
-        hour = c.get(Calendar.HOUR_OF_DAY);
-        minitus = c.get(Calendar.MINUTE);
-        dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-        String formattedDate = dateFormatter.format(c.getTime());
-        edghichu = (EditText) findViewById(R.id.ghichu);
-        timeformat = new SimpleDateFormat("HH:mm");
-        String formattime = timeformat.format(c.getTime());
-
-
         edquan = (EditText) findViewById(R.id.edquan);
         ses = new Session(this);
         prev = (Button) findViewById(R.id.btnpre);
@@ -287,6 +272,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager2 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);// (int spanCount, int orientation)
         rcof.setLayoutManager(mStaggeredVerticalLayoutManager);
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
+        rcquan.setLayoutManager(mStaggeredVerticalLayoutManager);
 
     }
 
