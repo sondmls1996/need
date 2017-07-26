@@ -139,6 +139,7 @@
     <string name="linksavetoken">http://needfood.webmantan.com/saveTokenDeviceAPI</string>
     <string name="linkgetinfo">http://needfood.webmantan.com/getInfoUserAPI</string>
     <string name="linklogfb">http://needfood.webmantan.com/checkRegisterFacebookAPI</string>
+    <string name="linksaveShare">http://needfood.webmantan.com/saveShareHotDealAPI</string>
 
     <string name="logout">Đăng xuất</string>
     <string name="ssor">Đặt hàng thành công</string>

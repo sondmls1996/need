@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -35,10 +36,17 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.easyandroidanimations.library.SlideInUnderneathAnimation;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.LikeView;
 import com.facebook.share.widget.ShareButton;
+import com.facebook.share.widget.ShareDialog;
 import com.needfood.kh.Adapter.ProductDetail.CommentAdapter;
 import com.needfood.kh.Adapter.ProductDetail.OftenAdapter;
 import com.needfood.kh.Brand.BrandDetail;
@@ -476,6 +484,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                         ShareLinkContent content = new ShareLinkContent.Builder()
                                 .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
+                                .setShareHashtag(new ShareHashtag.Builder()
+                                        .setHashtag("#NeedFood")
+                                        .build())
                                 .build();
 
                         shareButton.setShareContent(content);
@@ -526,7 +537,82 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(get);
     }
+    protected void share(){
+        ShareDialog shareDialog = new ShareDialog(this);
+        if (ShareDialog.canShow(SharePhotoContent.class)) {
+            shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+                @Override
+                public void onSuccess(Sharer.Result result) {
+                    saveShare();
+                }
 
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onError(FacebookException exception) {
+
+                    Log.e("DEBUG", "Share: " + exception.getMessage());
+                    exception.printStackTrace();
+                }
+            });
+
+            SharePhoto photo = new SharePhoto.Builder()
+                    .setBitmap(((BitmapDrawable) imageView.getDrawable()).getBitmap())
+                    .build();
+            SharePhotoContent content = new SharePhotoContent.Builder()
+                    .addPhoto(photo)
+                    .build();
+
+            shareDialog.show(content);
+        }
+
+    }
+    public void saveShare(){
+        final String link = getResources().getString(R.string.linkprdat);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", access);
+        map.put("idSeller",idsl);
+        map.put("numberShare","1");
+
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.d("EEE", response);
+                try {
+                    JSONArray ja = new JSONArray(response);
+                    for (int i = 0; i < ja.length(); i++) {
+                        String mn = "";
+                        JSONObject jo = ja.getJSONObject(i);
+                        JSONObject prd = jo.getJSONObject("Product");
+                        JSONArray jaimg = prd.getJSONArray("images");
+                        String typemn = prd.getString("typeMoneyId");
+                        list = db.getMNid(typemn);
+                        for (ListMN lu : list) {
+                            mn = lu.getMn();
+                        }
+                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
+                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
+                                "", prd.getString("id")));
+                    }
+
+                    quanadapter.notifyDataSetChanged();
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
+    }
     private void getAtach() {
         final String link = getResources().getString(R.string.linkprdat);
 
