@@ -195,7 +195,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         deal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                senKM("0","0");
             }
         });
         bn.setOnClickListener(new View.OnClickListener() {
@@ -413,19 +413,19 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void senKM() {
+    private void senKM(String prices,String ship) {
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
             String quan = "1";
 
-            int money1 = Integer.parseInt(quan) * Integer.parseInt(priceDiscount);
+            int money1 = Integer.parseInt(quan) * Integer.parseInt(prices);
             JSONArray jsonArray = new JSONArray();
             JSONObject j1 = new JSONObject();
 
             try {
                 j1.put("quantity", "1");
-                j1.put("price", priceDiscount);
+                j1.put("price", prices);
                 j1.put("tickKM", "false");
                 j1.put("tickKM_percent", "");
                 j1.put("tickKM_money", "");
@@ -450,7 +450,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("money", money + "");
             map.put("totalMoneyProduct", (money * 1.1) + "");
             map.put("fullName", "");
-            map.put("moneyShip", strship.toString());
+            map.put("moneyShip",ship);
             map.put("timeShiper", "");
             map.put("address", "");
             map.put("note", "");
@@ -818,7 +818,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     txt.setVisibility(View.GONE);
                     lnn.setVisibility(View.VISIBLE);
                 } else {
-                    senKM();
+                    senKM(priceDiscount,strship.toString());
                 }
             }
         });
