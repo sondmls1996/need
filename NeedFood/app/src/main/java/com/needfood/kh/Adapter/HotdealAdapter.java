@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.needfood.kh.Constructor.HotdealConstructor;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.NewsConstructor;
 import com.needfood.kh.Database.DataHandle;
@@ -28,15 +29,16 @@ import java.util.Locale;
  * Created by Vi on 4/24/2017.
  */
 
-public class NewsAdapter extends
-        RecyclerView.Adapter<NewsAdapter.RecyclerViewHolder> {
+public class HotdealAdapter extends
+        RecyclerView.Adapter<HotdealAdapter.RecyclerViewHolder> {
     DataHandle db;
     String tymn;
     List<ListMN> list;
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
-    private List<NewsConstructor> listData = new ArrayList<>();
+    private List<HotdealConstructor> listData = new ArrayList<>();
     Context context;
-    public NewsAdapter(Context context,List<NewsConstructor> listData) {
+
+    public HotdealAdapter(Context context, List<HotdealConstructor> listData) {
         this.context = context;
         this.listData = listData;
     }
@@ -44,38 +46,34 @@ public class NewsAdapter extends
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvname,tvdv,tvdv2,namea,price,price2,vote,unv;
-        public ImageView imageView,imga;
+        public TextView tvname, tvdv, tvdv2, namea, price, price2, vote;
+        public ImageView imageView, imga;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-            db=new DataHandle(context);
+            db = new DataHandle(context);
 
-             tvname = (TextView)itemView.findViewById(R.id.tvname);
+            tvname = (TextView) itemView.findViewById(R.id.tvname1);
 
-             tvdv =(TextView)itemView.findViewById(R.id.unit);
+            tvdv = (TextView) itemView.findViewById(R.id.unit1);
 
-             tvdv2 =(TextView)itemView.findViewById(R.id.unit2);
+            namea = (TextView) itemView.findViewById(R.id.tvau1);
 
-             namea = (TextView)itemView.findViewById(R.id.tvau);
+            price = (TextView) itemView.findViewById(R.id.pr11);
 
-             price = (TextView)itemView.findViewById(R.id.pr1);
+            price2 = (TextView) itemView.findViewById(R.id.pr21);
 
-             price2 = (TextView)itemView.findViewById(R.id.pr2);
-
-             vote = (TextView)itemView.findViewById(R.id.vt);
-
-            unv= (TextView)itemView.findViewById(R.id.votecount);
+            vote = (TextView) itemView.findViewById(R.id.numvotee);
 
 
-             imageView = (ImageView)itemView.findViewById(R.id.imgnews);
-             imga = (ImageView)itemView.findViewById(R.id.imgau);
-
+            imageView = (ImageView) itemView.findViewById(R.id.imgnews1);
+            imga = (ImageView) itemView.findViewById(R.id.imgau1);
 
 
         }
 
     }
+
     @Override
     public int getItemCount() {
         return listData.size();
@@ -85,46 +83,46 @@ public class NewsAdapter extends
     public RecyclerViewHolder onCreateViewHolder(ViewGroup viewGroup,
                                                  int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.customtop, viewGroup, false);
-   //     new ScaleInAnimation(itemView).animate();
+        View itemView = inflater.inflate(R.layout.customhotdeal, viewGroup, false);
+        //     new ScaleInAnimation(itemView).animate();
         return new RecyclerViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder viewHolder, int position) {
-        NewsConstructor p = listData.get(position);
+        HotdealConstructor p = listData.get(position);
         list = db.getMNid(p.getMn());
-        for (ListMN lu:list){
+        for (ListMN lu : list) {
             tymn = lu.getMn();
         }
         viewHolder.tvname.setText(p.getName());
 
         viewHolder.tvdv.setText(p.dv);
 
-        viewHolder.tvdv2.setText(p.dv);
-       // TextView namea = (TextView)view.findViewById(R.id.tvau);
+        // TextView namea = (TextView)view.findViewById(R.id.tvau);
         viewHolder.namea.setText(p.nameauth);
         //TextView price = (TextView)view.findViewById(R.id.pr1);
-        viewHolder.price.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getPrice()))+tymn);;
+        viewHolder.price.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getPrice())) + tymn);
+        ;
         //TextView price2 = (TextView)view.findViewById(R.id.pr2);
 
-        viewHolder.price2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getPrice2()))+tymn, TextView.BufferType.SPANNABLE);
-        Spannable spannable = (Spannable) viewHolder.price2.getText();
-        spannable.setSpan(STRIKE_THROUGH_SPAN, 0, viewHolder.price2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        viewHolder.price2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getPrice2())) + tymn, TextView.BufferType.SPANNABLE);
+//        Spannable spannable = (Spannable) viewHolder.price2.getText();
+//        spannable.setSpan(STRIKE_THROUGH_SPAN, 0, viewHolder.price2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //TextView vote = (TextView)view.findViewById(R.id.vt);
-        viewHolder.vote.setText(p.vt);
+        viewHolder.vote.setText(p.getNumvote());
 
 //        ImageView imageView = (ImageView)view.findViewById(R.id.imgnews);
-  //      ImageView imga = (ImageView)view.findViewById(R.id.imgau);
+        //      ImageView imga = (ImageView)view.findViewById(R.id.imgau);
 
         if (p.linkimg == null) {
 
-        } else{
+        } else {
             Picasso.with(context).load(p.linkimg).into(viewHolder.imageView);
         }
         if (p.getImga() == "") {
 
-        } else{
+        } else {
             Picasso.with(context).load(p.getImga()).into(viewHolder.imga);
         }
 

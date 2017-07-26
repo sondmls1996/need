@@ -92,33 +92,7 @@
 
 
                      </LinearLayout>
-                     <LinearLayout
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:gravity="center_vertical"
 
-                         android:orientation="horizontal">
-                         <TextView
-                             android:layout_width="match_parent"
-                             android:layout_margin="5dp"
-                             android:layout_height="wrap_content"
-                         android:layout_weight="4"
-                             android:text="@string/addr"
-                             android:textColor="@color/black"
-                             />
-                         <EditText
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:id="@+id/edadr"
-                             android:layout_weight="2"
-                             android:background="@color/white"
-                             android:layout_margin="5dp"
-                             android:textColor="@color/black"
-                             />
-
-
-
-                     </LinearLayout>
                      <LinearLayout
                          android:layout_width="match_parent"
                          android:layout_height="wrap_content"
@@ -146,54 +120,7 @@
 
 
                      </LinearLayout>
-                     <LinearLayout
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:gravity="center_vertical"
 
-                         android:orientation="horizontal">
-                         <TextView
-                             android:layout_width="match_parent"
-                             android:layout_margin="5dp"
-                             android:layout_height="wrap_content"
-                             android:text="@string/email"
-                         android:layout_weight="4"
-                             android:textColor="@color/black"
-                             />
-                         <EditText
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:id="@+id/edem"
-                             android:layout_weight="2"
-                             android:background="@color/white"
-                             android:layout_margin="5dp"
-                             android:textColor="@color/black"
-                             />
-                     </LinearLayout>
-                     <LinearLayout
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:gravity="center_vertical"
-
-                         android:orientation="horizontal">
-                         <TextView
-                             android:layout_width="match_parent"
-                             android:layout_margin="5dp"
-                             android:layout_height="wrap_content"
-                             android:text="@string/timeship"
-                             android:layout_weight="4"
-                             android:textColor="@color/black"
-                             />
-                         <TextView
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:id="@+id/tvtime"
-                             android:layout_weight="2"
-                             android:background="@color/white"
-                             android:layout_margin="5dp"
-                             android:textColor="@color/black"
-                             />
-                     </LinearLayout>
 
 
 
@@ -213,7 +140,7 @@
                 android:layout_margin="10dp"
                 android:layout_alignParentBottom="true"
                 android:textColor="@color/white"
-
+                android:id="@+id/btno"
                 android:text="@string/order"/>
         </LinearLayout>
 

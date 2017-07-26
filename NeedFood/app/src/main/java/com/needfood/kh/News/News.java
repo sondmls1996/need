@@ -35,6 +35,7 @@ public class News extends AppCompatActivity {
     EndlessScroll endlessScroll;
     TextView nop;
     LinearLayoutManager layoutManager;
+
     NewsAdapter adapter;
 
     @Override
@@ -99,10 +100,12 @@ public class News extends AppCompatActivity {
                             JSONObject j1 = ja.getJSONObject(i);
                             JSONObject prd = j1.getJSONObject("Product");
                             JSONArray imgs = prd.getJSONArray("images");
+                            JSONObject vote = prd.getJSONObject("vote");
+//                            JSONObject votec = vote.getJSONObject("user");
                             arr.add(new NewsConstructor("http://needfood.webmantan.com" + imgs.getString(0), prd.getString("id"),
                                     prd.getString("idSeller"),
                                     prd.getString("title"), prd.getString("nameSeller"), prd.getString("price")
-                                    , "", prd.getString("priceOther"), prd.getString("vote"), prd.getString("nameUnit"),
+                                    , "", prd.getString("priceOther"), vote.getString("point"), prd.getString("nameUnit"),
                                     prd.getString("typeMoneyId")));
                         }
                         adapter.notifyDataSetChanged();

@@ -8,13 +8,13 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/white">
+        app:cardBackgroundColor="@color/white"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-
             android:orientation="horizontal">
 
             <RelativeLayout
@@ -24,7 +24,7 @@
                 android:maxHeight="200dp">
 
                 <ImageView
-                    android:id="@+id/imgnews"
+                    android:id="@+id/imgnews1"
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:maxHeight="200dp"
@@ -40,10 +40,10 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:background="@drawable/borderedt"
-                        android:visibility="gone"
                         android:padding="3dp"
                         android:text="1:20"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -55,7 +55,7 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/tvname"
+                    android:id="@+id/tvname1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
@@ -78,7 +78,7 @@
                         android:textColor="@color/gray2" />
 
                     <TextView
-                        android:id="@+id/tvau"
+                        android:id="@+id/tvau1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="3dp"
@@ -88,22 +88,22 @@
                         android:textSize="16sp" />
 
                     <ImageView
-                        android:id="@+id/imgau"
+                        android:id="@+id/imgau1"
                         android:layout_width="30dp"
-                        android:visibility="gone"
                         android:layout_height="30dp"
-                        android:src="@drawable/deald" />
+                        android:src="@drawable/deald"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/pr1"
+                        android:id="@+id/pr11"
+                        android:background="@drawable/dashline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="240.000 VND"
@@ -111,6 +111,7 @@
                         android:textSize="20sp" />
 
                     <TextView
+                        android:background="@drawable/dashline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="3dp"
@@ -119,7 +120,8 @@
                         android:textColor="@color/black" />
 
                     <TextView
-                        android:id="@+id/unit"
+                        android:background="@drawable/dashline"
+                        android:id="@+id/unit1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="3dp"
@@ -131,54 +133,65 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/pr2"
+                        android:id="@+id/pr21"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="160.000 vnd"
-                        android:textColor="@color/gray2" />
+                        android:text="@string/fre"
+                        android:textColor="@color/red"
+                        android:textSize="22dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="/"
-                        android:textColor="@color/gray2" />
-
-                    <TextView
-                        android:id="@+id/unit2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1 pices"
-                        android:textColor="@color/gray2" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/vt"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="60"
-                        android:textColor="@color/red" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="/"
-                        android:textColor="@color/gray2" />
+                        <TextView
+                            android:id="@+id/vt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mission:"
+                            android:textSize="20dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:id="@+id/votecount"
+                        <TextView
+                            android:layout_marginLeft="5dp"
+                            android:id="@+id/numvotee"
+                            android:layout_marginRight="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20dp" />
+                        <TextView
+                            android:text="@string/phieu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="5 by Customer"
-                        android:textColor="@color/gray2" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
+                            android:text="*" />
+
+                        <TextView
+                            android:id="@+id/mis"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sare" />
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>

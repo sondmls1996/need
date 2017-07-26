@@ -5,8 +5,7 @@
     android:id="@+id/cor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
 
 
     <android.support.design.widget.AppBarLayout
@@ -14,56 +13,56 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        >
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
             <RelativeLayout
-                android:layout_width="match_parent"
                 android:id="@+id/rl"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
+                    android:id="@+id/imgsp"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:id="@+id/imgsp"
                     android:layout_marginTop="?attr/actionBarSize"
+                    android:scaleType="centerCrop" />
 
-                    android:scaleType="centerCrop"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_alignBottom="@id/imgsp"
-                    android:background="@color/blurdark">
+                    android:background="@color/blurdark"
+                    android:orientation="horizontal">
+
                     <TextView
+                        android:id="@+id/txtsp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:id="@+id/txtsp"
                         android:layout_margin="5dp"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
                 </LinearLayout>
             </RelativeLayout>
 
 
-            <include
-             layout="@layout/toolbar"
-                ></include>
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
+        <include layout="@layout/toolbar"></include>
 
     </android.support.design.widget.AppBarLayout>
+
     <include
 
-        layout="@layout/htucontent"/>
-
+        layout="@layout/htucontent" />
 
 
 </android.support.design.widget.CoordinatorLayout>
