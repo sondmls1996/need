@@ -149,4 +149,11 @@ public class ChangeInformation extends AppCompatActivity {
 
         }
     }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplication(),YourInformationActivity.class));
+
+
+    }
+
 }

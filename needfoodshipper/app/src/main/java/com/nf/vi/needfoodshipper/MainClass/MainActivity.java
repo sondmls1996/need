@@ -204,10 +204,13 @@ public class MainActivity extends TabActivity
         int id = v.getId();
         if (id == R.id.lnYourInformation) {
             startActivity(new Intent(getApplicationContext(), YourInformationActivity.class));
+            finish();
         } else if (id == R.id.lnHistory) {
             startActivity(new Intent(getApplicationContext(), HistoryActivity.class));
+            finish();
         } else if (id == R.id.lnSettings) {
             startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+            finish();
         }
 
     }

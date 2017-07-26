@@ -18,7 +18,7 @@
         <LinearLayout
             android:id="@+id/lntop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
@@ -333,118 +333,57 @@
                 android:padding="5dp">
 
 
-                <LinearLayout
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/dssanpham"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:text="@string/dssoluong"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/dssanpham"
-                        android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvSanpham"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="3kg Cá hồi + 4kg Rau cải"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:text="@string/dsdongia"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/dssoluong"
-                        android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvSoluong"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="3kg Cá hồi + 4kg Rau cải"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/dsdongia"
-                        android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvDongia"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="3kg Cá hồi + 4kg Rau cải"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/dstinhtien"
-                        android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvThanhtien"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="3kg Cá hồi + 4kg Rau cải"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-                </LinearLayout>
+                    android:text="@string/dstinhtien"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
+
+            <ListView
+                android:id="@+id/lvSanpham"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/white"
+                android:padding="5dp"></ListView>
 
             <LinearLayout
                 android:layout_width="match_parent"

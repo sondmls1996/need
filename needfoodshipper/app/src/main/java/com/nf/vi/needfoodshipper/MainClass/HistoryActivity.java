@@ -3,6 +3,7 @@ package com.nf.vi.needfoodshipper.MainClass;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
@@ -401,6 +402,12 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
 
         };
         ctime.start();
+
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplication(),MainActivity.class));
+
 
     }
 }
