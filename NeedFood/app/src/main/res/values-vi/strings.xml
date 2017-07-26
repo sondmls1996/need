@@ -194,4 +194,14 @@
     <string name="cha">Bạn cần nhập hơn 6 kí tự</string>
     <string name="paw">Mật khẩu không trùng nhau</string>
     <string name="piece">Chiếc</string>
+    <string name="wifi">Đã bật kết nối mạng Wifi</string>
+    <string name="mobile">Đã bật kết nối mạng di động</string>
+    <string name="nointer">Bạn không có kết nối internet</string>
+    <string name="exit">Bạn có chắc chắn là muốn thoát ứng dụng ?</string>
+    <string name="fre">Thực phẩm miễn phí, miễn phí giao hàng</string>
+    <string name="sare">Chia sẻ sản phẩm này ở nơi công cộng để đạt được số lượng phiếu mục tiêu</string>
+    <string name="phieu">Phiếu</string>
+    <string name="evs">Bạn có muốn lưu và thoát ?</string>
+    <string name="no">Không</string>
+    <string name="dclick">Nhấn 2 lần để thoát</string>
 </resources>

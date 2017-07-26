@@ -142,6 +142,7 @@
     <string name="linksavetoken">http://needfood.webmantan.com/saveTokenDeviceAPI</string>
     <string name="linkgetinfo">http://needfood.webmantan.com/getInfoUserAPI</string>
     <string name="linksaveShare">http://needfood.webmantan.com/saveShareHotDealAPI</string>
+    <string name="linkvote">http://needfood.webmantan.com/updateVoteProductAPI</string>
 
     <string name="logout">Logout</string>
     <string name="tiengviet">Tiếng Việt</string>
@@ -197,4 +198,14 @@
     <string name="cha">You need to enter more than 6 characters</string>
     <string name="paw">Passwords do not match</string>
     <string name="piece">Piece</string>
+    <string name="wifi">Wifi enabled</string>
+    <string name="mobile">Mobile data enabled</string>
+    <string name="nointer">Not connected to Internet</string>
+    <string name="exit">Are you sure you want to exit?</string>
+    <string name="fre">Free food, free delivery</string>
+    <string name="sare">Share this product in public to reach our target shares quantity</string>
+    <string name="phieu">Ballot</string>
+    <string name="evs">Are you want to save and exit?</string>
+    <string name="no">No</string>
+    <string name="dclick">Double click to exit</string>
 </resources>

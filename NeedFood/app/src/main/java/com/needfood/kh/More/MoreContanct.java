@@ -38,7 +38,7 @@ import static com.needfood.kh.R.id.proper;
 
 public class MoreContanct extends AppCompatActivity implements View.OnClickListener {
 
-    TextView change, changepass, save,pro;
+    TextView change, changepass, save, pro;
 
     EditText name_id, email_id, phone_id, pay, tvName, addr;
     DataHandle db;
@@ -47,16 +47,45 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
     String fname, fone, address, id, token, pass;
     Session ses;
     Class fragmentClass;
-
+    int achan = 1;
+    int bsave = 2;
+    boolean check = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_contanct);
-        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if(check==true){
+                    final AlertDialog.Builder dia = new android.support.v7.app.AlertDialog.Builder(MoreContanct.this);
+                    dia.setMessage(getResources().getString(R.string.evs));
+                    dia.setCancelable(false);
+                    dia.setPositiveButton(
+                            getResources().getString(R.string.ok),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savechange();
+                                    finish();
+                                }
+                            });
+
+                    dia.setNegativeButton(
+                            getResources().getString(R.string.no),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            });
+
+                    dia.show();
+                }else{
+                    finish();
+                }
+
             }
         });
         TextView txt = (TextView) findViewById(R.id.titletxt);
@@ -129,6 +158,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.change:
+                check = true;
                 change.setVisibility(View.GONE);
                 save.setVisibility(View.VISIBLE);
                 tvName.setEnabled(true);
@@ -136,59 +166,8 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                 addr.setEnabled(true);
                 break;
             case R.id.save:
-                save.setVisibility(View.GONE);
-                change.setVisibility(View.VISIBLE);
-                final ProgressDialog progressDialog = DialogUtils.show(MoreContanct.this, getResources().getString(R.string.wait));
-                final String namee = tvName.getText().toString();
-                final String emaill = email_id.getText().toString();
-                final String addresss = addr.getText().toString();
-                String link = getResources().getString(R.string.linkupdate);
-                Map<String, String> map = new HashMap<String, String>();
-                if (namee.matches("") || emaill.matches("") || addresss.matches("")) {
-                    progressDialog.dismiss();
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
-                } else {
-                    map.put("accessToken", token);
-                    map.put("fullName", namee);
-                    map.put("email", emaill);
-                    map.put("address", addresss);
-                    Response.Listener<String> response = new Response.Listener<String>() {
 
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-
-                                JSONObject jo = new JSONObject(response);
-                                String code = jo.getString("code");
-                                if (code.equals("0")) {
-                                    db.updateinfo(namee, emaill, addresss, id, "");
-                                    progressDialog.dismiss();
-                                    tvName.setEnabled(false);
-                                    email_id.setEnabled(false);
-                                    addr.setEnabled(false);
-                                    Intent intent = getIntent();
-                                    finish();
-                                    startActivity(intent);
-                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
-                                } else if (code.equals("-1")) {
-                                    AlertDialog alertDialog = taoMotAlertDialog();
-                                    alertDialog.show();
-                                } else {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-
-                                }
-                            } catch (JSONException e) {
-                                progressDialog.dismiss();
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-                                e.printStackTrace();
-                            }
-                        }
-                    };
-                    PostCL post = new PostCL(link, map, response);
-                    RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-                    que.add(post);
-                }
+                savechange();
 
                 break;
             case R.id.changepass:
@@ -197,6 +176,62 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                 break;
             default:
                 break;
+        }
+    }
+
+    public void savechange() {
+        save.setVisibility(View.GONE);
+        change.setVisibility(View.VISIBLE);
+        final ProgressDialog progressDialog = DialogUtils.show(this, getResources().getString(R.string.wait));
+        final String namee = tvName.getText().toString();
+        final String emaill = email_id.getText().toString();
+        final String addresss = addr.getText().toString();
+        String link = getResources().getString(R.string.linkupdate);
+        Map<String, String> map = new HashMap<String, String>();
+        if (namee.matches("") || emaill.matches("") || addresss.matches("")) {
+            progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
+        } else {
+            map.put("accessToken", token);
+            map.put("fullName", namee);
+            map.put("email", emaill);
+            map.put("address", addresss);
+            Response.Listener<String> response = new Response.Listener<String>() {
+
+                @Override
+                public void onResponse(String response) {
+                    try {
+
+                        JSONObject jo = new JSONObject(response);
+                        String code = jo.getString("code");
+                        if (code.equals("0")) {
+                            db.updateinfo(namee, emaill, addresss, id, "");
+                            progressDialog.dismiss();
+                            tvName.setEnabled(false);
+                            email_id.setEnabled(false);
+                            addr.setEnabled(false);
+                            Intent intent = getIntent();
+                            finish();
+                            startActivity(intent);
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
+                        } else if (code.equals("-1")) {
+                            AlertDialog alertDialog = taoMotAlertDialog();
+                            alertDialog.show();
+                        } else {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+
+                        }
+                    } catch (JSONException e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                }
+            };
+            PostCL post = new PostCL(link, map, response);
+            RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+            que.add(post);
         }
     }
 
@@ -218,7 +253,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                     String fone = jo.getString("fone");
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
-                    pro.setText(coin+" coins");
+                    pro.setText(coin + " coins");
                     db.updateinfo(fullname, email, address, id, coin);
                 } catch (JSONException e) {
                     e.printStackTrace();

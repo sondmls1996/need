@@ -118,7 +118,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String cmt, time, iduser, fullnameus;
     ImageView imageView;
     ShareButton shareButton;
-
+    String linkfbb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,6 +178,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     };
 
     private void khaibao() {
+        db = new DataHandle(this);
+        Intent it = getIntent();
+        view1 = (LinearLayout) findViewById(R.id.v1);
+        pr1 = (ProgressBar) findViewById(R.id.prg1);
+        idprd = it.getStringExtra("idprd");
+        lnf = (LinearLayout) findViewById(R.id.lnfb);
         c = Calendar.getInstance();
         day = c.get(Calendar.DAY_OF_MONTH);
         month2 = c.get(Calendar.MONTH);
@@ -196,6 +202,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 it.putExtra("htu", howto.toString());
                 it.putExtra("img", simg.toString());
                 it.putExtra("tit", titl);
+                it.putExtra("idpr",idprd);
+                it.putExtra("idsl",idsl);
                 startActivity(it);
             }
         });
@@ -207,12 +215,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         edghichu = (EditText) findViewById(R.id.ghichu);
         timeformat = new SimpleDateFormat("HH:mm");
         String formattime = timeformat.format(c.getTime());
-        db = new DataHandle(this);
-        Intent it = getIntent();
-        view1 = (LinearLayout) findViewById(R.id.v1);
-        pr1 = (ProgressBar) findViewById(R.id.prg1);
-        idprd = it.getStringExtra("idprd");
-        lnf = (LinearLayout) findViewById(R.id.lnfb);
+
 
         edadrs = (EditText) findViewById(R.id.edadrship);
         Log.d("PRODUCTID", idprd);
@@ -409,32 +412,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("min", mnid);
             startActivity(it);
             pro.dismiss();
-//            Response.Listener<String> response = new Response.Listener<String>() {
-//                @Override
-//                public void onResponse(String response) {
-//
-//                    pro.dismiss();
-//                    try {
-//                    JSONObject jo = new JSONObject(response);
-//                        String code = jo.getString("code");
-//                        if(code.equals("0")){
-//                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.ssor),Toast.LENGTH_SHORT).show();
-//                        }else if(code.equals("-1")){
-//                            AlertDialog alertDialog = taoMotAlertDialog();
-//                            alertDialog.show();
-//                          //  Toast.makeText(getApplicationContext(),getResources().getString(R.string.lostss),Toast.LENGTH_SHORT).show();
-//                        }else{
-//                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.er),Toast.LENGTH_SHORT).show();
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//            };
-//            PostCL get = new PostCL(link, map, response);
-//            RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-//            que.add(get);
         } else {
             pro.dismiss();
             AlertDialog alertDialog = taoMotAlertDialog2();
@@ -443,25 +420,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void dialogbuy() {
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialogbuy);
-        dialog.show();
-        EditText edtFn = (EditText) dialog.findViewById(R.id.fn);
-        EditText edtFone = (EditText) dialog.findViewById(R.id.fone);
-
-        Button btnclonse = (Button) dialog.findViewById(R.id.clo);
-        btnclonse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                dialog.cancel();
-            }
-        });
-
-
-    }
 
     public void getProductDT() {
         final String link = getResources().getString(R.string.linkprdde);
@@ -480,7 +438,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     JSONObject prd = jo.getJSONObject("Product");
                     if (prd.has("linkFacebook")) {
                         lnf.setVisibility(View.VISIBLE);
-
+                        linkfbb = prd.getString("linkFacebook");
 
                         ShareLinkContent content = new ShareLinkContent.Builder()
                                 .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
@@ -537,7 +495,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(get);
     }
-    protected void share(){
+
+    protected void share() {
         ShareDialog shareDialog = new ShareDialog(this);
         if (ShareDialog.canShow(SharePhotoContent.class)) {
             shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
@@ -559,53 +518,54 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 }
             });
 
-            SharePhoto photo = new SharePhoto.Builder()
-                    .setBitmap(((BitmapDrawable) imageView.getDrawable()).getBitmap())
-                    .build();
-            SharePhotoContent content = new SharePhotoContent.Builder()
-                    .addPhoto(photo)
+            ShareLinkContent content = new ShareLinkContent.Builder()
+                    .setContentUrl(Uri.parse(linkfbb))
+                    .setShareHashtag(new ShareHashtag.Builder()
+                            .setHashtag("#NeedFood")
+                            .build())
                     .build();
 
             shareDialog.show(content);
         }
 
     }
-    public void saveShare(){
+
+    public void saveShare() {
         final String link = getResources().getString(R.string.linkprdat);
 
         Map<String, String> map = new HashMap<>();
         map.put("accessToken", access);
-        map.put("idSeller",idsl);
-        map.put("numberShare","1");
+        map.put("idSeller", idsl);
+        map.put("numberShare", "1");
 
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 Log.d("EEE", response);
-                try {
-                    JSONArray ja = new JSONArray(response);
-                    for (int i = 0; i < ja.length(); i++) {
-                        String mn = "";
-                        JSONObject jo = ja.getJSONObject(i);
-                        JSONObject prd = jo.getJSONObject("Product");
-                        JSONArray jaimg = prd.getJSONArray("images");
-                        String typemn = prd.getString("typeMoneyId");
-                        list = db.getMNid(typemn);
-                        for (ListMN lu : list) {
-                            mn = lu.getMn();
-                        }
-                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                "", prd.getString("id")));
-                    }
-
-                    quanadapter.notifyDataSetChanged();
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    JSONArray ja = new JSONArray(response);
+//                    for (int i = 0; i < ja.length(); i++) {
+//                        String mn = "";
+//                        JSONObject jo = ja.getJSONObject(i);
+//                        JSONObject prd = jo.getJSONObject("Product");
+//                        JSONArray jaimg = prd.getJSONArray("images");
+//                        String typemn = prd.getString("typeMoneyId");
+//                        list = db.getMNid(typemn);
+//                        for (ListMN lu : list) {
+//                            mn = lu.getMn();
+//                        }
+//                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
+//                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
+//                                "", prd.getString("id")));
+//                    }
+//
+//                    quanadapter.notifyDataSetChanged();
+//
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
 
             }
         };
@@ -613,6 +573,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(get);
     }
+
     private void getAtach() {
         final String link = getResources().getString(R.string.linkprdat);
 
@@ -816,6 +777,15 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.promotiondialog);
         dialog.show();
+        final EditText edpro = (EditText) dialog.findViewById(R.id.promotion);
+
+        Button clo = (Button) dialog.findViewById(R.id.proc);
+        clo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String a = edpro.getText().toString();
+            }
+        });
         ImageView close = (ImageView) dialog.findViewById(R.id.img_close);
         close.setOnClickListener(new View.OnClickListener() {
             @Override

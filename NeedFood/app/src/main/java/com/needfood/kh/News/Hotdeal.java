@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.needfood.kh.Adapter.HotdealAdapter;
 import com.needfood.kh.Adapter.NewsAdapter;
+import com.needfood.kh.Constructor.HotdealConstructor;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.NewsConstructor;
 import com.needfood.kh.Database.DataHandle;
@@ -44,8 +46,8 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
     ListView lv;
     RecyclerView lvb;
 
-    ArrayList<NewsConstructor> arr;
-    NewsAdapter adapter;
+    ArrayList<HotdealConstructor> arr;
+    HotdealAdapter adapter;
     LinearLayoutManager layoutManager;
     String token;
     List<InfoConstructor> list;
@@ -76,7 +78,7 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
 
             layoutManager = new LinearLayoutManager(getApplicationContext());
             lvb.setLayoutManager(layoutManager);
-            adapter = new NewsAdapter(getApplicationContext(), arr);
+            adapter = new HotdealAdapter(getApplicationContext(), arr);
             lvb.setAdapter(adapter);
             endlessScroll = new EndlessScroll(layoutManager) {
                 @Override
@@ -86,7 +88,6 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
                 }
             };
             getData(1);
-
             lvb.addOnItemTouchListener(
                     new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                         @Override
@@ -145,10 +146,10 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
                             JSONObject j1 = ja.getJSONObject(i);
                             JSONObject prd = j1.getJSONObject("Product");
                             JSONArray imgs = prd.getJSONArray("images");
-                            arr.add(new NewsConstructor("http://needfood.webmantan.com" + imgs.getString(0), prd.getString("id"),
+                            arr.add(new HotdealConstructor("http://needfood.webmantan.com" + imgs.getString(0), prd.getString("id"),
                                     prd.getString("idSeller"),
                                     prd.getString("title"), prd.getString("nameSeller"), prd.getString("price")
-                                    , "", prd.getString("priceOther"), prd.getString("vote"), prd.getString("nameUnit"), prd.getString("typeMoneyId")));
+                                    , "", prd.getString("priceOther"), prd.getString("vote"), prd.getString("nameUnit"), prd.getString("typeMoneyId"),prd.getString("numberShare")));
                         }
                         adapter.notifyDataSetChanged();
                     }
