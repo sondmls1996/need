@@ -1,5 +1,9 @@
 package com.needfood.kh.Constructor;
 
+import com.needfood.kh.News.News;
+
+import java.util.Comparator;
+
 /**
  * Created by Vi on 4/24/2017.
  */

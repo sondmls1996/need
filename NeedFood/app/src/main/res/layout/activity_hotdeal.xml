@@ -7,17 +7,25 @@
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".News.Hotdeal">
+
     <TextView
+        android:id="@+id/nop6"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:text="@string/noprd"
-        android:id="@+id/nop6"
-        android:visibility="gone"
-        android:textSize="16sp"
         android:textColor="@color/black"
-        android:gravity="center"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/lvhostdeal"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefreshlayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lvhostdeal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

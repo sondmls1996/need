@@ -90,6 +90,7 @@ public class News extends AppCompatActivity {
     }
 
     private void getData(int page) {
+
         final String link = getResources().getString(R.string.linknew);
         final Map<String, String> map = new HashMap<>();
         map.put("page", page + "");
@@ -136,8 +137,7 @@ public class News extends AppCompatActivity {
     }
 
     private void refresh() {
-
-        swipeRefreshLayout.setRefreshing(true);
+        arr.clear();
         getData(1);
     }
 
