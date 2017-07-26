@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,13 +20,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.needfood.kh.Brand.BrandDetail;
 import com.needfood.kh.Constructor.MapConstructor;
 import com.needfood.kh.R;
-import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.GPSTracker;
 import com.needfood.kh.SupportClass.PostCL;
 
@@ -92,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
+       // mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(sydney)
