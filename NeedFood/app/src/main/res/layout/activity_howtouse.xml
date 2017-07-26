@@ -53,9 +53,10 @@
             </RelativeLayout>
 
 
-            <include layout="@layout/toolbar"></include>
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
+        <include layout="@layout/toolbar"></include>
 
     </android.support.design.widget.AppBarLayout>
 

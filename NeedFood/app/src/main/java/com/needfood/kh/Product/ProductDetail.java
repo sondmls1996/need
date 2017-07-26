@@ -285,7 +285,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     }
 
     private void sendOrder() {
-        String link = getResources().getString(R.string.linkorder);
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {

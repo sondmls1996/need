@@ -1,9 +1,12 @@
 package com.needfood.kh.Product;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,32 +18,43 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Adapter.PreAdapter;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.PreConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
+import com.needfood.kh.StartActivity;
+import com.needfood.kh.SupportClass.DialogUtils;
+import com.needfood.kh.SupportClass.PostCL;
+import com.needfood.kh.SupportClass.Session;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class Preview extends AppCompatActivity implements View.OnClickListener{
-    String json,mid;
+    String json,mid,mnship;
     RecyclerView lv;
     private SimpleDateFormat dateFormatter, timeformat;
     ArrayList<PreConstructor> arr;
     DataHandle dataHandle;
     List<ListMN> list;
     List<InfoConstructor> listif;
+    Session ses;
     TextView shipm;
     HashMap<String, String> hashMap;
     EditText edname,edadr,edphome,edemail,edghichu,edpickngay,edpickgio;
@@ -56,6 +70,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_preview);
         TextView txt = (TextView)findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.conor));
+
         ImageView imgb = (ImageView)findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +81,10 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
         Intent intent = getIntent();
          hashMap = (HashMap<String, String>)intent.getSerializableExtra("map");
         json = hashMap.get("listProduct");
+        mnship = hashMap.get("moneyShip");
         btno = (Button)findViewById(R.id.btno); 
         mid = intent.getStringExtra("min");
+        edadr = (EditText)findViewById(R.id.edadrship);
         dataHandle = new DataHandle(this);
         c = Calendar.getInstance();
         day = c.get(Calendar.DAY_OF_MONTH);
@@ -80,6 +97,8 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
 
         timeformat = new SimpleDateFormat("HH:mm");
         shipm = (TextView) findViewById(R.id.shipmn);
+        shipm.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(mnship))+"VND");
+
         fromDatePickerDialog = new DatePickerDialog(this, datePickerListener, year2, month2, day);
         timepicker = new TimePickerDialog(this, timepic, hour, minitus, true);
         String formattime = timeformat.format(c.getTime());
@@ -99,7 +118,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
         listif = dataHandle.getAllInfor();
 
         edname = (EditText)findViewById(R.id.edname);
-        edadr = (EditText)findViewById(R.id.edadr);
+
         edphome = (EditText)findViewById(R.id.edphone);
 
         edghichu = (EditText) findViewById(R.id.ghichu);
@@ -134,17 +153,50 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
     }
 
     private void sendSever() {
+
+        final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
+        String link = getResources().getString(R.string.linkorder);
+
         String name = edname.getText().toString();
         String adr = edadr.getText().toString();
         String phone = edphome.getText().toString();
-
         String note = edghichu.getText().toString();
 
-        hashMap.put("fullName",name);
-        hashMap.put("timeShiper",day+"/"+month2+"/"+year2+" "+hour+":"+minitus);
-        hashMap.put("address",adr);
-        hashMap.put("note",note);
-        hashMap.put("fone",phone);
+        if(adr.equals("")){
+            pro.dismiss();
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.wrreg),Toast.LENGTH_SHORT).toString();
+        }else{
+
+            hashMap.put("fullName",name);
+            hashMap.put("timeShiper",day+"/"+(month2+1)+"/"+year2+" "+hour+":"+minitus);
+            hashMap.put("address",adr);
+            hashMap.put("note",note);
+            hashMap.put("fone",phone);
+            Response.Listener<String> response = new Response.Listener<String>(){
+
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        pro.dismiss();
+                        JSONObject jo = new JSONObject(response);
+                        String code = jo.getString("code");
+                        if(code.equals("0")){
+                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.ssor),Toast.LENGTH_SHORT).show();
+                        }else if(code.equals("-1")){
+                            taoMotAlertDialog();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            };
+            PostCL get = new PostCL(link, hashMap, response);
+            RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+            que.add(get);
+        }
+
+
 
 
     }
@@ -178,5 +230,29 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
         } else if (v == edpickgio) {
             timepicker.show();
         }
+    }
+    private AlertDialog taoMotAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Thiết lập tiêu đề hiển thị
+        builder.setTitle(getResources().getString(R.string.er));
+        //Thiết lập thông báo hiển thị
+
+        builder.setMessage(getResources().getString(R.string.lostss));
+        builder.setCancelable(false);
+        //Tạo nút Chu hang
+        builder.setNegativeButton(getResources().getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        dataHandle.deleteInfo();
+                        ses = new Session(getBaseContext());
+                        ses.setLoggedin(false);
+                        Intent i = new Intent(getApplicationContext(), StartActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        return dialog;
     }
 }

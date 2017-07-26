@@ -15,10 +15,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Adapter.HotdealAdapter;
-import com.needfood.kh.Adapter.NewsAdapter;
 import com.needfood.kh.Constructor.HotdealConstructor;
 import com.needfood.kh.Constructor.InfoConstructor;
-import com.needfood.kh.Constructor.NewsConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Login.Login;
 import com.needfood.kh.Product.ProductDetail;
@@ -146,10 +144,15 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
                             JSONObject j1 = ja.getJSONObject(i);
                             JSONObject prd = j1.getJSONObject("Product");
                             JSONArray imgs = prd.getJSONArray("images");
+
+                            JSONObject vote = prd.getJSONObject("vote");
+
+
                             arr.add(new HotdealConstructor("http://needfood.webmantan.com" + imgs.getString(0), prd.getString("id"),
                                     prd.getString("idSeller"),
                                     prd.getString("title"), prd.getString("nameSeller"), prd.getString("price")
                                     , "", prd.getString("priceOther"), prd.getString("vote"), prd.getString("nameUnit"), prd.getString("typeMoneyId"),prd.getString("numberShare")));
+
                         }
                         adapter.notifyDataSetChanged();
                     }
