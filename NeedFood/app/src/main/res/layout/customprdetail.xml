@@ -1,68 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rlmain"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        app:cardBackgroundColor="@color/white"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white">
+
         <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
             android:id="@+id/prg1"
-            android:layout_gravity="center"/>
-        <LinearLayout android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/v1"
-        android:visibility="gone"
+            android:layout_gravity="center" />
 
-            xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/v1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
-
                 android:maxHeight="200dp">
+
                 <ImageView
-                    android:layout_width="120dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/bg"
-                    android:layout_height="match_parent"
                     android:id="@+id/imgnews"
-                    android:maxHeight="200dp"/>
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:maxHeight="200dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="1:20"
+                        android:background="@drawable/borderedt"
 
                         android:padding="3dp"
-                        android:visibility="gone"
-                        android:background="@drawable/borderedt"
-                        android:textColor="@color/white"/>
+                        android:text="1:20"
+                        android:textColor="@color/white"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:padding="10dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
+
                 <TextView
+                    android:id="@+id/tvname2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                          android:id="@+id/tvname2"
                     android:text="SEA FOOD"
-                    android:textColor="@color/red"/>
+                    android:textColor="@color/red"
+                    android:textSize="25sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -70,158 +75,173 @@
 
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
+
                     <TextView
+                        android:id="@+id/pr1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="240.000 VND"
-                        android:textSize="20sp"
                         android:textColor="@color/black"
-                        android:id="@+id/pr1"
-                        />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="/"
-                        android:maxLength="20"
-
                         android:layout_marginRight="3dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2 xuất"
-                        android:textColor="@color/black"
                         android:maxLength="20"
+
+                        android:text="/" />
+
+                    <TextView
                         android:id="@+id/donvi1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginRight="3dp"
-                        />
+                        android:maxLength="20"
+                        android:text="2 xuất"
+                        android:textColor="@color/black" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:id="@+id/pr2"
-                        android:textColor="@color/gray2"
-                        android:text="160.000 vnd"/>
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray2"
-                        android:text="/"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/gray2"
-                        android:id="@+id/donvi2"
-                        android:text="1 pices"/>
-                </LinearLayout>
+                        android:text="160.000 vnd"
+                        android:textColor="@color/gray2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="One day of guided fishing on the Henry’s Fork of the Snake River and two nights lodging with Three Rivers Ranch.
+                        android:text="/"
+                        android:textColor="@color/gray2" />
+
+                    <TextView
+                        android:id="@+id/donvi2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 pices"
+                        android:textColor="@color/gray2" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:ellipsize="middle"
+                    android:maxLength="100"
+                    android:maxLines="3"
+                    android:text="One day of guided fishing on the Henry’s Fork of the Snake River and two nights lodging with Three Rivers Ranch.
 Nestled in the quiet town of Warm River, in Southeastern Idaho, the ranch is surrounded by enormous pines, brilliant colored aspens and three enticing rivers, all within walking distance from the front step of your cabin. Three Rivers Ranch has "
-                        android:maxLength="100"
-                        android:maxLines="3"
-                        android:ellipsize="middle"
-                        android:layout_marginBottom="5dp"
-                        android:id="@+id/des"
-                        android:textColor="@color/gray2"/>
+                    android:textColor="@color/gray2" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="3dp"
-                    android:visibility="gone"
                     android:background="@color/gray"
-                    android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/red"
-                    android:text="Free "/>
+                    android:orientation="horizontal"
+                    android:padding="3dp"
+                    android:visibility="gone">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:text="Free "
+                        android:textColor="@color/red" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="with deal minimum "
-                        android:textColor="@color/black"/>]
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />]
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="70.000"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:text="70.000"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
+
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:layout_weight="1">
-                        <ImageView
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/imglike"
-                            android:src="@drawable/heartb"/>
-                    </RelativeLayout>
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/grayDark"/>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:layout_weight="1">
-                        <ImageView
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:id="@+id/imglike"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/heartb" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grayDark" />
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/imgshare"
-                            android:src="@drawable/share"/>
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="5dp">
 
-                    </RelativeLayout>
+                            <ImageView
+                                android:id="@+id/imgshare"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/share" />
 
+                        </RelativeLayout>
+
+                    </LinearLayout>
                 </LinearLayout>
-                </LinearLayout>
+
                 <LinearLayout
-                    android:layout_width="match_parent"
                     android:id="@+id/lnfb"
-                    android:visibility="visible"
-                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
                     <com.facebook.share.widget.LikeView
                         android:id="@+id/btnlike"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"></com.facebook.share.widget.LikeView>
-                    <com.facebook.share.widget.ShareButton
-                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"></com.facebook.share.widget.LikeView>
 
+                    <com.facebook.share.widget.ShareButton
                         android:id="@+id/btnshare"
+
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
-
 
 
             </LinearLayout>

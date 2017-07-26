@@ -85,6 +85,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     TextView se;
     CoordinatorLayout activity_news;
     NetworkCheck networkCheck;
+    int check = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -399,6 +400,34 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         config.locale = myLocale;//set config locale as selected locale
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());//Update the config
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getBaseContext(), getResources().getString(R.string.dclick), Toast.LENGTH_SHORT).show();
+        check++;
+        if (check == 2) {
+            android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(StartActivity.this);
+            alertDialogBuilder.setTitle("ManMo");
+            alertDialogBuilder
+                    .setMessage(getResources().getString(R.string.exit))
+                    .setCancelable(false)
+                    .setPositiveButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                            check = 0;
+                        }
+                    })
+                    .setNegativeButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            moveTaskToBack(true);
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                            System.exit(0);
+                        }
+                    });
+            android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
     }
 
 }
