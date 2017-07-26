@@ -99,7 +99,7 @@ public class Drink extends AppCompatActivity {
                             JSONObject prd = j1.getJSONObject("Product");
                             JSONArray imgs = prd.getJSONArray("images");
                             JSONObject vote = prd.getJSONObject("vote");
-                            JSONObject votec = vote.getJSONObject("user");
+                     //       JSONObject votec = vote.getJSONObject("user");
                             arr.add(new NewsConstructor("http://needfood.webmantan.com" + imgs.getString(0), prd.getString("id"),
                                     prd.getString("idSeller"),
                                     prd.getString("title"), prd.getString("nameSeller"), prd.getString("price")
