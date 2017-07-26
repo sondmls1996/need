@@ -1,7 +1,9 @@
 package com.needfood.kh.News;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,18 +27,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BestQuality extends AppCompatActivity {
     RecyclerView lvb;
 
-    ArrayList<NewsConstructor> arr;
+    List<NewsConstructor> arr;
+    List<NewsConstructor> arr1;
     EndlessScroll endlessScroll;
     NewsAdapter adapter;
     LinearLayoutManager layoutManager;
     TextView nop;
-
+    SwipeRefreshLayout swipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,7 @@ public class BestQuality extends AppCompatActivity {
         lvb = (RecyclerView) findViewById(R.id.lvbest);
         lvb.setHasFixedSize(true);
         arr = new ArrayList<>();
+        arr1 = new ArrayList<>();
         nop = (TextView) findViewById(R.id.nop7);
         layoutManager = new LinearLayoutManager(this);
         lvb.setLayoutManager(layoutManager);
@@ -71,6 +78,14 @@ public class BestQuality extends AppCompatActivity {
                     }
                 })
         );
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefreshlayout2);
+        swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
     }
 
     private void getData(int page) {
@@ -104,6 +119,8 @@ public class BestQuality extends AppCompatActivity {
                                     prd.getString("typeMoneyId")));
                         }
                         adapter.notifyDataSetChanged();
+                        sapxep();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -116,4 +133,27 @@ public class BestQuality extends AppCompatActivity {
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(post);
     }
+
+    public void sapxep() {
+        Collections.sort(arr, new Comparator<NewsConstructor>() {
+            @Override
+            public int compare(NewsConstructor o1, NewsConstructor o2) {
+                if (Float.parseFloat(o1.getVt()) < Float.parseFloat(o2.getVt())) {
+                    return 1;
+                } else {
+                    if (Float.parseFloat(o1.getVt()) == Float.parseFloat(o2.getVt())) {
+                        return 0;
+                    } else {
+                        return -1;
+                    }
+                }
+
+            }
+        });
+    }
+    public void refresh(){
+        arr.clear();
+        getData(1);
+    }
+
 }

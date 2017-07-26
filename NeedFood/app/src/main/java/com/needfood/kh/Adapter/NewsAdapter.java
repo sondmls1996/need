@@ -36,7 +36,8 @@ public class NewsAdapter extends
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     private List<NewsConstructor> listData = new ArrayList<>();
     Context context;
-    public NewsAdapter(Context context,List<NewsConstructor> listData) {
+
+    public NewsAdapter(Context context, List<NewsConstructor> listData) {
         this.context = context;
         this.listData = listData;
     }
@@ -44,38 +45,38 @@ public class NewsAdapter extends
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvname,tvdv,tvdv2,namea,price,price2,vote,unv;
-        public ImageView imageView,imga;
+        public TextView tvname, tvdv, tvdv2, namea, price, price2, vote, unv;
+        public ImageView imageView, imga;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-            db=new DataHandle(context);
+            db = new DataHandle(context);
 
-             tvname = (TextView)itemView.findViewById(R.id.tvname);
+            tvname = (TextView) itemView.findViewById(R.id.tvname);
 
-             tvdv =(TextView)itemView.findViewById(R.id.unit);
+            tvdv = (TextView) itemView.findViewById(R.id.unit);
 
-             tvdv2 =(TextView)itemView.findViewById(R.id.unit2);
+            tvdv2 = (TextView) itemView.findViewById(R.id.unit2);
 
-             namea = (TextView)itemView.findViewById(R.id.tvau);
+            namea = (TextView) itemView.findViewById(R.id.tvau);
 
-             price = (TextView)itemView.findViewById(R.id.pr1);
+            price = (TextView) itemView.findViewById(R.id.pr1);
 
-             price2 = (TextView)itemView.findViewById(R.id.pr2);
+            price2 = (TextView) itemView.findViewById(R.id.pr2);
 
-             vote = (TextView)itemView.findViewById(R.id.vt);
+            vote = (TextView) itemView.findViewById(R.id.vt);
 
-            unv= (TextView)itemView.findViewById(R.id.votecount);
+            unv = (TextView) itemView.findViewById(R.id.votecount);
 
 
-             imageView = (ImageView)itemView.findViewById(R.id.imgnews);
-             imga = (ImageView)itemView.findViewById(R.id.imgau);
-
+            imageView = (ImageView) itemView.findViewById(R.id.imgnews);
+            imga = (ImageView) itemView.findViewById(R.id.imgau);
 
 
         }
 
     }
+
     @Override
     public int getItemCount() {
         return listData.size();
@@ -86,7 +87,7 @@ public class NewsAdapter extends
                                                  int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.customtop, viewGroup, false);
-   //     new ScaleInAnimation(itemView).animate();
+        //     new ScaleInAnimation(itemView).animate();
         return new RecyclerViewHolder(itemView);
     }
 
@@ -94,7 +95,7 @@ public class NewsAdapter extends
     public void onBindViewHolder(RecyclerViewHolder viewHolder, int position) {
         NewsConstructor p = listData.get(position);
         list = db.getMNid(p.getMn());
-        for (ListMN lu:list){
+        for (ListMN lu : list) {
             tymn = lu.getMn();
         }
         viewHolder.tvname.setText(p.getName());
@@ -102,29 +103,30 @@ public class NewsAdapter extends
         viewHolder.tvdv.setText(p.dv);
 
         viewHolder.tvdv2.setText(p.dv);
-       // TextView namea = (TextView)view.findViewById(R.id.tvau);
+        // TextView namea = (TextView)view.findViewById(R.id.tvau);
         viewHolder.namea.setText(p.nameauth);
         //TextView price = (TextView)view.findViewById(R.id.pr1);
-        viewHolder.price.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getPrice()))+tymn);;
+        viewHolder.price.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getPrice())) + tymn);
+        ;
         //TextView price2 = (TextView)view.findViewById(R.id.pr2);
 
-        viewHolder.price2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getPrice2()))+tymn, TextView.BufferType.SPANNABLE);
+        viewHolder.price2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getPrice2())) + tymn, TextView.BufferType.SPANNABLE);
         Spannable spannable = (Spannable) viewHolder.price2.getText();
         spannable.setSpan(STRIKE_THROUGH_SPAN, 0, viewHolder.price2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //TextView vote = (TextView)view.findViewById(R.id.vt);
         viewHolder.vote.setText(p.vt);
 
 //        ImageView imageView = (ImageView)view.findViewById(R.id.imgnews);
-  //      ImageView imga = (ImageView)view.findViewById(R.id.imgau);
+        //      ImageView imga = (ImageView)view.findViewById(R.id.imgau);
 
         if (p.linkimg == null) {
 
-        } else{
+        } else {
             Picasso.with(context).load(p.linkimg).into(viewHolder.imageView);
         }
         if (p.getImga() == "") {
 
-        } else{
+        } else {
             Picasso.with(context).load(p.getImga()).into(viewHolder.imga);
         }
 

@@ -191,6 +191,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         // likeView.callOnClick();
         edquan = (EditText) findViewById(R.id.edquan);
         ses = new Session(this);
+//        prev = (Button) findViewById(R.id.btnpre);
+//        prev.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
         deal = (Button) findViewById(R.id.btndeal);
         deal.setOnClickListener(new View.OnClickListener() {
             @Override

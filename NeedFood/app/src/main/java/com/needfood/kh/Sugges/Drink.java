@@ -1,7 +1,9 @@
 package com.needfood.kh.Sugges;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +39,7 @@ public class Drink extends AppCompatActivity {
     EndlessScroll endlessScroll;
     int page;
     String namep = "drinks";
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,14 @@ public class Drink extends AppCompatActivity {
         };
 
         getData(1);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefreshlayout4);
+        swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
     }
 
     private void getData(int page) {
@@ -99,7 +110,7 @@ public class Drink extends AppCompatActivity {
                             JSONObject prd = j1.getJSONObject("Product");
                             JSONArray imgs = prd.getJSONArray("images");
                             JSONObject vote = prd.getJSONObject("vote");
-                     //       JSONObject votec = vote.getJSONObject("user");
+                            //       JSONObject votec = vote.getJSONObject("user");
                             arr.add(new NewsConstructor("http://needfood.webmantan.com" + imgs.getString(0), prd.getString("id"),
                                     prd.getString("idSeller"),
                                     prd.getString("title"), prd.getString("nameSeller"), prd.getString("price")
@@ -107,6 +118,7 @@ public class Drink extends AppCompatActivity {
                                     prd.getString("typeMoneyId")));
                         }
                         adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -118,5 +130,11 @@ public class Drink extends AppCompatActivity {
         PostCL post = new PostCL(link, map, response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(post);
+    }
+
+    public void refresh() {
+
+        arr.clear();
+        getData(1);
     }
 }

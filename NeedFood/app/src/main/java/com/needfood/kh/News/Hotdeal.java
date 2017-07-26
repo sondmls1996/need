@@ -1,7 +1,9 @@
 package com.needfood.kh.News;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +53,7 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
     List<InfoConstructor> list;
     EndlessScroll endlessScroll;
     TextView nop;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public Hotdeal() {
         // Required empty public constructor
@@ -99,7 +102,14 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
                         }
                     })
             );
-
+            swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefreshlayout1);
+            swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW);
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    refresh();
+                }
+            });
         } else {
             setContentView(R.layout.fragment_frag_log);
             btnlog = (Button) findViewById(R.id.btnlog);
@@ -151,10 +161,11 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
                             arr.add(new HotdealConstructor("http://needfood.webmantan.com" + imgs.getString(0), prd.getString("id"),
                                     prd.getString("idSeller"),
                                     prd.getString("title"), prd.getString("nameSeller"), prd.getString("price")
-                                    , "", prd.getString("priceOther"), prd.getString("vote"), prd.getString("nameUnit"), prd.getString("typeMoneyId"),prd.getString("numberShare")));
+                                    , "", prd.getString("priceOther"), prd.getString("vote"), prd.getString("nameUnit"), prd.getString("typeMoneyId"), prd.getString("numberShare")));
 
                         }
                         adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -166,5 +177,10 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
         PostCL post = new PostCL(link, map, response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(post);
+    }
+
+    public void refresh() {
+        arr.clear();
+        getData(1);
     }
 }

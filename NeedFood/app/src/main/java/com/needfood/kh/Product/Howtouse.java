@@ -118,6 +118,9 @@ public class Howtouse extends AppCompatActivity {
                             String code = jo.getString("code");
                             if (code.equals("0")) {
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
                             } else if (code.equals("-1")) {
                                 AlertDialog alertDialog = taoMotAlertDialog();
                                 alertDialog.show();
