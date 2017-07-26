@@ -106,6 +106,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 }
                 changeLang(lang);
+//                Toast.makeText(getApplicationContext(), ketqua, Toast.LENGTH_SHORT).show();
                 db.updateinfo1(iddb, ketqua);
 
             }
@@ -146,19 +147,21 @@ public class SettingsActivity extends AppCompatActivity {
 
                     if (code.equals("0")) {
                         progressDialog.dismiss();
-//                        Toast.makeText(getContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplication(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
                         db.deleteAll();
                         ses.setLoggedin(false);
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
+                        finish();
 
                     } else if (code.equals("-1")) {
                         progressDialog.dismiss();
-//                        Toast.makeText(getContext(), "Đăng xuất  thành công 1", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplication(), "Đăng xuất  thành công 1", Toast.LENGTH_SHORT).show();
                         db.deleteAll();
                         ses.setLoggedin(false);
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
+                        finish();
 
                     } else {
                         progressDialog.dismiss();
@@ -166,6 +169,7 @@ public class SettingsActivity extends AppCompatActivity {
                         ses.setLoggedin(false);
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -212,5 +216,11 @@ public class SettingsActivity extends AppCompatActivity {
             Locale.setDefault(myLocale);
             getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
         }
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplication(),MainActivity.class));
+
+
     }
 }

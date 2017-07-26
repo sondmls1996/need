@@ -68,6 +68,7 @@ public class YourInformationActivity extends AppCompatActivity implements View.O
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), ChangeInformation.class));
+                finish();
             }
         });
 
@@ -93,6 +94,12 @@ public class YourInformationActivity extends AppCompatActivity implements View.O
         if (v == tvChangPass) {
             startActivity(new Intent(this, ChangePassActivity.class));
         }
+
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplication(),MainActivity.class));
+
 
     }
 }

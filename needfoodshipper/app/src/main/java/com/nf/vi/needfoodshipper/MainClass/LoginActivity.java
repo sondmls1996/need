@@ -3,11 +3,13 @@ package com.nf.vi.needfoodshipper.MainClass;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     Button btnLogin;
     EditText edtSdt, edtPass;
     String sdt, pass;
-
+    private int check = 0;
     DBHandle db;
 
     String token, iddb, lang1;
@@ -301,5 +303,15 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
             startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+        finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
+
+
     }
 }

@@ -137,10 +137,8 @@ public class MainAdapter extends
                 it.putExtra("moneyship", ip.getMoneyship());
                 it.putExtra("stt", ip.getStt());
                 it.putExtra("code", ip.getCode());
-                it.putExtra("soluong", ip.getSoluong());
-                it.putExtra("sanpham", ip.getSanpham());
-                it.putExtra("dongia", ip.getDongia());
-                it.putExtra("thanhtien", ip.getThanhtien());
+                it.putExtra("listsanpham", ip.getListsanpham());
+
                 context.startActivity(it);
             }
         });
