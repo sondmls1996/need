@@ -140,6 +140,8 @@ public class MainActivity extends TabActivity
         spec.setContent(it1);
         host.addTab(spec);
         host.getTabWidget().getChildAt(0).setBackgroundColor(getResources().getColor(R.color.darkred)); // selected
+        TextView tv = (TextView) host.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
+        tv.setTextColor(Color.parseColor("#ffffff"));
 
         host.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override

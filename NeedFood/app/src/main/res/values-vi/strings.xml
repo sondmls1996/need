@@ -147,15 +147,17 @@
     <string name="lostss">Phiên đăng nhập đã hết, vui lòng đăng nhập lại</string>
     <string name="tienganh">English</string>
     <string name="new_">Mới</string>
-    <string name="topdeall">Ưu đãi</string>
+    <string name="topdeall">Bán chạy</string>
+    <string name="orif">Thông tin đơn hàng</string>
     <string name="CoinTran">Chuyển Coins</string>
     <string name="his">Lịch sử</string>
     <string name="Pwu">Hợp tác với chúng tôi</string>
     <string name="noprd">Không có sản phẩm để hiển thị</string>
+    <string name="qrc">Quét mã QR code sản phẩm</string>
     <string name="loginn">Đăng nhập</string>
     <string name="yhl">Bạn chưa đăng nhập?</string>
     <string name="price">Giá: \u0020</string>
-    <string name="timeship">Thời gian giao/nhận: \u0020</string>
+    <string name="timeship">Thời gian nhận: \u0020</string>
     <string name="buyer">Người mua: \u0020</string>
     <string name="addr">Địa chỉ: \u0020</string>
 

@@ -281,7 +281,7 @@ public class DeliveryActivity extends AppCompatActivity {
 
                 stt2 = "cancel";
                 if(note.equals("")){
-                    Toast.makeText(getApplicationContext(),"Lý do không được đươc để trống",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),getString(R.string.dslydo),Toast.LENGTH_SHORT).show();
                 }else{
                     sendSV();
                 }
@@ -312,7 +312,7 @@ public class DeliveryActivity extends AppCompatActivity {
 
                     if (code.equals("0")) {
                         dialog.dismiss();
-                        Toast.makeText(getApplication(), "Thành công", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplication(), getString(R.string.dsthanhcong), Toast.LENGTH_LONG).show();
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);
                     } else {

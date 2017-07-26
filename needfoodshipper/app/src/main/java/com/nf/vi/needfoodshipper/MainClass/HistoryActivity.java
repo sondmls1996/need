@@ -1,5 +1,6 @@
 package com.nf.vi.needfoodshipper.MainClass;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Build;
@@ -65,7 +66,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
     HistoryAdapter adapterh;
     ArrayList<HistoryConstructor> arr;
     private RecyclerView rcvHistory;
-    private TextView tvTitle, thongbao, tvngayden, tvngaydi;
+    private TextView tvTitle, thongbao, tvngayden, tvngaydi, tvBao;
     private ImageView imghand;
     private EditText edtSearch1;
     String timeLeftShip = "";
@@ -79,7 +80,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
     private EndlessRecyclerViewScrollListener scrollListener;
     LinearLayoutManager linearLayoutManager;
     CountDownTimer ctime;
-
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +91,8 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
             tk = nu.getAccessToken();
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tvBao = (TextView) findViewById(R.id.tvBao);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
@@ -113,7 +116,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
         order(1);
         rcvHistory.setLayoutManager(linearLayoutManager);
         swipeRefresh.setOnRefreshListener(this);
-        scrollListener = new  EndlessRecyclerViewScrollListener (linearLayoutManager) {
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
@@ -126,7 +129,6 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
 
         // Adds the scroll listener to RecyclerView
         rcvHistory.addOnScrollListener(scrollListener);
-
 
 
         wrap.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
@@ -176,6 +178,9 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
                     if (checktime == true) {
                         ctime.cancel();
                     }
+                    if (response.equals("[]")) {
+                        tvBao.setVisibility(View.VISIBLE);
+                    }
                     JSONArray arr = new JSONArray(response);
                     for (int i = 0; i < arr.length(); i++) {
                         StringBuilder sb = new StringBuilder();
@@ -210,7 +215,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
                             timeLeftShip = Order.getString("timeLeftShip");
                         }
                         if (Order.has("noteShiper")) {
-                             note = Order.getString("noteShiper");
+                            note = Order.getString("noteShiper");
                         }
 
 //                        Toast.makeText(getApplication(), note, Toast.LENGTH_LONG).show();
@@ -315,7 +320,9 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
             public void onResponse(String response) {
                 try {
                     Log.d("GG", response);
-
+                    if (response.equals("[]")) {
+                        tvBao.setVisibility(View.VISIBLE);
+                    }
 
                     JSONArray arr = new JSONArray(response);
                     for (int i = 0; i < arr.length(); i++) {
@@ -352,7 +359,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
                         }
 
                         if (Order.has("noteShiper")) {
-                             note = Order.getString("noteShiper");
+                            note = Order.getString("noteShiper");
                         }
 
                         Log.d("111111", fullName);
@@ -378,6 +385,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
     @Override
     public void onRefresh() {
         listht.clear();
+        adapter.notifyDataSetChanged();
         ctime = new CountDownTimer(15000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -388,7 +396,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
             @Override
             public void onFinish() {
                 swipeRefresh.setRefreshing(false);
-                Toast.makeText(getApplicationContext(), "Lỗi kết nối", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.dhloiketnoi), Toast.LENGTH_SHORT).show();
             }
 
         };

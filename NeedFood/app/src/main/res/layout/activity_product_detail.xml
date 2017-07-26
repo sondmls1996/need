@@ -126,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <include layout="@layout/shipto"></include>
+
 
             <Button
                 android:id="@+id/btnpre"
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@color/blue"
-                android:text="@string/buynow"
+                android:text="@string/conor"
                 android:textColor="@color/white" />
 
 

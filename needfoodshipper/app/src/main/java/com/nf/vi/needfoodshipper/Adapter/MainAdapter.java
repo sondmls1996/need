@@ -192,7 +192,7 @@ public class MainAdapter extends
                 stt = "cancel";
                 id1 = ip.getId();
                 if (note.equals("")) {
-                    Toast.makeText(context, "Lý do không được đươc để trống", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.dslydo), Toast.LENGTH_SHORT).show();
                 } else {
                     sendSV();
                 }
@@ -218,7 +218,7 @@ public class MainAdapter extends
 
 
                     if (code.equals("0")) {
-                        Toast.makeText(context, "Thành Công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.dsthanhcong), Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(context, MainActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(i);
