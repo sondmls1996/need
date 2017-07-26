@@ -122,6 +122,7 @@
     <string name="linkbest">http://needfood.webmantan.com/getProductBestAPI</string>
     <string name="linknew">http://needfood.webmantan.com/getProductNewAPI</string>
     <string name="linkprdde">http://needfood.webmantan.com/getProductAPI</string>
+    <string name="linkgetnum">http://needfood.webmantan.com/getNumberShareAPI</string>
     <string name="linkmn">http://needfood.webmantan.com/getTypeMoneyAPI</string>
     <string name="linkprdsell">http://needfood.webmantan.com/getProductSellerAPI</string>
     <string name="linklogout">http://needfood.webmantan.com/checkLogoutUseronlAPI</string>

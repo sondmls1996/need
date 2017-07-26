@@ -75,6 +75,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ArrayList<CommentConstructor> arr;
     String maniid, idsel, mnid;
     LinearLayout view1;
+    int numshare = 0;
     ProgressBar pr1;
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
@@ -89,7 +90,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     public TimePickerDialog timepicker;
     EditText edpickngay, edpickgio, edquan, edadrs, edghichu;
     String cata;
-    Button prev, bn;
+    Button deal, bn;
     OftenAdapter adapterof1, adapterof2;
     TextView tvco, tvcodes, tvprize;
     TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
@@ -170,7 +171,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 shareOnFB();
-
             }
         });
 
@@ -198,6 +198,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 //
 //            }
 //        });
+        deal = (Button) findViewById(R.id.btndeal);
+        deal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                senKM("0","0");
+            }
+        });
         bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,6 +218,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             fullname = listu.get(listu.size() - 1).getFullname();
             phone = listu.get(listu.size() - 1).getFone();
             uadr = listu.get(listu.size() - 1).getAddress();
+            imgshare.setVisibility(View.VISIBLE);
 
 
         }
@@ -281,6 +289,26 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
         rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
 
+    }
+
+    private void getNumberShare(){
+        String link = getResources().getString(R.string.linkgetnum);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", access);
+        map.put("idSeller", idsl);
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                int a = Integer.parseInt(response);
+                Log.d("TTT",a+"");
+                if(a>=numshare){
+                    deal.setVisibility(View.VISIBLE);
+                }
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
     }
 
 
@@ -392,19 +420,19 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void senKM() {
+    private void senKM(String prices,String ship) {
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
             String quan = "1";
 
-            int money1 = Integer.parseInt(quan) * Integer.parseInt(priceDiscount);
+            int money1 = Integer.parseInt(quan) * Integer.parseInt(prices);
             JSONArray jsonArray = new JSONArray();
             JSONObject j1 = new JSONObject();
 
             try {
                 j1.put("quantity", "1");
-                j1.put("price", priceDiscount);
+                j1.put("price", prices);
                 j1.put("tickKM", "false");
                 j1.put("tickKM_percent", "");
                 j1.put("tickKM_money", "");
@@ -429,7 +457,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("money", money + "");
             map.put("totalMoneyProduct", (money * 1.1) + "");
             map.put("fullName", "");
-            map.put("moneyShip", strship.toString());
+            map.put("moneyShip",ship);
             map.put("timeShiper", "");
             map.put("address", "");
             map.put("note", "");
@@ -511,6 +539,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     time2 = jos2.getString("time");
                     priceDiscount = jos.getString("priceDiscount");
                     discountCode = jos.getString("discountCode");
+                    if(prd.has("numberShare")){
+                        numshare = prd.getInt("numberShare");
+                    }
+                    Log.d("SHARENUM",numshare+"");
                     howto = new StringBuilder("");
                     howto.append(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
@@ -556,19 +588,19 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
-    protected void share() {
-
-            ShareLinkContent content = new ShareLinkContent.Builder()
-                    .setContentUrl(Uri.parse(linkfbb))
-                    .setShareHashtag(new ShareHashtag.Builder()
-
-                            .setHashtag("#NeedFood")
-                            .build())
-                    .build();
-
-
-
-    }
+//    protected void share() {
+//
+//            ShareLinkContent content = new ShareLinkContent.Builder()
+//                    .setContentUrl(Uri.parse(linkfbb))
+//                    .setShareHashtag(new ShareHashtag.Builder()
+//
+//                            .setHashtag("#NeedFood")
+//                            .build())
+//                    .build();
+//
+//
+//
+//    }
 
     public void saveShare() {
         final String link = getResources().getString(R.string.linksaveShare);
@@ -581,33 +613,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-
                 Log.d("EEEE", response);
-
-//                try {
-//                    JSONArray ja = new JSONArray(response);
-//                    for (int i = 0; i < ja.length(); i++) {
-//                        String mn = "";
-//                        JSONObject jo = ja.getJSONObject(i);
-//                        JSONObject prd = jo.getJSONObject("Product");
-//                        JSONArray jaimg = prd.getJSONArray("images");
-//                        String typemn = prd.getString("typeMoneyId");
-//                        list = db.getMNid(typemn);
-//                        for (ListMN lu : list) {
-//                            mn = lu.getMn();
-//                        }
-//                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-//                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-//                                "", prd.getString("id")));
-//                    }
-//
-//                    quanadapter.notifyDataSetChanged();
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+                getNumberShare();
 
             }
         };
@@ -818,7 +825,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     txt.setVisibility(View.GONE);
                     lnn.setVisibility(View.VISIBLE);
                 } else {
-                    senKM();
+                    senKM(priceDiscount,strship.toString());
                 }
             }
         });
@@ -864,6 +871,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         alertDialog.show();
                     } else {
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                    }
+                    if(ses.loggedin()){
+                        getNumberShare();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
