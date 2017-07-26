@@ -27,6 +27,7 @@
     <string name="enamout">Nhập số Coins sử dụng</string>
     <string name="coins">Coins</string>
     <string name="paym">Thanh toán</string>
+    <string name="pr">Tài sản: \u0020</string>
     <string name="changepass">Đổi mật khẩu</string>
     <string name="quanlity2">Số lượng:\u0020</string>
     <string name="total">Tổng:\u0020</string>
@@ -116,7 +117,12 @@
     <string name="linkifsel">http://needfood.webmantan.com/getInfoSellerAPI</string>
     <string name="linkbest">http://needfood.webmantan.com/getProductBestAPI</string>
     <string name="linknew">http://needfood.webmantan.com/getProductNewAPI</string>
+    <string name="linkshare">http://needfood.webmantan.com/saveShareHotDealAPI</string>
+    <string name="linksavecmpr">http://needfood.webmantan.com/saveCommentProductAPI</string>
+    <string name="linkgetcmpr">http://needfood.webmantan.com/getCommentProductAPI</string>
+    <string name="linkvote">http://needfood.webmantan.com/updateVoteProductAPI</string>
     <string name="linkprdde">http://needfood.webmantan.com/getProductAPI</string>
+    <string name="linksug">http://needfood.webmantan.com/getProductSuggestionAPI</string>
     <string name="linkmn">http://needfood.webmantan.com/getTypeMoneyAPI</string>
     <string name="linkprdsell">http://needfood.webmantan.com/getProductSellerAPI</string>
     <string name="linklogout">http://needfood.webmantan.com/checkLogoutUseronlAPI</string>

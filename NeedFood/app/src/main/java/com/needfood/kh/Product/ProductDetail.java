@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -40,8 +39,6 @@ import com.facebook.share.DeviceShareDialog;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.LikeView;
 import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
@@ -110,6 +107,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ImageView img_comment, imglike, imgshare;
     RecyclerView re_comment;
     String comment;
+    ShareLinkContent content;
     CallbackManager callbackManager;
     LikeView likeView;
     StringBuilder howto, simg, strship;
@@ -150,9 +148,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
         th.start();
-        getCommen();
-
-
+      //  getCommen();
     }
 
     private void khaibao() {
@@ -162,10 +158,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
         lnf = (LinearLayout) findViewById(R.id.lnfb);
-        c = Calendar.getInstance();
-        day = c.get(Calendar.DAY_OF_MONTH);
-        month2 = c.get(Calendar.MONTH);
-        year2 = c.get(Calendar.YEAR);
         bn = (Button) findViewById(R.id.bn);
         shareButton = (ShareButton) findViewById(R.id.btnshare);
         likeView = (LikeView) findViewById(R.id.btnlike);
@@ -228,15 +220,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
         // likeView.callOnClick();
-        hour = c.get(Calendar.HOUR_OF_DAY);
-        minitus = c.get(Calendar.MINUTE);
-        dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-        String formattedDate = dateFormatter.format(c.getTime());
-        edghichu = (EditText) findViewById(R.id.ghichu);
-        timeformat = new SimpleDateFormat("HH:mm");
-        String formattime = timeformat.format(c.getTime());
-
-
         edquan = (EditText) findViewById(R.id.edquan);
         ses = new Session(this);
         prev = (Button) findViewById(R.id.btnpre);
@@ -326,6 +309,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager2 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);// (int spanCount, int orientation)
         rcof.setLayoutManager(mStaggeredVerticalLayoutManager);
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
+        rcquan.setLayoutManager(mStaggeredVerticalLayoutManager);
 
     }
 
@@ -532,7 +516,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         lnf.setVisibility(View.VISIBLE);
                         linkfbb = prd.getString("linkFacebook");
 
-                        ShareLinkContent content = new ShareLinkContent.Builder()
+                         content = new ShareLinkContent.Builder()
                                 .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
 
                                 .setShareHashtag(new ShareHashtag.Builder()
@@ -540,7 +524,28 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                                         .build())
                                 .build();
 
-                        shareButton.setShareContent(content);
+
+                         shareDialog = new ShareDialog(ProductDetail.this);
+                        if (ShareDialog.canShow(ShareLinkContent.class)) {
+                            shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+                                @Override
+                                public void onSuccess(Sharer.Result result) {
+                                  Log.d("SHARE","SUCC");
+                                }
+
+                                @Override
+                                public void onCancel() {
+                                    Log.d("SHARE","CANCEL");
+                                }
+
+                                @Override
+                                public void onError(FacebookException exception) {
+
+                                    Log.d("SHARE","ERR");
+                                }
+                            });
+                        }
+
                     }
                     strship = new StringBuilder(prd.getString("moneyShip"));
                     JSONObject jos = prd.getJSONObject("discount");
@@ -599,11 +604,20 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     protected void share() {
 
+            ShareLinkContent content = new ShareLinkContent.Builder()
+                    .setContentUrl(Uri.parse(linkfbb))
+                    .setShareHashtag(new ShareHashtag.Builder()
+
+                            .setHashtag("#NeedFood")
+                            .build())
+                    .build();
+
+
 
     }
 
     public void saveShare() {
-        final String link = getResources().getString(R.string.linkprdat);
+        final String link = getResources().getString(R.string.linksaveShare);
 
         Map<String, String> map = new HashMap<>();
         map.put("accessToken", access);
@@ -614,7 +628,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(String response) {
 
+
                 Log.d("EEEE", response);
+
 //                try {
 //                    JSONArray ja = new JSONArray(response);
 //                    for (int i = 0; i < ja.length(); i++) {
