@@ -75,6 +75,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ArrayList<CommentConstructor> arr;
     String maniid, idsel, mnid;
     LinearLayout view1;
+    int a;
     int numshare = 0;
     ProgressBar pr1;
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
@@ -115,6 +116,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ImageView imageView;
     ShareDialog shareDialog;
     ShareButton shareButton;
+    int hieu;
     String linkfbb;
     Button sharee;
 
@@ -202,7 +204,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         deal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                senKM("0","0");
+                senKM("0","0","deal");
             }
         });
         bn.setOnClickListener(new View.OnClickListener() {
@@ -299,7 +301,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                int a = Integer.parseInt(response);
+                 a = Integer.parseInt(response);
                 Log.d("TTT",a+"");
                 if(a>=numshare){
                     deal.setVisibility(View.VISIBLE);
@@ -410,6 +412,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             Intent it = new Intent(getApplicationContext(), Preview.class);
             it.putExtra("map", map);
             it.putExtra("min", mnid);
+            it.putExtra("stt","nom");
             startActivity(it);
             pro.dismiss();
         } else {
@@ -420,7 +423,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void senKM(String prices,String ship) {
+    private void senKM(String prices,String ship,String stt) {
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
@@ -468,6 +471,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             Intent it = new Intent(getApplicationContext(), Preview.class);
             it.putExtra("map", map);
             it.putExtra("min", mnid);
+            it.putExtra("stt",stt);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -825,7 +829,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     txt.setVisibility(View.GONE);
                     lnn.setVisibility(View.VISIBLE);
                 } else {
-                    senKM(priceDiscount,strship.toString());
+                    senKM(priceDiscount,strship.toString(),"km");
                 }
             }
         });

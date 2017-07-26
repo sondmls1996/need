@@ -47,7 +47,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class Preview extends AppCompatActivity implements View.OnClickListener{
-    String json,mid,mnship;
+    String json,mid,stt,mnship;
     RecyclerView lv;
     private SimpleDateFormat dateFormatter, timeformat;
     ArrayList<PreConstructor> arr;
@@ -82,6 +82,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener{
          hashMap = (HashMap<String, String>)intent.getSerializableExtra("map");
         json = hashMap.get("listProduct");
         mnship = hashMap.get("moneyShip");
+        stt = intent.getStringExtra("stt");
         btno = (Button)findViewById(R.id.btno); 
         mid = intent.getStringExtra("min");
         edadr = (EditText)findViewById(R.id.edadrship);
