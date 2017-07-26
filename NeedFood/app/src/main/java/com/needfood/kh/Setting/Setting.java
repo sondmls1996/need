@@ -74,6 +74,8 @@ public class Setting extends AppCompatActivity {
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),StartActivity.class);
+                startActivity(i);
                 finish();
             }
         });
