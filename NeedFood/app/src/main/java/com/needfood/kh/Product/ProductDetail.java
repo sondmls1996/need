@@ -163,12 +163,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         imglike = (ImageView) findViewById(R.id.imglike);
         imgshare = (ImageView) findViewById(R.id.imgshare);
         shareButton.setEnabled(true);
-        imgshare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareDialog.show(content);
-            }
-        });
+//        imgshare.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                shareDialog.show(content);
+//            }
+//        });
         htu = (LinearLayout) findViewById(R.id.htu);
         htu.setOnClickListener(new View.OnClickListener() {
             @Override
