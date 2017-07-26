@@ -104,7 +104,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
                 // Add whatever code is needed to append new items to the bottom of the list
                 page++;
 
-                    order(page);
+                order(page);
 
             }
         };
@@ -127,7 +127,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
             public void onResponse(String response) {
 
                 try {
-                    Log.d("GG", response);
+
                     if (checktime == true) {
                         ctime.cancel();
                     }
@@ -146,7 +146,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
                         String money;
                         JSONObject json = arr.getJSONObject(i);
                         JSONObject Order = json.getJSONObject("Order");
-
+                            Log.d("OR",Order.toString());
                         JSONObject listProduct = Order.getJSONObject("listProduct");
                         JSONObject infoOrder = Order.getJSONObject("infoOrder");
                         JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
@@ -172,7 +172,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
                         String code = Order.getString("code");
 
                         Log.d("hh", fullName);
-                        ld.add(new MainConstructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, soluong.toString(), sanpham.toString(), dongia.toString(), thanhtien.toString()));
+                        ld.add(new MainConstructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
                     }
 
                     adapter.notifyDataSetChanged();

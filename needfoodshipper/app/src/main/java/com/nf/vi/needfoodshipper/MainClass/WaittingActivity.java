@@ -151,7 +151,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
                         String code = Order.getString("code");
 
                         Log.d("hh", fullName);
-                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code,soluong.toString(),sanpham.toString(),dongia.toString(),thanhtien.toString()));
+                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code,listProduct.toString()));
 
 
                     }

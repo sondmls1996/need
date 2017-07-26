@@ -134,10 +134,8 @@ public class WaittingAdapter extends
                 intent.putExtra("moneyship", ip.getMoneyship());
                 intent.putExtra("stt", ip.getStt());
                 intent.putExtra("code", ip.getCode());
-                intent.putExtra("soluong", ip.getSoluong());
-                intent.putExtra("sanpham", ip.getSanpham());
-                intent.putExtra("dongia", ip.getDongia());
-                intent.putExtra("thanhtien", ip.getThanhtien());
+                intent.putExtra("listsanpham", ip.getListsanpham());
+
                 context.startActivity(intent);
             }
         });

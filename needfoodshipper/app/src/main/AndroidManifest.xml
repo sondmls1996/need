@@ -32,6 +32,8 @@
         <activity
             android:name=".MainClass.LoginActivity"
             android:label="@string/app_name"
+
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,26 +48,40 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".MainClass.MainActivity" />
+        <activity
+            android:name=".MainClass.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainClass.YourInformationActivity"
-            android:parentActivityName=".MainClass.MainActivity" />
+            android:parentActivityName=".MainClass.MainActivity"
+
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainClass.HistoryActivity"
-            android:parentActivityName=".MainClass.MainActivity" />
+            android:parentActivityName=".MainClass.MainActivity"
+
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainClass.SettingsActivity"
-            android:parentActivityName=".MainClass.MainActivity" />
+            android:parentActivityName=".MainClass.MainActivity"
+
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainClass.DeliveryActivity"
-            android:parentActivityName=".MainClass.MainActivity" />
+            android:parentActivityName=".MainClass.MainActivity"
+
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".MainClass.LayMaActivity" />
-        <activity android:name=".MainClass.SentPassEmail" />
+        <activity
+            android:name=".MainClass.LayMaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainClass.SentPassEmail"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".Checkinternet.ConnectivityReceiver"
@@ -77,7 +93,9 @@
 
         <activity
             android:name=".MainClass.ChangePassActivity"
-            android:parentActivityName=".MainClass.YourInformationActivity" />
+            android:parentActivityName=".MainClass.YourInformationActivity"
+
+            android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -92,15 +110,23 @@
 
         <activity
             android:name=".MainClass.MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".MainClass.OrderActivity" />
+            android:label="@string/title_activity_maps"
+
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainClass.OrderActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainClass.ChangeInformation"
-            android:parentActivityName=".MainClass.YourInformationActivity" />
-        <activity android:name=".MainClass.NewDealActivity" />
+            android:parentActivityName=".MainClass.YourInformationActivity"
+
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainClass.NewDealActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainClass.WaittingActivity"
-            android:parentActivityName=".MainClass.NewDealActivity"></activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

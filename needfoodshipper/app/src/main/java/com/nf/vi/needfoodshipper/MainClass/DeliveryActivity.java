@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -29,7 +30,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.nf.vi.needfoodshipper.Adapter.HistoryAdapter;
+import com.nf.vi.needfoodshipper.Adapter.ListviewAdapter;
 import com.nf.vi.needfoodshipper.Constructor.ListUserContructor;
+import com.nf.vi.needfoodshipper.Constructor.ListviewContructor;
+import com.nf.vi.needfoodshipper.Constructor.MainConstructor;
 import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.TrangThaiRequest;
 import com.nf.vi.needfoodshipper.SupportClass.ChangeDatetoTimestamp;
@@ -37,12 +42,15 @@ import com.nf.vi.needfoodshipper.SupportClass.ChangeTimeToHours;
 import com.nf.vi.needfoodshipper.SupportClass.ChangeTimestamp;
 import com.nf.vi.needfoodshipper.database.DBHandle;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,25 +59,29 @@ import static android.R.id.tabhost;
 public class DeliveryActivity extends AppCompatActivity {
 
     private Button btnFinish, btnDirect;
-    private TextView tvTitle, tvre, tvStt, tvCode, tvod, tvloc, tvct, tvtm, tvpay, textstt, tvMoneyShiper, tvTimeleft,tvSanpham,tvSoluong,tvDongia,tvThanhtien;
+    private TextView tvTitle, tvre, tvStt, tvCode, tvod, tvloc, tvct, tvtm, tvpay, textstt, tvMoneyShiper, tvTimeleft, tvSanpham, tvSoluong, tvDongia, tvThanhtien;
     private Dialog dialog;
     private ImageView imgstt;
     SimpleDateFormat dateFormatter;
     private Calendar cal, cal1;
-    private String a, id, order, lc, ct, re, tl, pay, moneyship, stt, code, stt2,sanpham,soluong;
+    private String a, id, order, lc, ct, re, tl, pay, moneyship, stt, code, stt2, listsanpham, tm;
     private Button btnDFinish, btnDCancel1, btnDSend, btnDCancel;
     private RelativeLayout rfDialog;
     ChangeDatetoTimestamp change;
     ChangeTimeToHours changetime;
+    private ListviewAdapter adapter;
+
+    private List<ListviewContructor> ld;
     String timeleftc;
     DBHandle db;
     EditText edfedd;
     List<ListUserContructor> list;
     private Date date;
-    private String timest, timestgh, timeleft, tk, note,dongia,thanhtien;
+    private String timest, timestgh, timeleft, tk, note, sanpham, soluong, dongia, thanhtien;
     private int time, ngay, thang, nam, gio, phut;
     private long timesttl, giocl, phutcl, tinhgio, ngaycl;
     private RelativeLayout rtButton;
+    private ListView lvSanpham;
 
 
     @Override
@@ -105,13 +117,17 @@ public class DeliveryActivity extends AppCompatActivity {
         tvpay = (TextView) findViewById(R.id.tvpay);
         tvMoneyShiper = (TextView) findViewById(R.id.tvMoneyShip);
         tvTimeleft = (TextView) findViewById(R.id.tvTimeLeft);
-        tvSanpham=(TextView)findViewById(R.id.tvSanpham);
-        tvSoluong=(TextView)findViewById(R.id.tvSoluong);
-        tvDongia=(TextView)findViewById(R.id.tvDongia) ;
-        tvThanhtien=(TextView)findViewById(R.id.tvThanhtien);
+        lvSanpham = (ListView) findViewById(R.id.lvSanpham);
+        ld = new ArrayList<ListviewContructor>();
+        adapter = new ListviewAdapter(getBaseContext(), R.layout.custom_lv, ld);
+        lvSanpham.setAdapter(adapter);
+//        tvSanpham=(TextView)findViewById(R.id.tvSanpham);
+//        tvSoluong=(TextView)findViewById(R.id.tvSoluong);
+//        tvDongia=(TextView)findViewById(R.id.tvDongia) ;
+//        tvThanhtien=(TextView)findViewById(R.id.tvThanhtien);
         btnFinish = (Button) findViewById(R.id.btnFinish);
         rtButton = (RelativeLayout) findViewById(R.id.rlButton);
-        btnDirect=(Button)findViewById(R.id.btnDirect);
+        btnDirect = (Button) findViewById(R.id.btnDirect);
 
 
         tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -128,10 +144,37 @@ public class DeliveryActivity extends AppCompatActivity {
         moneyship = data.getStringExtra("moneyship");
         code = data.getStringExtra("code");
         stt = data.getStringExtra("stt");
-        sanpham=data.getStringExtra("sanpham");
-        soluong=data.getStringExtra("soluong");
-        dongia=data.getStringExtra("dongia");
-        thanhtien=data.getStringExtra("thanhtien");
+        listsanpham = data.getStringExtra("listsanpham");
+        Log.d("listsanpham", listsanpham);
+
+
+        try {
+
+            JSONObject json = new JSONObject(listsanpham);
+            Iterator<String> ite = json.keys();
+            while (ite.hasNext())
+//            for (int i = 0; !ite.hasNext(); i++)
+            {
+                String key = ite.next();
+                JSONObject idx = json.getJSONObject(key);
+
+                soluong = idx.getString("quantity");
+                sanpham = idx.getString("title");
+                dongia = idx.getString("price");
+                thanhtien = idx.getString("money");
+
+                ld.add(new ListviewContructor(sanpham, soluong, dongia, thanhtien));
+
+
+            }
+
+            adapter.notifyDataSetChanged();
+
+
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+
 
         if (stt.equals("waiting")) {
             rtButton.setVisibility(View.VISIBLE);
@@ -155,10 +198,7 @@ public class DeliveryActivity extends AppCompatActivity {
         tvtm.setText(tl);
         tvpay.setText(pay + " đ");
         tvMoneyShiper.setText(moneyship + " đ");
-        tvSoluong.setText(soluong);
-        tvSanpham.setText(sanpham);
-        tvDongia.setText(dongia);
-        tvThanhtien.setText(thanhtien);
+
 
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,7 +210,7 @@ public class DeliveryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + myla + "," + mylo+"&daddr="+ hotella + "," + hotello ));
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+"&daddr="+lc ));
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + "&daddr=" + lc));
                 startActivity(intent);
             }
         });
@@ -246,7 +286,7 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getApplication(), "được k", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplication(), "được k", Toast.LENGTH_LONG).show();
                 note = edfedd.getText().toString();
                 stt2 = "done";
                 sendSV();
@@ -280,9 +320,9 @@ public class DeliveryActivity extends AppCompatActivity {
                 note = edfedd.getText().toString();
 
                 stt2 = "cancel";
-                if(note.equals("")){
-                    Toast.makeText(getApplicationContext(),getString(R.string.dslydo),Toast.LENGTH_SHORT).show();
-                }else{
+                if (note.equals("")) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.dslydo), Toast.LENGTH_SHORT).show();
+                } else {
                     sendSV();
                 }
 
@@ -297,6 +337,7 @@ public class DeliveryActivity extends AppCompatActivity {
     }
 
     private void sendSV() {
+        tm = tvTimeleft.getText().toString();
 
 
         String link = getResources().getString(R.string.saveStatusOrderAPI);
@@ -323,7 +364,7 @@ public class DeliveryActivity extends AppCompatActivity {
                 }
             }
         };
-        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt2, id, timeleftc, link, response);
+        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt2, id, tm, link, response);
         RequestQueue qe = Volley.newRequestQueue(getApplication());
         qe.add(save);
 

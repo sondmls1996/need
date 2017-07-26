@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.Toast;
 
+import com.needfood.kh.R;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -21,20 +23,22 @@ public class NetworkCheck {
 
     ConnectivityManager connectivityManager;
     NetworkInfo wifiInfo, mobileInfo;
+
     public static int getConnectivityStatus(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if (null != activeNetwork) {
-            if(activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
                 return TYPE_WIFI;
 
-            if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
                 return TYPE_MOBILE;
         }
         return TYPE_NOT_CONNECTED;
     }
+
     public static boolean checkConnection(Context context) {
         final ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -53,33 +57,33 @@ public class NetworkCheck {
         }
         return false;
     }
-    public Boolean checkNow(Context con){
 
-        try{
+    public Boolean checkNow(Context con) {
+
+        try {
             connectivityManager = (ConnectivityManager) con.getSystemService(Context.CONNECTIVITY_SERVICE);
             wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
-            if(wifiInfo.isConnected() || mobileInfo.isConnected())
-            {
+            if (wifiInfo.isConnected() || mobileInfo.isConnected()) {
                 return true;
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("CheckConnectivity Exception: " + e.getMessage());
         }
 
         return false;
     }
+
     public static String getConnectivityStatusString(Context context) {
         int conn = NetworkCheck.getConnectivityStatus(context);
         String status = null;
         if (conn == NetworkCheck.TYPE_WIFI) {
-            status = "Wifi enabled";
+            status = context.getResources().getString(R.string.wifi);
         } else if (conn == NetworkCheck.TYPE_MOBILE) {
-            status = "Mobile data enabled";
+            status = context.getResources().getString(R.string.mobile);
         } else if (conn == NetworkCheck.TYPE_NOT_CONNECTED) {
-            status = "Not connected to Internet";
+            status = context.getResources().getString(R.string.nointer);
         }
         return status;
     }
