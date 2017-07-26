@@ -164,52 +164,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         imgshare = (ImageView) findViewById(R.id.imgshare);
         sharee = (Button) findViewById(R.id.share);
         shareDialog = new ShareDialog(ProductDetail.this);
-        shareDialog.registerCallback(callbackManager, shareCallBack);
+
         shareButton.setEnabled(true);
-
-//        imgshare.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                shareDialog.show(content);
-//            }
-//        });
-
-        sharee.setOnClickListener(new View.OnClickListener() {
+        imgshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 shareOnFB();
-//                ShareDialog shareDialog = new ShareDialog(ProductDetail.this);
-//                if (ShareDialog.canShow(SharePhotoContent.class)) {
-//                    shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-//                        @Override
-//                        public void onSuccess(Sharer.Result result) {
-//                            if(result.getPostId()!=null){
-//                                Toast.makeText(getApplicationContext(),result.toString(),Toast.LENGTH_LONG).show();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancel() {
-//
-//                        }
-//
-//                        @Override
-//                        public void onError(FacebookException exception) {
-//
-//                            Log.e("DEBUG", "Share: " + exception.getMessage());
-//                            exception.printStackTrace();
-//                        }
-//                    });
-//
-//                    ShareLinkContent content = new ShareLinkContent.Builder()
-//                            .setContentUrl(Uri.parse(linkfbb))
-//                            .setShareHashtag(new ShareHashtag.Builder()
-//                                    .setHashtag("#NeedFood")
-//                                    .build())
-//                            .build();
-//
-//                    shareDialog.show(content);
-//                }
+
             }
         });
 
@@ -314,30 +275,31 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rc.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+        StaggeredGridLayoutManager mStaggeredVerticalLayoutManager3 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager2 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);// (int spanCount, int orientation)
         rcof.setLayoutManager(mStaggeredVerticalLayoutManager);
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
-        rcquan.setLayoutManager(mStaggeredVerticalLayoutManager);
+        rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
 
     }
 
-    public FacebookCallback<Sharer.Result> shareCallBack = new FacebookCallback<Sharer.Result>() {
-
-
-        @Override
-        public void onSuccess(Sharer.Result result) {
-            saveShare();
-        }
-
-        @Override
-        public void onCancel() {
-        }
-
-        @Override
-        public void onError(FacebookException error) {
-            Toast.makeText(getApplicationContext(), error + "", Toast.LENGTH_SHORT).show();
-        }
-    };
+//    public FacebookCallback<Sharer.Result> shareCallBack = new FacebookCallback<Sharer.Result>() {
+//
+//
+//        @Override
+//        public void onSuccess(Sharer.Result result) {
+//
+//        }
+//
+//        @Override
+//        public void onCancel() {
+//        }
+//
+//        @Override
+//        public void onError(FacebookException error) {
+//            Toast.makeText(getApplicationContext(), error + "", Toast.LENGTH_SHORT).show();
+//        }
+//    };
 
     private void shareOnFB() {
         if (ShareDialog.canShow(ShareLinkContent.class)) {
@@ -539,6 +501,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onSuccess(Sharer.Result result) {
                                   Log.d("SHARE","SUCC");
+                                    saveShare();
                                 }
 
                                 @Override
