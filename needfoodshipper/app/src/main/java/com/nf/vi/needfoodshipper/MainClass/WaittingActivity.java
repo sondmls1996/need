@@ -151,7 +151,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
                         String code = Order.getString("code");
 
                         Log.d("hh", fullName);
-                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code,listProduct.toString()));
+                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
 
 
                     }
@@ -165,7 +165,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
             }
         };
 
-        WaittingRequest loginRequest = new WaittingRequest(page+"", accessToken, link, response);
+        WaittingRequest loginRequest = new WaittingRequest(page + "", accessToken, link, response);
         RequestQueue queue = Volley.newRequestQueue(WaittingActivity.this);
         queue.add(loginRequest);
     }
@@ -174,13 +174,12 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
     @Override
     public void onRefresh() {
         ld.clear();
-        adapter.notifyDataSetChanged();
+        order(1);
 
         ctime = new CountDownTimer(15000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 checktime = true;
-                order(1);
             }
 
             @Override
