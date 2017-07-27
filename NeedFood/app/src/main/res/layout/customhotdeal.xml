@@ -141,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/fre"
                         android:textColor="@color/red"
-                        android:textSize="22dp" />
+                        android:textSize="18dp" />
 
                 </LinearLayout>
 
