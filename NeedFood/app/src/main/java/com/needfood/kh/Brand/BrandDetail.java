@@ -51,7 +51,7 @@ import static com.needfood.kh.R.menu.main;
 
 public class BrandDetail extends AppCompatActivity {
     TabLayout tabLayout;
-    TextView tvname;
+    TextView tvname,tvadr,bran,tvp;
     ViewPager viewPager;
     ListView lvs;
     String mns;
@@ -73,8 +73,11 @@ public class BrandDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         tvname = (TextView) findViewById(R.id.brname);
+        bran = (TextView)findViewById(R.id.brn);
         db = new DataHandle(this);
         arrs = new ArrayList<>();
+        tvadr = (TextView)findViewById(R.id.adr);
+        tvp = (TextView)findViewById(R.id.tvphone);
         edsearch = (EditText) findViewById(R.id.edsearch);
         edsearch.setInputType(InputType.TYPE_NULL);
         edsearch.requestFocus();
@@ -138,8 +141,10 @@ public class BrandDetail extends AppCompatActivity {
                 try {
                     JSONObject jo = new JSONObject(response);
                     JSONObject sl = jo.getJSONObject("Seller");
-                    tvname.setText(sl.getString("branchName"));
-
+                    tvname.setText(sl.getString("fullName"));
+                    tvadr.setText(sl.getString("address"));
+                    bran.setText(sl.getString("branchName"));
+                    tvp.setText(sl.getString("fone"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
