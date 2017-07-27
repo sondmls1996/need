@@ -60,7 +60,7 @@ public class RawFood extends AppCompatActivity {
             }
         };
         getData(1);
-
+        lv.addOnScrollListener(endlessScroll);
         lv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override

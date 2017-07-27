@@ -30,6 +30,7 @@
                     android:id="@+id/lnby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:background="@drawable/cusedblue"
                     android:orientation="horizontal"
                     android:padding="3dp">

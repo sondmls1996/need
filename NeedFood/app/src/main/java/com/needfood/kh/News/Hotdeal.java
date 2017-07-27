@@ -88,6 +88,7 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
                     getData(page);
                 }
             };
+            lvb.addOnScrollListener(endlessScroll);
             getData(1);
             lvb.addOnItemTouchListener(
                     new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {

@@ -58,6 +58,7 @@ public class Fruits extends AppCompatActivity {
                 getData(page);
             }
         };
+        lv.addOnScrollListener(endlessScroll);
         getData(1);
 
         lv.addOnItemTouchListener(

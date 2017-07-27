@@ -73,7 +73,7 @@ public class Drink extends AppCompatActivity {
                 getData(page);
             }
         };
-
+        lv.addOnScrollListener(endlessScroll);
         getData(1);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefreshlayout4);
         swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW);

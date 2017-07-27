@@ -306,6 +306,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 tvmyphi.setText(a2+"");
                 if (a2 >= numshare&&numshare!=0) {
                     deal.setVisibility(View.VISIBLE);
+                }else{
+                    deal.setVisibility(View.GONE);
                 }
             }
         };
@@ -628,6 +630,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     priceprd = prd.getString("price");
                     namesel.setText(namesl);
                     idsl = prd.getString("idSeller");
+                    lnby.setVisibility(View.VISIBLE);
                     maniid = prd.getString("manufacturerId");
                     tvdv1.setText(dvs);
                     tvdv2.setText(dvs);
@@ -660,6 +663,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getNumberShare();
+    }
 
     public void saveShare() {
         final String link = getResources().getString(R.string.linksaveShare);

@@ -63,6 +63,7 @@ public class News extends AppCompatActivity {
                 getData(page);
             }
         };
+        lv.addOnScrollListener(endlessScroll);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefreshlayout);
         swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

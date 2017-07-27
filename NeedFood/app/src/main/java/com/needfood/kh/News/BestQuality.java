@@ -64,7 +64,7 @@ public class BestQuality extends AppCompatActivity {
             }
         };
         getData(1);
-
+        lvb.addOnScrollListener(endlessScroll);
         lvb.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override

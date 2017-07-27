@@ -59,6 +59,7 @@ public class Food extends AppCompatActivity {
                 getData(page);
             }
         };
+        lv.addOnScrollListener(endlessScroll);
         getData(page);
 
         lv.addOnItemTouchListener(
