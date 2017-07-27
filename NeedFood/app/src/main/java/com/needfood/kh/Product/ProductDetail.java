@@ -98,7 +98,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ArrayList<OftenConstructor> arrof, arrof2;
     ArrayList<OftenConstructor> arrq;
     OftenAdapter quanadapter;
-    LinearLayout lnby, lnf, htu;
+    LinearLayout lnby, lnf, htu,lnshare;
     List<ListMN> list;
     String discount, discountStart, discountEnd, text1, text2, time1, time2, priceDiscount, discountCode;
     List<InfoConstructor> listu;
@@ -159,16 +159,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         view1 = (LinearLayout) findViewById(R.id.v1);
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
-        lnf = (LinearLayout) findViewById(R.id.lnfb);
+
         bn = (Button) findViewById(R.id.bn);
-        shareButton = (ShareButton) findViewById(R.id.btnshare);
-        likeView = (LikeView) findViewById(R.id.btnlike);
-        imglike = (ImageView) findViewById(R.id.imglike);
+        lnshare = (LinearLayout)findViewById(R.id.lnshare);
+
         imgshare = (ImageView) findViewById(R.id.imgshare);
-        sharee = (Button) findViewById(R.id.share);
+
         shareDialog = new ShareDialog(ProductDetail.this);
 
-        shareButton.setEnabled(true);
         imgshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -556,7 +554,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     JSONObject jo = new JSONObject(response);
                     JSONObject prd = jo.getJSONObject("Product");
                     if (prd.has("linkFacebook")) {
-                        lnf.setVisibility(View.VISIBLE);
+//                        lnf.setVisibility(View.VISIBLE);
                         linkfbb = prd.getString("linkFacebook");
 
                          content = new ShareLinkContent.Builder()

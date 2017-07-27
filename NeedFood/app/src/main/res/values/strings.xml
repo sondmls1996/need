@@ -189,6 +189,7 @@
     <string name="cs">Code shop:\u0020 </string>
     <string name="cb">Co/Brand: \u0020</string>
     <string name="rate">Rate: \u0020</string>
+    <string name="mys">My share:</string>
     <string name="pd">P.Day: \u0020</string>
     <string name="exp">Exp: \u0020</string>
     <string name="lf">Left</string>
@@ -211,7 +212,7 @@
     <string name="exit">Are you sure you want to exit?</string>
     <string name="fre">Free food, free delivery</string>
     <string name="sare">Share this product in public to reach our target shares quantity</string>
-    <string name="phieu">Ballot</string>
+    <string name="phieu">Share</string>
     <string name="evs">Are you want to save and exit?</string>
     <string name="no">No</string>
     <string name="dclick">Double click to exit</string>
