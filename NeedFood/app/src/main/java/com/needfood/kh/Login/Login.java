@@ -134,6 +134,7 @@ public class Login extends AppCompatActivity {
                                     addInfo(accesstoken, id, "0");
                                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                                     startActivity(it);
+                                    finish();
                                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
 
                                 } else {

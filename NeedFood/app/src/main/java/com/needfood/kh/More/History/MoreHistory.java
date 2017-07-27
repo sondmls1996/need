@@ -61,11 +61,13 @@ public class MoreHistory extends AppCompatActivity implements View.OnClickListen
             case R.id.histr:
                 Intent i = new Intent(getApplicationContext(), TransferHistory.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.hiso:
 
                 Intent it = new Intent(getApplicationContext(), OrderHistory.class);
                 startActivity(it);
+                finish();
                 break;
 
         }

@@ -216,4 +216,5 @@
     <string name="no">No</string>
     <string name="dclick">Double click to exit</string>
     <string name="km">This product is currently no promotional</string>
+    <string name="checkin">Please check your internet connection!</string>
 </resources>

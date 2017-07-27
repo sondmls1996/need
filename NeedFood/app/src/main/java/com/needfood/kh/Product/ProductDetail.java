@@ -188,6 +188,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 it.putExtra("idpr", idprd);
                 it.putExtra("idsl", idsl);
                 startActivity(it);
+                finish();
             }
         });
         // likeView.callOnClick();
@@ -261,6 +262,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 Intent it = new Intent(getApplicationContext(), BrandDetail.class);
                 it.putExtra("ids", idsl);
                 startActivity(it);
+                finish();
             }
         });
 

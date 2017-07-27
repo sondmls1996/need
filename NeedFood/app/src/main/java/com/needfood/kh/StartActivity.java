@@ -182,6 +182,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 Intent it = new Intent(getApplicationContext(), ProductDetail.class);
                 it.putExtra("idprd", arrs.get(position).getId());
                 startActivity(it);
+                finish();
             }
         });
         final EditText edt = (EditText) dialog.findViewById(R.id.searched);
@@ -408,25 +409,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ECLAIR
-                && keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            // Take care of calling this method on earlier versions of
-            // the platform where it doesn't exist.
-            check();
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
     public void onBackPressed() {
-        check();
-        return;
-    }
-
-    public void check() {
         check++;
         if (check < 2) {
             Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
@@ -455,4 +438,5 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             alertDialog.show();
         }
     }
+
 }
