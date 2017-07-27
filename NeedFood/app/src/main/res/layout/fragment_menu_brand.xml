@@ -13,15 +13,8 @@
         android:background="@color/white"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        android:padding="10dp"
+
      >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/promo"
-            android:textAlignment="textEnd"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/blue"/>
 
         <LinearLayout
             android:layout_width="match_parent"

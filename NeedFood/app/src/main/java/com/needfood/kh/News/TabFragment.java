@@ -2,7 +2,6 @@ package com.needfood.kh.News;
 
 
 import android.app.LocalActivityManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
@@ -89,36 +87,7 @@ public class TabFragment extends Fragment {
     public void onResume() {
         mlam.dispatchResume();
         super.onResume();
-        getActivity().onBackPressed();
-    }
 
-    public void onBackPressed() {
-        check++;
-        if (check < 2) {
-            Toast.makeText(getActivity(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
-        } else if (check >= 2) {
-            android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
-            alertDialogBuilder.setTitle("Needfood");
-            alertDialogBuilder
-                    .setMessage("Bạn thực sự muốn thoát ứng dụng Manmo ?")
-                    .setCancelable(false)
-                    .setPositiveButton("Không", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                            check = 0;
-
-                        }
-                    })
-                    .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            getActivity().moveTaskToBack(true);
-                            android.os.Process.killProcess(android.os.Process.myPid());
-                            System.exit(0);
-                        }
-                    });
-            android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-        }
     }
 
 }

@@ -187,7 +187,7 @@
     <string name="pz">Giá: \u0020</string>
     <string name="cs">Mã cửa hàng:\u0020 </string>
     <string name="cb">Mã sản phẩm: \u0020</string>
-    <string name="rate">Tỉ lệ: \u0020</string>
+    <string name="rate">Đánh giá: \u0020</string>
     <string name="pd">Sản xuất ngày: \u0020</string>
     <string name="exp">Điểm số: \u0020</string>
     <string name="lf">Suất</string>
@@ -202,7 +202,7 @@
     <string name="ad">Địa chỉ</string>
     <string name="cust">Khách hàng</string>
     <string name="cha">Bạn cần nhập hơn 6 kí tự</string>
-    <string name="mys">Chia ser cuar tôi:</string>
+    <string name="mys">Chia sẻ của tôi:\u0020</string>
     <string name="paw">Mật khẩu không trùng nhau</string>
     <string name="piece">Chiếc</string>
     <string name="wifi">Đã bật kết nối mạng Wifi</string>

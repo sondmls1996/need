@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class TransferHistory extends AppCompatActivity {
     ListView lv;
-    int page;
+    int page=1;
     DataHandle db;
     List<InfoConstructor> list;
     String token;
@@ -94,11 +94,12 @@ public class TransferHistory extends AppCompatActivity {
             }
         });
 
-        getHisTran(1);
+        getHisTran(page);
 
     }
 
     public void getHisTran(int page) {
+
         final ProgressDialog progressDialog = DialogUtils.show(TransferHistory.this, getResources().getString(R.string.wait));
         String link = getResources().getString(R.string.linkhiscoin);
         Map<String, String> map = new HashMap<String, String>();
