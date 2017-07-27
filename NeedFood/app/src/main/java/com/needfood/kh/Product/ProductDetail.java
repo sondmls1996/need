@@ -150,7 +150,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
         th.start();
-      //  getCommen();
+        //  getCommen();
     }
 
     private void khaibao() {
@@ -202,7 +202,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         deal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                senKM2("0","0","deal",numshare);
+                senKM2("0", "0", "deal", numshare);
             }
         });
         bn.setOnClickListener(new View.OnClickListener() {
@@ -291,7 +291,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void getNumberShare(){
+    private void getNumberShare() {
         String link = getResources().getString(R.string.linkgetnum);
         Map<String, String> map = new HashMap<>();
         map.put("accessToken", access);
@@ -299,9 +299,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                 a2 = Integer.parseInt(response);
-                Log.d("TTT",a2+"");
-                if(a2>=numshare){
+                a2 = Integer.parseInt(response);
+                Log.d("TTT", a2 + "");
+                if (a2 >= numshare) {
                     deal.setVisibility(View.VISIBLE);
                 }
             }
@@ -410,7 +410,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             Intent it = new Intent(getApplicationContext(), Preview.class);
             it.putExtra("map", map);
             it.putExtra("min", mnid);
-            it.putExtra("stt","nom");
+            it.putExtra("stt", "nom");
             startActivity(it);
             pro.dismiss();
         } else {
@@ -420,7 +420,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
 
     }
-    private void senKM2(String prices,String ship,String stt, int ns) {
+
+    private void senKM2(String prices, String ship, String stt, int ns) {
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
@@ -457,7 +458,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("money", money + "");
             map.put("totalMoneyProduct", (money * 1.1) + "");
             map.put("fullName", "");
-            map.put("moneyShip",ship);
+            map.put("moneyShip", ship);
             map.put("timeShiper", "");
             map.put("address", "");
             map.put("note", "");
@@ -468,8 +469,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             Intent it = new Intent(getApplicationContext(), Preview.class);
             it.putExtra("map", map);
             it.putExtra("min", mnid);
-            it.putExtra("stt",stt);
-            it.putExtra("num",ns);
+            it.putExtra("stt", stt);
+            it.putExtra("num", ns);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -479,6 +480,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
 
     }
+
     private void senKM(String mkm) {
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
@@ -494,12 +496,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 j1.put("price", priceDiscount);
                 j1.put("tickKM", "1");
                 j1.put("tickKM_percent", "");
-                j1.put("tickKM_money", Integer.parseInt(priceprd)-Integer.parseInt(priceDiscount));
+                j1.put("tickKM_money", Integer.parseInt(priceprd) - Integer.parseInt(priceDiscount));
                 j1.put("barcode", idprd);
                 j1.put("code", prdcode);
                 j1.put("title", titl);
                 j1.put("money", money1 + "");
-                j1.put("note", "Sử dụng mã khuyến mại "+mkm);
+                j1.put("note", "Sử dụng mã khuyến mại " + mkm);
                 j1.put("id", idprd);
                 jsonArray.put(j1);
             } catch (JSONException e) {
@@ -516,7 +518,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("money", money + "");
             map.put("totalMoneyProduct", (money * 1.1) + "");
             map.put("fullName", "");
-            map.put("moneyShip",strship.toString());
+            map.put("moneyShip", strship.toString());
             map.put("timeShiper", "");
             map.put("address", "");
             map.put("note", "");
@@ -527,7 +529,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             Intent it = new Intent(getApplicationContext(), Preview.class);
             it.putExtra("map", map);
             it.putExtra("min", mnid);
-            it.putExtra("stt","");
+            it.putExtra("stt", "");
             startActivity(it);
             pro.dismiss();
         } else {
@@ -557,7 +559,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 //                        lnf.setVisibility(View.VISIBLE);
                         linkfbb = prd.getString("linkFacebook");
 
-                         content = new ShareLinkContent.Builder()
+                        content = new ShareLinkContent.Builder()
                                 .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
 
                                 .setShareHashtag(new ShareHashtag.Builder()
@@ -566,24 +568,24 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                                 .build();
 
 
-                         shareDialog = new ShareDialog(ProductDetail.this);
+                        shareDialog = new ShareDialog(ProductDetail.this);
                         if (ShareDialog.canShow(ShareLinkContent.class)) {
                             shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
                                 @Override
                                 public void onSuccess(Sharer.Result result) {
-                                  Log.d("SHARE","SUCC");
+                                    Log.d("SHARE", "SUCC");
                                     saveShare();
                                 }
 
                                 @Override
                                 public void onCancel() {
-                                    Log.d("SHARE","CANCEL");
+                                    Log.d("SHARE", "CANCEL");
                                 }
 
                                 @Override
                                 public void onError(FacebookException exception) {
 
-                                    Log.d("SHARE","ERR");
+                                    Log.d("SHARE", "ERR");
                                 }
                             });
                         }
@@ -599,13 +601,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     time2 = jos2.getString("time");
                     priceDiscount = jos.getString("priceDiscount");
                     discountCode = jos.getString("discountCode");
-                    if(prd.has("numberShare")){
+                    if (prd.has("numberShare")) {
                         numshare = prd.getInt("numberShare");
                     }
-                    Log.d("SHARENUM",numshare+"");
+                    Log.d("SHARENUM", numshare + "");
                     howto = new StringBuilder("");
                     howto.append(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
+                    Log.d("ABCC", cata);
                     tvnameprd.setText(prd.getString("title"));
                     String tym = prd.getString("typeMoneyId");
                     String dvs = prd.getString("nameUnit");
@@ -648,19 +651,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
-//    protected void share() {
-//
-//            ShareLinkContent content = new ShareLinkContent.Builder()
-//                    .setContentUrl(Uri.parse(linkfbb))
-//                    .setShareHashtag(new ShareHashtag.Builder()
-//
-//                            .setHashtag("#NeedFood")
-//                            .build())
-//                    .build();
-//
-//
-//
-//    }
 
     public void saveShare() {
         final String link = getResources().getString(R.string.linksaveShare);
@@ -932,7 +922,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     } else {
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
                     }
-                    if(ses.loggedin()){
+                    if (ses.loggedin()) {
                         getNumberShare();
                     }
                 } catch (JSONException e) {
