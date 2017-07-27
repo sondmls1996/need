@@ -61,7 +61,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
     HashMap<String, String> hashMap;
     EditText edname, edadr, edphome, edemail, edghichu, edpickngay, edpickgio;
     Calendar c;
-    int day, month2, year2, hour, minitus, numshare;
+    int day, month2, year2, hour, minitus, numshare,total;
     public DatePickerDialog fromDatePickerDialog;
     public TimePickerDialog timepicker;
     PreAdapter adapter;
@@ -85,6 +85,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         hashMap = (HashMap<String, String>) intent.getSerializableExtra("map");
         json = hashMap.get("listProduct");
         idsl = hashMap.get("idSeller");
+        total = Integer.parseInt(hashMap.get("totalMoneyProduct"));
         mnship = hashMap.get("moneyShip");
         stt = intent.getStringExtra("stt");
         if (intent.hasExtra("num")) {
@@ -200,7 +201,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             pro.dismiss();
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).toString();
         } else {
-
+            hashMap.put("totalMoneyProduct",total+Integer.parseInt(mnship)+"");
             hashMap.put("fullName", name);
             hashMap.put("timeShiper", day + "/" + (month2 + 1) + "/" + year2 + " " + hour + ":" + minitus);
             hashMap.put("address", adr);
