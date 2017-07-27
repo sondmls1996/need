@@ -28,6 +28,7 @@ public class TabFragment extends Fragment {
         // Required empty public constructor
     }
 
+    int check = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,5 +87,6 @@ public class TabFragment extends Fragment {
     public void onResume() {
         mlam.dispatchResume();
         super.onResume();
+
     }
 }

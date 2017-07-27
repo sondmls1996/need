@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -39,8 +38,6 @@ import com.facebook.FacebookSdk;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.LikeView;
 import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
@@ -78,8 +75,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ArrayList<CommentConstructor> arr;
     String maniid, idsel, mnid;
     LinearLayout view1;
+    int a2;
+    int numshare = 0;
     ProgressBar pr1;
-
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
     ImageView imgprd;
@@ -93,15 +91,17 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     public TimePickerDialog timepicker;
     EditText edpickngay, edpickgio, edquan, edadrs, edghichu;
     String cata;
-    Button prev, bn;
+    Button deal, bn;
     OftenAdapter adapterof1, adapterof2;
-    TextView tvco, tvcodes, tvprize;
+    TextView tvco, tvcodes, tvprize,tvphi,tvmyphi;
     TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
     ArrayList<OftenConstructor> arrof, arrof2;
     ArrayList<OftenConstructor> arrq;
+    public static ArrayList<Integer> listship;
     OftenAdapter quanadapter;
-    LinearLayout lnby, lnf, htu;
+    LinearLayout lnby, lnf, htu,lnshare,lnmyshare;
     List<ListMN> list;
+    String discount, discountStart, discountEnd, text1, text2, time1, time2, priceDiscount, discountCode;
     List<InfoConstructor> listu;
     DataHandle db;
     String idprd, idsl, namesl, access, idu, fullname, phone, bar;
@@ -109,14 +109,20 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ImageView img_comment, imglike, imgshare;
     RecyclerView re_comment;
     String comment;
+    ShareLinkContent content;
     CallbackManager callbackManager;
     LikeView likeView;
     StringBuilder howto, simg, strship;
     String cmt, time, iduser, fullnameus;
     ImageView imageView;
-
+    ShareDialog shareDialog;
     ShareButton shareButton;
+    int hieu;
     String linkfbb;
+    Button sharee;
+    TextView vote;
+    String point;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +132,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
+        listship = new ArrayList<>();
         ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,9 +154,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
         th.start();
-        getCommen();
-
-
+        //  getCommen();
     }
 
     private void khaibao() {
@@ -158,16 +163,24 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         view1 = (LinearLayout) findViewById(R.id.v1);
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
-        lnf = (LinearLayout) findViewById(R.id.lnfb);
-        c = Calendar.getInstance();
-        day = c.get(Calendar.DAY_OF_MONTH);
-        month2 = c.get(Calendar.MONTH);
-        year2 = c.get(Calendar.YEAR);
+
         bn = (Button) findViewById(R.id.bn);
-        shareButton = (ShareButton) findViewById(R.id.btnshare);
-        likeView = (LikeView) findViewById(R.id.btnlike);
-        imglike = (ImageView) findViewById(R.id.imglike);
+        lnshare = (LinearLayout) findViewById(R.id.lnshare);
+
+        lnshare = (LinearLayout)findViewById(R.id.lnshare);
+        lnmyshare = (LinearLayout)findViewById(R.id.lnmhysh);
         imgshare = (ImageView) findViewById(R.id.imgshare);
+        tvphi = (TextView)findViewById(R.id.phi);
+        tvmyphi = (TextView)findViewById(R.id.myphi);
+        shareDialog = new ShareDialog(ProductDetail.this);
+
+        imgshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareOnFB();
+            }
+        });
+
 
         htu = (LinearLayout) findViewById(R.id.htu);
         htu.setOnClickListener(new View.OnClickListener() {
@@ -177,28 +190,26 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 it.putExtra("htu", howto.toString());
                 it.putExtra("img", simg.toString());
                 it.putExtra("tit", titl);
-                it.putExtra("idpr",idprd);
-                it.putExtra("idsl",idsl);
+                it.putExtra("idpr", idprd);
+                it.putExtra("idsl", idsl);
                 startActivity(it);
             }
         });
         // likeView.callOnClick();
-        hour = c.get(Calendar.HOUR_OF_DAY);
-        minitus = c.get(Calendar.MINUTE);
-        dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-        String formattedDate = dateFormatter.format(c.getTime());
-        edghichu = (EditText) findViewById(R.id.ghichu);
-        timeformat = new SimpleDateFormat("HH:mm");
-        String formattime = timeformat.format(c.getTime());
-
-
         edquan = (EditText) findViewById(R.id.edquan);
         ses = new Session(this);
-        prev = (Button) findViewById(R.id.btnpre);
-        prev.setOnClickListener(new View.OnClickListener() {
+//        prev = (Button) findViewById(R.id.btnpre);
+//        prev.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+        deal = (Button) findViewById(R.id.btndeal);
+        deal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                senKM2("0", "0", "deal", numshare);
             }
         });
         bn.setOnClickListener(new View.OnClickListener() {
@@ -214,7 +225,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             fullname = listu.get(listu.size() - 1).getFullname();
             phone = listu.get(listu.size() - 1).getFone();
             uadr = listu.get(listu.size() - 1).getAddress();
-
+            imgshare.setVisibility(View.VISIBLE);
+            lnshare.setVisibility(View.VISIBLE);
 
         }
         tvco = (TextView) findViewById(R.id.tvco);
@@ -227,6 +239,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         arr = new ArrayList<>();
         namesel = (TextView) findViewById(R.id.namesl);
 
+        vote = (TextView) findViewById(R.id.vote);
         txt_comment = (EditText) findViewById(R.id.txt_comment);
         img_comment = (ImageView) findViewById(R.id.img_comment);
         img_comment.setOnClickListener(this);
@@ -278,10 +291,56 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rc.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+        StaggeredGridLayoutManager mStaggeredVerticalLayoutManager3 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager2 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);// (int spanCount, int orientation)
         rcof.setLayoutManager(mStaggeredVerticalLayoutManager);
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
+        rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
 
+    }
+
+    private void getNumberShare() {
+        String link = getResources().getString(R.string.linkgetnum);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", access);
+        map.put("idSeller", idsl);
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (response.equals("{\"code\":-1}")) {
+                    AlertDialog alertDialog = taoMotAlertDialog();
+                    alertDialog.show();
+                } else {
+                    a2 = Integer.parseInt(response);
+                    Log.d("TTT", a2 + "");
+                    if (a2 >= numshare&&numshare!=0) {
+                        deal.setVisibility(View.VISIBLE);
+                    }else{
+                        deal.setVisibility(View.GONE);
+                    }
+
+                }
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
+    }
+
+
+    private void shareOnFB() {
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            ShareLinkContent content = new ShareLinkContent.Builder()
+                    .setContentUrl(Uri.parse(linkfbb))
+                    .setShareHashtag(new ShareHashtag.Builder()
+                            .setHashtag("#NeedFood")
+                            .build())
+                    .build();
+
+
+            shareDialog.show(content);
+        }
     }
 
     private void sendOrder() {
@@ -289,6 +348,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
             String quan;
+            int mnship = Collections.max(listship);
             if (edquan.equals("")) {
                 quan = "1";
             } else {
@@ -357,8 +417,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("money", money + "");
             map.put("totalMoneyProduct", (money * 1.1) + "");
             map.put("fullName", "");
-            map.put("moneyShip", strship.toString());
-            map.put("timeShiper","");
+            map.put("moneyShip", mnship + "");
+            map.put("timeShiper", "");
             map.put("address", "");
             map.put("note", "");
             map.put("fone", "");
@@ -368,6 +428,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             Intent it = new Intent(getApplicationContext(), Preview.class);
             it.putExtra("map", map);
             it.putExtra("min", mnid);
+            it.putExtra("stt", "nom");
             startActivity(it);
             pro.dismiss();
         } else {
@@ -378,6 +439,124 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void senKM2(String prices, String ship, String stt, int ns) {
+
+        final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
+        if (ses.loggedin()) {
+            String quan = "1";
+
+            int money1 = Integer.parseInt(quan) * Integer.parseInt(prices);
+            JSONArray jsonArray = new JSONArray();
+            JSONObject j1 = new JSONObject();
+
+            try {
+                j1.put("quantity", "1");
+                j1.put("price", prices);
+                j1.put("tickKM", "false");
+                j1.put("tickKM_percent", "");
+                j1.put("tickKM_money", "");
+                j1.put("barcode", idprd);
+                j1.put("code", prdcode);
+                j1.put("title", titl);
+                j1.put("money", money1 + "");
+                j1.put("note", "");
+                j1.put("id", idprd);
+                jsonArray.put(j1);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            int money = 0;
+
+
+            money = money + money1;
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("accessToken", access);
+            map.put("listProduct", jsonArray.toString());
+            map.put("money", money + "");
+            map.put("totalMoneyProduct", (money * 1.1) + "");
+            map.put("fullName", "");
+            map.put("moneyShip", ship);
+            map.put("timeShiper", "");
+            map.put("address", "");
+            map.put("note", "");
+            map.put("fone", "");
+            // map.put("idUseronl",idu);
+            map.put("idSeller", idsl);
+
+            Intent it = new Intent(getApplicationContext(), Preview.class);
+            it.putExtra("map", map);
+            it.putExtra("min", mnid);
+            it.putExtra("stt", stt);
+            it.putExtra("num", ns);
+            startActivity(it);
+            pro.dismiss();
+        } else {
+            pro.dismiss();
+            AlertDialog alertDialog = taoMotAlertDialog2();
+            alertDialog.show();
+        }
+
+    }
+
+    private void senKM(String mkm) {
+
+        final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
+        if (ses.loggedin()) {
+            String quan = "1";
+
+            int money1 = Integer.parseInt(quan) * Integer.parseInt(priceDiscount);
+            JSONArray jsonArray = new JSONArray();
+            JSONObject j1 = new JSONObject();
+
+            try {
+                j1.put("quantity", "1");
+                j1.put("price", priceDiscount);
+                j1.put("tickKM", "1");
+                j1.put("tickKM_percent", "");
+                j1.put("tickKM_money", Integer.parseInt(priceprd) - Integer.parseInt(priceDiscount));
+                j1.put("barcode", idprd);
+                j1.put("code", prdcode);
+                j1.put("title", titl);
+                j1.put("money", money1 + "");
+                j1.put("note", "Sử dụng mã khuyến mại " + mkm);
+                j1.put("id", idprd);
+                jsonArray.put(j1);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            int money = 0;
+
+
+            money = money + money1;
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("accessToken", access);
+            map.put("listProduct", jsonArray.toString());
+            map.put("money", money + "");
+            map.put("totalMoneyProduct", (money * 1.1) + "");
+            map.put("fullName", "");
+            map.put("moneyShip", strship.toString());
+            map.put("timeShiper", "");
+            map.put("address", "");
+            map.put("note", "");
+            map.put("fone", "");
+            // map.put("idUseronl",idu);
+            map.put("idSeller", idsl);
+
+            Intent it = new Intent(getApplicationContext(), Preview.class);
+            it.putExtra("map", map);
+            it.putExtra("min", mnid);
+            it.putExtra("stt", "");
+            startActivity(it);
+            pro.dismiss();
+        } else {
+            pro.dismiss();
+            AlertDialog alertDialog = taoMotAlertDialog2();
+            alertDialog.show();
+        }
+
+    }
 
     public void getProductDT() {
         final String link = getResources().getString(R.string.linkprdde);
@@ -395,10 +574,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     JSONObject jo = new JSONObject(response);
                     JSONObject prd = jo.getJSONObject("Product");
                     if (prd.has("linkFacebook")) {
-                        lnf.setVisibility(View.VISIBLE);
+//                        lnf.setVisibility(View.VISIBLE);
                         linkfbb = prd.getString("linkFacebook");
 
-                        ShareLinkContent content = new ShareLinkContent.Builder()
+                        content = new ShareLinkContent.Builder()
                                 .setContentUrl(Uri.parse(prd.getString("linkFacebook")))
 
                                 .setShareHashtag(new ShareHashtag.Builder()
@@ -406,10 +585,52 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                                         .build())
                                 .build();
 
-                        shareButton.setShareContent(content);
-                    }
-                    strship = new StringBuilder(prd.getString("moneyShip"));
 
+                        shareDialog = new ShareDialog(ProductDetail.this);
+                        if (ShareDialog.canShow(ShareLinkContent.class)) {
+                            shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+                                @Override
+                                public void onSuccess(Sharer.Result result) {
+                                    Log.d("SHARE", "SUCC");
+                                    saveShare();
+                                }
+
+                                @Override
+                                public void onCancel() {
+                                    Log.d("SHARE", "CANCEL");
+                                }
+
+                                @Override
+                                public void onError(FacebookException exception) {
+
+                                    Log.d("SHARE", "ERR");
+                                }
+                            });
+                        }
+
+                    }
+
+                    JSONObject joo = prd.getJSONObject("vote");
+                    point = joo.getString("point");
+                    strship = new StringBuilder(prd.getString("moneyShip"));
+                    listship.add(Integer.parseInt(strship.toString()));
+                    JSONObject jos = prd.getJSONObject("discount");
+                    JSONObject jos1 = jos.getJSONObject("discountStart");
+                    text1 = jos1.getString("text");
+                    time1 = jos1.getString("time");
+                    JSONObject jos2 = jos.getJSONObject("discountEnd");
+                    text2 = jos2.getString("text");
+                    time2 = jos2.getString("time");
+                    priceDiscount = jos.getString("priceDiscount");
+                    discountCode = jos.getString("discountCode");
+                    if (prd.has("numberShare")) {
+                        numshare = prd.getInt("numberShare");
+                        if(numshare>0){
+                            lnmyshare.setVisibility(View.VISIBLE);
+                            tvphi.setText(numshare+"");
+                        }
+                    }
+                    Log.d("SHARENUM", numshare + "");
                     howto = new StringBuilder("");
                     howto.append(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
@@ -423,6 +644,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     priceprd = prd.getString("price");
                     namesel.setText(namesl);
                     idsl = prd.getString("idSeller");
+                    lnby.setVisibility(View.VISIBLE);
                     maniid = prd.getString("manufacturerId");
                     tvdv1.setText(dvs);
                     tvdv2.setText(dvs);
@@ -442,7 +664,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     JSONArray ja = prd.getJSONArray("images");
                     simg = new StringBuilder("http://needfood.webmantan.com" + ja.getString(0));
                     Picasso.with(getApplicationContext()).load("http://needfood.webmantan.com" + ja.getString(0)).into(imgprd);
-
+                    vote.setText(point);
                     getPrdDK();
                     getCommen();
                 } catch (JSONException e) {
@@ -455,42 +677,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
-    protected void share() {
-        ShareDialog shareDialog = new ShareDialog(this);
-        if (ShareDialog.canShow(SharePhotoContent.class)) {
-            shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-                @Override
-                public void onSuccess(Sharer.Result result) {
-                    saveShare();
-                }
-
-                @Override
-                public void onCancel() {
-
-                }
-
-                @Override
-                public void onError(FacebookException exception) {
-
-                    Log.e("DEBUG", "Share: " + exception.getMessage());
-                    exception.printStackTrace();
-                }
-            });
-
-            ShareLinkContent content = new ShareLinkContent.Builder()
-                    .setContentUrl(Uri.parse(linkfbb))
-                    .setShareHashtag(new ShareHashtag.Builder()
-                            .setHashtag("#NeedFood")
-                            .build())
-                    .build();
-
-            shareDialog.show(content);
-        }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getNumberShare();
     }
 
     public void saveShare() {
-        final String link = getResources().getString(R.string.linkprdat);
+        final String link = getResources().getString(R.string.linksaveShare);
 
         Map<String, String> map = new HashMap<>();
         map.put("accessToken", access);
@@ -500,31 +694,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-                Log.d("EEE", response);
-//                try {
-//                    JSONArray ja = new JSONArray(response);
-//                    for (int i = 0; i < ja.length(); i++) {
-//                        String mn = "";
-//                        JSONObject jo = ja.getJSONObject(i);
-//                        JSONObject prd = jo.getJSONObject("Product");
-//                        JSONArray jaimg = prd.getJSONArray("images");
-//                        String typemn = prd.getString("typeMoneyId");
-//                        list = db.getMNid(typemn);
-//                        for (ListMN lu : list) {
-//                            mn = lu.getMn();
-//                        }
-//                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-//                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-//                                "", prd.getString("id")));
-//                    }
-//
-//                    quanadapter.notifyDataSetChanged();
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+                Log.d("EEEE", response);
+                getNumberShare();
 
             }
         };
@@ -558,7 +729,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         }
                         arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                "", prd.getString("id")));
+                                "", prd.getString("id"), prd.getString("moneyShip")));
                     }
 
                     quanadapter.notifyDataSetChanged();
@@ -602,7 +773,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         }
                         arrof.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                "", prd.getString("id")));
+                                "", prd.getString("id"), prd.getString("moneyShip")));
                     }
 
                     adapterof1.notifyDataSetChanged();
@@ -647,7 +818,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                         arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
-                                "", prd.getString("id")));
+                                "", prd.getString("id"), prd.getString("moneyShip")));
                     }
                     adapterof2.notifyDataSetChanged();
                     getAtach();
@@ -712,13 +883,31 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.promotiondialog);
         dialog.show();
+        final TextView txt = (TextView) dialog.findViewById(R.id.tx_km);
         final EditText edpro = (EditText) dialog.findViewById(R.id.promotion);
-
+        final LinearLayout lnn = (LinearLayout) dialog.findViewById(R.id.lnn);
+        Calendar c = Calendar.getInstance();
+        final double timenow = c.getTimeInMillis();
+        final double a1 = Long.parseLong(time1);
+        final double b = Long.parseLong(time2);
+        if (discountCode.isEmpty()) {
+            txt.setVisibility(View.VISIBLE);
+            lnn.setVisibility(View.GONE);
+        }
         Button clo = (Button) dialog.findViewById(R.id.proc);
         clo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String a = edpro.getText().toString();
+                if (!a.equals(discountCode)) {
+                    txt.setVisibility(View.GONE);
+                    lnn.setVisibility(View.VISIBLE);
+                } else if (a1 < timenow && timenow < b) {
+                    txt.setVisibility(View.GONE);
+                    lnn.setVisibility(View.VISIBLE);
+                } else {
+                    senKM(a);
+                }
             }
         });
         ImageView close = (ImageView) dialog.findViewById(R.id.img_close);
@@ -764,6 +953,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     } else {
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
                     }
+                    if (ses.loggedin()) {
+                        getNumberShare();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -778,7 +970,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-     if (v == img_comment) {
+        if (v == img_comment) {
             saveComment();
         }
     }
@@ -832,7 +1024,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             // verify we're returning from like action
             if ("com.facebook.platform.action.request.LIKE_DIALOG".equals(data.getStringExtra("com.facebook.platform.protocol.PROTOCOL_ACTION"))) {

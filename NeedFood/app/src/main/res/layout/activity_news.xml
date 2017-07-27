@@ -5,17 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".News.News">
+
     <TextView
+        android:id="@+id/nop5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:text="@string/noprd"
-        android:id="@+id/nop5"
-        android:visibility="gone"
-        android:textSize="16sp"
         android:textColor="@color/black"
-        android:gravity="center"/>
-    <android.support.v7.widget.RecyclerView
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lvnew"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lvnew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

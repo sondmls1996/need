@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
     Session ses;
     EditText edus, edpass;
     DataHandle db;
-    String fullname, idfb, email, fone = "", adr;
+    String fullname, idfb, email, fone = "", adr="";
     String dvtoken;
 
     @Override
@@ -134,6 +134,7 @@ public class Login extends AppCompatActivity {
                                     addInfo(accesstoken, id, "0");
                                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                                     startActivity(it);
+                                    finish();
                                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
 
                                 } else {
@@ -170,8 +171,8 @@ public class Login extends AppCompatActivity {
                                     fullname = json.getString("name");
                                     idfb = json.getString("id");
                                     email = json.getString("email");
-                                    JSONObject loc = json.getJSONObject("location");
-                                    adr = loc.getString("name");
+//                                    JSONObject loc = json.getJSONObject("location");
+//                                    adr = loc.getString("name");
                                     regisFB();
 //                                    Intent it = new Intent(getApplicationContext(),Register.class);
 //                                    it.putExtra("fullname",fullname);

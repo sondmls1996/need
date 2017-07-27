@@ -3,6 +3,7 @@ package com.needfood.kh.Product;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +20,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Constructor.InfoConstructor;
-import com.needfood.kh.Constructor.ListMN;
-import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
@@ -28,7 +27,6 @@ import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -90,7 +88,30 @@ public class Howtouse extends AppCompatActivity {
         txts.setText(titl);
         addListenerOnButtonClick();
     }
+    private class ImageGetter implements Html.ImageGetter {
 
+        public Drawable getDrawable(String source) {
+            int id;
+
+            id = getResources().getIdentifier(source, "drawable", getPackageName());
+
+            if (id == 0) {
+                // the drawable resource wasn't found in our package, maybe it is a stock android drawable?
+                id = getResources().getIdentifier(source, "drawable", "android");
+            }
+
+            if (id == 0) {
+                // prevent a crash if the resource still can't be found
+                return null;
+            }
+            else {
+                Drawable d = getResources().getDrawable(id);
+                d.setBounds(0,0,d.getIntrinsicWidth(),d.getIntrinsicHeight());
+                return d;
+            }
+        }
+
+    }
     public void addListenerOnButtonClick() {
         ratingbar = (RatingBar) findViewById(R.id.ratingBar1);
         submit = (Button) findViewById(R.id.button1);
@@ -118,6 +139,7 @@ public class Howtouse extends AppCompatActivity {
                             String code = jo.getString("code");
                             if (code.equals("0")) {
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
+
                             } else if (code.equals("-1")) {
                                 AlertDialog alertDialog = taoMotAlertDialog();
                                 alertDialog.show();

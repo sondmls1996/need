@@ -1,7 +1,9 @@
 package com.needfood.kh.News;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +39,7 @@ public class News extends AppCompatActivity {
     LinearLayoutManager layoutManager;
 
     NewsAdapter adapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,15 @@ public class News extends AppCompatActivity {
                 getData(page);
             }
         };
+        lv.addOnScrollListener(endlessScroll);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefreshlayout);
+        swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
         getData(1);
         lv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
@@ -79,6 +91,7 @@ public class News extends AppCompatActivity {
     }
 
     private void getData(int page) {
+
         final String link = getResources().getString(R.string.linknew);
         final Map<String, String> map = new HashMap<>();
         map.put("page", page + "");
@@ -109,6 +122,7 @@ public class News extends AppCompatActivity {
                                     prd.getString("typeMoneyId")));
                         }
                         adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (JSONException e1) {
                     e1.printStackTrace();
@@ -121,6 +135,11 @@ public class News extends AppCompatActivity {
         PostCL post = new PostCL(link, map, response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(post);
+    }
+
+    private void refresh() {
+        arr.clear();
+        getData(1);
     }
 
 

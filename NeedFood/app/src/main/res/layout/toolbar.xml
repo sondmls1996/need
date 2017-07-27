@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
     android:id="@+id/toolbarr"
     app:layout_collapseMode="pin"
     android:layout_width="match_parent"
     android:background="@color/red"
-    app:navigationIcon="@drawable/backw"
+
     android:layout_height="?attr/actionBarSize">
     <ImageView
         android:layout_width="wrap_content"
@@ -26,4 +25,4 @@
         android:textSize="16sp"
         android:id="@+id/titletxt"
         android:text="sdsdasd"/>
-</LinearLayout>
+</android.support.v7.widget.Toolbar>

@@ -1,7 +1,7 @@
 package com.needfood.kh;
 
 import android.Manifest;
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,9 +9,11 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -19,6 +21,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -85,7 +88,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     TextView se;
     CoordinatorLayout activity_news;
     NetworkCheck networkCheck;
-    int check = 0;
+    public static int check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +181,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 Intent it = new Intent(getApplicationContext(), ProductDetail.class);
                 it.putExtra("idprd", arrs.get(position).getId());
                 startActivity(it);
+                finish();
             }
         });
         final EditText edt = (EditText) dialog.findViewById(R.id.searched);
@@ -201,6 +205,12 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             }
         });
         dialog.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // .... other stuff in my onResume ....
     }
 
     private void searchSP(String s) {
@@ -239,12 +249,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
     private void getMoney() {
         String link = getResources().getString(R.string.linkmn);
@@ -317,7 +321,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 pg = 1;
                 break;
             case R.id.sug:
-
                 fragmentClass = SuggessFrag.class;
                 ReplaceFrag(fragmentClass);
                 break;
@@ -381,15 +384,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         return true;
     }
 
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(StartActivity.this)
-                .setMessage(message)
-                .setPositiveButton("Đòng ý", okListener)
-                .setNegativeButton("Hủy", null)
-                .create()
-                .show();
-    }
-
     public void changeLocale(String lang) {
 
         if (lang.equalsIgnoreCase(""))
@@ -402,31 +396,37 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+
     @Override
     public void onBackPressed() {
-        Toast.makeText(getBaseContext(), getResources().getString(R.string.dclick), Toast.LENGTH_SHORT).show();
         check++;
-        if (check == 2) {
-            android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(StartActivity.this);
-            alertDialogBuilder.setTitle("ManMo");
+        if (check < 2) {
+            Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
+        } else if (check >= 2) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(StartActivity.this);
+            alertDialogBuilder.setTitle("Needfood");
             alertDialogBuilder
-                    .setMessage(getResources().getString(R.string.exit))
+                    .setMessage("Bạn thực sự muốn thoát ứng dụng Manmo ?")
                     .setCancelable(false)
-                    .setPositiveButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Không", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                             check = 0;
+
                         }
                     })
-                    .setNegativeButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            check = 0;
                             moveTaskToBack(true);
                             android.os.Process.killProcess(android.os.Process.myPid());
                             System.exit(0);
                         }
                     });
-            android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
+        } else {
+
         }
     }
 

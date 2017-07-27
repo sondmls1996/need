@@ -9,139 +9,148 @@
 
     <include
         android:id="@+id/t3"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar" />
+
     <com.needfood.kh.SupportClass.VerticalScrollview
         android:layout_width="match_parent"
-        android:layout_below="@id/t3"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/t3">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
-
             android:layout_height="match_parent"
+
+            android:layout_margin="10dp"
             android:orientation="vertical">
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                app:cardBackgroundColor="@color/white"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/orif"
-                    android:padding="5dp"
-                    android:background="@color/red"
-                    android:textColor="@color/white"/>
 
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:id="@+id/lvpre"
-                    android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/red"
+                        android:padding="5dp"
+                        android:text="@string/orif"
+                        android:textColor="@color/white" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/lvpre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="#0000"/>
+                android:background="#0000" />
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                app:cardBackgroundColor="@color/white"
-                android:layout_height="wrap_content">
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical">
-                 <TextView
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:text="@string/rein"
-                     android:padding="5dp"
-                     android:background="@color/red"
-                     android:textColor="@color/white"/>
-                 <LinearLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:padding="10dp"
-                     android:orientation="vertical">
-                     <LinearLayout
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white">
 
-                         android:orientation="horizontal">
-                         <TextView
-                             android:layout_width="match_parent"
-                             android:layout_margin="5dp"
-                             android:layout_height="wrap_content"
-                             android:layout_weight="4"
-                             android:text="@string/name"
-                             android:textColor="@color/black"
-                             />
-                         <EditText
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:id="@+id/edname"
-                             android:layout_weight="2"
-                             android:background="@color/white"
-                             android:layout_margin="5dp"
-                             android:textColor="@color/black"
-                             />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/red"
+                        android:padding="5dp"
+                        android:text="@string/rein"
+                        android:textColor="@color/white" />
 
-                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                     <LinearLayout
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:gravity="center_vertical"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
 
-                         android:orientation="horizontal">
-                         <TextView
-                             android:layout_width="match_parent"
-                             android:layout_margin="5dp"
-                             android:layout_height="wrap_content"
-                         android:layout_weight="4"
-                             android:text="@string/phonenum2"
-                             android:textColor="@color/black"
-                             />
-                         <EditText
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:id="@+id/edphone"
-                             android:layout_weight="2"
-                             android:background="@color/white"
-                             android:layout_margin="5dp"
-                             android:textColor="@color/black"
-                             />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:layout_weight="4"
+                                android:text="@string/name"
+                                android:textColor="@color/black" />
+
+                            <EditText
+                                android:id="@+id/edname"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:layout_weight="2"
+                                android:background="@color/white"
+                                android:textColor="@color/black" />
 
 
+                        </LinearLayout>
 
-                     </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:layout_weight="4"
+                                android:text="@string/phonenum2"
+                                android:textColor="@color/black" />
+
+                            <EditText
+                                android:id="@+id/edphone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:layout_weight="2"
+                                android:background="@color/white"
+                                android:textColor="@color/black" />
 
 
+                        </LinearLayout>
 
 
-                 </LinearLayout>
-             </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+                android:layout_height="10dp" />
 
             <include layout="@layout/shipto"></include>
 
             <Button
+                android:id="@+id/btno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/blue"
-                android:layout_margin="10dp"
                 android:layout_alignParentBottom="true"
-                android:textColor="@color/white"
-                android:id="@+id/btno"
-                android:text="@string/order"/>
+                android:layout_margin="10dp"
+                android:background="@color/blue"
+                android:text="@string/order"
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </com.needfood.kh.SupportClass.VerticalScrollview>

@@ -1,7 +1,9 @@
 package com.needfood.kh.Sugges;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,17 +38,19 @@ public class Food extends AppCompatActivity {
     int page = 1;
     TextView nop;
     EndlessScroll endlessScroll;
-    String namep="food";
+    String namep = "food";
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food);
-        lv = (RecyclerView)findViewById(R.id.lvfood);
-        nop = (TextView)findViewById(R.id.nop3);
-        arr=new ArrayList<>();
+        lv = (RecyclerView) findViewById(R.id.lvfood);
+        nop = (TextView) findViewById(R.id.nop3);
+        arr = new ArrayList<>();
         layoutManager = new LinearLayoutManager(this);
         lv.setLayoutManager(layoutManager);
-        adapter = new NewsAdapter(getApplicationContext(),arr);
+        adapter = new NewsAdapter(getApplicationContext(), arr);
         lv.setAdapter(adapter);
         endlessScroll = new EndlessScroll(layoutManager) {
             @Override
@@ -55,14 +59,16 @@ public class Food extends AppCompatActivity {
                 getData(page);
             }
         };
+        lv.addOnScrollListener(endlessScroll);
         getData(page);
 
         lv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
+                    @Override
+                    public void onItemClick(View view, int position) {
 
                         Intent it = new Intent(getApplicationContext(), ProductDetail.class);
-                        it.putExtra("idprd",arr.get(position).getIdprd());
+                        it.putExtra("idprd", arr.get(position).getIdprd());
 
                         startActivity(it);
 
@@ -70,28 +76,36 @@ public class Food extends AppCompatActivity {
                     }
                 })
         );
-
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefreshlayout5);
+        swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
     }
+
     private void getData(int page) {
         final String link = getResources().getString(R.string.linksug);
-        final Map<String,String> map = new HashMap<>();
-        map.put("page",page+"");
-        map.put("suggestion",namep);
-        final Response.Listener<String> response= new Response.Listener<String>() {
+        final Map<String, String> map = new HashMap<>();
+        map.put("page", page + "");
+        map.put("suggestion", namep);
+        final Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 try {
-                    Log.d("sugest",response);
+                    Log.d("sugest", response);
                     JSONArray ja = new JSONArray(response);
-                    if(ja.length()==0){
-                        if(arr.size()==0){
+                    if (ja.length() == 0) {
+                        if (arr.size() == 0) {
                             nop.setVisibility(View.VISIBLE);
-                        }else{
+                        } else {
                             nop.setVisibility(View.GONE);
                         }
 
-                    }else {
+                    } else {
                         nop.setVisibility(View.GONE);
                         for (int i = 0; i < ja.length(); i++) {
                             JSONObject j1 = ja.getJSONObject(i);
@@ -106,6 +120,7 @@ public class Food extends AppCompatActivity {
                                     prd.getString("typeMoneyId")));
                         }
                         adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -114,8 +129,12 @@ public class Food extends AppCompatActivity {
             }
 
         };
-        PostCL post = new PostCL(link,map,response);
+        PostCL post = new PostCL(link, map, response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(post);
+    }
+
+    public void refresh() {
+        arr.clear();getData(1);
     }
 }

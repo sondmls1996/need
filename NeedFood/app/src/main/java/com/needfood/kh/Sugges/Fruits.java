@@ -1,7 +1,9 @@
 package com.needfood.kh.Sugges;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +39,7 @@ public class Fruits extends AppCompatActivity {
     EndlessScroll endlessScroll;
     TextView nop;
     String namep="fruits";
+    SwipeRefreshLayout swipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,7 @@ public class Fruits extends AppCompatActivity {
                 getData(page);
             }
         };
+        lv.addOnScrollListener(endlessScroll);
         getData(1);
 
         lv.addOnItemTouchListener(
@@ -71,7 +75,14 @@ public class Fruits extends AppCompatActivity {
                 })
         );
 
-
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefreshlayout6);
+        swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
     }
     private void getData(int page) {
         final String link = getResources().getString(R.string.linksug);
@@ -106,6 +117,7 @@ public class Fruits extends AppCompatActivity {
                                     prd.getString("typeMoneyId")));
                         }
                         adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -117,5 +129,9 @@ public class Fruits extends AppCompatActivity {
         PostCL post = new PostCL(link,map,response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(post);
+    }
+    private void refresh() {
+        arr.clear();
+        getData(1);
     }
 }

@@ -1,7 +1,11 @@
 package com.needfood.kh.News;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +25,7 @@ import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Login.Login;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
+import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.EndlessScroll;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.RecyclerItemClickListener;
@@ -51,6 +56,7 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
     List<InfoConstructor> list;
     EndlessScroll endlessScroll;
     TextView nop;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public Hotdeal() {
         // Required empty public constructor
@@ -85,6 +91,7 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
                     getData(page);
                 }
             };
+            lvb.addOnScrollListener(endlessScroll);
             getData(1);
             lvb.addOnItemTouchListener(
                     new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
@@ -99,7 +106,14 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
                         }
                     })
             );
-
+            swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefreshlayout1);
+            swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW);
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    refresh();
+                }
+            });
         } else {
             setContentView(R.layout.fragment_frag_log);
             btnlog = (Button) findViewById(R.id.btnlog);
@@ -120,7 +134,30 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
                 break;
         }
     }
+    private AlertDialog taoMotAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Thiết lập tiêu đề hiển thị
+        builder.setTitle(getResources().getString(R.string.er));
+        //Thiết lập thông báo hiển thị
 
+        builder.setMessage(getResources().getString(R.string.lostss));
+        builder.setCancelable(false);
+        //Tạo nút Chu hang
+        builder.setNegativeButton(getResources().getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        db.deleteInfo();
+                        ses = new Session(getBaseContext());
+                        ses.setLoggedin(false);
+                        Intent i = new Intent(getApplicationContext(), StartActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        return dialog;
+    }
     private void getData(int page) {
         final String link = getResources().getString(R.string.linkhotdeal);
         final Map<String, String> map = new HashMap<>();
@@ -131,31 +168,39 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
             public void onResponse(String response) {
                 Log.d("aa", response + "");
                 try {
-                    JSONArray ja = new JSONArray(response);
-                    if (ja.length() == 0) {
-                        if (arr.size() == 0) {
-                            nop.setVisibility(View.VISIBLE);
+                    if(response.equals("{\"code\":-1}")){
+                        swipeRefreshLayout.setRefreshing(false);
+                        AlertDialog alertDialog = taoMotAlertDialog();
+                        alertDialog.show();
+                    }else{
+                        JSONArray ja = new JSONArray(response);
+                        if (ja.length() == 0) {
+                            if (arr.size() == 0) {
+                                nop.setVisibility(View.VISIBLE);
+                            } else {
+                                nop.setVisibility(View.GONE);
+                            }
                         } else {
                             nop.setVisibility(View.GONE);
+                            for (int i = 0; i < ja.length(); i++) {
+                                JSONObject j1 = ja.getJSONObject(i);
+                                JSONObject prd = j1.getJSONObject("Product");
+                                JSONArray imgs = prd.getJSONArray("images");
+
+                                JSONObject vote = prd.getJSONObject("vote");
+
+
+                                arr.add(new HotdealConstructor("http://needfood.webmantan.com" + imgs.getString(0), prd.getString("id"),
+                                        prd.getString("idSeller"),
+                                        prd.getString("title"), prd.getString("nameSeller"), prd.getString("price")
+                                        , "", prd.getString("priceOther"), prd.getString("vote"), prd.getString("nameUnit"), prd.getString("typeMoneyId"), prd.getString("numberShare")));
+
+                            }
+                            adapter.notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
                         }
-                    } else {
-                        nop.setVisibility(View.GONE);
-                        for (int i = 0; i < ja.length(); i++) {
-                            JSONObject j1 = ja.getJSONObject(i);
-                            JSONObject prd = j1.getJSONObject("Product");
-                            JSONArray imgs = prd.getJSONArray("images");
-
-                            JSONObject vote = prd.getJSONObject("vote");
-
-
-                            arr.add(new HotdealConstructor("http://needfood.webmantan.com" + imgs.getString(0), prd.getString("id"),
-                                    prd.getString("idSeller"),
-                                    prd.getString("title"), prd.getString("nameSeller"), prd.getString("price")
-                                    , "", prd.getString("priceOther"), prd.getString("vote"), prd.getString("nameUnit"), prd.getString("typeMoneyId"),prd.getString("numberShare")));
-
-                        }
-                        adapter.notifyDataSetChanged();
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -166,5 +211,10 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
         PostCL post = new PostCL(link, map, response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(post);
+    }
+
+    public void refresh() {
+        arr.clear();
+        getData(1);
     }
 }

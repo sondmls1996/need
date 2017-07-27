@@ -27,6 +27,7 @@
     <string name="enamout">Nhập số Coins sử dụng</string>
     <string name="coins">Coins</string>
     <string name="paym">Thanh toán</string>
+    <string name="pr">Tài sản: \u0020</string>
     <string name="changepass">Đổi mật khẩu</string>
     <string name="quanlity2">Số lượng:\u0020</string>
     <string name="total">Tổng:\u0020</string>
@@ -88,6 +89,7 @@
     <string name="sugg">Gợi ý</string>
     <string name="notif">Thông báo</string>
     <string name="succ">Thành công</string>
+    <string name="buy0">Mua với giá 0đ</string>
     <string name="emailwr">Email không đúng định dạng</string>
     <string name="wait">Vui lòng chờ...</string>
     <string name="wrreg">Không được để trống</string>
@@ -116,7 +118,12 @@
     <string name="linkifsel">http://needfood.webmantan.com/getInfoSellerAPI</string>
     <string name="linkbest">http://needfood.webmantan.com/getProductBestAPI</string>
     <string name="linknew">http://needfood.webmantan.com/getProductNewAPI</string>
+    <string name="linkshare">http://needfood.webmantan.com/saveShareHotDealAPI</string>
+    <string name="linksavecmpr">http://needfood.webmantan.com/saveCommentProductAPI</string>
+    <string name="linkgetcmpr">http://needfood.webmantan.com/getCommentProductAPI</string>
+    <string name="linkvote">http://needfood.webmantan.com/updateVoteProductAPI</string>
     <string name="linkprdde">http://needfood.webmantan.com/getProductAPI</string>
+    <string name="linksug">http://needfood.webmantan.com/getProductSuggestionAPI</string>
     <string name="linkmn">http://needfood.webmantan.com/getTypeMoneyAPI</string>
     <string name="linkprdsell">http://needfood.webmantan.com/getProductSellerAPI</string>
     <string name="linklogout">http://needfood.webmantan.com/checkLogoutUseronlAPI</string>
@@ -124,6 +131,7 @@
     <string name="linksavecmt">http://needfood.webmantan.com/saveCommentSellerAPI</string>
     <string name="linkgetcmt">http://needfood.webmantan.com/getCommentSellerAPI</string>
     <string name="linkreg">http://needfood.webmantan.com/checkRegisterUseronlAPI</string>
+    <string name="linkgetnum">http://needfood.webmantan.com/getNumberShareAPI</string>
     <string name="linklogin">http://needfood.webmantan.com/checkLoginUseronlAPI</string>
     <string name="linkchangep">http://needfood.webmantan.com/changePassUseronlAPI</string>
     <string name="linkgetcode">http://needfood.webmantan.com/sendCodePassUseronlAPI</string>
@@ -179,7 +187,8 @@
     <string name="pz">Giá: \u0020</string>
     <string name="cs">Mã cửa hàng:\u0020 </string>
     <string name="cb">Mã sản phẩm: \u0020</string>
-    <string name="rate">Tỉ lệ: \u0020</string>
+    <string name="brname">Tên hãng:\u0020</string>
+    <string name="rate">Đánh giá: \u0020</string>
     <string name="pd">Sản xuất ngày: \u0020</string>
     <string name="exp">Điểm số: \u0020</string>
     <string name="lf">Suất</string>
@@ -194,6 +203,7 @@
     <string name="ad">Địa chỉ</string>
     <string name="cust">Khách hàng</string>
     <string name="cha">Bạn cần nhập hơn 6 kí tự</string>
+    <string name="mys">Chia sẻ của tôi:\u0020</string>
     <string name="paw">Mật khẩu không trùng nhau</string>
     <string name="piece">Chiếc</string>
     <string name="wifi">Đã bật kết nối mạng Wifi</string>
@@ -201,9 +211,12 @@
     <string name="nointer">Bạn không có kết nối internet</string>
     <string name="exit">Bạn có chắc chắn là muốn thoát ứng dụng ?</string>
     <string name="fre">Thực phẩm miễn phí, miễn phí giao hàng</string>
-    <string name="sare">Chia sẻ sản phẩm này ở nơi công cộng để đạt được số lượng phiếu mục tiêu</string>
-    <string name="phieu">Phiếu</string>
+    <string name="sare">Chia sẻ đủ số lượng yêu cầu</string>
+    <string name="phieu">Chia sẻ</string>
     <string name="evs">Bạn có muốn lưu và thoát ?</string>
     <string name="no">Không</string>
     <string name="dclick">Nhấn 2 lần để thoát</string>
+    <string name="km">Sản phẩm này hiện tại không có khuyến mại</string>
+    <string name="checkin">Bạn vui lòng kiểm tra lại mạng kết nối internet!</string>
+    <string name="miss">Nhiệm vụ </string>
 </resources>

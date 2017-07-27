@@ -10,7 +10,7 @@
     <RelativeLayout
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
@@ -33,10 +33,10 @@
             android:visibility="gone" />
 
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/txtht"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <RatingBar

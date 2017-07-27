@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.easyandroidanimations.library.ScaleInAnimation;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
+import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
 import com.squareup.picasso.Picasso;
 
@@ -109,6 +110,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                             ip.getName(),Integer.parseInt(ip.getPrize())*1+"",
                             ip.getNote(),ip.getId()
                     ));
+                    ProductDetail.listship.add(Integer.parseInt(ip.getNmship()));
                     viewHolder.edo.setText("1");
                     viewHolder.textWatcher = new TextWatcher() {
                         @Override
@@ -151,13 +153,16 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     viewHolder.edo.addTextChangedListener(viewHolder.textWatcher);
                     Log.d("ARRSIZE",arrcheck.size()+"");
                 }else {
+
                     viewHolder.edo.setEnabled(false);
                     viewHolder.edo.removeTextChangedListener(viewHolder.textWatcher);
                     viewHolder.edo.setText(null);
                     if(arrcheck.size()==1){
                         arrcheck.clear();
+                        ProductDetail.listship.remove(ProductDetail.listship.size()-1);
                     }else{
                         arrcheck.remove(position);
+                        ProductDetail.listship.remove(position);
                     }
 
                     Log.d("ARRSIZE",arrcheck.size()+"");

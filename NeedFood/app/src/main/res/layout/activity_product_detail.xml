@@ -30,6 +30,7 @@
                     android:id="@+id/lnby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:background="@drawable/cusedblue"
                     android:orientation="horizontal"
                     android:padding="3dp">
@@ -75,10 +76,10 @@
                 card_view:cardElevation="4dp">
 
                 <LinearLayout
+                    android:id="@+id/htu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/red"
-                    android:id="@+id/htu"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -127,16 +128,15 @@
                 android:layout_height="10dp" />
 
 
-
             <Button
-                android:id="@+id/btnpre"
+                android:id="@+id/btndeal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/red"
-                android:visibility="gone"
-                android:text="@string/precart"
-                android:textColor="@color/white" />
+                android:background="@drawable/deald"
+                android:text="@string/buy0"
+                android:textColor="@color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/bn"

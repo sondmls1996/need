@@ -82,6 +82,7 @@ public class Notif extends Fragment {
     public void loadagain() {
         arr.clear();
         arr = db.getNoti();
+        Collections.reverse(arr);
         adapter = new NotifAdapter(getContext(), arr);
         lv.setAdapter(adapter);
         adapter.notifyDataSetChanged();

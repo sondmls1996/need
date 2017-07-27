@@ -99,7 +99,7 @@ public class Register extends AppCompatActivity {
                                     Intent it = new Intent(getApplicationContext(), Login.class);
                                     startActivity(it);
                                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
-
+                                    finish();
                                 } else {
                                     progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
