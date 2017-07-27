@@ -103,7 +103,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     public void savedata(String title) {
-        DateFormat df = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm dd-MM-yyyy");
         df.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
         String date = df.format(Calendar.getInstance().getTime());
         int count = db.getNotesCount();

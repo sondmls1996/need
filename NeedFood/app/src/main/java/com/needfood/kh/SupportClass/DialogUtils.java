@@ -17,17 +17,6 @@ public class DialogUtils {
         m_Dialog.setMessage(text);
         m_Dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         m_Dialog.setCancelable(false);
-        Runnable progressRunnable = new Runnable() {
-
-            @Override
-            public void run() {
-                m_Dialog.cancel();
-                Toast.makeText(context, context.getResources().getString(R.string.checkin), Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        Handler pdCanceller = new Handler();
-        pdCanceller.postDelayed(progressRunnable, 10000);
         m_Dialog.show();
         return m_Dialog;
     }

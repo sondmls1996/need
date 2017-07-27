@@ -2,7 +2,6 @@ package com.needfood.kh;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +13,7 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -88,8 +88,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     TextView se;
     CoordinatorLayout activity_news;
     NetworkCheck networkCheck;
-    int check = 0;
-    boolean doubleBackToExitPressedOnce = false;
+    public static int check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -322,7 +321,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 pg = 1;
                 break;
             case R.id.sug:
-
                 fragmentClass = SuggessFrag.class;
                 ReplaceFrag(fragmentClass);
                 break;
@@ -398,15 +396,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-//
-//            return true; //I have tried here true also
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
-
 
     @Override
     public void onBackPressed() {
@@ -428,11 +417,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                     })
                     .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            Intent intent = new Intent(Intent.ACTION_MAIN);
-                            intent.addCategory(Intent.CATEGORY_HOME);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
-                            startActivity(intent);
-                            finish();
+                            check = 0;
+                            moveTaskToBack(true);
+                            android.os.Process.killProcess(android.os.Process.myPid());
                             System.exit(0);
                         }
                     });
