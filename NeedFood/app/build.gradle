@@ -2,7 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-
+        config {
+            keyAlias 'needkh'
+            keyPassword '123456'
+            storeFile file('D:/github/need/keystore/needkh.jks')
+            storePassword '123456'
+        }
     }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -23,6 +28,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }

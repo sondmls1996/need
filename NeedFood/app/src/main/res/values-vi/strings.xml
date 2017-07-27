@@ -180,10 +180,12 @@
     <string name="histran">Lịch sử chuyển khoản</string>
     <string name="hiset">Lịch sử đặt hàng</string>
     <string name="checkfon">Số điện thoại không hợp lệ</string>
-    <string name="coinn">Xu: \u0020</string>
+    <string name="coinn">Coins: \u0020</string>
     <string name="trancoin">Chuyển xu</string>
-    <string name="bc">Bởi Customer</string>
+    <string name="mis">Yêu cầu: \u0020</string>
+    <string name="bc">Bởi người dùng</string>
     <string name="bn">Bởi NeedFood</string>
+    <string name="bill0">Đơn hàng miễn phí</string>
     <string name="pz">Giá: \u0020</string>
     <string name="cs">Mã cửa hàng:\u0020 </string>
     <string name="cb">Mã sản phẩm: \u0020</string>
@@ -218,5 +220,5 @@
     <string name="dclick">Nhấn 2 lần để thoát</string>
     <string name="km">Sản phẩm này hiện tại không có khuyến mại</string>
     <string name="checkin">Bạn vui lòng kiểm tra lại mạng kết nối internet!</string>
-    <string name="miss">Nhiệm vụ </string>
+
 </resources>

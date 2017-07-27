@@ -113,6 +113,7 @@ public class Tranfer extends AppCompatActivity {
                         pro.dismiss();
                         if (code.equals("0")) {
                             Toast.makeText(getApplicationContext(), getResources().getString(R.string.transuc), Toast.LENGTH_SHORT).show();
+                            finish();
                         } else if (code.equals("-1")) {
                             AlertDialog alertDialog = taoMotAlertDialog();
                             alertDialog.show();

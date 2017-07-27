@@ -39,7 +39,7 @@ public class OrderHistory extends AppCompatActivity {
     OrderHisAdapter adapter;
     List<OrderHisConstructor> ls;
     ListView lv;
-    int page;
+    int page=1;
     TextView nop;
 
     @Override
@@ -83,6 +83,7 @@ public class OrderHistory extends AppCompatActivity {
                 totalItemCount = totalItemCountt;
             }
         });
+
 
     }
 
