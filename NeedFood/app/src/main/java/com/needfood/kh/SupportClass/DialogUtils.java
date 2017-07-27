@@ -27,7 +27,7 @@ public class DialogUtils {
         };
 
         Handler pdCanceller = new Handler();
-        pdCanceller.postAtTime(progressRunnable, 10000);
+        pdCanceller.postDelayed(progressRunnable, 10000);
         m_Dialog.show();
         return m_Dialog;
     }

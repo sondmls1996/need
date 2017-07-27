@@ -217,4 +217,5 @@
     <string name="dclick">Nhấn 2 lần để thoát</string>
     <string name="km">Sản phẩm này hiện tại không có khuyến mại</string>
     <string name="checkin">Bạn vui lòng kiểm tra lại mạng kết nối internet!</string>
+    <string name="miss">Nhiệm vụ </string>
 </resources>

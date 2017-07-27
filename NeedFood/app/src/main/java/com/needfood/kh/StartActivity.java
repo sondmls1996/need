@@ -414,7 +414,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         if (check < 2) {
             Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
         } else if (check >= 2) {
-            android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(StartActivity.this);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(StartActivity.this);
             alertDialogBuilder.setTitle("Needfood");
             alertDialogBuilder
                     .setMessage("Bạn thực sự muốn thoát ứng dụng Manmo ?")
@@ -428,14 +428,18 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                     })
                     .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            StartActivity.super.onBackPressed();
-                            moveTaskToBack(true);
-                            android.os.Process.killProcess(android.os.Process.myPid());
+                            Intent intent = new Intent(Intent.ACTION_MAIN);
+                            intent.addCategory(Intent.CATEGORY_HOME);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
+                            startActivity(intent);
+                            finish();
                             System.exit(0);
                         }
                     });
-            android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
+        } else {
+
         }
     }
 

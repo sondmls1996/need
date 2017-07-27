@@ -105,7 +105,8 @@
         <activity
             android:name=".More.History.OrderHistory"
             android:parentActivityName=".More.History.MoreHistory" />
-        <activity android:name=".News.Hotdeal" />
+        <activity android:name=".News.Hotdeal"
+            android:parentActivityName=".StartActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
