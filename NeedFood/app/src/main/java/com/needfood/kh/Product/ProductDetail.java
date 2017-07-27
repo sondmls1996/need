@@ -93,13 +93,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String cata;
     Button deal, bn;
     OftenAdapter adapterof1, adapterof2;
-    TextView tvco, tvcodes, tvprize;
+    TextView tvco, tvcodes, tvprize,tvphi,tvmyphi;
     TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
     ArrayList<OftenConstructor> arrof, arrof2;
     ArrayList<OftenConstructor> arrq;
     public static ArrayList<Integer> listship;
     OftenAdapter quanadapter;
-    LinearLayout lnby, lnf, htu, lnshare;
+    LinearLayout lnby, lnf, htu,lnshare,lnmyshare;
     List<ListMN> list;
     String discount, discountStart, discountEnd, text1, text2, time1, time2, priceDiscount, discountCode;
     List<InfoConstructor> listu;
@@ -167,8 +167,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         bn = (Button) findViewById(R.id.bn);
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
 
+        lnshare = (LinearLayout)findViewById(R.id.lnshare);
+        lnmyshare = (LinearLayout)findViewById(R.id.lnmhysh);
         imgshare = (ImageView) findViewById(R.id.imgshare);
-
+        tvphi = (TextView)findViewById(R.id.phi);
+        tvmyphi = (TextView)findViewById(R.id.myphi);
         shareDialog = new ShareDialog(ProductDetail.this);
 
         imgshare.setOnClickListener(new View.OnClickListener() {
@@ -223,7 +226,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             phone = listu.get(listu.size() - 1).getFone();
             uadr = listu.get(listu.size() - 1).getAddress();
             imgshare.setVisibility(View.VISIBLE);
-
+            lnshare.setVisibility(View.VISIBLE);
 
         }
         tvco = (TextView) findViewById(R.id.tvco);
@@ -304,7 +307,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.equals("{code:-1}")) {
+                if (response.equals("{\"code\":-1}")) {
                     AlertDialog alertDialog = taoMotAlertDialog();
                     alertDialog.show();
                 } else {
@@ -314,7 +317,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         deal.setVisibility(View.VISIBLE);
                     }
                 }
-
             }
         };
         PostCL get = new PostCL(link, map, response);
@@ -619,6 +621,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     discountCode = jos.getString("discountCode");
                     if (prd.has("numberShare")) {
                         numshare = prd.getInt("numberShare");
+                        if(numshare>0){
+                            lnmyshare.setVisibility(View.VISIBLE);
+                            tvphi.setText(numshare+"");
+                        }
                     }
                     Log.d("SHARENUM", numshare + "");
                     howto = new StringBuilder("");

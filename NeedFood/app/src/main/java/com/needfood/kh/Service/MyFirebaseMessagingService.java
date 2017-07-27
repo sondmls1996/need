@@ -6,15 +6,11 @@ import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.TimeZone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -27,10 +23,11 @@ import com.needfood.kh.SupportClass.ChangeTimestamp;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
+import java.util.TimeZone;
 
 /**
  * Created by Tung-PC on 20/03/2017.
@@ -41,6 +38,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public String urln, title, notif, open, idTask, time;
     public String id, name;
     public String idUser;
+    Calendar c;
     Intent it;
     ChangeTimestamp changeTimestamp;
     DataHandle db;
@@ -51,6 +49,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         changeTimestamp = new ChangeTimestamp();
+        c = Calendar.getInstance();
         db = new DataHandle(getApplicationContext());
         Random random = new Random();
         int m = random.nextInt(9999 - 1000) + 1000;
@@ -67,13 +66,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     title = jobj.getString("title");
                     savedata(title);
                 }
-
                 notif = jobj.getString("functionCall");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
             if (notif.equals("changeCoinAPI")) {
                 it = new Intent(this, TransferHistory.class);
             }
@@ -81,8 +77,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 it = new Intent(this, TransferHistory.class);
             }
         }
-
-
         it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, it, PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
@@ -105,7 +99,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void savedata(String title) {
         SimpleDateFormat df = new SimpleDateFormat("HH:mm dd-MM-yyyy");
         df.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
-        String date = df.format(Calendar.getInstance().getTime());
+        String date = df.format(c.getTime());
+//        df.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
+//        String date = df.format(Calendar.getInstance().getTime());
         int count = db.getNotesCount();
         if (count <= 15) {
             Log.d("DEMSO", count + "");

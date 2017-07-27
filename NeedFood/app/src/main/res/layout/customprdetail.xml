@@ -178,18 +178,8 @@ Nestled in the quiet town of Warm River, in Southeastern Idaho, the ranch is sur
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/lnshare"
+                    android:visibility="gone"
                     android:orientation="vertical">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-
-
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -198,21 +188,17 @@ Nestled in the quiet town of Warm River, in Southeastern Idaho, the ranch is sur
 
                           >
 
-                            <ImageView
-                                android:id="@+id/imgshare"
-                                android:layout_width="60dp"
-                                android:translationZ="10dp"
-                                android:visibility="gone"
-                                android:layout_marginTop="5dp"
-                                android:layout_height="60dp"
-                                android:src="@drawable/shareic" />
+
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="59dp"
                                 android:orientation="vertical"
                                 android:visibility="gone"
+                                android:id="@+id/lnmhysh"
+                                android:paddingRight="10dp"
+
                                 android:gravity="center"
-                                android:layout_marginLeft="30dp"
+                                android:layout_marginLeft="25dp"
                                 android:background="@color/blue">
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -256,6 +242,14 @@ Nestled in the quiet town of Warm River, in Southeastern Idaho, the ranch is sur
 
 
                             </LinearLayout>
+                            <ImageView
+                                android:id="@+id/imgshare"
+                                android:layout_width="50dp"
+                                android:translationZ="10dp"
+                                android:visibility="gone"
+                                android:layout_marginTop="5dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/shareic" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -263,7 +257,6 @@ Nestled in the quiet town of Warm River, in Southeastern Idaho, the ranch is sur
 
 
 
-            </LinearLayout>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
