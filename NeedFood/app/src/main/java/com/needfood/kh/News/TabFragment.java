@@ -89,5 +89,4 @@ public class TabFragment extends Fragment {
         super.onResume();
 
     }
-
 }

@@ -76,10 +76,10 @@
                 card_view:cardElevation="4dp">
 
                 <LinearLayout
+                    android:id="@+id/htu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/red"
-                    android:id="@+id/htu"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -128,16 +128,15 @@
                 android:layout_height="10dp" />
 
 
-
             <Button
                 android:id="@+id/btndeal"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/deald"
-                android:visibility="gone"
                 android:text="@string/buy0"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/bn"

@@ -120,6 +120,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     int hieu;
     String linkfbb;
     Button sharee;
+    TextView vote;
+    String point;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +132,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
-        listship=new ArrayList<>();
+        listship = new ArrayList<>();
         ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +165,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         idprd = it.getStringExtra("idprd");
 
         bn = (Button) findViewById(R.id.bn);
+        lnshare = (LinearLayout) findViewById(R.id.lnshare);
+
         lnshare = (LinearLayout)findViewById(R.id.lnshare);
         lnmyshare = (LinearLayout)findViewById(R.id.lnmhysh);
         imgshare = (ImageView) findViewById(R.id.imgshare);
@@ -235,6 +239,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         arr = new ArrayList<>();
         namesel = (TextView) findViewById(R.id.namesl);
 
+        vote = (TextView) findViewById(R.id.vote);
         txt_comment = (EditText) findViewById(R.id.txt_comment);
         img_comment = (ImageView) findViewById(R.id.img_comment);
         img_comment.setOnClickListener(this);
@@ -302,12 +307,19 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                a2 = Integer.parseInt(response);
-                tvmyphi.setText(a2+"");
-                if (a2 >= numshare&&numshare!=0) {
-                    deal.setVisibility(View.VISIBLE);
-                }else{
-                    deal.setVisibility(View.GONE);
+
+                if (response.equals("{\"code\":-1}")) {
+                    AlertDialog alertDialog = taoMotAlertDialog();
+                    alertDialog.show();
+                } else {
+                    a2 = Integer.parseInt(response);
+                    Log.d("TTT", a2 + "");
+                    if (a2 >= numshare) {
+                        deal.setVisibility(View.VISIBLE);
+                    }else{
+                        deal.setVisibility(View.GONE);
+                    }
+
                 }
             }
         };
@@ -336,7 +348,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
             String quan;
-            int mnship=Collections.max(listship);
+            int mnship = Collections.max(listship);
             if (edquan.equals("")) {
                 quan = "1";
             } else {
@@ -405,7 +417,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("money", money + "");
             map.put("totalMoneyProduct", (money * 1.1) + "");
             map.put("fullName", "");
-            map.put("moneyShip", mnship+"");
+            map.put("moneyShip", mnship + "");
             map.put("timeShiper", "");
             map.put("address", "");
             map.put("note", "");
@@ -597,6 +609,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         }
 
                     }
+
+                    JSONObject joo = prd.getJSONObject("vote");
+                    point = joo.getString("point");
                     strship = new StringBuilder(prd.getString("moneyShip"));
                     listship.add(Integer.parseInt(strship.toString()));
                     JSONObject jos = prd.getJSONObject("discount");
@@ -619,7 +634,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     howto = new StringBuilder("");
                     howto.append(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
-                    Log.d("ABCC", cata);
                     tvnameprd.setText(prd.getString("title"));
                     String tym = prd.getString("typeMoneyId");
                     String dvs = prd.getString("nameUnit");
@@ -650,7 +664,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     JSONArray ja = prd.getJSONArray("images");
                     simg = new StringBuilder("http://needfood.webmantan.com" + ja.getString(0));
                     Picasso.with(getApplicationContext()).load("http://needfood.webmantan.com" + ja.getString(0)).into(imgprd);
-
+                    vote.setText(point);
                     getPrdDK();
                     getCommen();
                 } catch (JSONException e) {
@@ -715,7 +729,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         }
                         arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                "", prd.getString("id"),prd.getString("moneyShip")));
+                                "", prd.getString("id"), prd.getString("moneyShip")));
                     }
 
                     quanadapter.notifyDataSetChanged();
@@ -759,7 +773,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         }
                         arrof.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                "", prd.getString("id"),prd.getString("moneyShip")));
+                                "", prd.getString("id"), prd.getString("moneyShip")));
                     }
 
                     adapterof1.notifyDataSetChanged();
@@ -804,7 +818,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                         arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
-                                "", prd.getString("id"),prd.getString("moneyShip")));
+                                "", prd.getString("id"), prd.getString("moneyShip")));
                     }
                     adapterof2.notifyDataSetChanged();
                     getAtach();

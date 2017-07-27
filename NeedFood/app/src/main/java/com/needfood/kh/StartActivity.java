@@ -2,7 +2,6 @@ package com.needfood.kh;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +13,7 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -88,8 +88,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     TextView se;
     CoordinatorLayout activity_news;
     NetworkCheck networkCheck;
-    int check = 0;
-    boolean doubleBackToExitPressedOnce = false;
+    public static int check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +181,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 Intent it = new Intent(getApplicationContext(), ProductDetail.class);
                 it.putExtra("idprd", arrs.get(position).getId());
                 startActivity(it);
+                finish();
             }
         });
         final EditText edt = (EditText) dialog.findViewById(R.id.searched);
@@ -321,7 +321,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 pg = 1;
                 break;
             case R.id.sug:
-
                 fragmentClass = SuggessFrag.class;
                 ReplaceFrag(fragmentClass);
                 break;
@@ -397,41 +396,14 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-//
-//            return true; //I have tried here true also
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
-
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ECLAIR
-                && keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            // Take care of calling this method on earlier versions of
-            // the platform where it doesn't exist.
-            check();
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }
 
     @Override
     public void onBackPressed() {
-        check();
-        return;
-    }
-
-    public void check() {
         check++;
         if (check < 2) {
             Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
         } else if (check >= 2) {
-            android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(StartActivity.this);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(StartActivity.this);
             alertDialogBuilder.setTitle("Needfood");
             alertDialogBuilder
                     .setMessage("Bạn thực sự muốn thoát ứng dụng Manmo ?")
@@ -445,14 +417,17 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                     })
                     .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            StartActivity.super.onBackPressed();
+                            check = 0;
                             moveTaskToBack(true);
                             android.os.Process.killProcess(android.os.Process.myPid());
                             System.exit(0);
                         }
                     });
-            android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
+        } else {
+
         }
     }
+
 }
