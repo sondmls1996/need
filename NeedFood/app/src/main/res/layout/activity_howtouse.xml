@@ -60,43 +60,7 @@
 
 
     </android.support.design.widget.AppBarLayout>
-<<<<<<< HEAD
-    <RelativeLayout
-        android:layout_width="match_parent"
 
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
-
-            <RatingBar
-                android:id="@+id/ratingBar1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-
-                android:layout_marginTop="20dp" />
-
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@color/red"
-                android:text="@string/ok"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-    <include
-
-        layout="@layout/htucontent" />
-    </RelativeLayout>
-=======
->>>>>>> e97b3597151ddecbdb966953d75e30d2e4a72b10
 
     <include layout="@layout/htucontent" />
 </android.support.design.widget.CoordinatorLayout>
