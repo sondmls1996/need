@@ -132,7 +132,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void logout() {
         final String link = getResources().getString(R.string.checkLogoutShiperAPI);
-        progressDialog.setMessage("Đang đăng xuất");
+        progressDialog.setMessage(getResources().getString(R.string.logut));
         String it = token;
         Log.d("CODELOG", it);
         Response.Listener<String> response = new Response.Listener<String>() {
@@ -147,7 +147,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                     if (code.equals("0")) {
                         progressDialog.dismiss();
-                        Toast.makeText(getApplication(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplication(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
                         db.deleteAll();
                         ses.setLoggedin(false);
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -156,7 +156,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                     } else if (code.equals("-1")) {
                         progressDialog.dismiss();
-                        Toast.makeText(getApplication(), "Đăng xuất  thành công 1", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplication(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
                         db.deleteAll();
                         ses.setLoggedin(false);
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);

@@ -110,53 +110,53 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
                     if (checktime == true) {
                         ctime.cancel();
                     }
-                    if (response.equals("[]")) {
+                    if (response.equals("")) {
                         tvBao.setVisibility(View.VISIBLE);
-                    }
-                    JSONArray arr = new JSONArray(response);
-                    for (int i = 0; i < arr.length(); i++) {
-                        StringBuilder sb = new StringBuilder();
-                        StringBuilder soluong = new StringBuilder();
-                        StringBuilder sanpham = new StringBuilder();
-                        StringBuilder dongia = new StringBuilder();
-                        StringBuilder thanhtien = new StringBuilder();
-                        String money;
-                        JSONObject json = arr.getJSONObject(i);
-                        JSONObject Order = json.getJSONObject("Order");
+                    } else {
+                        tvBao.setVisibility(View.GONE);
+                        JSONArray arr = new JSONArray(response);
+                        for (int i = 0; i < arr.length(); i++) {
+                            StringBuilder sb = new StringBuilder();
+                            StringBuilder soluong = new StringBuilder();
+                            StringBuilder sanpham = new StringBuilder();
+                            StringBuilder dongia = new StringBuilder();
+                            StringBuilder thanhtien = new StringBuilder();
+                            String money;
+                            JSONObject json = arr.getJSONObject(i);
+                            JSONObject Order = json.getJSONObject("Order");
 
-                        JSONObject listProduct = Order.getJSONObject("listProduct");
-                        JSONObject infoOrder = Order.getJSONObject("infoOrder");
-                        JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
+                            JSONArray listProduct = Order.getJSONArray("listProduct");
+                            JSONObject infoOrder = Order.getJSONObject("infoOrder");
+                            JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
+
+                            for (int l = 0; l < listProduct.length(); l++) {
+                                JSONObject idx = listProduct.getJSONObject(l);
+                                sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
+                                soluong.append(idx.getString("quantity") + "\n");
+                                sanpham.append(idx.getString("title") + "\n");
+                                dongia.append(idx.getString("price") + "\n");
+                                thanhtien.append(idx.getString("money") + "\n");
+                            }
 
 
-                        Iterator<String> ite = listProduct.keys();
+                            String timeShiper = infoOrder.getString("timeShiper");
 
-                        while (ite.hasNext()) {
-                            String key = ite.next();
+                            String fullName = infoCustomer.getString("fullName");
+                            String fone = infoCustomer.getString("fone");
+                            String address = infoCustomer.getString("address");
+                            String id = Order.getString("id");
+                            String status = Order.getString("status");
+                            String code = Order.getString("code");
 
-                            JSONObject idx = listProduct.getJSONObject(key);
-                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
-                            soluong.append(idx.getString("quantity") + "\n");
-                            sanpham.append(idx.getString("title") + "\n");
-                            dongia.append(idx.getString("price") + "\n");
-                            thanhtien.append(idx.getString("money") + "\n");
+                            Log.d("hh", fullName);
+                            ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
+
+
                         }
-                        String timeShiper = infoOrder.getString("timeShiper");
-
-                        String fullName = infoCustomer.getString("fullName");
-                        String fone = infoCustomer.getString("fone");
-                        String address = infoCustomer.getString("address");
-                        String id = Order.getString("id");
-                        String status = Order.getString("status");
-                        String code = Order.getString("code");
-
-                        Log.d("hh", fullName);
-                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
-
-
+                        adapter.notifyDataSetChanged();
+                        swipeRefresh.setRefreshing(false);
                     }
-                    adapter.notifyDataSetChanged();
-                    swipeRefresh.setRefreshing(false);
+
 
                 } catch (JSONException e1) {
                     e1.printStackTrace();
@@ -173,13 +173,14 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
-        ld.clear();
-        order(1);
+
 
         ctime = new CountDownTimer(15000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 checktime = true;
+                ld.clear();
+                order(1);
             }
 
             @Override
@@ -194,21 +195,21 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), getResources().getString(R.string.dclick), Toast.LENGTH_SHORT).show();
         check++;
         if (check == 2) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(WaittingActivity.this);
             alertDialogBuilder.setTitle("Needfood");
             alertDialogBuilder
-                    .setMessage("Bạn thực sự muốn thoát ứng dụng ?")
+                    .setMessage(getResources().getString(R.string.evs))
                     .setCancelable(false)
-                    .setPositiveButton("Không", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getResources().getString(R.string.dhkhong), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                             check = 0;
                         }
                     })
-                    .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getResources().getString(R.string.dhdongy), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             moveTaskToBack(true);
                             android.os.Process.killProcess(android.os.Process.myPid());

@@ -103,9 +103,9 @@ public class ChangeInformation extends AppCompatActivity {
 
         if (fullname1.matches("")  || address1.matches("")  ) {
 //            progressDialog.dismiss();
-            Toast.makeText(getApplication(), "Nhập thiếu thông tin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
         } else {
-            progressDialog = ProgressDialog.show(ChangeInformation.this, "Đang thay đổi", "Vui lòng chờ", true);
+            progressDialog = ProgressDialog.show(ChangeInformation.this, getResources().getString(R.string.chan), getResources().getString(R.string.wait), true);
             Response.Listener<String> responseListener = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -118,11 +118,11 @@ public class ChangeInformation extends AppCompatActivity {
                             boolean update = db.updateinfo(id, fullname1, email1, address1, brithday1, skype1, facebook1, description1);
                             if (update == true) {
                                 progressDialog.dismiss();
-                                Toast.makeText(getApplicationContext(), "Lưu thành công", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
 
                             } else {
                                 progressDialog.dismiss();
-                                Toast.makeText(getApplicationContext(), "Lưu thất bại", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
                             }
 //                            Intent intent = new Intent(ChinhSuaTTActivity.this, ThongTinActivity.class);
 //                            ChinhSuaTTActivity.this.startActivity(intent);
@@ -130,7 +130,7 @@ public class ChangeInformation extends AppCompatActivity {
                         } else {
 //                            progressDialog.dismiss();
                             AlertDialog.Builder builder = new AlertDialog.Builder(ChangeInformation.this);
-                            builder.setMessage("Thay đổi thất bại thất bại")
+                            builder.setMessage(getResources().getString(R.string.er))
                                     .setNegativeButton("Retry", null)
                                     .create()
                                     .show();

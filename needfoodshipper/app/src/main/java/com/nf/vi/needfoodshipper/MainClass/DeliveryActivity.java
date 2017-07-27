@@ -286,7 +286,7 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplication(), "được k", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplication(), "được k", Toast.LENGTH_LONG).show();
                 note = edfedd.getText().toString();
                 stt2 = "done";
                 sendSV();

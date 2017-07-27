@@ -81,6 +81,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
     private EndlessRecyclerViewScrollListener scrollListener;
     LinearLayoutManager linearLayoutManager;
     CountDownTimer ctime;
+
     @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,55 +180,52 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
                     if (checktime == true) {
                         ctime.cancel();
                     }
-                    if (response.equals("[]")) {
+                    if (response.equals("")) {
                         tvBao.setVisibility(View.VISIBLE);
-                    }
-                    JSONArray arr = new JSONArray(response);
-                    for (int i = 0; i < arr.length(); i++) {
-                        StringBuilder sb = new StringBuilder();
-                        String money;
-                        JSONObject json = arr.getJSONObject(i);
-                        JSONObject Order = json.getJSONObject("Order");
+                    } else {
+                        JSONArray arr = new JSONArray(response);
+                        for (int i = 0; i < arr.length(); i++) {
+                            StringBuilder sb = new StringBuilder();
+                            String money;
+                            JSONObject json = arr.getJSONObject(i);
+                            JSONObject Order = json.getJSONObject("Order");
 
-                        JSONObject listProduct = Order.getJSONObject("listProduct");
-                        JSONObject infoOrder = Order.getJSONObject("infoOrder");
-                        JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
+                            JSONArray listProduct = Order.getJSONArray("listProduct");
+                            JSONObject infoOrder = Order.getJSONObject("infoOrder");
+                            JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
 
-
-                        Iterator<String> ite = listProduct.keys();
-
-                        while (ite.hasNext()) {
-                            String key = ite.next();
-
-                            JSONObject idx = listProduct.getJSONObject(key);
-                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
+                            for (int k = 0; k < listProduct.length(); k++) {
+                                JSONObject idx = listProduct.getJSONObject(k);
+                                sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
+                            }
 
 
-                        }
-                        String timeShiper = infoOrder.getString("timeShiper");
+                            String timeShiper = infoOrder.getString("timeShiper");
 
-                        String fullName = infoCustomer.getString("fullName");
-                        String fone = infoCustomer.getString("fone");
-                        String address = infoCustomer.getString("address");
-                        String id = Order.getString("id");
-                        String status = Order.getString("status");
-                        String code = Order.getString("code");
-                        if (Order.has("timeLeftShip")) {
-                            timeLeftShip = Order.getString("timeLeftShip");
-                        }
-                        if (Order.has("noteShiper")) {
-                            note = Order.getString("noteShiper");
-                        }
+                            String fullName = infoCustomer.getString("fullName");
+                            String fone = infoCustomer.getString("fone");
+                            String address = infoCustomer.getString("address");
+                            String id = Order.getString("id");
+                            String status = Order.getString("status");
+                            String code = Order.getString("code");
+                            if (Order.has("timeLeftShip")) {
+                                timeLeftShip = Order.getString("timeLeftShip");
+                            }
+                            if (Order.has("noteShiper")) {
+                                note = Order.getString("noteShiper");
+                            }
 
 //                        Toast.makeText(getApplication(), note, Toast.LENGTH_LONG).show();
 
-                        Log.d("hh", fullName);
-                        listht.add(new HistoryConstructor(status, code, timeShiper, timeLeftShip, note));
+                            Log.d("hh", fullName);
+                            listht.add(new HistoryConstructor(status, code, timeShiper, timeLeftShip, note));
 
 
+                        }
+                        adapter.notifyDataSetChanged();
+                        swipeRefresh.setRefreshing(false);
                     }
-                    adapter.notifyDataSetChanged();
-                    swipeRefresh.setRefreshing(false);
+
 
                 } catch (JSONException e1) {
                     e1.printStackTrace();
@@ -269,7 +267,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
             DatePickerDialog pic = new DatePickerDialog(
                     HistoryActivity.this,
                     callback, nam, thang, ngay);
-            pic.setTitle("Chọn ngày bắt đầu");
+            pic.setTitle(getResources().getString(R.string.dates));
             pic.show();
         }
     };
@@ -301,7 +299,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
             DatePickerDialog pic = new DatePickerDialog(
                     HistoryActivity.this,
                     callback, nam, thang, ngay);
-            pic.setTitle("Chọn ngày kết thúc");
+            pic.setTitle(getResources().getString(R.string.datee));
             pic.show();
         }
     };
@@ -385,12 +383,12 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
 
     @Override
     public void onRefresh() {
-        listht.clear();
-        adapter.notifyDataSetChanged();
+
         ctime = new CountDownTimer(15000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 checktime = true;
+                listht.clear();
                 order(1);
             }
 
@@ -404,9 +402,10 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
         ctime.start();
 
     }
+
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplication(),MainActivity.class));
+        startActivity(new Intent(getApplication(), MainActivity.class));
 
 
     }

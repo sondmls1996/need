@@ -88,11 +88,11 @@ public class ChangePassActivity extends AppCompatActivity {
 
 
                         if (code.equals("0")) {
-                            Toast.makeText(getApplicationContext(), "Gửi thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
                         } else if(code.equals("1")) {
-                       Toast.makeText(getApplicationContext(), "Mật khẩu cũ không đúng", Toast.LENGTH_SHORT).show();
+                       Toast.makeText(getApplicationContext(), getResources().getString(R.string.mkc), Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -103,10 +103,10 @@ public class ChangePassActivity extends AppCompatActivity {
             RequestQueue qe = Volley.newRequestQueue(getApplicationContext());
             qe.add(save);
         } else if (!pass.equals(repass)) {
-            Toast.makeText(getApplicationContext(), "Mật khẩu xác nhận không đúng", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.mkc), Toast.LENGTH_SHORT).show();
         }
         else if (pass.equals("")&&repass.equals("")) {
-            Toast.makeText(getApplicationContext(), "Nhập thiếu trường dữ liệu", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
         }
 
     }

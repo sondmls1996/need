@@ -50,11 +50,11 @@ public class SentPassEmail extends AppCompatActivity implements View.OnClickList
                         Log.d("CODE", code);
 
                         if (code.equals("0")) {
-                            Toast.makeText(getApplicationContext(), "Gửi thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(SentPassEmail.this, LoginActivity.class);
                             startActivity(i);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

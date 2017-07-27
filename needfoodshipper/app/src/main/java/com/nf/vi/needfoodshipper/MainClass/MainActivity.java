@@ -239,12 +239,12 @@ public class MainActivity extends TabActivity
 
     @Override
     public void onProviderEnabled(String provider) {
-        Toast.makeText(getApplicationContext(), "Da bat gps", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.gpse), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        Toast.makeText(getApplicationContext(), "Da tat gps", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.gpse), Toast.LENGTH_SHORT).show();
 
 
     }

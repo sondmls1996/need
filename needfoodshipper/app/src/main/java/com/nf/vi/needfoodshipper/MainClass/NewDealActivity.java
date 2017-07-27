@@ -146,21 +146,19 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
                         String money;
                         JSONObject json = arr.getJSONObject(i);
                         JSONObject Order = json.getJSONObject("Order");
-                            Log.d("OR",Order.toString());
-                        JSONObject listProduct = Order.getJSONObject("listProduct");
+                        Log.d("OR", Order.toString());
+                        JSONArray listProduct = Order.getJSONArray("listProduct");
                         JSONObject infoOrder = Order.getJSONObject("infoOrder");
                         JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
-                        Iterator<String> ite = listProduct.keys();
-
-                        while (ite.hasNext()) {
-                            String key = ite.next();
-                            JSONObject idx = listProduct.getJSONObject(key);
+                        for (int k = 0; k < listProduct.length(); k++) {
+                            JSONObject idx = listProduct.getJSONObject(k);
                             sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
                             soluong.append(idx.getString("quantity") + "\n");
                             sanpham.append(idx.getString("title") + "\n");
                             dongia.append(idx.getString("price") + "\n");
                             thanhtien.append(idx.getString("money") + "\n");
                         }
+
 
                         String timeShiper = infoOrder.getString("timeShiper");
                         String fullName = infoCustomer.getString("fullName");
