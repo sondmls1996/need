@@ -139,35 +139,31 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
 
                     for (int i = 0; i < arr.length(); i++) {
                         StringBuilder sb = new StringBuilder();
-                        StringBuilder soluong = new StringBuilder();
-                        StringBuilder sanpham = new StringBuilder();
-                        StringBuilder dongia = new StringBuilder();
-                        StringBuilder thanhtien = new StringBuilder();
-                        String money;
+
+
                         JSONObject json = arr.getJSONObject(i);
                         JSONObject Order = json.getJSONObject("Order");
-                            Log.d("OR",Order.toString());
-                        JSONObject listProduct = Order.getJSONObject("listProduct");
+                        Log.d("OR", Order.toString());
+                        JSONArray listProduct = Order.getJSONArray("listProduct");
+                        for (int j = 0; j < listProduct.length(); j++) {
+                            JSONObject json1 = listProduct.getJSONObject(j);
+                            String title = json1.getString("title");
+                            String quantity = json1.getString("quantity");
+                            String price = json1.getString("price");
+                            String money1 = json1.getString("money");
+                            sb.append(quantity + title + ";" + "\t");
+
+                        }
                         JSONObject infoOrder = Order.getJSONObject("infoOrder");
                         JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
-                        Iterator<String> ite = listProduct.keys();
 
-                        while (ite.hasNext()) {
-                            String key = ite.next();
-                            JSONObject idx = listProduct.getJSONObject(key);
-                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
-                            soluong.append(idx.getString("quantity") + "\n");
-                            sanpham.append(idx.getString("title") + "\n");
-                            dongia.append(idx.getString("price") + "\n");
-                            thanhtien.append(idx.getString("money") + "\n");
-                        }
 
                         String timeShiper = infoOrder.getString("timeShiper");
                         String fullName = infoCustomer.getString("fullName");
                         String fone = infoCustomer.getString("fone");
                         String address = infoCustomer.getString("address");
                         String id = Order.getString("id");
-                        Log.d("IDD", Order.getString("id"));
+                        Log.d("IDD", sb.toString());
                         String status = Order.getString("status");
                         String code = Order.getString("code");
 
@@ -194,7 +190,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
     public void onRefresh() {
         ld.clear();
         adapter.notifyDataSetChanged();
-        ctime = new CountDownTimer(15000, 1000) {
+        ctime = new CountDownTimer(10000, 1000) {
             @Override
 
             public void onTick(long millisUntilFinished) {
@@ -223,7 +219,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
         }
         if (check == 2) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(NewDealActivity.this);
-            alertDialogBuilder.setTitle("Needfood");
+            alertDialogBuilder.setTitle("Shipper");
             alertDialogBuilder
                     .setMessage(getString(R.string.dhhoithoat))
                     .setCancelable(false)
@@ -235,6 +231,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
                     })
                     .setNegativeButton(getString(R.string.dhdongy), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            check = 0;
                             moveTaskToBack(true);
                             android.os.Process.killProcess(android.os.Process.myPid());
                             System.exit(0);
@@ -243,5 +240,9 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
+
     }
+
+
 }
+

@@ -96,7 +96,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(getString(R.string.lstoobar));
         wrap = (WrapSliding) findViewById(R.id.slide);
@@ -175,7 +175,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("GG", response);
+                    Log.d("GGKK", response);
                     if (checktime == true) {
                         ctime.cancel();
                     }
@@ -189,21 +189,21 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
                         JSONObject json = arr.getJSONObject(i);
                         JSONObject Order = json.getJSONObject("Order");
 
-                        JSONObject listProduct = Order.getJSONObject("listProduct");
+
                         JSONObject infoOrder = Order.getJSONObject("infoOrder");
                         JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
 
 
-                        Iterator<String> ite = listProduct.keys();
+//                        Iterator<String> ite = listProduct.keys();
 
-                        while (ite.hasNext()) {
-                            String key = ite.next();
-
-                            JSONObject idx = listProduct.getJSONObject(key);
-                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
-
-
-                        }
+//                        while (ite.hasNext()) {
+//                            String key = ite.next();
+//
+//                            JSONObject idx = listProduct.getJSONObject(key);
+//                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
+//
+//
+//                        }
                         String timeShiper = infoOrder.getString("timeShiper");
 
                         String fullName = infoCustomer.getString("fullName");
@@ -320,7 +320,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("GG", response);
+                    Log.d("GGkk", response);
                     if (response.equals("[]")) {
                         tvBao.setVisibility(View.VISIBLE);
                     }
@@ -332,21 +332,21 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
                         JSONObject json = arr.getJSONObject(i);
                         JSONObject Order = json.getJSONObject("Order");
 
-                        JSONObject listProduct = Order.getJSONObject("listProduct");
+//                        JSONObject listProduct = Order.getJSONObject("listProduct");
                         JSONObject infoOrder = Order.getJSONObject("infoOrder");
                         JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
 
 
-                        Iterator<String> ite = listProduct.keys();
-
-                        while (ite.hasNext()) {
-                            String key = ite.next();
-
-                            JSONObject idx = listProduct.getJSONObject(key);
-                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
-
-
-                        }
+//                        Iterator<String> ite = listProduct.keys();
+//
+//                        while (ite.hasNext()) {
+//                            String key = ite.next();
+//
+//                            JSONObject idx = listProduct.getJSONObject(key);
+//                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
+//
+//
+//                        }
                         String timeShiper = infoOrder.getString("timeShiper");
 
                         String fullName = infoCustomer.getString("fullName");
@@ -387,7 +387,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
     public void onRefresh() {
         listht.clear();
         adapter.notifyDataSetChanged();
-        ctime = new CountDownTimer(15000, 1000) {
+        ctime = new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 checktime = true;
@@ -407,6 +407,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
     @Override
     public void onBackPressed() {
         startActivity(new Intent(getApplication(),MainActivity.class));
+        finish();
 
 
     }

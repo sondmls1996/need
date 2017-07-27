@@ -14,7 +14,7 @@ import com.google.firebase.iid.zzd;
  * Created by Minh Nhat on 7/5/2017.
  */
 
-public class FirebaseTK extends FirebaseInstanceIdService {
+public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     @Override
     public void onTokenRefresh() {
         String token= FirebaseInstanceId.getInstance().getToken();

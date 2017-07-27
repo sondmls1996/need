@@ -47,7 +47,7 @@ public class YourInformationActivity extends AppCompatActivity implements View.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(getString(R.string.iftoobar));
@@ -93,12 +93,15 @@ public class YourInformationActivity extends AppCompatActivity implements View.O
 
         if (v == tvChangPass) {
             startActivity(new Intent(this, ChangePassActivity.class));
+            finish();
         }
+
 
     }
     @Override
     public void onBackPressed() {
         startActivity(new Intent(getApplication(),MainActivity.class));
+        finish();
 
 
     }

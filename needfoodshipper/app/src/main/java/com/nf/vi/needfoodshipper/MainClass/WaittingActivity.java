@@ -95,6 +95,14 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
         rc.addOnScrollListener(scrollListener);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ld.clear();
+        // adapter.notifyDataSetChanged();
+        order(1);
+    }
+
     private void order(int page) {
 
 //        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
@@ -124,22 +132,20 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
                         JSONObject json = arr.getJSONObject(i);
                         JSONObject Order = json.getJSONObject("Order");
 
-                        JSONObject listProduct = Order.getJSONObject("listProduct");
+
                         JSONObject infoOrder = Order.getJSONObject("infoOrder");
                         JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
 
 
-                        Iterator<String> ite = listProduct.keys();
+                        JSONArray listProduct = Order.getJSONArray("listProduct");
+                        for (int j = 0; j < listProduct.length(); j++) {
+                            JSONObject json1 = listProduct.getJSONObject(j);
+                            String title = json1.getString("title");
+                            String quantity = json1.getString("quantity");
+                            String price = json1.getString("price");
+                            String money1 = json1.getString("money");
+                            sb.append(quantity + title + ";" + "\t");
 
-                        while (ite.hasNext()) {
-                            String key = ite.next();
-
-                            JSONObject idx = listProduct.getJSONObject(key);
-                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
-                            soluong.append(idx.getString("quantity") + "\n");
-                            sanpham.append(idx.getString("title") + "\n");
-                            dongia.append(idx.getString("price") + "\n");
-                            thanhtien.append(idx.getString("money") + "\n");
                         }
                         String timeShiper = infoOrder.getString("timeShiper");
 
@@ -151,7 +157,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
                         String code = Order.getString("code");
 
                         Log.d("hh", fullName);
-                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code,listProduct.toString()));
+                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
 
 
                     }
@@ -165,7 +171,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
             }
         };
 
-        WaittingRequest loginRequest = new WaittingRequest(page+"", accessToken, link, response);
+        WaittingRequest loginRequest = new WaittingRequest(page + "", accessToken, link, response);
         RequestQueue queue = Volley.newRequestQueue(WaittingActivity.this);
         queue.add(loginRequest);
     }
@@ -173,13 +179,14 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
-        ld.clear();
-        adapter.notifyDataSetChanged();
 
-        ctime = new CountDownTimer(15000, 1000) {
+
+        ctime = new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 checktime = true;
+                ld.clear();
+                adapter.notifyDataSetChanged();
                 order(1);
             }
 
@@ -195,11 +202,11 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), getString(R.string.dhgailan), Toast.LENGTH_SHORT).show();
         check++;
         if (check == 2) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(WaittingActivity.this);
-            alertDialogBuilder.setTitle("Needfood");
+            alertDialogBuilder.setTitle("Shipper");
             alertDialogBuilder
                     .setMessage("Bạn thực sự muốn thoát ứng dụng ?")
                     .setCancelable(false)

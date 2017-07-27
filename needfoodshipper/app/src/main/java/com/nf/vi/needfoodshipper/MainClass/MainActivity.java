@@ -210,6 +210,8 @@ public class MainActivity extends TabActivity
             finish();
         } else if (id == R.id.lnSettings) {
             startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+//            Toast.makeText(getApplicationContext(), "VÌ SAO", Toast.LENGTH_SHORT).show();
+
             finish();
         }
 
@@ -307,11 +309,8 @@ public class MainActivity extends TabActivity
 
 
                     if (code.equals("0")) {
-//                        Toast.makeText(getApplicationContext(), "Gửi thành công", Toast.LENGTH_SHORT).show();
-//                            Intent i = new Intent(SentPassEmail.this, DangNhapActivity.class);
-//                            startActivity(i);
+
                     } else {
-//                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -322,6 +321,7 @@ public class MainActivity extends TabActivity
         RequestQueue qe = Volley.newRequestQueue(getApplicationContext());
         qe.add(save);
     }
+
 
 }
 

@@ -92,7 +92,7 @@ public class DeliveryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         db = new DBHandle(this);
         list = db.getAllUser();
         for (ListUserContructor lu : list) {
@@ -150,22 +150,31 @@ public class DeliveryActivity extends AppCompatActivity {
 
         try {
 
-            JSONObject json = new JSONObject(listsanpham);
-            Iterator<String> ite = json.keys();
-            while (ite.hasNext())
-//            for (int i = 0; !ite.hasNext(); i++)
-            {
-                String key = ite.next();
-                JSONObject idx = json.getJSONObject(key);
-
-                soluong = idx.getString("quantity");
-                sanpham = idx.getString("title");
-                dongia = idx.getString("price");
-                thanhtien = idx.getString("money");
-
-                ld.add(new ListviewContructor(sanpham, soluong, dongia, thanhtien));
-
-
+//            JSONObject json = new JSONObject(listsanpham);
+//            Iterator<String> ite = json.keys();
+//            while (ite.hasNext())
+////            for (int i = 0; !ite.hasNext(); i++)
+//            {
+//                String key = ite.next();
+//                JSONObject idx = json.getJSONObject(key);
+//
+//                soluong = idx.getString("quantity");
+//                sanpham = idx.getString("title");
+//                dongia = idx.getString("price");
+//                thanhtien = idx.getString("money");
+//
+//                ld.add(new ListviewContructor(sanpham, soluong, dongia, thanhtien));
+//
+//
+//            }
+            JSONArray listProduct = new JSONArray(listsanpham);
+            for (int j = 0; j < listProduct.length(); j++) {
+                JSONObject json1 = listProduct.getJSONObject(j);
+                String title = json1.getString("title");
+                String quantity = json1.getString("quantity");
+                String price = json1.getString("price");
+                String money1 = json1.getString("money");
+                ld.add(new ListviewContructor(title, quantity, price, money1));
             }
 
             adapter.notifyDataSetChanged();
@@ -286,10 +295,11 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplication(), "được k", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplication(), "được k", Toast.LENGTH_LONG).show();
                 note = edfedd.getText().toString();
                 stt2 = "done";
                 sendSV();
+                dialog.dismiss();
 
             }
         });
@@ -308,6 +318,7 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 dialog.dismiss();
                 rfDialog.setVisibility(View.GONE);
                 btnDFinish.setEnabled(true);
@@ -324,6 +335,7 @@ public class DeliveryActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), getString(R.string.dslydo), Toast.LENGTH_SHORT).show();
                 } else {
                     sendSV();
+                    dialog.dismiss();
                 }
 
 
@@ -354,8 +366,9 @@ public class DeliveryActivity extends AppCompatActivity {
                     if (code.equals("0")) {
                         dialog.dismiss();
                         Toast.makeText(getApplication(), getString(R.string.dsthanhcong), Toast.LENGTH_LONG).show();
-                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(i);
+//                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+//                        startActivity(i);
+                        finish();
                     } else {
 //                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_SHORT).show();
                     }

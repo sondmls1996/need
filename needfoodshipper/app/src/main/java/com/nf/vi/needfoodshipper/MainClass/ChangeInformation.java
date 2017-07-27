@@ -56,7 +56,7 @@ public class ChangeInformation extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(getString(R.string.ifchangetoobar));
         progressDialog = new ProgressDialog(this);
@@ -103,7 +103,7 @@ public class ChangeInformation extends AppCompatActivity {
 
         if (fullname1.matches("")  || address1.matches("")  ) {
 //            progressDialog.dismiss();
-            Toast.makeText(getApplication(), "Nhập thiếu thông tin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), getString(R.string.lnhapthieu), Toast.LENGTH_SHORT).show();
         } else {
             progressDialog = ProgressDialog.show(ChangeInformation.this, "Đang thay đổi", "Vui lòng chờ", true);
             Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -118,15 +118,16 @@ public class ChangeInformation extends AppCompatActivity {
                             boolean update = db.updateinfo(id, fullname1, email1, address1, brithday1, skype1, facebook1, description1);
                             if (update == true) {
                                 progressDialog.dismiss();
-                                Toast.makeText(getApplicationContext(), "Lưu thành công", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),getString(R.string.sttthanhcong), Toast.LENGTH_SHORT).show();
 
                             } else {
                                 progressDialog.dismiss();
-                                Toast.makeText(getApplicationContext(), "Lưu thất bại", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), "Lưu thất bại", Toast.LENGTH_SHORT).show();
                             }
 //                            Intent intent = new Intent(ChinhSuaTTActivity.this, ThongTinActivity.class);
 //                            ChinhSuaTTActivity.this.startActivity(intent);
                             startActivity(new Intent(getBaseContext(), YourInformationActivity.class));
+                            finish();
                         } else {
 //                            progressDialog.dismiss();
                             AlertDialog.Builder builder = new AlertDialog.Builder(ChangeInformation.this);
@@ -152,8 +153,10 @@ public class ChangeInformation extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         startActivity(new Intent(getApplication(),YourInformationActivity.class));
+        finish();
 
 
     }
+
 
 }

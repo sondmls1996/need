@@ -48,7 +48,7 @@ public class ChangePassActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(getString(R.string.ifchangepasstoobar));
@@ -88,11 +88,12 @@ public class ChangePassActivity extends AppCompatActivity {
 
 
                         if (code.equals("0")) {
-                            Toast.makeText(getApplicationContext(), "Gửi thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.sttthanhcong), Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
+                            finish();
                         } else if(code.equals("1")) {
-                       Toast.makeText(getApplicationContext(), "Mật khẩu cũ không đúng", Toast.LENGTH_SHORT).show();
+                       Toast.makeText(getApplicationContext(), getString(R.string.mkkhongdung), Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -103,11 +104,18 @@ public class ChangePassActivity extends AppCompatActivity {
             RequestQueue qe = Volley.newRequestQueue(getApplicationContext());
             qe.add(save);
         } else if (!pass.equals(repass)) {
-            Toast.makeText(getApplicationContext(), "Mật khẩu xác nhận không đúng", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),  getString(R.string.mkxnkhongdung), Toast.LENGTH_SHORT).show();
         }
         else if (pass.equals("")&&repass.equals("")) {
-            Toast.makeText(getApplicationContext(), "Nhập thiếu trường dữ liệu", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),getString(R.string.nhapthieutruong), Toast.LENGTH_SHORT).show();
         }
+
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplication(),YourInformationActivity.class));
+        finish();
+
 
     }
 }
