@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:textColor="@color/black"
-        android:text="@string/productoften"/>
+        android:text="@string/productoften"
+        android:textColor="@color/black" />
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcprd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rcprd"></android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:textColor="@color/black"
         android:layout_marginTop="5dp"
-        android:text="@string/brandprs"/>
+        android:text="@string/brandprs"
+        android:textColor="@color/black" />
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcprd2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rcprd2"></android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

@@ -28,9 +28,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-
         tools:replace="android:icon">
-        <activity android:name=".StartActivity">
+        <activity
+            android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -83,7 +83,9 @@
             android:name=".Login.Login"
             android:parentActivityName=".StartActivity" />
         <activity android:name=".News.News" />
-        <activity android:name=".Login.Register" />
+        <activity
+            android:name=".Login.Register"
+            android:parentActivityName=".StartActivity" />
         <activity
             android:name=".Login.GetCode"
             android:parentActivityName=".Login.GetPass" />
@@ -93,7 +95,9 @@
         <activity
             android:name=".Login.ChangePass"
             android:parentActivityName=".More.MoreContanct" />
-        <activity android:name=".QRCamera" />
+        <activity
+            android:name=".QRCamera"
+            android:parentActivityName=".StartActivity" />
         <activity
             android:name=".More.History.MoreHistory"
             android:parentActivityName=".StartActivity" />
@@ -136,10 +140,13 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".Product.Preview"/>
+
+        <activity
+            android:name=".Product.Preview"
+            android:parentActivityName=".StartActivity" />
         <activity
             android:name=".More.History.TransferHistory"
-            android:parentActivityName=".More.History.MoreHistory" />
+            android:parentActivityName=".StartActivity" />
 
         <receiver
             android:name=".Service.ConnectivityReceiver"

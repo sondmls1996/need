@@ -1,6 +1,7 @@
 package com.needfood.kh;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -87,6 +89,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     CoordinatorLayout activity_news;
     NetworkCheck networkCheck;
     int check = 0;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,6 +207,12 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         dialog.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // .... other stuff in my onResume ....
+    }
+
     private void searchSP(String s) {
         lvs.setVisibility(View.VISIBLE);
         String link = getResources().getString(R.string.linksearch);
@@ -240,12 +249,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
     private void getMoney() {
         String link = getResources().getString(R.string.linkmn);
@@ -382,15 +385,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         return true;
     }
 
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(StartActivity.this)
-                .setMessage(message)
-                .setPositiveButton("Đòng ý", okListener)
-                .setNegativeButton("Hủy", null)
-                .create()
-                .show();
-    }
-
     public void changeLocale(String lang) {
 
         if (lang.equalsIgnoreCase(""))
@@ -403,32 +397,62 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+//
+//            return true; //I have tried here true also
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ECLAIR
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            // Take care of calling this method on earlier versions of
+            // the platform where it doesn't exist.
+            check();
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
     @Override
     public void onBackPressed() {
-        Toast.makeText(getBaseContext(), getResources().getString(R.string.dclick), Toast.LENGTH_SHORT).show();
+        check();
+        return;
+    }
+
+    public void check() {
         check++;
-        if (check == 2) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(StartActivity.this);
-            alertDialogBuilder.setTitle("ManMo");
+        if (check < 2) {
+            Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
+        } else if (check >= 2) {
+            android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(StartActivity.this);
+            alertDialogBuilder.setTitle("Needfood");
             alertDialogBuilder
-                    .setMessage(getResources().getString(R.string.exit))
+                    .setMessage("Bạn thực sự muốn thoát ứng dụng Manmo ?")
                     .setCancelable(false)
-                    .setPositiveButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Không", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                             check = 0;
+
                         }
                     })
-                    .setNegativeButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            StartActivity.super.onBackPressed();
                             moveTaskToBack(true);
                             android.os.Process.killProcess(android.os.Process.myPid());
                             System.exit(0);
                         }
                     });
-            AlertDialog alertDialog = alertDialogBuilder.create();
+            android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
     }
-
 }
