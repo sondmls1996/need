@@ -81,7 +81,7 @@ public class Howtouse extends AppCompatActivity {
             nom.setVisibility(View.VISIBLE);
         } else {
             nom.setVisibility(View.GONE);
-            txtht.setText(Html.fromHtml(htu, new ImageGetter(), null));
+            txtht.setText(Html.fromHtml(Html.fromHtml(htu).toString()));
         }
 
         Picasso.with(getApplicationContext()).load(simg).into(img);
