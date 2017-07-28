@@ -50,6 +50,7 @@ import com.needfood.kh.Constructor.ProductDetail.CommentConstructor;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
+import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.PostCL;
@@ -81,7 +82,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
     ImageView imgprd;
-    String priceprd, prdcode, titl;
+    public static String priceprd;
+    String  prdcode, titl;
     Session ses;
     String uadr;
     private SimpleDateFormat dateFormatter, timeformat;
@@ -156,6 +158,26 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         th.start();
         //  getCommen();
     }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopService(new Intent(ProductDetail.this, BubbleService.class));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(ProductDetail.this, BubbleService.class));
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(ProductDetail.this, BubbleService.class));
+        getNumberShare();
+    }
+
 
     private void khaibao() {
         db = new DataHandle(this);
@@ -587,7 +609,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                                         .build())
                                 .build();
 
-
                         shareDialog = new ShareDialog(ProductDetail.this);
                         if (ShareDialog.canShow(ShareLinkContent.class)) {
                             shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
@@ -644,6 +665,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     prdcode = prd.getString("code");
                     bar = prd.getString("barcode");
                     priceprd = prd.getString("price");
+
+                    Intent i = new Intent(getApplicationContext(),BubbleService.class);
+                    i.putExtra("MN",priceprd);
+                    startService(i);
+
                     namesel.setText(namesl);
                     idsl = prd.getString("idSeller");
                     lnby.setVisibility(View.VISIBLE);
@@ -679,11 +705,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getNumberShare();
-    }
 
     public void saveShare() {
         final String link = getResources().getString(R.string.linksaveShare);
