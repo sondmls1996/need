@@ -45,7 +45,7 @@
     <string name="dltext1">Customer Attitude Evaluation</string>
     <string name="dltext2">Give a reason if you want to cancel the bill</string>
     <string name="dlcode">Code:</string>
-    <string name="dlmoneyship">Money Ship:</string>
+    <string name="dlmoneyship">Note:</string>
     <string name="dltimeleft">Time Left:</string>
     <string name="dlbtnhoanthanh">Finish</string>
     <string name="dlbtnchiduowng">Direct</string>
@@ -103,14 +103,13 @@
 </string>
     <string name="lnhapthieu">Enter missing information</string>
 
-<<<<<<< HEAD
+
     <string name="mkkhongdung">Old password is incorrect</string>
     <string name="mkxnkhongdung">Confirm password is incorrect</string>
 
     <string name="nhapthieutruong">Type missing data field</string>
 
 
-=======
     <string name="succ">Success</string>
     <string name="er">Error</string>
     <string name="evs">Are you want to save and exit?</string>

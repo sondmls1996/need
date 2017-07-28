@@ -70,7 +70,7 @@
     <string name="dltext1">Đánh giá thái độ của khách hàng</string>
     <string name="dltext2">Để lại một lý do nếu bạn hủy đơn</string>
     <string name="dlcode">Mã đơn:</string>
-    <string name="dlmoneyship">Phí ship:</string>
+    <string name="dlmoneyship">Ghi chú:</string>
     <string name="dltimeleft">Còn lại:</string>
     <string name="dlbtnhoanthanh">Kết thúc</string>
     <string name="dlbtnchiduowng">Chỉ đường</string>

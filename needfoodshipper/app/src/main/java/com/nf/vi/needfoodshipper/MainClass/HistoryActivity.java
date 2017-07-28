@@ -182,45 +182,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
                     }
                     if (response.equals("")) {
                         tvBao.setVisibility(View.VISIBLE);
-<<<<<<< HEAD
-                    }
-                    JSONArray arr = new JSONArray(response);
-                    for (int i = 0; i < arr.length(); i++) {
-                        StringBuilder sb = new StringBuilder();
-                        String money;
-                        JSONObject json = arr.getJSONObject(i);
-                        JSONObject Order = json.getJSONObject("Order");
 
-
-                        JSONObject infoOrder = Order.getJSONObject("infoOrder");
-                        JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
-
-
-//                        Iterator<String> ite = listProduct.keys();
-
-//                        while (ite.hasNext()) {
-//                            String key = ite.next();
-//
-//                            JSONObject idx = listProduct.getJSONObject(key);
-//                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
-//
-//
-//                        }
-                        String timeShiper = infoOrder.getString("timeShiper");
-
-                        String fullName = infoCustomer.getString("fullName");
-                        String fone = infoCustomer.getString("fone");
-                        String address = infoCustomer.getString("address");
-                        String id = Order.getString("id");
-                        String status = Order.getString("status");
-                        String code = Order.getString("code");
-                        if (Order.has("timeLeftShip")) {
-                            timeLeftShip = Order.getString("timeLeftShip");
-                        }
-                        if (Order.has("noteShiper")) {
-                            note = Order.getString("noteShiper");
-                        }
-=======
                     } else {
                         JSONArray arr = new JSONArray(response);
                         for (int i = 0; i < arr.length(); i++) {
@@ -253,7 +215,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
                             if (Order.has("noteShiper")) {
                                 note = Order.getString("noteShiper");
                             }
->>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
+
 
 //                        Toast.makeText(getApplication(), note, Toast.LENGTH_LONG).show();
 
@@ -423,14 +385,10 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
 
     @Override
     public void onRefresh() {
-<<<<<<< HEAD
-        listht.clear();
-        adapter.notifyDataSetChanged();
-        ctime = new CountDownTimer(10000, 1000) {
-=======
+
 
         ctime = new CountDownTimer(15000, 1000) {
->>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
+
             @Override
             public void onTick(long millisUntilFinished) {
                 checktime = true;
@@ -451,12 +409,10 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
 
     @Override
     public void onBackPressed() {
-<<<<<<< HEAD
+
         startActivity(new Intent(getApplication(),MainActivity.class));
         finish();
-=======
-        startActivity(new Intent(getApplication(), MainActivity.class));
->>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
+
 
 
     }

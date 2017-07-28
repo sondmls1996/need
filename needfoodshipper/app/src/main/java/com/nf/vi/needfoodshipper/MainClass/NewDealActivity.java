@@ -145,7 +145,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
                         JSONObject Order = json.getJSONObject("Order");
                         Log.d("OR", Order.toString());
                         JSONArray listProduct = Order.getJSONArray("listProduct");
-<<<<<<< HEAD
+
                         for (int j = 0; j < listProduct.length(); j++) {
                             JSONObject json1 = listProduct.getJSONObject(j);
                             String title = json1.getString("title");
@@ -158,18 +158,6 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
                         JSONObject infoOrder = Order.getJSONObject("infoOrder");
                         JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
 
-=======
-                        JSONObject infoOrder = Order.getJSONObject("infoOrder");
-                        JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
-                        for (int k = 0; k < listProduct.length(); k++) {
-                            JSONObject idx = listProduct.getJSONObject(k);
-                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
-                            soluong.append(idx.getString("quantity") + "\n");
-                            sanpham.append(idx.getString("title") + "\n");
-                            dongia.append(idx.getString("price") + "\n");
-                            thanhtien.append(idx.getString("money") + "\n");
-                        }
->>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
 
 
                         String timeShiper = infoOrder.getString("timeShiper");
@@ -182,7 +170,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
                         String code = Order.getString("code");
 
                         Log.d("hh", fullName);
-                        ld.add(new MainConstructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
+                        ld.add(new MainConstructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), Order.getString("note"), status, code, listProduct.toString()));
                     }
 
                     adapter.notifyDataSetChanged();

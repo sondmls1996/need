@@ -210,13 +210,7 @@ public class MainActivity extends TabActivity
 
         } else if (id == R.id.lnSettings) {
             startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-<<<<<<< HEAD
-//            Toast.makeText(getApplicationContext(), "VÌ SAO", Toast.LENGTH_SHORT).show();
 
-            finish();
-=======
-
->>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
         }
 
     }

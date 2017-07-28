@@ -21,6 +21,7 @@ public class TrangThaiRequest extends StringRequest {
                             String status,
                             String idOrder,
                             String timeLeft,
+                            String vote,
                             String WEBURL, Response.Listener<String> listener) {
         super(Method.POST,WEBURL, listener, null);
         params = new HashMap<>();
@@ -29,6 +30,7 @@ public class TrangThaiRequest extends StringRequest {
         params.put("status", status);
         params.put("idOrder", idOrder);
         params.put("timeLeft", timeLeft);
+        params.put("vote", vote);
         this.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 48,
                 x, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 

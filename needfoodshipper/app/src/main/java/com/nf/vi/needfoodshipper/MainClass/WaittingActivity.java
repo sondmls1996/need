@@ -94,18 +94,17 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
         // Adds the scroll listener to RecyclerView
         rc.addOnScrollListener(scrollListener);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ld.clear();
-        adapter.notifyDataSetChanged();
-        order(1);
-    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        ld.clear();
+//        adapter.notifyDataSetChanged();
+//        order(1);
+//    }
 
     private void order(int page) {
-        ld.clear();
-        adapter.notifyDataSetChanged();
+
 //        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
 //        dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
 //        String page = "1";
@@ -198,7 +197,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
                             String code = Order.getString("code");
 
                             Log.d("hh", fullName);
-                            ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
+                            ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), Order.getString("note"), status, code, listProduct.toString()));
 
 
 
@@ -246,9 +245,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public void onBackPressed() {
-//<<<<<<< HEAD
-//        Toast.makeText(getBaseContext(), getString(R.string.dhgailan), Toast.LENGTH_SHORT).show();
-//=======
+
         Toast.makeText(getBaseContext(), getResources().getString(R.string.dclick), Toast.LENGTH_SHORT).show();
 
         check++;

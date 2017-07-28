@@ -149,11 +149,9 @@ public class SettingsActivity extends AppCompatActivity {
 
                     if (code.equals("0")) {
                         progressDialog.dismiss();
-<<<<<<< HEAD
-//                        Toast.makeText(getApplication(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
-=======
+
                         Toast.makeText(getApplication(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
->>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
+
                         db.deleteAll();
                         ses.setLoggedin(false);
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -162,11 +160,8 @@ public class SettingsActivity extends AppCompatActivity {
 
                     } else if (code.equals("-1")) {
                         progressDialog.dismiss();
-<<<<<<< HEAD
-//                        Toast.makeText(getApplication(), "Đăng xuất  thành công 1", Toast.LENGTH_SHORT).show();
-=======
+
                         Toast.makeText(getApplication(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
->>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
                         db.deleteAll();
                         ses.setLoggedin(false);
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);

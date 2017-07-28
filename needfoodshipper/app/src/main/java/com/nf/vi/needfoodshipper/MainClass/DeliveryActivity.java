@@ -1,10 +1,13 @@
 package com.nf.vi.needfoodshipper.MainClass;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.CountDownTimer;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -62,6 +66,8 @@ public class DeliveryActivity extends AppCompatActivity {
     private TextView tvTitle, tvre, tvStt, tvCode, tvod, tvloc, tvct, tvtm, tvpay, textstt, tvMoneyShiper, tvTimeleft, tvSanpham, tvSoluong, tvDongia, tvThanhtien;
     private Dialog dialog;
     private ImageView imgstt;
+    RatingBar ratingbar;
+    String rating;
     SimpleDateFormat dateFormatter;
     private Calendar cal, cal1;
     private String a, id, order, lc, ct, re, tl, pay, moneyship, stt, code, stt2, listsanpham, tm;
@@ -198,6 +204,18 @@ public class DeliveryActivity extends AppCompatActivity {
         } else if (stt.equals("process")) {
             rtButton.setVisibility(View.GONE);
         }
+        tvct.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:"+ct));
+
+                if (ActivityCompat.checkSelfPermission(DeliveryActivity.this,
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                startActivity(callIntent);
+            }
+        });
 
         tvre.setText(re);
         tvCode.setText(code);
@@ -287,6 +305,7 @@ public class DeliveryActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_delivery);
         btnDFinish = (Button) dialog.findViewById(R.id.btnDFinish);
+        ratingbar=(RatingBar)dialog.findViewById(R.id.ratingBar);
         btnDCancel1 = (Button) dialog.findViewById(R.id.btnDCancel1);
         btnDSend = (Button) dialog.findViewById(R.id.btnDSend);
         btnDCancel = (Button) dialog.findViewById(R.id.btnDDeny);
@@ -295,8 +314,10 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getApplication(), "được k", Toast.LENGTH_LONG).show();
+//
                 note = edfedd.getText().toString();
+                 rating=String.valueOf(ratingbar.getRating());
+//                Toast.makeText(getApplication(), rating, Toast.LENGTH_LONG).show();
                 stt2 = "done";
                 sendSV();
                 dialog.dismiss();
@@ -328,6 +349,7 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                 rating=String.valueOf(ratingbar.getRating());
                 note = edfedd.getText().toString();
 
                 stt2 = "cancel";
@@ -377,7 +399,7 @@ public class DeliveryActivity extends AppCompatActivity {
                 }
             }
         };
-        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt2, id, tm, link, response);
+        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt2, id, tm,rating, link, response);
         RequestQueue qe = Volley.newRequestQueue(getApplication());
         qe.add(save);
 

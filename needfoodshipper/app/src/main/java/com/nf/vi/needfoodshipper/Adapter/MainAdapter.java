@@ -242,7 +242,7 @@ public class MainAdapter extends
                 }
             }
         };
-        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt, id1, "", link, response);
+        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt, id1, "","", link, response);
         RequestQueue qe = Volley.newRequestQueue(context);
         qe.add(save);
 

@@ -173,7 +173,7 @@ public class OrderActivity extends AppCompatActivity {
                 }
             }
         };
-        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt, id,"", link, response);
+        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt, id,"","", link, response);
         RequestQueue qe = Volley.newRequestQueue(this);
         qe.add(save);
 
