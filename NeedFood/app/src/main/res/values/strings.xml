@@ -112,6 +112,7 @@
     <string name="ssor">Order Success</string>
 
     <string name="linklogfb">http://needfood.webmantan.com/checkRegisterFacebookAPI</string>
+    <string name="linkselling">http://needfood.webmantan.com/getProductSellingOutAPI</string>
     <string name="linktranf">http://needfood.webmantan.com/changeCoinAPI</string>
     <string name="linkgetcoin">http://needfood.webmantan.com/getInfoUserAPI</string>
     <string name="linkorder">http://needfood.webmantan.com/saveOrderAPI</string>
@@ -149,6 +150,7 @@
     <string name="linkgetinfo">http://needfood.webmantan.com/getInfoUserAPI</string>
     <string name="linksaveShare">http://needfood.webmantan.com/saveShareHotDealAPI</string>
     <string name="linkvote">http://needfood.webmantan.com/updateVoteProductAPI</string>
+    <string name="linktimenow">http://needfood.webmantan.com/getTimeServerAPI</string>
 
     <string name="logout">Logout</string>
     <string name="tiengviet">Tiếng Việt</string>
@@ -203,6 +205,7 @@
     <string name="pa">Password</string>
     <string name="cpas">Confirm Password</string>
     <string name="ad">Address</string>
+    <string name="selling">Selling out</string>
     <string name="cust">Customer</string>
     <string name="cha">You need to enter more than 6 characters</string>
     <string name="paw">Passwords do not match</string>

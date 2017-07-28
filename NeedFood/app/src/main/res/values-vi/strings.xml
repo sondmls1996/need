@@ -110,6 +110,7 @@
     <string name="ok">Đồng ý</string>
     <string name="action_settings">Cài đặt</string>
 
+    <string name="linkselling">http://needfood.webmantan.com/getProductSellingOutAPI</string>
     <string name="linkgetcoin">http://needfood.webmantan.com/getInfoUserAPI</string>
     <string name="linktranf">http://needfood.webmantan.com/changeCoinAPI</string>
     <string name="linkorder">http://needfood.webmantan.com/saveOrderAPI</string>
@@ -148,6 +149,7 @@
     <string name="linkgetinfo">http://needfood.webmantan.com/getInfoUserAPI</string>
     <string name="linklogfb">http://needfood.webmantan.com/checkRegisterFacebookAPI</string>
     <string name="linksaveShare">http://needfood.webmantan.com/saveShareHotDealAPI</string>
+    <string name="linktimenow">http://needfood.webmantan.com/getTimeServerAPI</string>
 
     <string name="logout">Đăng xuất</string>
     <string name="ssor">Đặt hàng thành công</string>
@@ -168,7 +170,7 @@
     <string name="timeship">Thời gian nhận: \u0020</string>
     <string name="buyer">Người mua: \u0020</string>
     <string name="addr">Địa chỉ: \u0020</string>
-
+    <string name="selling">Selling out</string>
     <string name="F_REF">com.needfood.kh.fcm_re</string>
     <string name="F_CM">com.needfood.kh.fcm_cm</string>
 

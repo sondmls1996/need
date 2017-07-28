@@ -62,7 +62,8 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationName"
             android:value="@string/app_name" />
-        <service android:name=".Service.BubbleService"/>
+
+        <service android:name=".Service.BubbleService" />
         <!--
                <activity android:name="com.facebook.FacebookActivity"
                android:configChanges= "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -158,10 +159,9 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".More.Contact" />
-        <activity
-            android:name=".More.ParentUs"></activity>
+        <activity android:name=".More.Contact" />
+        <activity android:name=".More.ParentUs" />
+        <activity android:name=".News.SellingOut"></activity>
     </application>
 
 </manifest>
