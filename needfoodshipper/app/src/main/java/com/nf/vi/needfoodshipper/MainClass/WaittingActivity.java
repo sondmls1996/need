@@ -121,47 +121,47 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
                     }
                     if (response.equals("")) {
                         tvBao.setVisibility(View.VISIBLE);
-<<<<<<< HEAD
+
                     }
-                    JSONArray arr = new JSONArray(response);
-                    for (int i = 0; i < arr.length(); i++) {
-                        StringBuilder sb = new StringBuilder();
-                        StringBuilder soluong = new StringBuilder();
-                        StringBuilder sanpham = new StringBuilder();
-                        StringBuilder dongia = new StringBuilder();
-                        StringBuilder thanhtien = new StringBuilder();
-                        String money;
-                        JSONObject json = arr.getJSONObject(i);
-                        JSONObject Order = json.getJSONObject("Order");
-
-
-                        JSONObject infoOrder = Order.getJSONObject("infoOrder");
-                        JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
-
-
-                        JSONArray listProduct = Order.getJSONArray("listProduct");
-                        for (int j = 0; j < listProduct.length(); j++) {
-                            JSONObject json1 = listProduct.getJSONObject(j);
-                            String title = json1.getString("title");
-                            String quantity = json1.getString("quantity");
-                            String price = json1.getString("price");
-                            String money1 = json1.getString("money");
-                            sb.append(quantity + title + ";" + "\t");
-
-                        }
-                        String timeShiper = infoOrder.getString("timeShiper");
-
-                        String fullName = infoCustomer.getString("fullName");
-                        String fone = infoCustomer.getString("fone");
-                        String address = infoCustomer.getString("address");
-                        String id = Order.getString("id");
-                        String status = Order.getString("status");
-                        String code = Order.getString("code");
-
-                        Log.d("hh", fullName);
-                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
-=======
-                    } else {
+//                    JSONArray arr = new JSONArray(response);
+//                    for (int i = 0; i < arr.length(); i++) {
+//                        StringBuilder sb = new StringBuilder();
+//                        StringBuilder soluong = new StringBuilder();
+//                        StringBuilder sanpham = new StringBuilder();
+//                        StringBuilder dongia = new StringBuilder();
+//                        StringBuilder thanhtien = new StringBuilder();
+//                        String money;
+//                        JSONObject json = arr.getJSONObject(i);
+//                        JSONObject Order = json.getJSONObject("Order");
+//
+//
+//                        JSONObject infoOrder = Order.getJSONObject("infoOrder");
+//                        JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
+//
+//
+//                        JSONArray listProduct = Order.getJSONArray("listProduct");
+//                        for (int j = 0; j < listProduct.length(); j++) {
+//                            JSONObject json1 = listProduct.getJSONObject(j);
+//                            String title = json1.getString("title");
+//                            String quantity = json1.getString("quantity");
+//                            String price = json1.getString("price");
+//                            String money1 = json1.getString("money");
+//                            sb.append(quantity + title + ";" + "\t");
+//
+//                        }
+//                        String timeShiper = infoOrder.getString("timeShiper");
+//
+//                        String fullName = infoCustomer.getString("fullName");
+//                        String fone = infoCustomer.getString("fone");
+//                        String address = infoCustomer.getString("address");
+//                        String id = Order.getString("id");
+//                        String status = Order.getString("status");
+//                        String code = Order.getString("code");
+//
+//                        Log.d("hh", fullName);
+//                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
+//=======
+                     else {
                         tvBao.setVisibility(View.GONE);
                         JSONArray arr = new JSONArray(response);
                         for (int i = 0; i < arr.length(); i++) {
@@ -199,7 +199,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
                             Log.d("hh", fullName);
                             ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
->>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
+
 
 
                         }
@@ -230,11 +230,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
             @Override
             public void onTick(long millisUntilFinished) {
                 checktime = true;
-<<<<<<< HEAD
-
-=======
                 ld.clear();
->>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
                 order(1);
             }
 
@@ -250,11 +246,11 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public void onBackPressed() {
-<<<<<<< HEAD
-        Toast.makeText(getBaseContext(), getString(R.string.dhgailan), Toast.LENGTH_SHORT).show();
-=======
+//<<<<<<< HEAD
+//        Toast.makeText(getBaseContext(), getString(R.string.dhgailan), Toast.LENGTH_SHORT).show();
+//=======
         Toast.makeText(getBaseContext(), getResources().getString(R.string.dclick), Toast.LENGTH_SHORT).show();
->>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
+
         check++;
         if (check == 2) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(WaittingActivity.this);
