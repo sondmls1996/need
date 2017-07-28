@@ -97,9 +97,6 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
     private void order(int page) {
 
-//        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
-//        dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
-//        String page = "1";
         final String link = getResources().getString(R.string.getListOrderWaitingShiperAPI);
 
         Response.Listener<String> response = new Response.Listener<String>() {
@@ -173,8 +170,6 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
-
-
         ctime = new CountDownTimer(15000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {

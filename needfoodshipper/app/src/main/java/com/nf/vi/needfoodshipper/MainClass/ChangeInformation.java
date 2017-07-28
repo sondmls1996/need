@@ -101,7 +101,7 @@ public class ChangeInformation extends AppCompatActivity {
 
         String link = getResources().getString(R.string.updateInfoShiperAPI);
 
-        if (fullname1.matches("")  || address1.matches("")  ) {
+        if (fullname1.matches("") || address1.matches("")) {
 //            progressDialog.dismiss();
             Toast.makeText(getApplication(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
         } else {
@@ -149,10 +149,11 @@ public class ChangeInformation extends AppCompatActivity {
 
         }
     }
+
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplication(),YourInformationActivity.class));
-
+        startActivity(new Intent(getApplication(), YourInformationActivity.class));
+        finish();
 
     }
 

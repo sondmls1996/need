@@ -40,6 +40,7 @@ public class Tranfer extends AppCompatActivity {
     List<InfoConstructor> list;
     String acc, coinn, idu;
     Class fragmentClass;
+    TextView txtCoin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class Tranfer extends AppCompatActivity {
 
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.CoinTran));
-        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +63,8 @@ public class Tranfer extends AppCompatActivity {
         acc = list.get(list.size() - 1).getAccesstoken();
         idu = list.get(list.size() - 1).getId();
         addInfo();
+
+        txtCoin = (TextView) findViewById(R.id.coins);
         btnsend = (Button) findViewById(R.id.btnsend);
         edphone = (EditText) findViewById(R.id.edrephone);
         edcoin = (EditText) findViewById(R.id.edcoin);
@@ -151,6 +154,7 @@ public class Tranfer extends AppCompatActivity {
                     String address = jo.getString("address");
                     coinn = jo.getString("coin");
                     db.updateinfo(fullname, email, address, idu, coinn);
+                    txtCoin.setText(coinn);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

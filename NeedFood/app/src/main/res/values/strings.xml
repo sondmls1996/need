@@ -155,7 +155,7 @@
     <string name="tienganh">English</string>
     <string name="new_">New</string>
     <string name="topdeall">Top Deal</string>
-    <string name="CoinTran">Coin Transfer</string>
+    <string name="CoinTran">Donate Coins</string>
     <string name="his">History</string>
     <string name="sento">Send to:</string>
 
@@ -192,7 +192,7 @@
     <string name="rate">Rate: \u0020</string>
     <string name="mys">My share:</string>
     <string name="pd">P.Day: \u0020</string>
-    <string name="exp">Exp: \u0020</string>
+    <string name="exp">Expiry date: \u0020</string>
     <string name="lf">Left</string>
     <string name="prcode">Enter promotion code</string>
     <string name="det">Detail</string>
@@ -220,6 +220,6 @@
     <string name="km">This product is currently no promotional</string>
     <string name="checkin">Please check your internet connection!</string>
     <string name="mis">Mission: </string>
-
+    <string name="ycc">Your current cents: \u0020</string>
 
 </resources>

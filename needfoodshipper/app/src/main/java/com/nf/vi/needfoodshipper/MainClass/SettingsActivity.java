@@ -220,7 +220,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         startActivity(new Intent(getApplication(),MainActivity.class));
-
+        finish();
 
     }
 }

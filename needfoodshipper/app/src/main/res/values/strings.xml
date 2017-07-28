@@ -19,7 +19,6 @@
     <string name="sendPassShiperAPI">http://needfood.webmantan.com/sendPassShiperAPI</string>
     <string name="getListOrderDoneShiperAPI">http://needfood.webmantan.com/getListOrderDoneShiperAPI</string>
     <string name="updateInfoShiperAPI">http://needfood.webmantan.com/updateInfoShiperAPI</string>
-    getListOrderWaitingShiperAPI
     <string name="getListOrderWaitingShiperAPI">http://needfood.webmantan.com/getListOrderWaitingShiperAPI</string>
 
     <string name="F_REF">com.mantanapp.needfoodshiper.f_ref</string>

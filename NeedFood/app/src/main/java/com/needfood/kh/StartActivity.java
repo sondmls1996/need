@@ -47,6 +47,7 @@ import com.needfood.kh.Constructor.SearchConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Maps.MapsActivity;
 import com.needfood.kh.More.More;
+import com.needfood.kh.News.Hotdeal;
 import com.needfood.kh.News.TabFragment;
 import com.needfood.kh.Notif.Notif;
 import com.needfood.kh.Product.ProductDetail;
@@ -316,9 +317,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 pg = 0;
                 break;
             case R.id.dod:
-                fragmentClass = TabFragment.class;
+                fragmentClass = Hotdeal.class;
                 ReplaceFrag(fragmentClass);
-                pg = 1;
                 break;
             case R.id.sug:
                 fragmentClass = SuggessFrag.class;

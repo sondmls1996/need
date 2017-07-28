@@ -43,24 +43,24 @@ public class TabFragment extends Fragment {
 
         //   TabHost tabHost = getTabHost();
         TabHost.TabSpec taba = tabHost.newTabSpec(getString(R.string.new_));
-        TabHost.TabSpec tab1 = tabHost.newTabSpec(getString(R.string.topdeall));
+//        TabHost.TabSpec tab1 = tabHost.newTabSpec(getString(R.string.topdeall));
         TabHost.TabSpec tab2 = tabHost.newTabSpec(getString(R.string.besqua));
 
         // Set the Tab name and Activity
         // that will be opened when particular Tab will be selected
         taba.setIndicator(getString(R.string.new_));
-        tab1.setIndicator(getString(R.string.topdeall));
+//        tab1.setIndicator(getString(R.string.topdeall));
 
         taba.setContent(new Intent(getActivity(), News.class));
 
-        tab1.setContent(new Intent(getActivity(), Hotdeal.class));
+//        tab1.setContent(new Intent(getActivity(), Hotdeal.class));
 
         tab2.setIndicator(getString(R.string.besqua));
         tab2.setContent(new Intent(getActivity(), BestQuality.class));
 
         /** Add the tabs  to the TabHost to display. */
         tabHost.addTab(taba);
-        tabHost.addTab(tab1);
+//        tabHost.addTab(tab1);
         tabHost.addTab(tab2);
 
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {

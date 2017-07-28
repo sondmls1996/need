@@ -406,7 +406,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
     @Override
     public void onBackPressed() {
         startActivity(new Intent(getApplication(), MainActivity.class));
-
+            finish();
 
     }
 }

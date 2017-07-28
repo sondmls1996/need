@@ -7,65 +7,88 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context="com.needfood.kh.More.Tranfer">
+
     <include
-        layout="@layout/toolbar"
         android:id="@+id/t"
-        ></include>
+        layout="@layout/toolbar"></include>
+
     <LinearLayout
-        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/t"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ycc"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/coins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red" />
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginBottom="5dp"
-            android:textColor="@color/black"
-            android:text="@string/sento"/>
+            android:text="@string/sento"
+            android:textColor="@color/black" />
+
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:padding="5dp"
-            android:background="@drawable/commentedt"
             android:id="@+id/edrephone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/commentedt"
             android:hint="@string/phonenum"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:padding="5dp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:textColor="@color/black"
-            android:text="@string/coins"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:hint="@string/entercoin"
-            android:padding="5dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/edcoin"
-            android:background="@drawable/commentedt"
-            android:inputType="number"/>
+            android:layout_marginTop="5dp"
+            android:text="@string/coins"
+            android:textColor="@color/black" />
 
         <EditText
+            android:id="@+id/edcoin"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/commentedt"
+            android:hint="@string/entercoin"
+            android:inputType="number"
+            android:padding="5dp" />
+
+        <EditText
+            android:id="@+id/edcont"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:gravity="top"
-            android:padding="5dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/commentedt"
-            android:id="@+id/edcont"
+            android:gravity="top"
             android:hint="@string/note"
-/>
+            android:padding="5dp" />
+
         <Button
+            android:id="@+id/btnsend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:layout_marginTop="10dp"
             android:background="@drawable/cusbtnred"
-            android:id="@+id/btnsend"
-            android:text="@string/send"/>
+            android:text="@string/send"
+            android:textColor="@color/white" />
     </LinearLayout>
 </RelativeLayout>

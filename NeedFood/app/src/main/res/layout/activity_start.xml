@@ -5,6 +5,7 @@
     android:id="@+id/activity_news"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <include layout="@layout/custoolbar"></include>
 
     <RelativeLayout
@@ -28,11 +29,11 @@
             android:padding="10dp">
 
             <LinearLayout
+                android:id="@+id/imgnewstart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:id="@+id/imgnewstart"
                 android:orientation="vertical">
 
                 <ImageView
@@ -52,11 +53,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/sug"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:id="@+id/sug"
                 android:orientation="vertical">
 
                 <ImageView
@@ -83,11 +84,11 @@
                 android:layout_weight="1"></RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/notif"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:id="@+id/notif"
                 android:orientation="vertical">
 
                 <ImageView
@@ -107,11 +108,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/more"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:id="@+id/more"
                 android:orientation="vertical">
 
                 <ImageView
@@ -140,7 +141,7 @@
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginBottom="9dp"
-       android:src="@drawable/dimg"
+        android:src="@drawable/dimg"
         app:layout_anchor="@id/deal0"
         app:layout_anchorGravity="center|top" />
 

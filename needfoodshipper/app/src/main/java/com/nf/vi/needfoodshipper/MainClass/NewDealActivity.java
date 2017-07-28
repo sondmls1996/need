@@ -116,10 +116,7 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
 
     private void order(int page) {
 
-
         final String link = getResources().getString(R.string.getListOrderShiperAPI);
-
-
         Response.Listener<String> response = new Response.Listener<String>() {
 
 
@@ -133,49 +130,49 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
                     }
                     if (response.equals("[]")) {
                         tvBao.setVisibility(View.VISIBLE);
-                    }
+                    } else {
+                        tvBao.setVisibility(View.GONE);
+                        JSONArray arr = new JSONArray(response);
 
-                    JSONArray arr = new JSONArray(response);
+                        for (int i = 0; i < arr.length(); i++) {
+                            StringBuilder sb = new StringBuilder();
+                            StringBuilder soluong = new StringBuilder();
+                            StringBuilder sanpham = new StringBuilder();
+                            StringBuilder dongia = new StringBuilder();
+                            StringBuilder thanhtien = new StringBuilder();
+                            String money;
+                            JSONObject json = arr.getJSONObject(i);
+                            JSONObject Order = json.getJSONObject("Order");
+                            Log.d("OR", Order.toString());
+                            JSONArray listProduct = Order.getJSONArray("listProduct");
+                            JSONObject infoOrder = Order.getJSONObject("infoOrder");
+                            JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
+                            for (int k = 0; k < listProduct.length(); k++) {
+                                JSONObject idx = listProduct.getJSONObject(k);
+                                sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
+                                soluong.append(idx.getString("quantity") + "\n");
+                                sanpham.append(idx.getString("title") + "\n");
+                                dongia.append(idx.getString("price") + "\n");
+                                thanhtien.append(idx.getString("money") + "\n");
+                            }
 
-                    for (int i = 0; i < arr.length(); i++) {
-                        StringBuilder sb = new StringBuilder();
-                        StringBuilder soluong = new StringBuilder();
-                        StringBuilder sanpham = new StringBuilder();
-                        StringBuilder dongia = new StringBuilder();
-                        StringBuilder thanhtien = new StringBuilder();
-                        String money;
-                        JSONObject json = arr.getJSONObject(i);
-                        JSONObject Order = json.getJSONObject("Order");
-                        Log.d("OR", Order.toString());
-                        JSONArray listProduct = Order.getJSONArray("listProduct");
-                        JSONObject infoOrder = Order.getJSONObject("infoOrder");
-                        JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
-                        for (int k = 0; k < listProduct.length(); k++) {
-                            JSONObject idx = listProduct.getJSONObject(k);
-                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
-                            soluong.append(idx.getString("quantity") + "\n");
-                            sanpham.append(idx.getString("title") + "\n");
-                            dongia.append(idx.getString("price") + "\n");
-                            thanhtien.append(idx.getString("money") + "\n");
+
+                            String timeShiper = infoOrder.getString("timeShiper");
+                            String fullName = infoCustomer.getString("fullName");
+                            String fone = infoCustomer.getString("fone");
+                            String address = infoCustomer.getString("address");
+                            String id = Order.getString("id");
+                            Log.d("IDD", Order.getString("id"));
+                            String status = Order.getString("status");
+                            String code = Order.getString("code");
+
+                            Log.d("hh", fullName);
+                            ld.add(new MainConstructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
                         }
 
-
-                        String timeShiper = infoOrder.getString("timeShiper");
-                        String fullName = infoCustomer.getString("fullName");
-                        String fone = infoCustomer.getString("fone");
-                        String address = infoCustomer.getString("address");
-                        String id = Order.getString("id");
-                        Log.d("IDD", Order.getString("id"));
-                        String status = Order.getString("status");
-                        String code = Order.getString("code");
-
-                        Log.d("hh", fullName);
-                        ld.add(new MainConstructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
+                        adapter.notifyDataSetChanged();
+                        swipeRefresh.setRefreshing(false);
                     }
-
-                    adapter.notifyDataSetChanged();
-                    swipeRefresh.setRefreshing(false);
-
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }
@@ -190,14 +187,12 @@ public class NewDealActivity extends AppCompatActivity implements SwipeRefreshLa
 
     @Override
     public void onRefresh() {
-        ld.clear();
-        adapter.notifyDataSetChanged();
         ctime = new CountDownTimer(15000, 1000) {
             @Override
 
             public void onTick(long millisUntilFinished) {
                 checktime = true;
-
+                ld.clear();
                 order(1);
 
             }

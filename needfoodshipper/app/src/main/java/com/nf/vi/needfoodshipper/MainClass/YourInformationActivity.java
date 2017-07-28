@@ -99,7 +99,7 @@ public class YourInformationActivity extends AppCompatActivity implements View.O
     @Override
     public void onBackPressed() {
         startActivity(new Intent(getApplication(),MainActivity.class));
-
+        finish();
 
     }
 }
