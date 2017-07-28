@@ -204,15 +204,19 @@ public class MainActivity extends TabActivity
         int id = v.getId();
         if (id == R.id.lnYourInformation) {
             startActivity(new Intent(getApplicationContext(), YourInformationActivity.class));
-            finish();
+
         } else if (id == R.id.lnHistory) {
             startActivity(new Intent(getApplicationContext(), HistoryActivity.class));
-            finish();
+
         } else if (id == R.id.lnSettings) {
             startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+<<<<<<< HEAD
 //            Toast.makeText(getApplicationContext(), "VÌ SAO", Toast.LENGTH_SHORT).show();
 
             finish();
+=======
+
+>>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
         }
 
     }
@@ -241,12 +245,12 @@ public class MainActivity extends TabActivity
 
     @Override
     public void onProviderEnabled(String provider) {
-        Toast.makeText(getApplicationContext(), "Da bat gps", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.gpse), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        Toast.makeText(getApplicationContext(), "Da tat gps", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.gpse), Toast.LENGTH_SHORT).show();
 
 
     }

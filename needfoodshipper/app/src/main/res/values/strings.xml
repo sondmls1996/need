@@ -136,11 +136,16 @@
 
 
 
-
-
-
-
-
-
-
+    <string name="succ">Thành Công</string>
+    <string name="er">Lỗi</string>
+    <string name="evs">Bạn có muốn lưu và thoát ?</string>
+    <string name="no">Không</string>
+    <string name="dclick">Nhấn 2 lần để thoát</string>
+    <string name="gpse">Đã bật GPS</string>
+    <string name="dates">Chọn ngày bắt đầu</string>
+    <string name="datee">Chọn ngày kết thúc</string>
+    <string name="mkc">Mật khẩu không đúng</string>
+    <string name="wrreg">Không được để trống</string>
+    <string name="logut">Đăng xuất</string>
+    <string name="chan">Đang cập nhật...</string>
 </resources>

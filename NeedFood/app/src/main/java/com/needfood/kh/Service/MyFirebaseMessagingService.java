@@ -27,7 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
-import java.util.TimeZone;
 
 /**
  * Created by Tung-PC on 20/03/2017.
@@ -98,7 +97,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     public void savedata(String title) {
         SimpleDateFormat df = new SimpleDateFormat("HH:mm dd-MM-yyyy");
-        df.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
+       // df.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
         String date = df.format(c.getTime());
 //        df.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
 //        String date = df.format(Calendar.getInstance().getTime());

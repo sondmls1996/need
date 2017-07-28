@@ -88,12 +88,20 @@ public class ChangePassActivity extends AppCompatActivity {
 
 
                         if (code.equals("0")) {
+<<<<<<< HEAD
                             Toast.makeText(getApplicationContext(), getString(R.string.sttthanhcong), Toast.LENGTH_SHORT).show();
+=======
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
+>>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
                             finish();
                         } else if(code.equals("1")) {
+<<<<<<< HEAD
                        Toast.makeText(getApplicationContext(), getString(R.string.mkkhongdung), Toast.LENGTH_SHORT).show();
+=======
+                       Toast.makeText(getApplicationContext(), getResources().getString(R.string.mkc), Toast.LENGTH_SHORT).show();
+>>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -104,10 +112,17 @@ public class ChangePassActivity extends AppCompatActivity {
             RequestQueue qe = Volley.newRequestQueue(getApplicationContext());
             qe.add(save);
         } else if (!pass.equals(repass)) {
+<<<<<<< HEAD
             Toast.makeText(getApplicationContext(),  getString(R.string.mkxnkhongdung), Toast.LENGTH_SHORT).show();
         }
         else if (pass.equals("")&&repass.equals("")) {
             Toast.makeText(getApplicationContext(),getString(R.string.nhapthieutruong), Toast.LENGTH_SHORT).show();
+=======
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.mkc), Toast.LENGTH_SHORT).show();
+        }
+        else if (pass.equals("")&&repass.equals("")) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
+>>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
         }
 
     }

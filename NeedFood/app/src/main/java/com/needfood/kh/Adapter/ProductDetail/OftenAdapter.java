@@ -126,13 +126,13 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         @Override
                         public void afterTextChanged(Editable s) {
                             if(viewHolder.edo.getText().toString().equals("")){
-                                viewHolder.edo.setText("1");
+
                                 if(arrcheck.size()==1){
-                                    arrcheck.get(0).setQuanli(viewHolder.edo.getText().toString());
-                                    arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
+                                    arrcheck.get(0).setQuanli("1");
+                                    arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
                                 }else{
                                     arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
-                                    arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
+                                    arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
                                 }
 
                             }else {

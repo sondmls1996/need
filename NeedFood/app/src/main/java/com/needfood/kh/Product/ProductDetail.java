@@ -314,7 +314,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 } else {
                     a2 = Integer.parseInt(response);
                     Log.d("TTT", a2 + "");
+                    tvmyphi.setText(a2+"");
                     if (a2 >= numshare&&numshare!=0) {
+
                         deal.setVisibility(View.VISIBLE);
                     }else{
                         deal.setVisibility(View.GONE);

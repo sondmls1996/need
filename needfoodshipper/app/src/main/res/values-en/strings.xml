@@ -103,10 +103,25 @@
 </string>
     <string name="lnhapthieu">Enter missing information</string>
 
+<<<<<<< HEAD
     <string name="mkkhongdung">Old password is incorrect</string>
     <string name="mkxnkhongdung">Confirm password is incorrect</string>
 
     <string name="nhapthieutruong">Type missing data field</string>
 
 
+=======
+    <string name="succ">Success</string>
+    <string name="er">Error</string>
+    <string name="evs">Are you want to save and exit?</string>
+    <string name="no">No</string>
+    <string name="dclick">Double click to exit</string>
+    <string name="gpse">GPS Enable</string>
+    <string name="dates">Choice date start</string>
+    <string name="datee">Choice date end</string>
+    <string name="mkc">Password is incorrect</string>
+    <string name="wrreg">Can not be empty</string>
+    <string name="logut">Logout</string>
+    <string name="chan">Loading...</string>
+>>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
 </resources>
