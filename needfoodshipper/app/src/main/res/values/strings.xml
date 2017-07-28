@@ -75,6 +75,8 @@
     <string name="dlbtnhoanthanh">Kết thúc</string>
     <string name="dlbtnchiduowng">Chỉ đường</string>
     <string name="dltoobar">Chi tiết</string>
+    <string name="dlbando">Bản đồ</string>
+    <string name="dltool">Thông tin đơn hàng</string>
     //home
     <string name="hnew">Đơn mới</string>
     <string name="hdandoi">Đang chờ</string>
@@ -133,7 +135,6 @@
     <string name="mkxnkhongdung">Mật khẩu xác nhận không đúng</string>
 
     <string name="nhapthieutruong">Nhập thiếu trường dữ liệu</string>
-
 
 
     <string name="succ">Thành Công</string>

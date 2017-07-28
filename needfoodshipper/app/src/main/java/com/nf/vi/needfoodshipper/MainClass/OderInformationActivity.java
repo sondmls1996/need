@@ -2,6 +2,7 @@ package com.nf.vi.needfoodshipper.MainClass;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.TabActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -15,7 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -28,22 +28,13 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.nf.vi.needfoodshipper.Adapter.HistoryAdapter;
 import com.nf.vi.needfoodshipper.Adapter.ListviewAdapter;
 import com.nf.vi.needfoodshipper.Constructor.ListUserContructor;
 import com.nf.vi.needfoodshipper.Constructor.ListviewContructor;
-import com.nf.vi.needfoodshipper.Constructor.MainConstructor;
 import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.TrangThaiRequest;
 import com.nf.vi.needfoodshipper.SupportClass.ChangeDatetoTimestamp;
 import com.nf.vi.needfoodshipper.SupportClass.ChangeTimeToHours;
-import com.nf.vi.needfoodshipper.SupportClass.ChangeTimestamp;
 import com.nf.vi.needfoodshipper.database.DBHandle;
 
 import org.json.JSONArray;
@@ -54,14 +45,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import static android.R.id.tabhost;
 
-public class DeliveryActivity extends AppCompatActivity {
-
+public class OderInformationActivity extends TabActivity {
+    private TabHost tabHost;
     private Button btnFinish, btnDirect;
     private TextView tvTitle, tvre, tvStt, tvCode, tvod, tvloc, tvct, tvtm, tvpay, textstt, tvMoneyShiper, tvTimeleft, tvSanpham, tvSoluong, tvDongia, tvThanhtien;
     private Dialog dialog;
@@ -89,16 +78,82 @@ public class DeliveryActivity extends AppCompatActivity {
     private RelativeLayout rtButton;
     private ListView lvSanpham;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delivery);
+        setContentView(R.layout.activity_oder_information);
+//        final TabHost host = (TabHost) findViewById(tabhost);
+//        host.setup();
+//
+//        //Tab 1
+//        TabHost.TabSpec spec1 = host.newTabSpec("Tab One");
+//        spec1.setIndicator(getResources().getString(R.string.dltoobar));
+//
+//
+//        Intent it = new Intent(this, DeliveryActivity.class);
+//        spec1.setContent(it);
+//        host.addTab(spec1);
+//
+//        //Tab 2
+//        TabHost.TabSpec spec = host.newTabSpec("Tab Two");
+//
+//        spec.setIndicator(getResources().getString(R.string.dlbando));
+//        Intent it1 = new Intent(this, BandoActivity.class);
+//        spec.setContent(it1);
+//        host.addTab(spec);
+//
+//        host.setCurrentTab(0);
+        final TabHost tab = (TabHost) findViewById
+                (android.R.id.tabhost);
+        //gọi lệnh setup
+        tab.setup();
+        TabHost.TabSpec spec;
+        //Tạo tab1
+        spec = tab.newTabSpec("t1");
+        spec.setContent(R.id.tab1);
+            spec.setIndicator("Chi tiết");
+        tab.addTab(spec);
+//        //Tạo tab2
+//        spec = tab.newTabSpec("t2");
+//        spec.setContent(R.id.tab2);
+//        spec.setIndicator("Bản đồ");
+//        tab.addTab(spec);
+        TabHost.TabSpec spec1 = tab.newTabSpec("Tab Two");
+
+        spec1.setIndicator(getResources().getString(R.string.hdandoi));
+        Intent it1 = new Intent(this, BandoActivity.class);
+        spec1.setContent(it1);
+        tab.addTab(spec1);
+        tab.getTabWidget().getChildAt(0).setBackgroundColor(getResources().getColor(R.color.darkred)); // selected
+        TextView tv = (TextView) tab.getTabWidget().getChildAt(0).findViewById(android.R.id.title); //for Selected Tab
+        tv.setTextColor(Color.parseColor("#ffffff"));
+        tab.getTabWidget().getChildAt(1).setBackgroundColor(getResources().getColor(R.color.red)); // selected
+        TextView tv1 = (TextView) tab.getTabWidget().getChildAt(1).findViewById(android.R.id.title); //for Selected Tab
+        tv1.setTextColor(Color.parseColor("#ffffff"));
+
+        tab.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String s) {
+
+                for (int i = 0; i < tab.getTabWidget().getChildCount(); i++) {
+                    tab.getTabWidget().getChildAt(i).setBackgroundColor(getResources().getColor(R.color.red)); // unselected
+                    TextView tv = (TextView) tab.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
+                    tv.setTextColor(Color.parseColor("#ffffff"));
+                }
+
+                tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.darkred)); // selected
+                TextView tv = (TextView) tab.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
+                tv.setTextColor(Color.parseColor("#ffffff"));
+            }
+        });
+        //Thiết lập tab mặc định được chọn ban đầu là tab 0
+
+        tab.setCurrentTab(0);
         changetime = new ChangeTimeToHours();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         db = new DBHandle(this);
         list = db.getAllUser();
         for (ListUserContructor lu : list) {
@@ -134,8 +189,6 @@ public class DeliveryActivity extends AppCompatActivity {
         btnFinish = (Button) findViewById(R.id.btnFinish);
         rtButton = (RelativeLayout) findViewById(R.id.rlButton);
         btnDirect = (Button) findViewById(R.id.btnDirect);
-
-
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(getString(R.string.dltoobar));
 
@@ -151,7 +204,7 @@ public class DeliveryActivity extends AppCompatActivity {
         code = data.getStringExtra("code");
         stt = data.getStringExtra("stt");
         listsanpham = data.getStringExtra("listsanpham");
-       // Log.d("listsanpham", listsanpham);
+        // Log.d("listsanpham", listsanpham);
 
 
         try {
@@ -207,9 +260,9 @@ public class DeliveryActivity extends AppCompatActivity {
         tvct.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:"+ct));
+                callIntent.setData(Uri.parse("tel:" + ct));
 
-                if (ActivityCompat.checkSelfPermission(DeliveryActivity.this,
+                if (ActivityCompat.checkSelfPermission(OderInformationActivity.this,
                         Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
@@ -305,7 +358,7 @@ public class DeliveryActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_delivery);
         btnDFinish = (Button) dialog.findViewById(R.id.btnDFinish);
-        ratingbar=(RatingBar)dialog.findViewById(R.id.ratingBar);
+        ratingbar = (RatingBar) dialog.findViewById(R.id.ratingBar);
         btnDCancel1 = (Button) dialog.findViewById(R.id.btnDCancel1);
         btnDSend = (Button) dialog.findViewById(R.id.btnDSend);
         btnDCancel = (Button) dialog.findViewById(R.id.btnDDeny);
@@ -316,7 +369,7 @@ public class DeliveryActivity extends AppCompatActivity {
             public void onClick(View v) {
 //
                 note = edfedd.getText().toString();
-                 rating=String.valueOf(ratingbar.getRating());
+                rating = String.valueOf(ratingbar.getRating());
 //                Toast.makeText(getApplication(), rating, Toast.LENGTH_LONG).show();
                 stt2 = "done";
                 sendSV();
@@ -349,7 +402,7 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 rating=String.valueOf(ratingbar.getRating());
+                rating = String.valueOf(ratingbar.getRating());
                 note = edfedd.getText().toString();
 
                 stt2 = "cancel";
@@ -399,11 +452,9 @@ public class DeliveryActivity extends AppCompatActivity {
                 }
             }
         };
-        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt2, id, tm,rating, link, response);
+        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt2, id, tm, rating, link, response);
         RequestQueue qe = Volley.newRequestQueue(getApplication());
         qe.add(save);
 
     }
-
-
 }

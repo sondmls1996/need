@@ -24,6 +24,7 @@ import com.nf.vi.needfoodshipper.Constructor.MainConstructor;
 import com.nf.vi.needfoodshipper.Constructor.WaittingContructor;
 import com.nf.vi.needfoodshipper.MainClass.DeliveryActivity;
 import com.nf.vi.needfoodshipper.MainClass.MainActivity;
+import com.nf.vi.needfoodshipper.MainClass.OderInformationActivity;
 import com.nf.vi.needfoodshipper.MainClass.WaittingActivity;
 import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.TrangThaiRequest;
@@ -124,7 +125,7 @@ public class WaittingAdapter extends
         viewHolder.lntop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, DeliveryActivity.class);
+                Intent intent = new Intent(context, OderInformationActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("id", ip.getId());
                 intent.putExtra("order", ip.getOrder());
