@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
     Session ses;
     EditText edus, edpass;
     DataHandle db;
-    String fullname, idfb, email, fone = "", adr="";
+    String fullname, idfb, email, fone = "", adr = "";
     String dvtoken;
 
     @Override
@@ -128,9 +128,7 @@ public class Login extends AppCompatActivity {
                                     String id = js.getString("id");
                                     String accesstoken = js.getString("accessToken");
 //                                    String pass = jo.getString("pass");
-
                                     postToken(accesstoken);
-
                                     addInfo(accesstoken, id, "0");
                                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                                     startActivity(it);

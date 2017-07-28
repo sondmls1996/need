@@ -48,7 +48,7 @@ public class ChangePassActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(getString(R.string.ifchangepasstoobar));
@@ -88,16 +88,11 @@ public class ChangePassActivity extends AppCompatActivity {
 
 
                         if (code.equals("0")) {
-
-                            Toast.makeText(getApplicationContext(), getString(R.string.sttthanhcong), Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
-                            finish();
                         } else if(code.equals("1")) {
-
                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.mkc), Toast.LENGTH_SHORT).show();
-
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -108,20 +103,11 @@ public class ChangePassActivity extends AppCompatActivity {
             RequestQueue qe = Volley.newRequestQueue(getApplicationContext());
             qe.add(save);
         } else if (!pass.equals(repass)) {
-
             Toast.makeText(getApplicationContext(),getResources().getString(R.string.mkc), Toast.LENGTH_SHORT).show();
         }
         else if (pass.equals("")&&repass.equals("")) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
-
         }
-
-    }
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(getApplication(),YourInformationActivity.class));
-        finish();
-
 
     }
 }

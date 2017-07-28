@@ -1,6 +1,5 @@
 package com.nf.vi.needfoodshipper.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -23,9 +22,12 @@ import com.nf.vi.needfoodshipper.Constructor.ListUserContructor;
 import com.nf.vi.needfoodshipper.Constructor.MainConstructor;
 import com.nf.vi.needfoodshipper.MainClass.DeliveryActivity;
 import com.nf.vi.needfoodshipper.MainClass.MainActivity;
+<<<<<<< HEAD
 import com.nf.vi.needfoodshipper.MainClass.NewDealActivity;
 
 import com.nf.vi.needfoodshipper.MainClass.OderInformationActivity;
+=======
+>>>>>>> 0814fb0dc205512ade80a99951d9a37f1a18ea24
 import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.TrangThaiRequest;
 import com.nf.vi.needfoodshipper.database.DBHandle;
@@ -144,16 +146,14 @@ public class MainAdapter extends
                 it.putExtra("listsanpham", ip.getListsanpham());
 
                 context.startActivity(it);
-
-
             }
         });
-//        if (stt1.equals("waiting")) {
-//            viewHolder.lnb.setVisibility(View.GONE);
-//            viewHolder.imgstt.setImageDrawable(context.getResources().getDrawable(R.drawable.grdot));
-//            viewHolder.textstt.setText(context.getResources().getString(R.string.wait));
-//            viewHolder.textstt.setTextColor(context.getResources().getColor(R.color.greenL));
-//        }
+        if (stt1.equals("waiting")) {
+            viewHolder.lnb.setVisibility(View.GONE);
+            viewHolder.imgstt.setImageDrawable(context.getResources().getDrawable(R.drawable.grdot));
+            viewHolder.textstt.setText(context.getResources().getString(R.string.wait));
+            viewHolder.textstt.setTextColor(context.getResources().getColor(R.color.greenL));
+        }
         viewHolder.btnDeny.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,11 +174,9 @@ public class MainAdapter extends
             public void onClick(View v) {
                 note = "";
                 stt = "waiting";
-
+                Log.d("IDD2", ip.getId());
                 id1 = ip.getId();
-                int ps = position;
-                sendSV(position);
-
+                sendSV();
 //                Intent it1 = new Intent(context, MainActivity.class);
 //                it1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                context.startActivity(it1);
@@ -194,19 +192,13 @@ public class MainAdapter extends
         viewHolder.btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 note = viewHolder.edfedd.getText().toString();
-                viewHolder.rl.setVisibility(View.GONE);
                 stt = "cancel";
                 id1 = ip.getId();
-                int ps = position;
                 if (note.equals("")) {
                     Toast.makeText(context, context.getString(R.string.dslydo), Toast.LENGTH_SHORT).show();
                 } else {
-                    sendSV(position);
-                    viewHolder.btnacc.setVisibility(View.VISIBLE);
-                    note = "";
-
+                    sendSV();
                 }
 //                Intent it1 = new Intent(context, MainActivity.class);
 //                it1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -216,7 +208,7 @@ public class MainAdapter extends
         });
     }
 
-    private void sendSV(final int ps) {
+    private void sendSV() {
 
         //   String link = getResources().getString(R.string.saveStatusOrderAPI);
         String link = "http://needfood.webmantan.com/saveStatusOrderAPI";
@@ -230,10 +222,10 @@ public class MainAdapter extends
 
 
                     if (code.equals("0")) {
-
                         Toast.makeText(context, context.getString(R.string.dsthanhcong), Toast.LENGTH_SHORT).show();
-                        removeItem(ps);
-
+                        Intent i = new Intent(context, MainActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(i);
 //
                     } else {
 //                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_SHORT).show();
@@ -243,7 +235,7 @@ public class MainAdapter extends
                 }
             }
         };
-        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt, id1, "","", link, response);
+        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt, id1, "", link, response);
         RequestQueue qe = Volley.newRequestQueue(context);
         qe.add(save);
 

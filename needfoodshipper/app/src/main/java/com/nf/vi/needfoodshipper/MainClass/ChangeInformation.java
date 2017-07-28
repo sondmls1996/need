@@ -56,7 +56,7 @@ public class ChangeInformation extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(getString(R.string.ifchangetoobar));
         progressDialog = new ProgressDialog(this);
@@ -101,11 +101,9 @@ public class ChangeInformation extends AppCompatActivity {
 
         String link = getResources().getString(R.string.updateInfoShiperAPI);
 
-        if (fullname1.matches("")  || address1.matches("")  ) {
+        if (fullname1.matches("") || address1.matches("")) {
 //            progressDialog.dismiss();
-
             Toast.makeText(getApplication(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
-
         } else {
             progressDialog = ProgressDialog.show(ChangeInformation.this, getResources().getString(R.string.chan), getResources().getString(R.string.wait), true);
             Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -120,18 +118,15 @@ public class ChangeInformation extends AppCompatActivity {
                             boolean update = db.updateinfo(id, fullname1, email1, address1, brithday1, skype1, facebook1, description1);
                             if (update == true) {
                                 progressDialog.dismiss();
-
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
 
                             } else {
                                 progressDialog.dismiss();
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-
                             }
 //                            Intent intent = new Intent(ChinhSuaTTActivity.this, ThongTinActivity.class);
 //                            ChinhSuaTTActivity.this.startActivity(intent);
                             startActivity(new Intent(getBaseContext(), YourInformationActivity.class));
-                            finish();
                         } else {
 //                            progressDialog.dismiss();
                             AlertDialog.Builder builder = new AlertDialog.Builder(ChangeInformation.this);
@@ -154,13 +149,12 @@ public class ChangeInformation extends AppCompatActivity {
 
         }
     }
+
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplication(),YourInformationActivity.class));
+        startActivity(new Intent(getApplication(), YourInformationActivity.class));
         finish();
 
-
     }
-
 
 }

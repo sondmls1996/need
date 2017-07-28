@@ -110,6 +110,7 @@
     <string name="ok">Đồng ý</string>
     <string name="action_settings">Cài đặt</string>
 
+    <string name="linkselling">http://needfood.webmantan.com/getProductSellingOutAPI</string>
     <string name="linkgetcoin">http://needfood.webmantan.com/getInfoUserAPI</string>
     <string name="linktranf">http://needfood.webmantan.com/changeCoinAPI</string>
     <string name="linkorder">http://needfood.webmantan.com/saveOrderAPI</string>
@@ -148,6 +149,7 @@
     <string name="linkgetinfo">http://needfood.webmantan.com/getInfoUserAPI</string>
     <string name="linklogfb">http://needfood.webmantan.com/checkRegisterFacebookAPI</string>
     <string name="linksaveShare">http://needfood.webmantan.com/saveShareHotDealAPI</string>
+    <string name="linktimenow">http://needfood.webmantan.com/getTimeServerAPI</string>
 
     <string name="logout">Đăng xuất</string>
     <string name="ssor">Đặt hàng thành công</string>
@@ -157,7 +159,7 @@
     <string name="new_">Mới</string>
     <string name="topdeall">Bán chạy</string>
     <string name="orif">Thông tin đơn hàng</string>
-    <string name="CoinTran">Chuyển Coins</string>
+    <string name="CoinTran">Tặng Coins</string>
     <string name="his">Lịch sử</string>
     <string name="Pwu">Hợp tác với chúng tôi</string>
     <string name="noprd">Không có sản phẩm để hiển thị</string>
@@ -168,7 +170,7 @@
     <string name="timeship">Thời gian nhận: \u0020</string>
     <string name="buyer">Người mua: \u0020</string>
     <string name="addr">Địa chỉ: \u0020</string>
-
+    <string name="selling">Selling out</string>
     <string name="F_REF">com.needfood.kh.fcm_re</string>
     <string name="F_CM">com.needfood.kh.fcm_cm</string>
 
@@ -192,7 +194,7 @@
     <string name="brname">Tên hãng:\u0020</string>
     <string name="rate">Đánh giá: \u0020</string>
     <string name="pd">Sản xuất ngày: \u0020</string>
-    <string name="exp">Điểm số: \u0020</string>
+    <string name="exp">Hạn sử dụng: \u0020</string>
     <string name="lf">Suất</string>
     <string name="prcode">Nhập mã khuyến mại</string>
     <string name="det">Chi tiết</string>
@@ -220,5 +222,5 @@
     <string name="dclick">Nhấn 2 lần để thoát</string>
     <string name="km">Sản phẩm này hiện tại không có khuyến mại</string>
     <string name="checkin">Bạn vui lòng kiểm tra lại mạng kết nối internet!</string>
-
+    <string name="ycc">Số xu hiện tại của bạn: \u0020</string>
 </resources>

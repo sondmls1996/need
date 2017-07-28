@@ -4,13 +4,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,7 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
+public class Hotdeal extends Fragment implements View.OnClickListener {
     Button btnlog;
     Session ses;
     DataHandle db;
@@ -63,26 +66,27 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ses = new Session(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
+        ses = new Session(getActivity());
+        db = new DataHandle(getActivity());
 
         if (ses.loggedin()) {
-            setContentView(R.layout.activity_hotdeal);
-            db = new DataHandle(this);
+            v = inflater.inflate(R.layout.activity_hotdeal, container, false);
+
             list = db.getAllInfor();
             for (InfoConstructor ic : list) {
                 token = ic.getAccesstoken();
             }
             arr = new ArrayList<>();
-            nop = (TextView) findViewById(R.id.nop6);
-            lvb = (RecyclerView) findViewById(R.id.lvhostdeal);
+            nop = (TextView) v.findViewById(R.id.nop6);
+            lvb = (RecyclerView) v.findViewById(R.id.lvhostdeal);
             lvb.setHasFixedSize(true);
 
-            layoutManager = new LinearLayoutManager(getApplicationContext());
+            layoutManager = new LinearLayoutManager(getActivity());
             lvb.setLayoutManager(layoutManager);
-            adapter = new HotdealAdapter(getApplicationContext(), arr);
+            adapter = new HotdealAdapter(getActivity(), arr);
             lvb.setAdapter(adapter);
             endlessScroll = new EndlessScroll(layoutManager) {
                 @Override
@@ -94,10 +98,10 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
             lvb.addOnScrollListener(endlessScroll);
             getData(1);
             lvb.addOnItemTouchListener(
-                    new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                    new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
-                            Intent it = new Intent(getApplicationContext(), ProductDetail.class);
+                            Intent it = new Intent(getActivity(), ProductDetail.class);
                             it.putExtra("idprd", arr.get(position).getIdprd());
                             it.putExtra("namesel", arr.get(position).getNameauth());
                             it.putExtra("idsel", arr.get(position).getIdsl());
@@ -106,7 +110,7 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
                         }
                     })
             );
-            swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefreshlayout1);
+            swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swiperefreshlayout1);
             swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW);
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -115,12 +119,14 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
                 }
             });
         } else {
-            setContentView(R.layout.fragment_frag_log);
-            btnlog = (Button) findViewById(R.id.btnlog);
+            v = inflater.inflate(R.layout.fragment_frag_log, container, false);
+            btnlog = (Button) v.findViewById(R.id.btnlog);
             btnlog.setOnClickListener(this);
 
 
         }
+
+        return v;
     }
 
 
@@ -129,13 +135,14 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
         int id = view.getId();
         switch (id) {
             case R.id.btnlog:
-                Intent it3 = new Intent(getApplicationContext(), Login.class);
+                Intent it3 = new Intent(getActivity(), Login.class);
                 startActivity(it3);
                 break;
         }
     }
+
     private AlertDialog taoMotAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         //Thiết lập tiêu đề hiển thị
         builder.setTitle(getResources().getString(R.string.er));
         //Thiết lập thông báo hiển thị
@@ -148,16 +155,17 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         db.deleteInfo();
-                        ses = new Session(getBaseContext());
+                        ses = new Session(getActivity());
                         ses.setLoggedin(false);
-                        Intent i = new Intent(getApplicationContext(), StartActivity.class);
+                        Intent i = new Intent(getActivity(), StartActivity.class);
                         startActivity(i);
-                        finish();
+                        getActivity().finish();
                     }
                 });
         AlertDialog dialog = builder.create();
         return dialog;
     }
+
     private void getData(int page) {
         final String link = getResources().getString(R.string.linkhotdeal);
         final Map<String, String> map = new HashMap<>();
@@ -168,11 +176,11 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
             public void onResponse(String response) {
                 Log.d("aa", response + "");
                 try {
-                    if(response.equals("{\"code\":-1}")){
+                    if (response.equals("{\"code\":-1}")) {
                         swipeRefreshLayout.setRefreshing(false);
                         AlertDialog alertDialog = taoMotAlertDialog();
                         alertDialog.show();
-                    }else{
+                    } else {
                         JSONArray ja = new JSONArray(response);
                         if (ja.length() == 0) {
                             if (arr.size() == 0) {
@@ -209,7 +217,7 @@ public class Hotdeal extends AppCompatActivity implements View.OnClickListener {
 
         };
         PostCL post = new PostCL(link, map, response);
-        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue que = Volley.newRequestQueue(getActivity());
         que.add(post);
     }
 

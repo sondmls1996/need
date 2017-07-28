@@ -309,8 +309,11 @@ public class MainActivity extends TabActivity
 
 
                     if (code.equals("0")) {
-
+//                        Toast.makeText(getApplicationContext(), "Gửi thành công", Toast.LENGTH_SHORT).show();
+//                            Intent i = new Intent(SentPassEmail.this, DangNhapActivity.class);
+//                            startActivity(i);
                     } else {
+//                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -321,7 +324,6 @@ public class MainActivity extends TabActivity
         RequestQueue qe = Volley.newRequestQueue(getApplicationContext());
         qe.add(save);
     }
-
 
 }
 

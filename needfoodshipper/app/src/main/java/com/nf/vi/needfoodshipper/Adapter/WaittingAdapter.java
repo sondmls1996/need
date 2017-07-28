@@ -1,6 +1,5 @@
 package com.nf.vi.needfoodshipper.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -24,8 +23,11 @@ import com.nf.vi.needfoodshipper.Constructor.MainConstructor;
 import com.nf.vi.needfoodshipper.Constructor.WaittingContructor;
 import com.nf.vi.needfoodshipper.MainClass.DeliveryActivity;
 import com.nf.vi.needfoodshipper.MainClass.MainActivity;
+<<<<<<< HEAD
 import com.nf.vi.needfoodshipper.MainClass.OderInformationActivity;
 import com.nf.vi.needfoodshipper.MainClass.WaittingActivity;
+=======
+>>>>>>> 0814fb0dc205512ade80a99951d9a37f1a18ea24
 import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.TrangThaiRequest;
 import com.nf.vi.needfoodshipper.database.DBHandle;
@@ -103,7 +105,7 @@ public class WaittingAdapter extends
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup viewGroup,
-                                                 int position) {
+                                                                 int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.customwaitting, viewGroup, false);
         return new WaittingAdapter.RecyclerViewHolder(itemView);
@@ -140,8 +142,6 @@ public class WaittingAdapter extends
                 intent.putExtra("listsanpham", ip.getListsanpham());
 
                 context.startActivity(intent);
-
-             //  System.exit(0);
             }
         });
         if (stt1.equals("waiting")) {

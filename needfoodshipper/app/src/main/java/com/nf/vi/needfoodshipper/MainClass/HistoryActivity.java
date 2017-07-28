@@ -97,7 +97,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(getString(R.string.lstoobar));
         wrap = (WrapSliding) findViewById(R.id.slide);
@@ -176,13 +176,12 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("GGKK", response);
+                    Log.d("GG", response);
                     if (checktime == true) {
                         ctime.cancel();
                     }
                     if (response.equals("")) {
                         tvBao.setVisibility(View.VISIBLE);
-
                     } else {
                         JSONArray arr = new JSONArray(response);
                         for (int i = 0; i < arr.length(); i++) {
@@ -215,7 +214,6 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
                             if (Order.has("noteShiper")) {
                                 note = Order.getString("noteShiper");
                             }
-
 
 //                        Toast.makeText(getApplication(), note, Toast.LENGTH_LONG).show();
 
@@ -320,7 +318,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("GGkk", response);
+                    Log.d("GG", response);
                     if (response.equals("[]")) {
                         tvBao.setVisibility(View.VISIBLE);
                     }
@@ -332,21 +330,21 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
                         JSONObject json = arr.getJSONObject(i);
                         JSONObject Order = json.getJSONObject("Order");
 
-//                        JSONObject listProduct = Order.getJSONObject("listProduct");
+                        JSONObject listProduct = Order.getJSONObject("listProduct");
                         JSONObject infoOrder = Order.getJSONObject("infoOrder");
                         JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
 
 
-//                        Iterator<String> ite = listProduct.keys();
-//
-//                        while (ite.hasNext()) {
-//                            String key = ite.next();
-//
-//                            JSONObject idx = listProduct.getJSONObject(key);
-//                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
-//
-//
-//                        }
+                        Iterator<String> ite = listProduct.keys();
+
+                        while (ite.hasNext()) {
+                            String key = ite.next();
+
+                            JSONObject idx = listProduct.getJSONObject(key);
+                            sb.append((idx.getString("quantity") + idx.getString("title")) + ";" + "\t");
+
+
+                        }
                         String timeShiper = infoOrder.getString("timeShiper");
 
                         String fullName = infoCustomer.getString("fullName");
@@ -386,9 +384,7 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
     @Override
     public void onRefresh() {
 
-
         ctime = new CountDownTimer(15000, 1000) {
-
             @Override
             public void onTick(long millisUntilFinished) {
                 checktime = true;
@@ -409,11 +405,8 @@ public class HistoryActivity extends AppCompatActivity implements SwipeRefreshLa
 
     @Override
     public void onBackPressed() {
-
-        startActivity(new Intent(getApplication(),MainActivity.class));
-        finish();
-
-
+        startActivity(new Intent(getApplication(), MainActivity.class));
+            finish();
 
     }
 }

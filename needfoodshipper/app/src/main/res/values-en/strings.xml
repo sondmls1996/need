@@ -9,7 +9,7 @@
     <string name="ttmanhanvien">Account ID      </string>
     <string name="late">Late</string>
     <string name="tthoten">Full Name       </string>
-    <string name="ttngaysinh">Birthday          </string>
+    <string name="ttngaysinh">Brithday          </string>
     <string name="wait">Waiting..</string>
     <string name="ttsodienthoai">Mobile Phone </string>
     <string name="ttemail">Email Contact</string>
@@ -35,19 +35,19 @@
     <string name="ctthoigiannhan">Time:\u0020</string>
     <string name="cttongtien">Payment:\u0020</string>
     <string name="ctbtnnhan">Accept</string>
-    <string name="ctbtnhuy">Cancel</string>
-    <string name="ctbtnhuy2">Deny</string>
+    <string name="ctbtnhuy">Deny</string>
+    <string name="ctbtnhuy2">Cancel</string>
     <string name="strnew">New</string>
-    <string name="ctphanhoi">Give a feedback</string>
+    <string name="ctphanhoi">Leave a feedback</string>
     <string name="ctbtngui">Send</string>
     <string name="dlbando">Map</string>
     <string name="dltool">Oder information</string>
     //deliveri
     <string name="ctbtnhoanthanh">Finish</string>
     <string name="dltext1">Customer Attitude Evaluation</string>
-    <string name="dltext2">Give a reason if you want to cancel the bill</string>
+    <string name="dltext2">Leave a reason if you can the bil</string>
     <string name="dlcode">Code:</string>
-    <string name="dlmoneyship">Note:</string>
+    <string name="dlmoneyship">Money Ship:</string>
     <string name="dltimeleft">Time Left:</string>
     <string name="dlbtnhoanthanh">Finish</string>
     <string name="dlbtnchiduowng">Direct</string>
@@ -100,17 +100,6 @@
     <string name="dstinhtien">Money</string>
     <string name="dsthanhcong">Success</string>
     <string name="dslydo">Leave feedback can not be empty</string>
-    //
-    <string name="sttthanhcong">successfully saved
-</string>
-    <string name="lnhapthieu">Enter missing information</string>
-
-
-    <string name="mkkhongdung">Old password is incorrect</string>
-    <string name="mkxnkhongdung">Confirm password is incorrect</string>
-
-    <string name="nhapthieutruong">Type missing data field</string>
-
 
     <string name="succ">Success</string>
     <string name="er">Error</string>
@@ -124,5 +113,4 @@
     <string name="wrreg">Can not be empty</string>
     <string name="logut">Logout</string>
     <string name="chan">Loading...</string>
->>>>>>> 483bd172d8c0f2dd432276d6015095eda042d16d
 </resources>

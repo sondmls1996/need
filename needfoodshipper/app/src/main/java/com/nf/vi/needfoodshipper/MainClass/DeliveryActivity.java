@@ -1,13 +1,10 @@
 package com.nf.vi.needfoodshipper.MainClass;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.CountDownTimer;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +16,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -66,8 +62,6 @@ public class DeliveryActivity extends AppCompatActivity {
     private TextView tvTitle, tvre, tvStt, tvCode, tvod, tvloc, tvct, tvtm, tvpay, textstt, tvMoneyShiper, tvTimeleft, tvSanpham, tvSoluong, tvDongia, tvThanhtien;
     private Dialog dialog;
     private ImageView imgstt;
-    RatingBar ratingbar;
-    String rating;
     SimpleDateFormat dateFormatter;
     private Calendar cal, cal1;
     private String a, id, order, lc, ct, re, tl, pay, moneyship, stt, code, stt2, listsanpham, tm;
@@ -98,7 +92,7 @@ public class DeliveryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         db = new DBHandle(this);
         list = db.getAllUser();
         for (ListUserContructor lu : list) {
@@ -156,31 +150,22 @@ public class DeliveryActivity extends AppCompatActivity {
 
         try {
 
-//            JSONObject json = new JSONObject(listsanpham);
-//            Iterator<String> ite = json.keys();
-//            while (ite.hasNext())
-////            for (int i = 0; !ite.hasNext(); i++)
-//            {
-//                String key = ite.next();
-//                JSONObject idx = json.getJSONObject(key);
-//
-//                soluong = idx.getString("quantity");
-//                sanpham = idx.getString("title");
-//                dongia = idx.getString("price");
-//                thanhtien = idx.getString("money");
-//
-//                ld.add(new ListviewContructor(sanpham, soluong, dongia, thanhtien));
-//
-//
-//            }
-            JSONArray listProduct = new JSONArray(listsanpham);
-            for (int j = 0; j < listProduct.length(); j++) {
-                JSONObject json1 = listProduct.getJSONObject(j);
-                String title = json1.getString("title");
-                String quantity = json1.getString("quantity");
-                String price = json1.getString("price");
-                String money1 = json1.getString("money");
-                ld.add(new ListviewContructor(title, quantity, price, money1));
+            JSONObject json = new JSONObject(listsanpham);
+            Iterator<String> ite = json.keys();
+            while (ite.hasNext())
+//            for (int i = 0; !ite.hasNext(); i++)
+            {
+                String key = ite.next();
+                JSONObject idx = json.getJSONObject(key);
+
+                soluong = idx.getString("quantity");
+                sanpham = idx.getString("title");
+                dongia = idx.getString("price");
+                thanhtien = idx.getString("money");
+
+                ld.add(new ListviewContructor(sanpham, soluong, dongia, thanhtien));
+
+
             }
 
             adapter.notifyDataSetChanged();
@@ -204,18 +189,6 @@ public class DeliveryActivity extends AppCompatActivity {
         } else if (stt.equals("process")) {
             rtButton.setVisibility(View.GONE);
         }
-        tvct.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:"+ct));
-
-                if (ActivityCompat.checkSelfPermission(DeliveryActivity.this,
-                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                startActivity(callIntent);
-            }
-        });
 
         tvre.setText(re);
         tvCode.setText(code);
@@ -305,7 +278,6 @@ public class DeliveryActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_delivery);
         btnDFinish = (Button) dialog.findViewById(R.id.btnDFinish);
-        ratingbar=(RatingBar)dialog.findViewById(R.id.ratingBar);
         btnDCancel1 = (Button) dialog.findViewById(R.id.btnDCancel1);
         btnDSend = (Button) dialog.findViewById(R.id.btnDSend);
         btnDCancel = (Button) dialog.findViewById(R.id.btnDDeny);
@@ -314,13 +286,10 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//
+//                Toast.makeText(getApplication(), "được k", Toast.LENGTH_LONG).show();
                 note = edfedd.getText().toString();
-                 rating=String.valueOf(ratingbar.getRating());
-//                Toast.makeText(getApplication(), rating, Toast.LENGTH_LONG).show();
                 stt2 = "done";
                 sendSV();
-                dialog.dismiss();
 
             }
         });
@@ -339,7 +308,6 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 dialog.dismiss();
                 rfDialog.setVisibility(View.GONE);
                 btnDFinish.setEnabled(true);
@@ -349,7 +317,6 @@ public class DeliveryActivity extends AppCompatActivity {
         btnDSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 rating=String.valueOf(ratingbar.getRating());
                 note = edfedd.getText().toString();
 
                 stt2 = "cancel";
@@ -357,7 +324,6 @@ public class DeliveryActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), getString(R.string.dslydo), Toast.LENGTH_SHORT).show();
                 } else {
                     sendSV();
-                    dialog.dismiss();
                 }
 
 
@@ -388,9 +354,8 @@ public class DeliveryActivity extends AppCompatActivity {
                     if (code.equals("0")) {
                         dialog.dismiss();
                         Toast.makeText(getApplication(), getString(R.string.dsthanhcong), Toast.LENGTH_LONG).show();
-//                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-//                        startActivity(i);
-                        finish();
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
                     } else {
 //                        Toast.makeText(getApplicationContext(), "Lỗi", Toast.LENGTH_SHORT).show();
                     }
@@ -399,7 +364,7 @@ public class DeliveryActivity extends AppCompatActivity {
                 }
             }
         };
-        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt2, id, tm,rating, link, response);
+        TrangThaiRequest save = new TrangThaiRequest(tk, note, stt2, id, tm, link, response);
         RequestQueue qe = Volley.newRequestQueue(getApplication());
         qe.add(save);
 

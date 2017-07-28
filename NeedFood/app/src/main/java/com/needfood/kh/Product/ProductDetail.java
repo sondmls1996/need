@@ -50,6 +50,7 @@ import com.needfood.kh.Constructor.ProductDetail.CommentConstructor;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
+import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.PostCL;
@@ -81,7 +82,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
     ImageView imgprd;
-    String priceprd, prdcode, titl;
+    public static String priceprd;
+    String  prdcode, titl;
     Session ses;
     String uadr;
     private SimpleDateFormat dateFormatter, timeformat;
@@ -93,13 +95,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String cata;
     Button deal, bn;
     OftenAdapter adapterof1, adapterof2;
-    TextView tvco, tvcodes, tvprize,tvphi,tvmyphi;
+    TextView tvco, tvcodes, tvprize, tvphi, tvmyphi;
     TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
     ArrayList<OftenConstructor> arrof, arrof2;
     ArrayList<OftenConstructor> arrq;
     public static ArrayList<Integer> listship;
     OftenAdapter quanadapter;
-    LinearLayout lnby, lnf, htu,lnshare,lnmyshare;
+    LinearLayout lnby, lnf, htu, lnshare, lnmyshare, lnprd;
     List<ListMN> list;
     String discount, discountStart, discountEnd, text1, text2, time1, time2, priceDiscount, discountCode;
     List<InfoConstructor> listu;
@@ -114,7 +116,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     LikeView likeView;
     StringBuilder howto, simg, strship;
     String cmt, time, iduser, fullnameus;
-    ImageView imageView;
+    ImageView imageView, next, down;
     ShareDialog shareDialog;
     ShareButton shareButton;
     int hieu;
@@ -122,6 +124,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Button sharee;
     TextView vote;
     String point;
+    TextView nameseller, exp;
+    LinearLayout lnpro;
+    boolean checkclick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +162,26 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         //  getCommen();
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopService(new Intent(ProductDetail.this, BubbleService.class));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(ProductDetail.this, BubbleService.class));
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(ProductDetail.this, BubbleService.class));
+        getNumberShare();
+    }
+
+
     private void khaibao() {
         db = new DataHandle(this);
         Intent it = getIntent();
@@ -167,12 +192,41 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         bn = (Button) findViewById(R.id.bn);
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
 
-        lnshare = (LinearLayout)findViewById(R.id.lnshare);
-        lnmyshare = (LinearLayout)findViewById(R.id.lnmhysh);
+        lnshare = (LinearLayout) findViewById(R.id.lnshare);
+        lnmyshare = (LinearLayout) findViewById(R.id.lnmhysh);
         imgshare = (ImageView) findViewById(R.id.imgshare);
-        tvphi = (TextView)findViewById(R.id.phi);
-        tvmyphi = (TextView)findViewById(R.id.myphi);
+        tvphi = (TextView) findViewById(R.id.phi);
+        tvmyphi = (TextView) findViewById(R.id.myphi);
         shareDialog = new ShareDialog(ProductDetail.this);
+
+        lnpro = (LinearLayout) findViewById(R.id.id_info_pro);
+        next = (ImageView) findViewById(R.id.nextt);
+        down = (ImageView) findViewById(R.id.downn);
+        lnprd = (LinearLayout) findViewById(R.id.prd);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        lnprd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkclick == false) {
+                    checkclick = true;
+                    down.setVisibility(View.VISIBLE);
+                    next.setVisibility(View.GONE);
+                    lnpro.setVisibility(View.VISIBLE);
+                } else {
+                    checkclick = false;
+                    down.setVisibility(View.GONE);
+                    lnpro.setVisibility(View.GONE);
+                    next.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
 
         imgshare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,6 +287,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         tvcodes = (TextView) findViewById(R.id.tvcodes);
         tvprize = (TextView) findViewById(R.id.tvprize);
         tvdv1 = (TextView) findViewById(R.id.donvi1);
+
+        nameseller = (TextView) findViewById(R.id.nameseller);
+        exp = (TextView) findViewById(R.id.exp);
 
         tvdv2 = (TextView) findViewById(R.id.donvi2);
         imgprd = (ImageView) findViewById(R.id.imgnews);
@@ -314,11 +371,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 } else {
                     a2 = Integer.parseInt(response);
                     Log.d("TTT", a2 + "");
-                    tvmyphi.setText(a2+"");
-                    if (a2 >= numshare&&numshare!=0) {
+                    tvmyphi.setText(a2 + "");
+                    if (a2 >= numshare && numshare != 0) {
 
                         deal.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         deal.setVisibility(View.GONE);
                     }
 
@@ -587,7 +644,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                                         .build())
                                 .build();
 
-
                         shareDialog = new ShareDialog(ProductDetail.this);
                         if (ShareDialog.canShow(ShareLinkContent.class)) {
                             shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
@@ -627,9 +683,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     discountCode = jos.getString("discountCode");
                     if (prd.has("numberShare")) {
                         numshare = prd.getInt("numberShare");
-                        if(numshare>0){
+                        if (numshare > 0) {
                             lnmyshare.setVisibility(View.VISIBLE);
-                            tvphi.setText(numshare+"");
+                            tvphi.setText(numshare + "");
                         }
                     }
                     Log.d("SHARENUM", numshare + "");
@@ -644,6 +700,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     prdcode = prd.getString("code");
                     bar = prd.getString("barcode");
                     priceprd = prd.getString("price");
+
+                    Intent i = new Intent(getApplicationContext(),BubbleService.class);
+                    i.putExtra("MN",priceprd);
+                    startService(i);
+
                     namesel.setText(namesl);
                     idsl = prd.getString("idSeller");
                     lnby.setVisibility(View.VISIBLE);
@@ -667,6 +728,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     simg = new StringBuilder("http://needfood.webmantan.com" + ja.getString(0));
                     Picasso.with(getApplicationContext()).load("http://needfood.webmantan.com" + ja.getString(0)).into(imgprd);
                     vote.setText(point);
+                    JSONObject ex = prd.getJSONObject("expiryDate");
+                    String txt_hsd = ex.getString("text");
+                    String time_hsd = ex.getString("time");
+                    exp.setText(txt_hsd);
+                    nameseller.setText(titl);
                     getPrdDK();
                     getCommen();
                 } catch (JSONException e) {
@@ -679,11 +745,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getNumberShare();
-    }
 
     public void saveShare() {
         final String link = getResources().getString(R.string.linksaveShare);
@@ -996,7 +1057,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         AlertDialog dialog = builder.create();
         return dialog;
     }
-
 
     // hoi xoa
     private AlertDialog taoMotAlertDialog() {

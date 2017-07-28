@@ -1,15 +1,15 @@
 package com.needfood.kh;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,7 +21,6 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +46,7 @@ import com.needfood.kh.Constructor.SearchConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Maps.MapsActivity;
 import com.needfood.kh.More.More;
+import com.needfood.kh.News.Hotdeal;
 import com.needfood.kh.News.TabFragment;
 import com.needfood.kh.Notif.Notif;
 import com.needfood.kh.Product.ProductDetail;
@@ -316,9 +316,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 pg = 0;
                 break;
             case R.id.dod:
-                fragmentClass = TabFragment.class;
+                fragmentClass = Hotdeal.class;
                 ReplaceFrag(fragmentClass);
-                pg = 1;
                 break;
             case R.id.sug:
                 fragmentClass = SuggessFrag.class;
@@ -340,7 +339,13 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     private void insertDummyContactWrapper() {
         List<String> permissionsNeeded = new ArrayList<String>();
-
+        if(Build.VERSION.SDK_INT >= 23) {
+            if (!Settings.canDrawOverlays(StartActivity.this)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, 1234);
+            }
+        }
         final List<String> permissionsList = new ArrayList<String>();
         if (!addPermission(permissionsList, Manifest.permission.CAMERA))
             permissionsNeeded.add("Camera");

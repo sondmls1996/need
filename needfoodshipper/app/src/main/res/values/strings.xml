@@ -19,7 +19,6 @@
     <string name="sendPassShiperAPI">http://needfood.webmantan.com/sendPassShiperAPI</string>
     <string name="getListOrderDoneShiperAPI">http://needfood.webmantan.com/getListOrderDoneShiperAPI</string>
     <string name="updateInfoShiperAPI">http://needfood.webmantan.com/updateInfoShiperAPI</string>
-    getListOrderWaitingShiperAPI
     <string name="getListOrderWaitingShiperAPI">http://needfood.webmantan.com/getListOrderWaitingShiperAPI</string>
 
     <string name="F_REF">com.mantanapp.needfoodshiper.f_ref</string>
@@ -70,7 +69,7 @@
     <string name="dltext1">Đánh giá thái độ của khách hàng</string>
     <string name="dltext2">Để lại một lý do nếu bạn hủy đơn</string>
     <string name="dlcode">Mã đơn:</string>
-    <string name="dlmoneyship">Ghi chú:</string>
+    <string name="dlmoneyship">Phí ship:</string>
     <string name="dltimeleft">Còn lại:</string>
     <string name="dlbtnhoanthanh">Kết thúc</string>
     <string name="dlbtnchiduowng">Chỉ đường</string>
@@ -114,7 +113,7 @@
     <string name="dithieu">Nhập thiếu thông tin</string>
     <string name="diathanhcong">Đăng nhập thành công !</string>
     //donhang
-    <string name="dhloiketnoi">Lỗi kết nối mạng</string>
+    <string name="dhloiketnoi">Lỗi kết nối</string>
     <string name="dhgailan">Nhấn 2 lần để thoát</string>
     <string name="dhhoithoat">Bạn thực sự muốn thoát ứng dụng ?</string>
     <string name="dhkhong">Không</string>
@@ -127,6 +126,7 @@
     <string name="dstinhtien">T.tiền</string>
     <string name="dsthanhcong">Thành công</string>
     <string name="dslydo">Lý do không được đươc để trống</string>
+<<<<<<< HEAD
     //suatt
     <string name="sttthanhcong">Lưu thành công</string>
     <string name="lnhapthieu">Nhập thiếu thông tin</string>
@@ -136,6 +136,8 @@
 
     <string name="nhapthieutruong">Nhập thiếu trường dữ liệu</string>
 
+=======
+>>>>>>> 0814fb0dc205512ade80a99951d9a37f1a18ea24
 
     <string name="succ">Thành Công</string>
     <string name="er">Lỗi</string>

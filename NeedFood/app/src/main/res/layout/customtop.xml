@@ -13,8 +13,6 @@
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-
             android:orientation="horizontal">
 
             <RelativeLayout
@@ -41,6 +39,7 @@
                         android:layout_margin="10dp"
                         android:background="@drawable/borderedt"
                         android:visibility="gone"
+                        android:id="@+id/txttime"
                         android:padding="3dp"
                         android:text="1:20"
                         android:textColor="@color/white" />
@@ -58,7 +57,6 @@
                     android:id="@+id/tvname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:text="SEA FOOD"
                     android:textColor="@color/red"
                     android:textSize="25sp" />
@@ -66,14 +64,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="5dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:text="by: "
                         android:textColor="@color/gray2" />
 
@@ -98,7 +95,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="5dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 

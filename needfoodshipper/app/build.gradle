@@ -5,12 +5,8 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.nf.vi.needfoodshipper"
-
-
         minSdkVersion 18
-
         targetSdkVersion 25
-
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
@@ -28,7 +24,6 @@ android {
 }
 
 dependencies {
-
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -36,11 +31,10 @@ dependencies {
 
 
 
-
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.google.android.gms:play-services-gcm:10.2.1'
     compile 'com.google.android.gms:play-services-maps:10.2.1'
@@ -52,8 +46,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 0814fb0dc205512ade80a99951d9a37f1a18ea24
 apply plugin: 'com.google.gms.google-services'

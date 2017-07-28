@@ -6,27 +6,21 @@ import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.TimeZone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
-
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.nf.vi.needfoodshipper.MainClass.MainActivity;
-import com.nf.vi.needfoodshipper.MainClass.NewDealActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -38,47 +32,34 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public String urln, title, notif, open, idTask, time;
     public String id, name;
     public String idUser;
+    Calendar c;
     Intent it;
-//    ChangeTimestamp changeTimestamp;
-//    DataHandle db;
-//    List<NotiConstructor> list;
-    int idd = 0;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-//        changeTimestamp = new ChangeTimestamp();
-//        db = new DataHandle(getApplicationContext());
         Random random = new Random();
         int m = random.nextInt(9999 - 1000) + 1000;
-//        list = db.getNoti();
-//        if (list.size() > 0) {
-//            idd = Integer.parseInt(list.get(0).getId());
-//        }
+
         if (remoteMessage.getData().size() > 0) {
-            Log.e(TAG, remoteMessage.getData() + "");
+            Log.e("MESSS", remoteMessage.getData() + "");
 
-            JSONObject jobj = new JSONObject(remoteMessage.getData());
-            try {
-                if (jobj.has("title")) {
-                    title = jobj.getString("title");
-                }
+//            JSONObject jobj = new JSONObject(remoteMessage.getData());
+//            try {
+//                if (jobj.has("title")) {
+//                    title = jobj.getString("title");
+//                }
+//                notif = jobj.getString("functionCall");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            if (notif.equals("changeCoinAPI")) {
+//                it = new Intent(this, HistoryActivity.class);
+//            }
 
-                notif = jobj.getString("functionCall");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-//
-
-            if (notif.equals("saveOrderAjax")) {
-                it = new Intent(this, MainActivity.class);
-            }
         }
-
-
-        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, it, PendingIntent.FLAG_ONE_SHOT);
+//        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, it, PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setContentTitle(title);
         builder.setContentText("Need Food");
@@ -89,14 +70,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         builder.setAutoCancel(true);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notif));
-        builder.setContentIntent(pendingIntent);
+//        builder.setContentIntent(pendingIntent);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(m, builder.build());
         checkNotificationSetting();
         isNLServiceCrashed();
     }
-
-
 
     private boolean checkNotificationSetting() {
 

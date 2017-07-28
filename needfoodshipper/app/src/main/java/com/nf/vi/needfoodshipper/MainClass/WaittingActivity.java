@@ -94,20 +94,9 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
         // Adds the scroll listener to RecyclerView
         rc.addOnScrollListener(scrollListener);
     }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        ld.clear();
-//        adapter.notifyDataSetChanged();
-//        order(1);
-//    }
 
     private void order(int page) {
 
-//        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
-//        dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
-//        String page = "1";
         final String link = getResources().getString(R.string.getListOrderWaitingShiperAPI);
 
         Response.Listener<String> response = new Response.Listener<String>() {
@@ -120,47 +109,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
                     }
                     if (response.equals("")) {
                         tvBao.setVisibility(View.VISIBLE);
-
-                    }
-//                    JSONArray arr = new JSONArray(response);
-//                    for (int i = 0; i < arr.length(); i++) {
-//                        StringBuilder sb = new StringBuilder();
-//                        StringBuilder soluong = new StringBuilder();
-//                        StringBuilder sanpham = new StringBuilder();
-//                        StringBuilder dongia = new StringBuilder();
-//                        StringBuilder thanhtien = new StringBuilder();
-//                        String money;
-//                        JSONObject json = arr.getJSONObject(i);
-//                        JSONObject Order = json.getJSONObject("Order");
-//
-//
-//                        JSONObject infoOrder = Order.getJSONObject("infoOrder");
-//                        JSONObject infoCustomer = Order.getJSONObject("infoCustomer");
-//
-//
-//                        JSONArray listProduct = Order.getJSONArray("listProduct");
-//                        for (int j = 0; j < listProduct.length(); j++) {
-//                            JSONObject json1 = listProduct.getJSONObject(j);
-//                            String title = json1.getString("title");
-//                            String quantity = json1.getString("quantity");
-//                            String price = json1.getString("price");
-//                            String money1 = json1.getString("money");
-//                            sb.append(quantity + title + ";" + "\t");
-//
-//                        }
-//                        String timeShiper = infoOrder.getString("timeShiper");
-//
-//                        String fullName = infoCustomer.getString("fullName");
-//                        String fone = infoCustomer.getString("fone");
-//                        String address = infoCustomer.getString("address");
-//                        String id = Order.getString("id");
-//                        String status = Order.getString("status");
-//                        String code = Order.getString("code");
-//
-//                        Log.d("hh", fullName);
-//                        ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
-//=======
-                     else {
+                    } else {
                         tvBao.setVisibility(View.GONE);
                         JSONArray arr = new JSONArray(response);
                         for (int i = 0; i < arr.length(); i++) {
@@ -197,8 +146,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
                             String code = Order.getString("code");
 
                             Log.d("hh", fullName);
-                            ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), Order.getString("note"), status, code, listProduct.toString()));
-
+                            ld.add(new WaittingContructor(id, sb.toString(), address, fone, fullName, timeShiper, infoOrder.getString("totalMoneyProduct"), infoOrder.getString("moneyShip"), status, code, listProduct.toString()));
 
 
                         }
@@ -222,10 +170,7 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
-
-
-
-        ctime = new CountDownTimer(10000, 1000) {
+        ctime = new CountDownTimer(15000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 checktime = true;
@@ -245,13 +190,11 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public void onBackPressed() {
-
         Toast.makeText(getBaseContext(), getResources().getString(R.string.dclick), Toast.LENGTH_SHORT).show();
-
         check++;
         if (check == 2) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(WaittingActivity.this);
-            alertDialogBuilder.setTitle("Shipper");
+            alertDialogBuilder.setTitle("Needfood");
             alertDialogBuilder
                     .setMessage(getResources().getString(R.string.evs))
                     .setCancelable(false)

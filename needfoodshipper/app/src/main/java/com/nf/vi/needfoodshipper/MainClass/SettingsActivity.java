@@ -71,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         btnSignout = (Button) findViewById(R.id.btnSignout);
         tvTitle.setText(getString(R.string.cdtoobar));
@@ -108,8 +108,6 @@ public class SettingsActivity extends AppCompatActivity {
                 changeLang(lang);
 //                Toast.makeText(getApplicationContext(), ketqua, Toast.LENGTH_SHORT).show();
                 db.updateinfo1(iddb, ketqua);
-
-
 
             }
 
@@ -149,9 +147,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                     if (code.equals("0")) {
                         progressDialog.dismiss();
-
                         Toast.makeText(getApplication(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
-
                         db.deleteAll();
                         ses.setLoggedin(false);
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -160,7 +156,6 @@ public class SettingsActivity extends AppCompatActivity {
 
                     } else if (code.equals("-1")) {
                         progressDialog.dismiss();
-
                         Toast.makeText(getApplication(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
                         db.deleteAll();
                         ses.setLoggedin(false);
@@ -210,7 +205,6 @@ public class SettingsActivity extends AppCompatActivity {
         android.content.res.Configuration config = new android.content.res.Configuration();
         config.locale = myLocale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
     }
 
 
@@ -223,12 +217,10 @@ public class SettingsActivity extends AppCompatActivity {
             getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
         }
     }
-
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplication(), MainActivity.class));
+        startActivity(new Intent(getApplication(),MainActivity.class));
         finish();
-
 
     }
 }
