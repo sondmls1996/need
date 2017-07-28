@@ -99,12 +99,13 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
     protected void onResume() {
         super.onResume();
         ld.clear();
-        // adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
         order(1);
     }
 
     private void order(int page) {
-
+        ld.clear();
+        adapter.notifyDataSetChanged();
 //        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.F_REF), Context.MODE_PRIVATE);
 //        dvtoken = sharedPreferences.getString(getString(R.string.F_CM), "");
 //        String page = "1";
@@ -179,14 +180,15 @@ public class WaittingActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
+        ld.clear();
+        adapter.notifyDataSetChanged();
 
 
         ctime = new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 checktime = true;
-                ld.clear();
-                adapter.notifyDataSetChanged();
+
                 order(1);
             }
 
