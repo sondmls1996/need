@@ -1,10 +1,11 @@
 package com.needfood.kh.More;
 
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,13 +54,9 @@ public class More extends Fragment implements View.OnClickListener {
         ses = new Session(getContext());
         db = new DataHandle(getContext());
 
-
-        if (ses.loggedin()) {
             v = inflater.inflate(R.layout.fragment_more, container, false);
-            list = db.getAllInfor();
-            for (InfoConstructor it : list) {
-                name = it.getFullname();
-            }
+
+
             imgavt = (ImageView) v.findViewById(R.id.avt);
             nameus = (TextView) v.findViewById(R.id.nameuser);
             lnhis = (LinearLayout) v.findViewById(R.id.history);
@@ -74,13 +71,19 @@ public class More extends Fragment implements View.OnClickListener {
             lntranf.setOnClickListener(this);
             lnparent.setOnClickListener(this);
             lncontac.setOnClickListener(this);
-            nameus.setText(name);
-            Picasso.with(getContext()).load(R.drawable.logo).transform(new TransImage()).into(imgavt);
-        } else {
-            v = inflater.inflate(R.layout.fragment_frag_log, container, false);
-            btnlog = (Button) v.findViewById(R.id.btnlog);
-            btnlog.setOnClickListener(this);
+        if (ses.loggedin()){
+            list = db.getAllInfor();
+            for (InfoConstructor it : list) {
+                name = it.getFullname();
+                nameus.setText(name);
+            }
         }
+            Picasso.with(getContext()).load(R.drawable.logo).transform(new TransImage()).into(imgavt);
+
+//            v = inflater.inflate(R.layout.fragment_frag_log, container, false);
+//            btnlog = (Button) v.findViewById(R.id.btnlog);
+//            btnlog.setOnClickListener(this);
+
         // Inflate the layout for this fragment
 
 
@@ -90,35 +93,84 @@ public class More extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id) {
-            case R.id.lntran:
-                Intent itt = new Intent(getContext(), Tranfer.class);
-                startActivity(itt);
-                break;
-            case R.id.lnself:
-                Intent it = new Intent(getContext(), MoreContanct.class);
-                startActivity(it);
-                break;
-            case R.id.lnset:
-                Intent it2 = new Intent(getContext(), Setting.class);
-                startActivity(it2);
-                break;
-            case R.id.btnlog:
-                Intent it3 = new Intent(getContext(), Login.class);
-                startActivity(it3);
-                break;
-            case R.id.lnparent:
-                Intent it4 = new Intent(getContext(), ParentUs.class);
-                startActivity(it4);
-                break;
-            case R.id.lncont:
-                Intent it5 = new Intent(getContext(), Contact.class);
-                startActivity(it5);
-                break;
-            case R.id.history:
-                Intent it6 = new Intent(getContext(), MoreHistory.class);
-                startActivity(it6);
-                break;
+        if(ses.loggedin()){
+            switch (id) {
+                case R.id.lntran:
+                    Intent itt = new Intent(getContext(), Tranfer.class);
+                    startActivity(itt);
+                    break;
+                case R.id.lnself:
+                    Intent it = new Intent(getContext(), MoreContanct.class);
+                    startActivity(it);
+                    break;
+                case R.id.lnset:
+                    Intent it2 = new Intent(getContext(), Setting.class);
+                    startActivity(it2);
+                    break;
+                case R.id.btnlog:
+                    Intent it3 = new Intent(getContext(), Login.class);
+                    startActivity(it3);
+                    break;
+                case R.id.lnparent:
+                    Intent it4 = new Intent(getContext(), ParentUs.class);
+                    startActivity(it4);
+                    break;
+                case R.id.lncont:
+                    Intent it5 = new Intent(getContext(), Contact.class);
+                    startActivity(it5);
+                    break;
+                case R.id.history:
+                    Intent it6 = new Intent(getContext(), MoreHistory.class);
+                    startActivity(it6);
+                    break;
+            }
+        }else{
+            switch (id) {
+                case R.id.lntran:
+                   taoMotAlertDialog2();
+                    break;
+                case R.id.lnself:
+                    Intent it3 = new Intent(getContext(), Login.class);
+                    startActivity(it3);
+                    break;
+                case R.id.lnset:
+                    Intent it2 = new Intent(getContext(), Setting.class);
+                    startActivity(it2);
+                    break;
+
+                case R.id.lnparent:
+                    Intent it4 = new Intent(getContext(), ParentUs.class);
+                    startActivity(it4);
+                    break;
+                case R.id.lncont:
+                    Intent it5 = new Intent(getContext(), Contact.class);
+                    startActivity(it5);
+                    break;
+                case R.id.history:
+                    taoMotAlertDialog2();
+                    break;
+            }
         }
+
+    }
+
+    private AlertDialog taoMotAlertDialog2() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        //Thiết lập tiêu đề hiển thị
+        builder.setTitle(getResources().getString(R.string.er));
+        //Thiết lập thông báo hiển thị
+
+        builder.setMessage(getResources().getString(R.string.yhl));
+        builder.setCancelable(false);
+        //Tạo nút Chu hang
+        builder.setNegativeButton(getResources().getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        return dialog;
     }
 }

@@ -131,7 +131,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         edname = (EditText) findViewById(R.id.edname);
 
         edphome = (EditText) findViewById(R.id.edphone);
-
+        edphome.requestFocus();
         edghichu = (EditText) findViewById(R.id.ghichu);
 
         for (InfoConstructor lu : listif) {
@@ -198,9 +198,9 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         String phone = edphome.getText().toString();
         String note = edghichu.getText().toString();
 
-        if (adr.equals("")) {
+        if (adr.equals("")||phone.equals("")) {
             pro.dismiss();
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).toString();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
         } else {
             hashMap.put("totalMoneyProduct",total+Integer.parseInt(mnship)+"");
             hashMap.put("fullName", name);

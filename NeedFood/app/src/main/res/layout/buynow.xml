@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="wrap_content"
+    android:id="@+id/lnbn"
     android:layout_height="wrap_content">
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:orientation="horizontal"
@@ -15,30 +16,17 @@
             android:padding="5dp"
             android:src="@drawable/shopbag"/>
         <TextView
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:textSize="16sp"
+            android:id="@+id/txthang"
             android:padding="5dp"
             android:background="@color/violet"
-            android:text="10.000.000"
+            android:text=""
             android:textColor="@color/white"/>
     </LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/white"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custombn"
-            android:text="Buy now"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:layout_margin="10dp"/>
 
-    </RelativeLayout>
 
 
 </LinearLayout>

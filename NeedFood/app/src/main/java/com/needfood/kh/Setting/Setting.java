@@ -2,10 +2,8 @@ package com.needfood.kh.Setting;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -86,17 +84,24 @@ public class Setting extends AppCompatActivity {
         lgb = (LoginButton) findViewById(R.id.loginset);
         logout = (LinearLayout) findViewById(R.id.logout);
         callbackManager = CallbackManager.Factory.create();
+
         db = new DataHandle(getApplicationContext());
-        list = db.getAllInfor();
-        for (InfoConstructor it : list) {
-            token = it.getAccesstoken();
-            type = it.getType();
-        }
-        if (type.equals("0")) {
+        if(ses.loggedin()){
+            list = db.getAllInfor();
+            for (InfoConstructor it : list) {
+                token = it.getAccesstoken();
+                type = it.getType();
+            }
+            if (type.equals("0")) {
+                lgb.setVisibility(View.GONE);
+            } else {
+                logout.setVisibility(View.GONE);
+            }
+        }else{
             lgb.setVisibility(View.GONE);
-        } else {
             logout.setVisibility(View.GONE);
         }
+
         lt = db.getLan();
         sharedPreferences = getSharedPreferences(Locale_Preference, Activity.MODE_PRIVATE);
         editor = sharedPreferences.edit();

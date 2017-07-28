@@ -1,6 +1,7 @@
 package com.needfood.kh.Adapter.ProductDetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,12 +19,15 @@ import com.easyandroidanimations.library.ScaleInAnimation;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
+import com.needfood.kh.Service.BubbleService;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by Vi on 4/27/2017.
@@ -104,7 +108,9 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     viewHolder.edo.setEnabled(true);
-
+                    Intent i = new Intent(getApplicationContext(),BubbleService.class);
+                    i.putExtra("MN",ip.getPrize());
+                    context.startService(i);
                     arrcheck.add(new CheckConstructor("1",
                             ip.getPrize(),"false",null,null,ip.getBar(),ip.getCode(),
                             ip.getName(),Integer.parseInt(ip.getPrize())*1+"",
@@ -130,12 +136,16 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                 if(arrcheck.size()==1){
                                     arrcheck.get(0).setQuanli("1");
                                     arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
+
                                 }else{
                                     arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
                                     arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
                                 }
 
                             }else {
+                                Intent i = new Intent(getApplicationContext(),BubbleService.class);
+                                i.putExtra("MN","-"+ip.getPrize());
+                                context.startService(i);
                                     if(arrcheck.size()==1){
                                         arrcheck.get(0).setQuanli(viewHolder.edo.getText().toString());
                                         arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
@@ -143,9 +153,6 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                         arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
                                         arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
                                     }
-
-
-
                             }
                         }
                     };
@@ -153,7 +160,9 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     viewHolder.edo.addTextChangedListener(viewHolder.textWatcher);
                     Log.d("ARRSIZE",arrcheck.size()+"");
                 }else {
-
+                    Intent i = new Intent(getApplicationContext(),BubbleService.class);
+                    i.putExtra("MN","-"+ip.getPrize());
+                    context.startService(i);
                     viewHolder.edo.setEnabled(false);
                     viewHolder.edo.removeTextChangedListener(viewHolder.textWatcher);
                     viewHolder.edo.setText(null);
