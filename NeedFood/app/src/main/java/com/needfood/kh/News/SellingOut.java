@@ -71,7 +71,7 @@ public class SellingOut extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         Intent it = new Intent(getApplicationContext(), ProductDetail.class);
                         it.putExtra("idprd", arr.get(position).getIdprd());
-
+                        it.putExtra("sell","true");
                         startActivity(it);
                         // TODO Handle item click
                     }

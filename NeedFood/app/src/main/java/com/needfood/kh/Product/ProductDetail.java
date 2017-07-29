@@ -92,7 +92,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     public DatePickerDialog fromDatePickerDialog;
     public TimePickerDialog timepicker;
     EditText edpickngay, edpickgio, edquan, edadrs, edghichu;
-    String cata;
+    String cata,sellprice="";
     Button deal, bn;
     OftenAdapter adapterof1, adapterof2;
     TextView tvco, tvcodes, tvprize, tvphi, tvmyphi;
@@ -106,7 +106,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String discount, discountStart, discountEnd, text1, text2, time1, time2, priceDiscount, discountCode;
     List<InfoConstructor> listu;
     DataHandle db;
-    String idprd, idsl, namesl, access, idu, fullname, phone, bar;
+    String idprd, idsl, namesl, access, idu, fullname, phone, bar,priceother;
     EditText txt_comment;
     ImageView img_comment, imglike, imgshare;
     RecyclerView re_comment;
@@ -120,7 +120,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ShareDialog shareDialog;
     ShareButton shareButton;
     int hieu;
-    String linkfbb;
+    String linkfbb,sttsell="";
     Button sharee;
     TextView vote;
     String point;
@@ -188,7 +188,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         view1 = (LinearLayout) findViewById(R.id.v1);
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
-
+        if(it.hasExtra("sell")){
+            sttsell = it.getStringExtra("sell");
+        }
         bn = (Button) findViewById(R.id.bn);
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
 
@@ -665,9 +667,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                                 }
                             });
                         }
-
                     }
-
                     JSONObject joo = prd.getJSONObject("vote");
                     point = joo.getString("point");
                     strship = new StringBuilder(prd.getString("moneyShip"));
@@ -699,7 +699,15 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     namesl = prd.getString("nameSeller");
                     prdcode = prd.getString("code");
                     bar = prd.getString("barcode");
-                    priceprd = prd.getString("price");
+
+                    if(sttsell.equals("true")){
+                            JSONObject selling = prd.getJSONObject("sellingOut");
+                            priceprd = selling.getString("price");
+                            priceother= prd.getString("price");
+                    }else{
+                        priceprd = prd.getString("price");
+                        priceother= prd.getString("priceOther");
+                    }
 
                     Intent i = new Intent(getApplicationContext(),BubbleService.class);
                     i.putExtra("MN",priceprd);
@@ -714,8 +722,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     list = db.getMNid(tym);
                     for (ListMN lu : list) {
                         mnid = lu.getMn();
-                        tvgia1.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("price"))) + lu.getMn());
-                        tvgia2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("priceOther"))) + lu.getMn(), TextView.BufferType.SPANNABLE);
+                        tvgia1.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(priceprd)) + lu.getMn());
+                        tvgia2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(priceother)) + lu.getMn(), TextView.BufferType.SPANNABLE);
                         Spannable spannable = (Spannable) tvgia2.getText();
                         spannable.setSpan(STRIKE_THROUGH_SPAN, 0, tvgia2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                         tvprize.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("price"))) + lu.getMn());
