@@ -1,10 +1,10 @@
 package com.needfood.kh.Constructor;
 
 /**
- * Created by Vi on 4/24/2017.
+ * Created by Vi on 7/28/2017.
  */
 
-public class NewsConstructor {
+public class SellingConstructor {
     public String linkimg;
     public String idprd;
     public String idsl;
@@ -16,6 +16,24 @@ public class NewsConstructor {
     public String vt;
     public String dv;
     public String mn;
+    public long tmleft;
+    public long now;
+
+    public SellingConstructor(String linkimg, String idprd, String idsl, String name, String nameauth, String price, String imga, String price2, String vt, String dv, String mn, long tmleft, long now) {
+        this.linkimg = linkimg;
+        this.idprd = idprd;
+        this.idsl = idsl;
+        this.name = name;
+        this.nameauth = nameauth;
+        this.price = price;
+        this.imga = imga;
+        this.price2 = price2;
+        this.vt = vt;
+        this.dv = dv;
+        this.mn = mn;
+        this.tmleft = tmleft;
+        this.now = now;
+    }
 
     public String getLinkimg() {
         return linkimg;
@@ -105,17 +123,19 @@ public class NewsConstructor {
         this.mn = mn;
     }
 
-    public NewsConstructor(String linkimg, String idprd, String idsl, String name, String nameauth, String price, String imga, String price2, String vt, String dv, String mn) {
-        this.linkimg = linkimg;
-        this.idprd = idprd;
-        this.idsl = idsl;
-        this.name = name;
-        this.nameauth = nameauth;
-        this.price = price;
-        this.imga = imga;
-        this.price2 = price2;
-        this.vt = vt;
-        this.dv = dv;
-        this.mn = mn;
+    public long getTmleft() {
+        return tmleft;
+    }
+
+    public void setTmleft(long tmleft) {
+        this.tmleft = tmleft;
+    }
+
+    public long getNow() {
+        return now;
+    }
+
+    public void setNow(long now) {
+        this.now = now;
     }
 }

@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
     Session ses;
     EditText edus, edpass;
     DataHandle db;
-    String fullname, idfb, email, fone = "", adr = "";
+    String fullname, idfb, email="", fone = "", adr = "";
     String dvtoken;
 
     @Override
@@ -120,14 +120,10 @@ public class Login extends AppCompatActivity {
                                     progressDialog.dismiss();
                                     ses.setLoggedin(true);
                                     JSONObject js = jo.getJSONObject("Useronl");
-//                                    String fullname = jo.getString("fullName");
-//                                    String email = jo.getString("email");
-//                                    String fone = jo.getString("fone");
-//                                    String address = jo.getString("address");
-//                                    String coin = jo.getString("coin");
+//
                                     String id = js.getString("id");
                                     String accesstoken = js.getString("accessToken");
-//                                    String pass = jo.getString("pass");
+
                                     postToken(accesstoken);
                                     addInfo(accesstoken, id, "0");
                                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
@@ -163,20 +159,21 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 final JSONObject json = response.getJSONObject();
-                                Log.d("JSRE", json.toString());
+                                Log.d("JSRE", response.toString());
 
                                 try {
                                     fullname = json.getString("name");
                                     idfb = json.getString("id");
-                                    email = json.getString("email");
-//                                    JSONObject loc = json.getJSONObject("location");
-//                                    adr = loc.getString("name");
+                                    if(json.has("location")){
+                                        adr = json.getString("location");
+                                    }
+                                    if(json.has("email")){
+                                        email = json.getString("email");
+                                    }
+
+//
                                     regisFB();
-//                                    Intent it = new Intent(getApplicationContext(),Register.class);
-//                                    it.putExtra("fullname",fullname);
-//                                    it.putExtra("email",email);
-//                                    it.putExtra("adr",adr);
-//                                    startActivity(it);
+//
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

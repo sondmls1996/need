@@ -74,6 +74,8 @@
     <string name="dlbtnhoanthanh">Kết thúc</string>
     <string name="dlbtnchiduowng">Chỉ đường</string>
     <string name="dltoobar">Chi tiết</string>
+    <string name="dlbando">Bản đồ</string>
+    <string name="dltool">Thông tin đơn hàng</string>
     //home
     <string name="hnew">Đơn mới</string>
     <string name="hdandoi">Đang chờ</string>
@@ -124,6 +126,18 @@
     <string name="dstinhtien">T.tiền</string>
     <string name="dsthanhcong">Thành công</string>
     <string name="dslydo">Lý do không được đươc để trống</string>
+
+    //suatt
+    <string name="sttthanhcong">Lưu thành công</string>
+    <string name="lnhapthieu">Nhập thiếu thông tin</string>
+
+    <string name="mkkhongdung">Mật khẩu cũ không đúng</string>
+    <string name="mkxnkhongdung">Mật khẩu xác nhận không đúng</string>
+
+    <string name="nhapthieutruong">Nhập thiếu trường dữ liệu</string>
+
+=======
+>>>>>>> 0814fb0dc205512ade80a99951d9a37f1a18ea24
 
     <string name="succ">Thành Công</string>
     <string name="er">Lỗi</string>

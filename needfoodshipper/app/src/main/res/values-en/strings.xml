@@ -40,6 +40,8 @@
     <string name="strnew">New</string>
     <string name="ctphanhoi">Leave a feedback</string>
     <string name="ctbtngui">Send</string>
+    <string name="dlbando">Map</string>
+    <string name="dltool">Oder information</string>
     //deliveri
     <string name="ctbtnhoanthanh">Finish</string>
     <string name="dltext1">Customer Attitude Evaluation</string>

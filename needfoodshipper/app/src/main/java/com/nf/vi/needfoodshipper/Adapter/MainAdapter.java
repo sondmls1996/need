@@ -22,6 +22,12 @@ import com.nf.vi.needfoodshipper.Constructor.ListUserContructor;
 import com.nf.vi.needfoodshipper.Constructor.MainConstructor;
 import com.nf.vi.needfoodshipper.MainClass.DeliveryActivity;
 import com.nf.vi.needfoodshipper.MainClass.MainActivity;
+<<<<<<< HEAD
+import com.nf.vi.needfoodshipper.MainClass.NewDealActivity;
+
+import com.nf.vi.needfoodshipper.MainClass.OderInformationActivity;
+=======
+>>>>>>> 0814fb0dc205512ade80a99951d9a37f1a18ea24
 import com.nf.vi.needfoodshipper.R;
 import com.nf.vi.needfoodshipper.Request.TrangThaiRequest;
 import com.nf.vi.needfoodshipper.database.DBHandle;
@@ -125,7 +131,7 @@ public class MainAdapter extends
         viewHolder.lntop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(context, DeliveryActivity.class);
+                Intent it = new Intent(context, OderInformationActivity.class);
                 it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 it.putExtra("id", ip.getId());
                 it.putExtra("order", ip.getOrder());

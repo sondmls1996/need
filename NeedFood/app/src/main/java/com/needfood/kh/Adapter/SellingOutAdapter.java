@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,32 +13,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.needfood.kh.Constructor.ListMN;
-import com.needfood.kh.Constructor.NewsConstructor;
+import com.needfood.kh.Constructor.SellingConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
+import com.needfood.kh.SupportClass.ChangeTimestamp;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-;
-
 /**
- * Created by Vi on 4/24/2017.
+ * Created by Vi on 7/28/2017.
  */
 
-public class NewsAdapter extends
-        RecyclerView.Adapter<NewsAdapter.RecyclerViewHolder> {
+public class SellingOutAdapter  extends
+        RecyclerView.Adapter<SellingOutAdapter.RecyclerViewHolder> {
     DataHandle db;
     String tymn;
+    ChangeTimestamp change;
+    Calendar c;
     List<ListMN> list;
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
-    private List<NewsConstructor> listData = new ArrayList<>();
+    private List<SellingConstructor> listData = new ArrayList<>();
     Context context;
 
-    public NewsAdapter(Context context, List<NewsConstructor> listData) {
+    public SellingOutAdapter(Context context, List<SellingConstructor> listData) {
         this.context = context;
         this.listData = listData;
     }
@@ -45,13 +48,16 @@ public class NewsAdapter extends
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvname, tvdv, tvdv2, namea, price, price2, vote, unv;
+        public TextView tvname, tvdv, tvdv2, namea, price, price2, vote, unv,txttime;
         public ImageView imageView, imga;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-            db = new DataHandle(context);
+            c = Calendar.getInstance();
 
+            change = new ChangeTimestamp();
+            db = new DataHandle(context);
+            txttime = (TextView) itemView.findViewById(R.id.txttime);
             tvname = (TextView) itemView.findViewById(R.id.tvname);
 
             tvdv = (TextView) itemView.findViewById(R.id.unit);
@@ -93,21 +99,27 @@ public class NewsAdapter extends
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder viewHolder, int position) {
-        NewsConstructor p = listData.get(position);
+        SellingConstructor p = listData.get(position);
         list = db.getMNid(p.getMn());
-
+        long now =p.getNow();
+        long tl = p.getTmleft()-now;
+        Log.d("SED",tl+"");
         for (ListMN lu : list) {
             tymn = lu.getMn();
         }
+        long giocl = tl / 3600;
+        long phutcl = (tl % 3600) / 60;
         viewHolder.tvname.setText(p.getName());
 
         viewHolder.tvdv.setText(p.dv);
-
+        viewHolder.txttime.setVisibility(View.VISIBLE);
+        viewHolder.txttime.setText(giocl+":"+phutcl);
         viewHolder.tvdv2.setText(p.dv);
         // TextView namea = (TextView)view.findViewById(R.id.tvau);
         viewHolder.namea.setText(p.nameauth);
         //TextView price = (TextView)view.findViewById(R.id.pr1);
         viewHolder.price.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getPrice())) + tymn);
+
         ;
         //TextView price2 = (TextView)view.findViewById(R.id.pr2);
 
@@ -140,9 +152,4 @@ public class NewsAdapter extends
         notifyItemRangeChanged(position, listData.size());
         notifyDataSetChanged();
     }
-
-    /**
-     * ViewHolder for item view of list
-     */
-
 }
