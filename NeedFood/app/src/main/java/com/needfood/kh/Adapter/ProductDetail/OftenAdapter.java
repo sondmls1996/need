@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.easyandroidanimations.library.ScaleInAnimation;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
@@ -34,7 +33,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 
 public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerViewHolder> {
-    public static ArrayList<CheckConstructor> arrcheck;
+    public static ArrayList<CheckConstructor> arrcheck = new ArrayList<>();
+
     private List<OftenConstructor> listData = new ArrayList<>();
     Context context;
     public OftenAdapter(Context context,List<OftenConstructor> listData) {
@@ -55,7 +55,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         public CheckBox cb;
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-            arrcheck = new ArrayList<>();
+
             img = (ImageView)itemView.findViewById(R.id.imgsug);
             tvName = (TextView)itemView.findViewById(R.id.namesug);
             prize = (TextView)itemView.findViewById(R.id.prizesug);
@@ -77,7 +77,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                                  int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.customprdoften, viewGroup, false);
-        new ScaleInAnimation(itemView).animate();
+
         return new RecyclerViewHolder(itemView);
     }
 
@@ -103,22 +103,19 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         }
 
 
-        viewHolder.cb.setTag(ip);
+   //     viewHolder.cb.setTag(ip);
         viewHolder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(isChecked){
-
-                    viewHolder.edo.setEnabled(true);
-                    Intent i = new Intent(getApplicationContext(),BubbleService.class);
-                    i.putExtra("MN",ip.getPrize());
-                    context.startService(i);
                     arrcheck.add(new CheckConstructor("1",
                             ip.getPrize(),"false",null,null,ip.getBar(),ip.getCode(),
-                            ip.getName(),Integer.parseInt(ip.getPrize())*1+"",
+                            ip.getName(),Integer.parseInt(ip.getPrize())+"",
                             ip.getNote(),ip.getId()
                     ));
+                    viewHolder.edo.setEnabled(true);
+
                     ProductDetail.listship.add(Integer.parseInt(ip.getNmship()));
                     viewHolder.edo.setText("1");
                     viewHolder.textWatcher = new TextWatcher() {
@@ -153,7 +150,6 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                         arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
                                         arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
                                     }
-
                             }
                             int prdmoney=0;
                             for (int i2 = 0; i2<arrcheck.size();i2++){
@@ -162,8 +158,6 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                             Intent it = new Intent(getApplicationContext(),BubbleService.class);
                             it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
                             context.startService(it);
-
-
 
                         }
                     };
@@ -181,7 +175,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     viewHolder.edo.removeTextChangedListener(viewHolder.textWatcher);
                     viewHolder.edo.setText(null);
                     if(arrcheck.size()==1){
-                        arrcheck.clear();
+                        arrcheck.remove(0);
                         ProductDetail.listship.remove(0);
                     }else{
                         arrcheck.remove(position);
