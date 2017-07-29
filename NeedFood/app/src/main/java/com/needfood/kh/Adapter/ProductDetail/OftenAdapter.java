@@ -66,6 +66,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         }
 
     }
+
     @Override
     public int getItemCount() {
         return listData.size();
@@ -106,7 +107,9 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         viewHolder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 if(isChecked){
+
                     viewHolder.edo.setEnabled(true);
                     Intent i = new Intent(getApplicationContext(),BubbleService.class);
                     i.putExtra("MN",ip.getPrize());
@@ -131,21 +134,18 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
 
                         @Override
                         public void afterTextChanged(Editable s) {
+
                             if(viewHolder.edo.getText().toString().equals("")){
 
                                 if(arrcheck.size()==1){
                                     arrcheck.get(0).setQuanli("1");
                                     arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
-
                                 }else{
+
                                     arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
                                     arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
                                 }
-
                             }else {
-                                Intent i = new Intent(getApplicationContext(),BubbleService.class);
-                                i.putExtra("MN","-"+ip.getPrize());
-                                context.startService(i);
                                     if(arrcheck.size()==1){
                                         arrcheck.get(0).setQuanli(viewHolder.edo.getText().toString());
                                         arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
@@ -153,26 +153,47 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                         arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
                                         arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
                                     }
+
                             }
+                            int prdmoney=0;
+                            for (int i2 = 0; i2<arrcheck.size();i2++){
+                                prdmoney = Integer.parseInt(arrcheck.get(i2).getMoney())+ prdmoney;
+                            }
+                            Intent it = new Intent(getApplicationContext(),BubbleService.class);
+                            it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
+                            context.startService(it);
+
+
+
                         }
                     };
-
+                    int prdmoney=0;
+                    for (int i2 = 0; i2<arrcheck.size();i2++){
+                        prdmoney = Integer.parseInt(arrcheck.get(i2).getMoney())+ prdmoney;
+                    }
+                    Intent it = new Intent(getApplicationContext(),BubbleService.class);
+                    it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
+                    context.startService(it);
                     viewHolder.edo.addTextChangedListener(viewHolder.textWatcher);
                     Log.d("ARRSIZE",arrcheck.size()+"");
                 }else {
-                    Intent i = new Intent(getApplicationContext(),BubbleService.class);
-                    i.putExtra("MN","-"+ip.getPrize());
-                    context.startService(i);
                     viewHolder.edo.setEnabled(false);
                     viewHolder.edo.removeTextChangedListener(viewHolder.textWatcher);
                     viewHolder.edo.setText(null);
                     if(arrcheck.size()==1){
                         arrcheck.clear();
-                        ProductDetail.listship.remove(ProductDetail.listship.size()-1);
+                        ProductDetail.listship.remove(0);
                     }else{
                         arrcheck.remove(position);
                         ProductDetail.listship.remove(position);
                     }
+                    int prdmoney=0;
+                    for (int i2 = 0; i2<arrcheck.size();i2++){
+                        prdmoney = Integer.parseInt(arrcheck.get(i2).getMoney())+ prdmoney;
+                    }
+                    Intent it = new Intent(getApplicationContext(),BubbleService.class);
+                    it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
+                    context.startService(it);
 
                     Log.d("ARRSIZE",arrcheck.size()+"");
                 }

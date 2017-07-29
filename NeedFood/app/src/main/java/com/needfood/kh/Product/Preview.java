@@ -91,7 +91,6 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         stt = intent.getStringExtra("stt");
         if (intent.hasExtra("num")) {
             numshare = intent.getIntExtra("num", 0);
-
         }
         btno = (Button) findViewById(R.id.btno);
         mid = intent.getStringExtra("min");
@@ -200,8 +199,10 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
 
         if (adr.equals("")||phone.equals("")) {
             pro.dismiss();
+            btno.setEnabled(true);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
         } else {
+            btno.setEnabled(true);
             hashMap.put("totalMoneyProduct",total+Integer.parseInt(mnship)+"");
             hashMap.put("fullName", name);
             hashMap.put("timeShiper", day + "/" + (month2 + 1) + "/" + year2 + " " + hour + ":" + minitus);

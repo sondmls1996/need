@@ -71,6 +71,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.needfood.kh.Adapter.ProductDetail.OftenAdapter.arrcheck;
+
 public class ProductDetail extends AppCompatActivity implements View.OnClickListener {
     RecyclerView rc, rcof, rcof2, rcquan;
     ArrayList<CommentConstructor> arr;
@@ -177,7 +179,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        startService(new Intent(ProductDetail.this, BubbleService.class));
+//        int prdmoney=0;
+//        for (int i2 = 0; i2<OftenAdapter.arrcheck.size();i2++){
+//            prdmoney = Integer.parseInt(OftenAdapter.arrcheck.get(i2).getMoney())+ prdmoney;
+//        }
+//        Intent it = new Intent(getApplicationContext(),BubbleService.class);
+//        it.putExtra("MN",prdmoney+Integer.parseInt(priceprd)+"");
+//        startService(it);
         getNumberShare();
     }
 
@@ -436,23 +444,23 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 e.printStackTrace();
             }
 
-            if (OftenAdapter.arrcheck.size() > 0) {
-                for (int i = 0; i < OftenAdapter.arrcheck.size(); i++) {
+            if (arrcheck.size() > 0) {
+                for (int i = 0; i < arrcheck.size(); i++) {
 
                     JSONObject jo = new JSONObject();
 
                     try {
-                        jo.put("quantity", OftenAdapter.arrcheck.get(i).getQuanli() + "");
-                        jo.put("price", OftenAdapter.arrcheck.get(i).getPrice() + "");
-                        jo.put("tickKM", OftenAdapter.arrcheck.get(i).getTickkm() + "");
-                        jo.put("tickKM_percent", OftenAdapter.arrcheck.get(i).getTickkm2() + "");
-                        jo.put("tickKM_money", OftenAdapter.arrcheck.get(i).getTickkm3() + "");
-                        jo.put("barcode", OftenAdapter.arrcheck.get(i).getBarcode() + "");
-                        jo.put("code", OftenAdapter.arrcheck.get(i).getCode() + "");
-                        jo.put("title", OftenAdapter.arrcheck.get(i).getTitle() + "");
-                        jo.put("money", OftenAdapter.arrcheck.get(i).getMoney() + "");
-                        jo.put("note", OftenAdapter.arrcheck.get(i).getNote() + "");
-                        jo.put("id", OftenAdapter.arrcheck.get(i).getId() + "");
+                        jo.put("quantity", arrcheck.get(i).getQuanli() + "");
+                        jo.put("price", arrcheck.get(i).getPrice() + "");
+                        jo.put("tickKM", arrcheck.get(i).getTickkm() + "");
+                        jo.put("tickKM_percent", arrcheck.get(i).getTickkm2() + "");
+                        jo.put("tickKM_money", arrcheck.get(i).getTickkm3() + "");
+                        jo.put("barcode", arrcheck.get(i).getBarcode() + "");
+                        jo.put("code", arrcheck.get(i).getCode() + "");
+                        jo.put("title", arrcheck.get(i).getTitle() + "");
+                        jo.put("money", arrcheck.get(i).getMoney() + "");
+                        jo.put("note", arrcheck.get(i).getNote() + "");
+                        jo.put("id", arrcheck.get(i).getId() + "");
                         jsonArray.put(jo);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -464,9 +472,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
             int money = 0;
 
-            if (OftenAdapter.arrcheck.size() > 0) {
-                for (int i = 0; i < OftenAdapter.arrcheck.size(); i++) {
-                    money = Integer.parseInt(OftenAdapter.arrcheck.get(i).getMoney()) + money;
+            if (arrcheck.size() > 0) {
+                for (int i = 0; i < arrcheck.size(); i++) {
+                    money = Integer.parseInt(arrcheck.get(i).getMoney()) + money;
                 }
             }
 
