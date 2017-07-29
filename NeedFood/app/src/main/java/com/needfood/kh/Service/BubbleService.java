@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
 
 
@@ -58,12 +59,15 @@ public class BubbleService extends Service implements View.OnClickListener {
 
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mWindowManager.addView(mChatHeadView, params);
-
+//        params.gravity = Gravity.TOP | Gravity.LEFT;
+//        params.x = 0;
+//        params.y = 100;
         txtgia = (TextView)mChatHeadView.findViewById(R.id.txthang);
 
-
             txtgia.setText("0");
-
+            if (!ProductDetail.priceprd.equals("")){
+                txtgia.setText(ProductDetail.priceprd);
+            }
         lnb = (LinearLayout)mChatHeadView.findViewById(R.id.lnbn);
         lnb.setOnTouchListener(new View.OnTouchListener() {
             private int lastAction;
