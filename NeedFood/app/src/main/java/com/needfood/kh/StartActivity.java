@@ -181,7 +181,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 Intent it = new Intent(getApplicationContext(), ProductDetail.class);
                 it.putExtra("idprd", arrs.get(position).getId());
                 startActivity(it);
-                finish();
+
             }
         });
         final EditText edt = (EditText) dialog.findViewById(R.id.searched);

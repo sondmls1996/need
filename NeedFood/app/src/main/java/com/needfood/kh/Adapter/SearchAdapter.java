@@ -26,8 +26,6 @@ public class SearchAdapter extends ArrayAdapter<SearchConstructor> {
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
 
     public SearchAdapter(Context context, int resource, List<SearchConstructor> items) {
-
-
         super(context, resource, items);
     }
 

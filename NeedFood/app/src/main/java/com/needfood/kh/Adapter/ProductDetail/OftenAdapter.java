@@ -133,18 +133,18 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         public void afterTextChanged(Editable s) {
 
                             if(viewHolder.edo.getText().toString().equals("")){
-
-                                if(arrcheck.size()==1){
-                                    arrcheck.get(0).setQuanli("1");
-                                    arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
-                                }else{
+//
+//                                if(arrcheck.size()==1){
+//                                    arrcheck.get(0).setQuanli("1");
+//                                    arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
+//                                }else{
                                     for(int i = 0 ; i < arrcheck.size() ; i++){
                                         if(ip.getId().equalsIgnoreCase(arrcheck.get(i).id)){
                                             arrcheck.get(i).setQuanli(viewHolder.edo
                                                     .getText().toString());
                                             arrcheck.get(i).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
                                         }
-                                    }
+//                                    }
 
                                 }
                                 int prdmoney=0;
@@ -155,16 +155,22 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                 it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
                                 context.startService(it);
                             }else {
-                                    if(arrcheck.size()==1){
-                                        arrcheck.get(0).setQuanli(viewHolder.edo.getText().toString());
-                                        arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
-                                    }else{
+//                                    if(arrcheck.size()==1){
+//                                        for(int i = 0 ; i < arrcheck.size() ; i++){
+//                                            if(ip.getId().equalsIgnoreCase(arrcheck.get(i).id)){
+//                                                arrcheck.get(i).setQuanli(viewHolder.edo.getText().toString());
+//                                                arrcheck.get(i).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
+//                                            }
+//                                        }
+//                                        arrcheck.get(0).setQuanli(viewHolder.edo.getText().toString());
+//                                        arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
+//                                    }else{
                                         for(int i = 0 ; i < arrcheck.size() ; i++){
                                             if(ip.getId().equalsIgnoreCase(arrcheck.get(i).id)){
                                                 arrcheck.get(i).setQuanli(viewHolder.edo.getText().toString());
                                                 arrcheck.get(i).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
                                             }
-                                        }
+                                        //}
 
                                     }
                                 int prdmoney=0;
@@ -192,10 +198,10 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     viewHolder.edo.setEnabled(false);
                     viewHolder.edo.removeTextChangedListener(viewHolder.textWatcher);
                     viewHolder.edo.setText(null);
-                    if(arrcheck.size()==1){
-                        arrcheck.remove(0);
-                        ProductDetail.listship.remove(0);
-                    }else{
+//                    if(arrcheck.size()==1){
+//                        arrcheck.remove(0);
+//                        ProductDetail.listship.remove(0);
+//                    }else{
                         for(int i = 0 ; i < arrcheck.size() ; i++){
                             if(ip.getId().equalsIgnoreCase(arrcheck.get(i).id)){
                                 arrcheck.remove(i);
@@ -204,7 +210,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         }
 
 
-                    }
+                  //  }
                     int prdmoney=0;
                     for (int i2 = 0; i2<arrcheck.size();i2++){
                         prdmoney = Integer.parseInt(arrcheck.get(i2).getMoney())+ prdmoney;
