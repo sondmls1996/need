@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -45,7 +46,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     List<MapConstructor> list;
     String brandName, fullName, fone, address, id, lat, lo;
     String linkbrand, linkname, linkfone, linkadd, linkid;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +73,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
 
 
