@@ -112,7 +112,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     arrcheck.add(new CheckConstructor("1",
                             ip.getPrize(),"false",null,null,ip.getBar(),ip.getCode(),
                             ip.getName(),Integer.parseInt(ip.getPrize())+"",
-                            ip.getNote(),ip.getId()
+                            ip.getNote(),ip.getId(),ip.getTymn()
                     ));
                     viewHolder.edo.setEnabled(true);
 

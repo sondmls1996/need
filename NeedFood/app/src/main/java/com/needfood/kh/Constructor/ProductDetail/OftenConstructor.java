@@ -15,7 +15,24 @@ public class OftenConstructor {
     public String code;
     public String note;
     public String id;
+
     public String  nmship;
+    public String tymn;
+
+    public OftenConstructor(String img, String name, String prize, String mn, String dv, boolean isSelected, String bar, String code, String note, String id, String nmship, String tymn) {
+        this.img = img;
+        this.name = name;
+        this.prize = prize;
+        this.mn = mn;
+        this.dv = dv;
+        this.isSelected = isSelected;
+        this.bar = bar;
+        this.code = code;
+        this.note = note;
+        this.id = id;
+        this.nmship = nmship;
+        this.tymn = tymn;
+    }
 
     public String getImg() {
         return img;
@@ -105,17 +122,11 @@ public class OftenConstructor {
         this.nmship = nmship;
     }
 
-    public OftenConstructor(String img, String name, String prize, String mn, String dv, boolean isSelected, String bar, String code, String note, String id, String nmship) {
-        this.img = img;
-        this.name = name;
-        this.prize = prize;
-        this.mn = mn;
-        this.dv = dv;
-        this.isSelected = isSelected;
-        this.bar = bar;
-        this.code = code;
-        this.note = note;
-        this.id = id;
-        this.nmship = nmship;
+    public String getTymn() {
+        return tymn;
+    }
+
+    public void setTymn(String tymn) {
+        this.tymn = tymn;
     }
 }

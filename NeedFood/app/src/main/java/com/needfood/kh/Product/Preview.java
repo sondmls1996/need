@@ -49,7 +49,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Preview extends AppCompatActivity implements View.OnClickListener {
-    String json, mid, stt, mnship, idsl, acess;
+    String json, mid, stt, mnship, idsl, acess,idmn;
     RecyclerView lv;
     private SimpleDateFormat dateFormatter, timeformat;
     ArrayList<PreConstructor> arr;
@@ -85,6 +85,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         Intent intent = getIntent();
         hashMap = (HashMap<String, String>) intent.getSerializableExtra("map");
         json = hashMap.get("listProduct");
+
         idsl = hashMap.get("idSeller");
         total = Double.parseDouble(hashMap.get("totalMoneyProduct"));
         mnship = hashMap.get("moneyShip");
@@ -209,6 +210,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             hashMap.put("address", adr);
             hashMap.put("note", note);
             hashMap.put("fone", phone);
+
             Response.Listener<String> response = new Response.Listener<String>() {
 
                 @Override

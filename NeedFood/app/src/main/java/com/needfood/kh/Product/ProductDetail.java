@@ -81,6 +81,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     int a2;
     int numshare = 0;
     ProgressBar pr1;
+    String tym;
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
     ImageView imgprd;
@@ -88,6 +89,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String  prdcode, titl;
     Session ses;
     String uadr;
+    String typemn;
     private SimpleDateFormat dateFormatter, timeformat;
     Calendar c;
     int day, month2, year2, hour, minitus;
@@ -110,7 +112,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     DataHandle db;
     String idprd, idsl, namesl, access, idu, fullname, phone, bar,priceother;
     EditText txt_comment;
-    ImageView img_comment, imglike, imgshare;
+    ImageView img_comment, imglike;
+    Button imgshare;
     RecyclerView re_comment;
     String comment;
     ShareLinkContent content;
@@ -206,7 +209,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
         lnmyshare = (LinearLayout) findViewById(R.id.lnmhysh);
-        imgshare = (ImageView) findViewById(R.id.imgshare);
+        imgshare = (Button) findViewById(R.id.imgshare);
         tvphi = (TextView) findViewById(R.id.phi);
         tvmyphi = (TextView) findViewById(R.id.myphi);
         shareDialog = new ShareDialog(ProductDetail.this);
@@ -435,6 +438,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 j1.put("money", money1 + "");
                 j1.put("note", "");
                 j1.put("id", idprd);
+                j1.put("typeMoneyId",tym);
                 jsonArray.put(j1);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -457,6 +461,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         jo.put("money", arrcheck.get(i).getMoney() + "");
                         jo.put("note", arrcheck.get(i).getNote() + "");
                         jo.put("id", arrcheck.get(i).getId() + "");
+                        jo.put("typeMoneyId",arrcheck.get(i).getTypeid());
                         jsonArray.put(jo);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -494,6 +499,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("map", map);
             it.putExtra("min", mnid);
             it.putExtra("stt", "nom");
+            it.putExtra("tymn",tym);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -526,6 +532,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 j1.put("money", money1 + "");
                 j1.put("note", "");
                 j1.put("id", idprd);
+                j1.put("typeMoneyId",tym);
                 jsonArray.put(j1);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -549,11 +556,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             // map.put("idUseronl",idu);
             map.put("idSeller", idsl);
 
+
             Intent it = new Intent(getApplicationContext(), Preview.class);
             it.putExtra("map", map);
             it.putExtra("min", mnid);
             it.putExtra("stt", stt);
             it.putExtra("num", ns);
+            it.putExtra("tymn",tym);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -586,6 +595,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 j1.put("money", money1 + "");
                 j1.put("note", "Sử dụng mã khuyến mại " + mkm);
                 j1.put("id", idprd);
+                j1.put("typeMoneyId",tym);
                 jsonArray.put(j1);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -613,6 +623,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("map", map);
             it.putExtra("min", mnid);
             it.putExtra("stt", "");
+            it.putExtra("tymn",tym);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -697,7 +708,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     howto.append(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
                     tvnameprd.setText(prd.getString("title"));
-                    String tym = prd.getString("typeMoneyId");
+                     tym = prd.getString("typeMoneyId");
                     String dvs = prd.getString("nameUnit");
                     titl = prd.getString("title");
                     namesl = prd.getString("nameSeller");
@@ -797,14 +808,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         JSONObject jo = ja.getJSONObject(i);
                         JSONObject prd = jo.getJSONObject("Product");
                         JSONArray jaimg = prd.getJSONArray("images");
-                        String typemn = prd.getString("typeMoneyId");
+                         typemn = prd.getString("typeMoneyId");
                         list = db.getMNid(typemn);
                         for (ListMN lu : list) {
                             mn = lu.getMn();
                         }
                         arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                "", prd.getString("id"), prd.getString("moneyShip")));
+                                "", prd.getString("id"), prd.getString("moneyShip"),typemn));
                     }
 
                     quanadapter.notifyDataSetChanged();
@@ -841,14 +852,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         JSONObject jo = ja.getJSONObject(i);
                         JSONObject prd = jo.getJSONObject("Product");
                         JSONArray jaimg = prd.getJSONArray("images");
-                        String typemn = prd.getString("typeMoneyId");
+                         typemn = prd.getString("typeMoneyId");
                         list = db.getMNid(typemn);
                         for (ListMN lu : list) {
                             mn = lu.getMn();
                         }
                         arrof.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                "", prd.getString("id"), prd.getString("moneyShip")));
+                                "", prd.getString("id"), prd.getString("moneyShip"),typemn));
                     }
 
                     adapterof1.notifyDataSetChanged();
@@ -885,7 +896,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         JSONObject jo = ja.getJSONObject(i);
                         JSONObject prd = jo.getJSONObject("Product");
                         JSONArray jaimg = prd.getJSONArray("images");
-                        String typemn = prd.getString("typeMoneyId");
+                         typemn = prd.getString("typeMoneyId");
                         list = db.getMNid(typemn);
                         for (ListMN lu : list) {
                             mn = lu.getMn();
@@ -893,7 +904,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                         arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
-                                "", prd.getString("id"), prd.getString("moneyShip")));
+                                "", prd.getString("id"), prd.getString("moneyShip"),typemn));
                     }
                     adapterof2.notifyDataSetChanged();
                     getAtach();

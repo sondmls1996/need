@@ -17,20 +17,7 @@ public class CheckConstructor {
     public String money;
     public String note;
     public String id;
-
-    public CheckConstructor(String quanli, String price, String tickkm, String tickkm2, String tickkm3, String barcode, String code, String title, String money, String note, String id) {
-        this.quanli = quanli;
-        this.price = price;
-        this.tickkm = tickkm;
-        this.tickkm2 = tickkm2;
-        this.tickkm3 = tickkm3;
-        this.barcode = barcode;
-        this.code = code;
-        this.title = title;
-        this.money = money;
-        this.note = note;
-        this.id = id;
-    }
+    public String typeid;
 
     public String getQuanli() {
         return quanli;
@@ -118,5 +105,28 @@ public class CheckConstructor {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTypeid() {
+        return typeid;
+    }
+
+    public void setTypeid(String typeid) {
+        this.typeid = typeid;
+    }
+
+    public CheckConstructor(String quanli, String price, String tickkm, String tickkm2, String tickkm3, String barcode, String code, String title, String money, String note, String id, String typeid) {
+        this.quanli = quanli;
+        this.price = price;
+        this.tickkm = tickkm;
+        this.tickkm2 = tickkm2;
+        this.tickkm3 = tickkm3;
+        this.barcode = barcode;
+        this.code = code;
+        this.title = title;
+        this.money = money;
+        this.note = note;
+        this.id = id;
+        this.typeid = typeid;
     }
 }

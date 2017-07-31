@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.needfood.kh.Adapter.PreAdapter;
+import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.PreConstructor;
+import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 
 import org.json.JSONArray;
@@ -18,11 +20,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryDetail extends AppCompatActivity {
-    String js;
+    String js,mn;
     RecyclerView rchis;
     ArrayList<PreConstructor> arr;
+    List<ListMN> listmn;
+    DataHandle db;
     PreAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,7 @@ public class HistoryDetail extends AppCompatActivity {
         });
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.orif));
+        db = new DataHandle(this);
         Intent it = getIntent();
         js = it.getStringExtra("js");
         rchis = (RecyclerView)findViewById(R.id.rchgis);
@@ -49,7 +55,11 @@ public class HistoryDetail extends AppCompatActivity {
             JSONArray list = jo.getJSONArray("listProduct");
             for (int i=0;i<list.length();i++){
                 JSONObject idx = list.getJSONObject(i);
-                arr.add(new PreConstructor(idx.getString("title"), idx.getString("quantity"), idx.getString("money"), ""));
+                listmn = db.getMNid(idx.getString("typeMoneyId"));
+                for (ListMN lu:listmn){
+                    mn=lu.getMn();
+                }
+                arr.add(new PreConstructor(idx.getString("title"), idx.getString("quantity"), idx.getString("money"), mn));
             }
             adapter.notifyDataSetChanged();
         } catch (JSONException e) {
