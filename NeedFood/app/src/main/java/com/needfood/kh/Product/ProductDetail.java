@@ -88,7 +88,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     public static String priceprd;
     String  prdcode, titl;
     Session ses;
-    String uadr;
+    String uadr,tax;
     String typemn;
     private SimpleDateFormat dateFormatter, timeformat;
     Calendar c;
@@ -485,7 +485,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("accessToken", access);
             map.put("listProduct", jsonArray.toString());
             map.put("money", money + "");
-            map.put("totalMoneyProduct", (money * 1.1) + "");
+            map.put("totalMoneyProduct", money * ((Integer.parseInt(tax)+1)/100) + "");
             map.put("fullName", "");
             map.put("moneyShip", mnship + "");
             map.put("timeShiper", "");
@@ -820,7 +820,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                     quanadapter.notifyDataSetChanged();
 
-
+                    getBrand();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -831,6 +831,30 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(get);
     }
+
+
+    private void getBrand() {
+            final String link = getResources().getString(R.string.linkifsel);
+            Map<String, String> map = new HashMap<>();
+            map.put("idSeller", idsl);
+            Response.Listener<String> response = new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d("SLL", response);
+                    try {
+                        JSONObject jo = new JSONObject(response);
+                        JSONObject sl = jo.getJSONObject("Seller");
+                        tax = sl.getString("taxNumber");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            PostCL get = new PostCL(link, map, response);
+            RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+            que.add(get);
+        }
+
 
     private void getPrdDK() {
         final String link = getResources().getString(R.string.linkprdcata);
