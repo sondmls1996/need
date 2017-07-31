@@ -153,7 +153,6 @@ public class Tranfer extends AppCompatActivity {
                     String fone = jo.getString("fone");
                     String address = jo.getString("address");
                     coinn = jo.getString("coin");
-                    db.updateinfo(fullname, email, address, idu, coinn);
                     txtCoin.setText(coinn);
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.media.Image;
 import android.util.Log;
 
 import com.needfood.kh.Constructor.InfoConstructor;
@@ -41,6 +42,9 @@ public class DataHandle extends SQLiteOpenHelper {
     public static final String IDINFO = "idin";
     public static final String ACCESSTK = "accessToken";
     public static final String COIN = "coin";
+    public static final String IMAGE = "avatar";
+    public static final String ID_IMG ="id_img";
+    public static final String TAB_IMAGE = "image_tb";
 
     public static final String CHECK_LAN = "language";
     public static final String ID_LANGUAGE = "id_language";
@@ -73,6 +77,7 @@ public class DataHandle extends SQLiteOpenHelper {
                         ACCESSTK + " TEXT NOT NULL," +
                         COIN + " TEXT NOT NULL," +
                         TYPE + " TEXT NOT NULL" +
+
                         ");";
         String CREATE_TABLE_LAN =
                 "CREATE TABLE " + CHECK_LAN + "(" +
@@ -86,6 +91,7 @@ public class DataHandle extends SQLiteOpenHelper {
                         IMAGE_NOTI + " TEXT NOT NULL," +
                         TIME_NOTI + " TEXT NOT NULL" +
                         ");";
+
         db.execSQL(CREATE_TABLE_USER);
         db.execSQL(CREATE_TABLE_INFO);
         db.execSQL(CREATE_TABLE_LAN);
@@ -138,7 +144,7 @@ public class DataHandle extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addNoti(String tit,String img,String time) {
+    public void addNoti(String tit, String img, String time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TIT_NOTI, tit);
@@ -148,6 +154,7 @@ public class DataHandle extends SQLiteOpenHelper {
         db.close();
     }
 
+
     public List<NotiConstructor> getNoti() {
         List<NotiConstructor> contactList = new ArrayList<NotiConstructor>();
         // Select All Query
@@ -155,19 +162,21 @@ public class DataHandle extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-
+        NotiConstructor contact = new NotiConstructor();
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            do {
-                NotiConstructor contact = new NotiConstructor();
-                contact.setId(cursor.getString(0));
-                contact.setTitle(cursor.getString(1));
-                contact.setImg(cursor.getString(2));
-                contact.setTime(cursor.getString(3));
+            if (cursor.getCount() > 0) {
+                do {
 
-                // Adding contact to list
-                contactList.add(contact);
-            } while (cursor.moveToNext());
+                    contact.setId(cursor.getString(0));
+                    contact.setTitle(cursor.getString(1));
+                    contact.setImg(cursor.getString(2));
+                    contact.setTime(cursor.getString(3));
+
+                    // Adding contact to list
+                    contactList.add(contact);
+                } while (cursor.moveToNext());
+            }
         }
         cursor.close();
 
@@ -210,20 +219,22 @@ public class DataHandle extends SQLiteOpenHelper {
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            do {
-                InfoConstructor contact = new InfoConstructor();
-                contact.setFullname(cursor.getString(0));
-                contact.setEmail(cursor.getString(1));
-                contact.setFone(cursor.getString(2));
-                contact.setPass(cursor.getString(3));
-                contact.setAddress(cursor.getString(4));
-                contact.setId(cursor.getString(5));
-                contact.setAccesstoken(cursor.getString(6));
-                contact.setCoin(cursor.getString(7));
-                contact.setType(cursor.getString(8));
-                // Adding contact to list
-                contactList.add(contact);
-            } while (cursor.moveToNext());
+            if (cursor.getCount() > 0) {
+                do {
+                    InfoConstructor contact = new InfoConstructor();
+                    contact.setFullname(cursor.getString(0));
+                    contact.setEmail(cursor.getString(1));
+                    contact.setFone(cursor.getString(2));
+                    contact.setPass(cursor.getString(3));
+                    contact.setAddress(cursor.getString(4));
+                    contact.setId(cursor.getString(5));
+                    contact.setAccesstoken(cursor.getString(6));
+                    contact.setCoin(cursor.getString(7));
+                    contact.setType(cursor.getString(8));
+                    // Adding contact to list
+                    contactList.add(contact);
+                } while (cursor.moveToNext());
+            }
         }
         cursor.close();
 
@@ -286,6 +297,7 @@ public class DataHandle extends SQLiteOpenHelper {
         values.put(EMAIL, email);
         values.put(ADDRESS, addr);
         values.put(COIN, coin);
+
         db.update(INFO, values, IDINFO + " = ?", new String[]{id});
         return true;
     }
@@ -297,6 +309,7 @@ public class DataHandle extends SQLiteOpenHelper {
         cursor.close();
         return count;
     }
+
     public boolean isMoneyEmpty() {
         boolean empty = false;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -317,13 +330,15 @@ public class DataHandle extends SQLiteOpenHelper {
         db.delete(INFO, null, null);
         db.close();
     }
-    public void deleteNote(int  id) {
+
+    public void deleteNote(int id) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NOTI, ID_NOTI + " = ?",
                 new String[]{String.valueOf(id)});
         db.close();
     }
+
     public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(MONEYTB, null, null);

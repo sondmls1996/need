@@ -3,9 +3,13 @@ package com.needfood.kh.More;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +18,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Login.Login;
 import com.needfood.kh.More.History.MoreHistory;
 import com.needfood.kh.R;
 import com.needfood.kh.Setting.Setting;
+import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
 import com.needfood.kh.SupportClass.TransImage;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +48,8 @@ public class More extends Fragment implements View.OnClickListener {
 
     LinearLayout lntranf, lnself, lnset, lnhis, lnparent, lncontac;
 
-
+    String first;// this will contain "Fruit"
+    String second;
     Button btnlog;
     View v;
     Session ses;
@@ -42,6 +57,7 @@ public class More extends Fragment implements View.OnClickListener {
     DataHandle db;
     List<InfoConstructor> list;
     String name;
+    String token, id;
 
     public More() {
         // Required empty public constructor
@@ -54,32 +70,38 @@ public class More extends Fragment implements View.OnClickListener {
         ses = new Session(getContext());
         db = new DataHandle(getContext());
 
-            v = inflater.inflate(R.layout.fragment_more, container, false);
+        v = inflater.inflate(R.layout.fragment_more, container, false);
 
 
-            imgavt = (ImageView) v.findViewById(R.id.avt);
-            nameus = (TextView) v.findViewById(R.id.nameuser);
-            lnhis = (LinearLayout) v.findViewById(R.id.history);
-            lnhis.setOnClickListener(this);
-            lnself = (LinearLayout) v.findViewById(R.id.lnself);
-            lnset = (LinearLayout) v.findViewById(R.id.lnset);
-            lntranf = (LinearLayout) v.findViewById(R.id.lntran);
-            lnparent = (LinearLayout) v.findViewById(R.id.lnparent);
-            lncontac = (LinearLayout) v.findViewById(R.id.lncont);
-            lnset.setOnClickListener(this);
-            lnself.setOnClickListener(this);
-            lntranf.setOnClickListener(this);
-            lnparent.setOnClickListener(this);
-            lncontac.setOnClickListener(this);
-        if (ses.loggedin()){
+        imgavt = (ImageView) v.findViewById(R.id.avt);
+        nameus = (TextView) v.findViewById(R.id.nameuser);
+        lnhis = (LinearLayout) v.findViewById(R.id.history);
+        lnhis.setOnClickListener(this);
+        lnself = (LinearLayout) v.findViewById(R.id.lnself);
+        lnset = (LinearLayout) v.findViewById(R.id.lnset);
+        lntranf = (LinearLayout) v.findViewById(R.id.lntran);
+        lnparent = (LinearLayout) v.findViewById(R.id.lnparent);
+        lncontac = (LinearLayout) v.findViewById(R.id.lncont);
+        lnset.setOnClickListener(this);
+        lnself.setOnClickListener(this);
+        lntranf.setOnClickListener(this);
+        lnparent.setOnClickListener(this);
+        lncontac.setOnClickListener(this);
+        if (ses.loggedin()) {
             list = db.getAllInfor();
-            for (InfoConstructor it : list) {
-                name = it.getFullname();
-                nameus.setText(name);
+            Log.d("ABCCA", list.size() + "");
+            if (list.size() > 0) {
+                for (InfoConstructor it : list) {
+                    name = it.getFullname();
+                    nameus.setText(name);
+                    token = it.getAccesstoken();
+                    id = it.getId();
+                }
             }
-        }
-            Picasso.with(getContext()).load(R.drawable.logo).transform(new TransImage()).into(imgavt);
 
+        }
+//            Picasso.with(getContext()).load(R.drawable.logo).transform(new TransImage()).into(imgavt);
+        addInfo();
 //            v = inflater.inflate(R.layout.fragment_frag_log, container, false);
 //            btnlog = (Button) v.findViewById(R.id.btnlog);
 //            btnlog.setOnClickListener(this);
@@ -93,7 +115,7 @@ public class More extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if(ses.loggedin()){
+        if (ses.loggedin()) {
             switch (id) {
                 case R.id.lntran:
                     Intent itt = new Intent(getContext(), Tranfer.class);
@@ -124,10 +146,10 @@ public class More extends Fragment implements View.OnClickListener {
                     startActivity(it6);
                     break;
             }
-        }else{
+        } else {
             switch (id) {
                 case R.id.lntran:
-                   taoMotAlertDialog2();
+                    taoMotAlertDialog2();
                     break;
                 case R.id.lnself:
                     Intent it3 = new Intent(getContext(), Login.class);
@@ -172,5 +194,49 @@ public class More extends Fragment implements View.OnClickListener {
                 });
         AlertDialog dialog = builder.create();
         return dialog;
+    }
+
+    public void decode(String imageDecode) {
+        byte[] decodedString = Base64.decode(imageDecode, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        Log.d("LOGBITMAP", decodedByte + "");
+        imgavt.setImageBitmap(decodedByte);
+    }
+
+    private void addInfo() {
+        String linkk = getResources().getString(R.string.linkgetinfo);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", token);
+        map.put("idUseronl", id);
+        Response.Listener<String> response = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d("LOGA", response);
+                    JSONObject js = new JSONObject(response);
+                    JSONObject jo = js.getJSONObject("Useronl");
+                    String fullname = jo.getString("fullName");
+                    String email = jo.getString("email");
+                    String fone = jo.getString("fone");
+                    String address = jo.getString("address");
+                    String coin = jo.getString("coin");
+                    String ava = jo.getString("avatar");
+                    StringTokenizer tokenss = new StringTokenizer(ava, ",");
+                    first = tokenss.nextToken();// this will contain "Fruit"
+                    second = tokenss.nextToken();
+                    decode(second);
+
+                    db.updateinfo(fullname, email, address, id, coin);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        PostCL post = new PostCL(linkk, map, response);
+        RequestQueue que = Volley.newRequestQueue(getActivity());
+        que.add(post);
+
     }
 }

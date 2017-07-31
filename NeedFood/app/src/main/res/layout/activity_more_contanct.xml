@@ -30,6 +30,7 @@
                 android:layout_height="70dp"
                 android:scaleType="centerCrop" />
 
+
             <EditText
                 android:id="@+id/mor_name"
                 android:layout_width="wrap_content"
@@ -61,6 +62,7 @@
                     android:layout_gravity="center"
                     android:text="@string/yourin"
                     android:textColor="@color/white" />
+
                 <TextView
                     android:id="@+id/save"
                     android:layout_width="wrap_content"
@@ -69,6 +71,7 @@
                     android:text="@string/save"
                     android:textAlignment="textEnd"
                     android:textColor="@color/white" />
+
                 <TextView
                     android:id="@+id/change"
                     android:layout_width="wrap_content"
@@ -119,8 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="3"
-                    android:background="@android:color/transparent"
-                     />
+                    android:background="@android:color/transparent" />
 
 
             </LinearLayout>
@@ -143,8 +145,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:inputType="number"
-                    android:background="@android:color/transparent" />
+                    android:background="@android:color/transparent"
+                    android:inputType="number" />
             </LinearLayout>
 
             <LinearLayout
@@ -168,6 +170,7 @@
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -191,10 +194,10 @@
             </LinearLayout>
 
             <TextView
-                android:gravity="center"
                 android:id="@+id/changepass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:padding="5dp"
                 android:text="@string/changepass"
                 android:textColor="@color/blue"

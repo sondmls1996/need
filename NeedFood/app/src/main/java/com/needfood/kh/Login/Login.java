@@ -24,6 +24,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.needfood.kh.Constructor.ImageConstructor;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
@@ -38,6 +39,7 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 public class Login extends AppCompatActivity {
     LoginButton lgb;
@@ -47,7 +49,7 @@ public class Login extends AppCompatActivity {
     Session ses;
     EditText edus, edpass;
     DataHandle db;
-    String fullname, idfb, email="", fone = "", adr = "";
+    String fullname, idfb, email = "", fone = "", adr = "";
     String dvtoken;
 
     @Override
@@ -96,8 +98,8 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 final ProgressDialog progressDialog = DialogUtils.show(Login.this, getResources().getString(R.string.wait));
 
-                String phone = edus.getText().toString();
-                String pass = edpass.getText().toString();
+                final String phone = edus.getText().toString();
+                final String pass = edpass.getText().toString();
                 String link = getResources().getString(R.string.linklogin);
 
                 Map<String, String> map = new HashMap<String, String>();
@@ -120,10 +122,9 @@ public class Login extends AppCompatActivity {
                                     progressDialog.dismiss();
                                     ses.setLoggedin(true);
                                     JSONObject js = jo.getJSONObject("Useronl");
-//
                                     String id = js.getString("id");
+                                    String ava = js.getString("avatar");
                                     String accesstoken = js.getString("accessToken");
-
                                     postToken(accesstoken);
                                     addInfo(accesstoken, id, "0");
                                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
@@ -164,10 +165,10 @@ public class Login extends AppCompatActivity {
                                 try {
                                     fullname = json.getString("name");
                                     idfb = json.getString("id");
-                                    if(json.has("location")){
+                                    if (json.has("location")) {
                                         adr = json.getString("location");
                                     }
-                                    if(json.has("email")){
+                                    if (json.has("email")) {
                                         email = json.getString("email");
                                     }
 
@@ -262,7 +263,8 @@ public class Login extends AppCompatActivity {
                     String fone = jo.getString("fone");
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
-                    Log.d("ABCLOG", fullname + "-" + email + "-" + fone + "-" + "" + "-" + address + "-" + id + "-" + token + "-" + coin);
+
+                    Log.d("ABCLOG", token + "-" + id + "-" + fullname + "-" + email + "-" + fone + "-" + address + "-" + coin);
                     db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin, type));
                 } catch (JSONException e) {
                     e.printStackTrace();
