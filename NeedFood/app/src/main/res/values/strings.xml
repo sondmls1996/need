@@ -140,6 +140,7 @@
     <string name="linkupdate">http://needfood.webmantan.com/updateInfoUseronlAPI</string>
     <string name="linkorhis">http://needfood.webmantan.com/getHistoryOrderAPI</string>
     <string name="linkhotdeal">http://needfood.webmantan.com/getHotDealProductAPI</string>
+
     <string name="linksavecm">http://needfood.webmantan.com/saveCommentProductAPI</string>
     <string name="linkgetcm">http://needfood.webmantan.com/getCommentProductAPI</string>
     <string name="linksavecmpr">http://needfood.webmantan.com/saveCommentProductAPI</string>
@@ -157,6 +158,7 @@
     <string name="tienganh">English</string>
     <string name="new_">New</string>
     <string name="topdeall">Top Deal</string>
+    <string name="share">Share</string>
     <string name="CoinTran">Donate Coins</string>
     <string name="his">History</string>
     <string name="sento">Send to:</string>

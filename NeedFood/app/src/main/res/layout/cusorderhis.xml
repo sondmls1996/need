@@ -50,12 +50,7 @@
             android:layout_height="wrap_content"
             android:text="VND"
             android:textColor="@color/grayDark" />
-        <TextView
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="/"
-            android:textColor="@color/grayDark" />
 
 
     </LinearLayout>

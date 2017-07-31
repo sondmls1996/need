@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.needfood.kh.R;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 
 /**
@@ -34,8 +36,7 @@ public class BubbleService extends Service implements View.OnClickListener {
     public int onStartCommand (Intent intent, int flags, int startId) {
         if(intent.hasExtra("MN")){
             int pr = Integer.parseInt(intent.getStringExtra("MN"));
-
-            txtgia.setText(Integer.parseInt(txtgia.getText().toString())+pr +"");
+            txtgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(pr));
         }
 
         return START_STICKY;
@@ -64,9 +65,7 @@ public class BubbleService extends Service implements View.OnClickListener {
         txtgia = (TextView)mChatHeadView.findViewById(R.id.txthang);
 
             txtgia.setText("0");
-                params.gravity = Gravity.TOP | Gravity.LEFT;
-        params.x = 0;
-        params.y = 100;
+
         lnb = (LinearLayout)mChatHeadView.findViewById(R.id.lnbn);
         lnb.setOnTouchListener(new View.OnTouchListener() {
             private int lastAction;

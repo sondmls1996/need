@@ -35,7 +35,7 @@ public class QRCamera extends AppCompatActivity implements QRCodeReaderView.OnQR
     private QRCodeReaderView qrCodeReaderView;
     String idsp;
     DataHandle db;
-    TextView tvpr, namesel, tvnameprd, tvgia1, tvgia2, dess, tvdv1, tvdv2;
+    TextView tvpr, namesel, tvnameprd, tvgia1, tvgia2, dess, tvdv1, tvdv2,txtcode;
     ImageView imgprd;
     RelativeLayout rl;
     List<ListMN> list;
@@ -50,6 +50,7 @@ public class QRCamera extends AppCompatActivity implements QRCodeReaderView.OnQR
         qrCodeReaderView = (QRCodeReaderView) findViewById(R.id.qrdecoderview);
         qrCodeReaderView.setOnQRCodeReadListener(this);
         tvgia1 = (TextView) findViewById(R.id.pr1);
+        txtcode = (TextView)findViewById(R.id.txtcode);
         tvnameprd = (TextView) findViewById(R.id.tvname2);
         rl = (RelativeLayout) findViewById(R.id.rlmain);
         rl.setVisibility(View.GONE);
@@ -117,28 +118,36 @@ public class QRCamera extends AppCompatActivity implements QRCodeReaderView.OnQR
             public void onResponse(String response) {
                 try {
                     view1.setVisibility(View.VISIBLE);
-
+                    txtcode.setVisibility(View.GONE);
                     pr1.setVisibility(View.GONE);
                     rl.setVisibility(View.VISIBLE);
 
                     JSONObject jo = new JSONObject(response);
-                    JSONObject prd = jo.getJSONObject("Product");
+                    String code = jo.getString("code");
+                    if(code.equals("0")){
+                        JSONObject prd = jo.getJSONObject("Product");
 
-                    tvnameprd.setText(prd.getString("title"));
-                    String tym = prd.getString("typeMoneyId");
-                    String dvs = prd.getString("nameUnit");
-                    tvdv1.setText(dvs);
-                    tvdv2.setText(dvs);
-                    list = db.getMNid(tym);
-                    for (ListMN lu : list) {
-                        tvgia1.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("price"))) + lu.getMn());
-                        tvgia2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("priceOther"))) + lu.getMn(), TextView.BufferType.SPANNABLE);
+                        tvnameprd.setText(prd.getString("title"));
+                        String tym = prd.getString("typeMoneyId");
+                        String dvs = prd.getString("nameUnit");
+                        tvdv1.setText(dvs);
+                        tvdv2.setText(dvs);
+                        list = db.getMNid(tym);
+                        for (ListMN lu : list) {
+                            tvgia1.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("price"))) + lu.getMn());
+                            tvgia2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("priceOther"))) + lu.getMn(), TextView.BufferType.SPANNABLE);
 
+                        }
+                        dess.setText(prd.getString("description"));
+                        JSONArray ja = prd.getJSONArray("images");
+                        Picasso.with(getApplicationContext()).load("http://needfood.webmantan.com" + ja.getString(0)).into(imgprd);
+
+
+                    }else if(code.equals("1")){
+                        txtcode.setVisibility(View.VISIBLE);
+                        view1.setVisibility(View.GONE);
+                        txtcode.setText(getResources().getString(R.string.noprd));
                     }
-                    dess.setText(prd.getString("description"));
-                    JSONArray ja = prd.getJSONArray("images");
-                    Picasso.with(getApplicationContext()).load("http://needfood.webmantan.com" + ja.getString(0)).into(imgprd);
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();

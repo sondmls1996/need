@@ -14,8 +14,9 @@ public class OrderHisConstructor {
     String address;
     String tymemn;
     String unit;
+    String js;
 
-    public OrderHisConstructor(String id, String title, String money, String status, String fullname, String fone, String address, String tymemn, String unit) {
+    public OrderHisConstructor(String id, String title, String money, String status, String fullname, String fone, String address, String tymemn, String unit, String js) {
         this.id = id;
         this.title = title;
         this.money = money;
@@ -25,6 +26,7 @@ public class OrderHisConstructor {
         this.address = address;
         this.tymemn = tymemn;
         this.unit = unit;
+        this.js = js;
     }
 
     public String getId() {
@@ -97,5 +99,13 @@ public class OrderHisConstructor {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public String getJs() {
+        return js;
+    }
+
+    public void setJs(String js) {
+        this.js = js;
     }
 }

@@ -49,7 +49,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Preview extends AppCompatActivity implements View.OnClickListener {
-    String json, mid, stt, mnship, idsl, acess;
+    String json, mid, stt, mnship, idsl, acess,idmn;
     RecyclerView lv;
     private SimpleDateFormat dateFormatter, timeformat;
     ArrayList<PreConstructor> arr;
@@ -85,13 +85,13 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         Intent intent = getIntent();
         hashMap = (HashMap<String, String>) intent.getSerializableExtra("map");
         json = hashMap.get("listProduct");
+
         idsl = hashMap.get("idSeller");
         total = Double.parseDouble(hashMap.get("totalMoneyProduct"));
         mnship = hashMap.get("moneyShip");
         stt = intent.getStringExtra("stt");
         if (intent.hasExtra("num")) {
             numshare = intent.getIntExtra("num", 0);
-
         }
         btno = (Button) findViewById(R.id.btno);
         mid = intent.getStringExtra("min");
@@ -200,14 +200,17 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
 
         if (adr.equals("")||phone.equals("")) {
             pro.dismiss();
+            btno.setEnabled(true);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
         } else {
+            btno.setEnabled(true);
             hashMap.put("totalMoneyProduct",total+Integer.parseInt(mnship)+"");
             hashMap.put("fullName", name);
             hashMap.put("timeShiper", day + "/" + (month2 + 1) + "/" + year2 + " " + hour + ":" + minitus);
             hashMap.put("address", adr);
             hashMap.put("note", note);
             hashMap.put("fone", phone);
+
             Response.Listener<String> response = new Response.Listener<String>() {
 
                 @Override

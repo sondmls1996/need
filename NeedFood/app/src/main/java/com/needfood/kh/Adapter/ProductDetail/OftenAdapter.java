@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.easyandroidanimations.library.ScaleInAnimation;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
@@ -34,7 +33,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 
 public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerViewHolder> {
-    public static ArrayList<CheckConstructor> arrcheck;
+    public static ArrayList<CheckConstructor> arrcheck = new ArrayList<>();
+
     private List<OftenConstructor> listData = new ArrayList<>();
     Context context;
     public OftenAdapter(Context context,List<OftenConstructor> listData) {
@@ -55,7 +55,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         public CheckBox cb;
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-            arrcheck = new ArrayList<>();
+
             img = (ImageView)itemView.findViewById(R.id.imgsug);
             tvName = (TextView)itemView.findViewById(R.id.namesug);
             prize = (TextView)itemView.findViewById(R.id.prizesug);
@@ -66,6 +66,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         }
 
     }
+
     @Override
     public int getItemCount() {
         return listData.size();
@@ -76,7 +77,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                                  int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.customprdoften, viewGroup, false);
-        new ScaleInAnimation(itemView).animate();
+
         return new RecyclerViewHolder(itemView);
     }
 
@@ -102,20 +103,19 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         }
 
 
-        viewHolder.cb.setTag(ip);
+   //     viewHolder.cb.setTag(ip);
         viewHolder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 if(isChecked){
-                    viewHolder.edo.setEnabled(true);
-                    Intent i = new Intent(getApplicationContext(),BubbleService.class);
-                    i.putExtra("MN",ip.getPrize());
-                    context.startService(i);
                     arrcheck.add(new CheckConstructor("1",
                             ip.getPrize(),"false",null,null,ip.getBar(),ip.getCode(),
-                            ip.getName(),Integer.parseInt(ip.getPrize())*1+"",
-                            ip.getNote(),ip.getId()
+                            ip.getName(),Integer.parseInt(ip.getPrize())+"",
+                            ip.getNote(),ip.getId(),ip.getTymn()
                     ));
+                    viewHolder.edo.setEnabled(true);
+
                     ProductDetail.listship.add(Integer.parseInt(ip.getNmship()));
                     viewHolder.edo.setText("1");
                     viewHolder.textWatcher = new TextWatcher() {
@@ -131,50 +131,88 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
 
                         @Override
                         public void afterTextChanged(Editable s) {
+
                             if(viewHolder.edo.getText().toString().equals("")){
 
                                 if(arrcheck.size()==1){
                                     arrcheck.get(0).setQuanli("1");
                                     arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
-
                                 }else{
-                                    arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
-                                    arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
-                                }
+                                    for(int i = 0 ; i < arrcheck.size() ; i++){
+                                        if(ip.getId().equalsIgnoreCase(arrcheck.get(i).id)){
+                                            arrcheck.get(i).setQuanli(viewHolder.edo
+                                                    .getText().toString());
+                                            arrcheck.get(i).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
+                                        }
+                                    }
 
+                                }
+                                int prdmoney=0;
+                                for (int i2 = 0; i2<arrcheck.size();i2++){
+                                    prdmoney = Integer.parseInt(arrcheck.get(i2).getMoney())+ prdmoney;
+                                }
+                                Intent it = new Intent(getApplicationContext(),BubbleService.class);
+                                it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
+                                context.startService(it);
                             }else {
-                                Intent i = new Intent(getApplicationContext(),BubbleService.class);
-                                i.putExtra("MN","-"+ip.getPrize());
-                                context.startService(i);
                                     if(arrcheck.size()==1){
                                         arrcheck.get(0).setQuanli(viewHolder.edo.getText().toString());
                                         arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
                                     }else{
-                                        arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
-                                        arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
+                                        for(int i = 0 ; i < arrcheck.size() ; i++){
+                                            if(ip.getId().equalsIgnoreCase(arrcheck.get(i).id)){
+                                                arrcheck.get(i).setQuanli(viewHolder.edo.getText().toString());
+                                                arrcheck.get(i).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
+                                            }
+                                        }
+
                                     }
+                                int prdmoney=0;
+                                for (int i2 = 0; i2<arrcheck.size();i2++){
+                                    prdmoney = Integer.parseInt(arrcheck.get(i2).getMoney())+ prdmoney;
+                                }
+                                Intent it = new Intent(getApplicationContext(),BubbleService.class);
+                                it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
+                                context.startService(it);
                             }
+
+
                         }
                     };
-
+                    int prdmoney=0;
+                    for (int i2 = 0; i2<arrcheck.size();i2++){
+                        prdmoney = Integer.parseInt(arrcheck.get(i2).getMoney())+ prdmoney;
+                    }
+                    Intent it = new Intent(getApplicationContext(),BubbleService.class);
+                    it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
+                    context.startService(it);
                     viewHolder.edo.addTextChangedListener(viewHolder.textWatcher);
                     Log.d("ARRSIZE",arrcheck.size()+"");
                 }else {
-                    Intent i = new Intent(getApplicationContext(),BubbleService.class);
-                    i.putExtra("MN","-"+ip.getPrize());
-                    context.startService(i);
                     viewHolder.edo.setEnabled(false);
                     viewHolder.edo.removeTextChangedListener(viewHolder.textWatcher);
                     viewHolder.edo.setText(null);
                     if(arrcheck.size()==1){
-                        arrcheck.clear();
-                        ProductDetail.listship.remove(ProductDetail.listship.size()-1);
+                        arrcheck.remove(0);
+                        ProductDetail.listship.remove(0);
                     }else{
-                        arrcheck.remove(position);
-                        ProductDetail.listship.remove(position);
-                    }
+                        for(int i = 0 ; i < arrcheck.size() ; i++){
+                            if(ip.getId().equalsIgnoreCase(arrcheck.get(i).id)){
+                                arrcheck.remove(i);
+                                ProductDetail.listship.remove(i);
+                            }
+                        }
 
-                    Log.d("ARRSIZE",arrcheck.size()+"");
+
+                    }
+                    int prdmoney=0;
+                    for (int i2 = 0; i2<arrcheck.size();i2++){
+                        prdmoney = Integer.parseInt(arrcheck.get(i2).getMoney())+ prdmoney;
+                    }
+                    Intent it = new Intent(getApplicationContext(),BubbleService.class);
+                    it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
+                    context.startService(it);
+
                 }
             }
         });

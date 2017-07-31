@@ -1,11 +1,13 @@
 package com.needfood.kh.More.History;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,6 +39,7 @@ public class OrderHistory extends AppCompatActivity {
     String token;
     String title, price, tickkm, status, id, fullname, fone, address;
     OrderHisAdapter adapter;
+
     List<OrderHisConstructor> ls;
     ListView lv;
     int page=1;
@@ -65,6 +68,15 @@ public class OrderHistory extends AppCompatActivity {
         lv = (ListView) findViewById(R.id.lvhisorr);
         adapter = new OrderHisAdapter(getApplicationContext(), ls);
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent it = new Intent(getApplicationContext(),HistoryDetail.class);
+                it.putExtra("js",ls.get(position).getJs());
+                startActivity(it);
+            }
+        });
+
         getOrderHistory(1);
         lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             int firstVisibleItem, visibleItemCount, totalItemCount;
@@ -113,24 +125,23 @@ public class OrderHistory extends AppCompatActivity {
                         nop.setVisibility(View.GONE);
                         Log.d("id", jo.length() + "");
                         for (int i = 0; i < jo.length(); i++) {
+                            long tong=0;
                             JSONObject js = jo.getJSONObject(i);
                             JSONObject order = js.getJSONObject("Order");
                             id = order.getString("id");
+                            JSONObject inor=order.getJSONObject("infoOrder");
                             status = order.getString("status");
-
+                            title = order.getString("code");
                             JSONArray lp = order.getJSONArray("listProduct");
                             Log.d("size", lp.length() + "");
                             for (int j = 0; j < lp.length(); j++) {
                                 JSONObject jaa = lp.getJSONObject(j);
-                                title = jaa.getString("title");
-                                price = jaa.getString("money");
-
                             }
                             JSONObject ic = order.getJSONObject("infoCustomer");
                             fullname = ic.getString("fullName");
                             fone = ic.getString("fone");
                             address = ic.getString("address");
-                            ls.add(new OrderHisConstructor(id, title, price, status, fullname, fone, address, ",", ""));
+                            ls.add(new OrderHisConstructor(id, title, inor.getString("totalMoneyProduct"), status, fullname, fone, address, ",", "",order.toString()));
                         }
 
                         adapter.notifyDataSetChanged();

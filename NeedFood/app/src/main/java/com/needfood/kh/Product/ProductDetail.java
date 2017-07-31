@@ -71,6 +71,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.needfood.kh.Adapter.ProductDetail.OftenAdapter.arrcheck;
+
 public class ProductDetail extends AppCompatActivity implements View.OnClickListener {
     RecyclerView rc, rcof, rcof2, rcquan;
     ArrayList<CommentConstructor> arr;
@@ -79,6 +81,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     int a2;
     int numshare = 0;
     ProgressBar pr1;
+    String tym;
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
     ImageView imgprd;
@@ -86,6 +89,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String  prdcode, titl;
     Session ses;
     String uadr;
+    String typemn;
     private SimpleDateFormat dateFormatter, timeformat;
     Calendar c;
     int day, month2, year2, hour, minitus;
@@ -108,7 +112,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     DataHandle db;
     String idprd, idsl, namesl, access, idu, fullname, phone, bar,priceother;
     EditText txt_comment;
-    ImageView img_comment, imglike, imgshare;
+    ImageView img_comment, imglike;
+    Button imgshare;
     RecyclerView re_comment;
     String comment;
     ShareLinkContent content;
@@ -159,6 +164,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
         th.start();
+
         //  getCommen();
     }
 
@@ -177,7 +183,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        startService(new Intent(ProductDetail.this, BubbleService.class));
+//        int prdmoney=0;
+//        for (int i2 = 0; i2<OftenAdapter.arrcheck.size();i2++){
+//            prdmoney = Integer.parseInt(OftenAdapter.arrcheck.get(i2).getMoney())+ prdmoney;
+//        }
+//        Intent it = new Intent(getApplicationContext(),BubbleService.class);
+//        it.putExtra("MN",prdmoney+Integer.parseInt(priceprd)+"");
+//        startService(it);
         getNumberShare();
     }
 
@@ -191,12 +203,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         if(it.hasExtra("sell")){
             sttsell = it.getStringExtra("sell");
         }
+        OftenAdapter.arrcheck.clear();
         bn = (Button) findViewById(R.id.bn);
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
 
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
         lnmyshare = (LinearLayout) findViewById(R.id.lnmhysh);
-        imgshare = (ImageView) findViewById(R.id.imgshare);
+        imgshare = (Button) findViewById(R.id.imgshare);
         tvphi = (TextView) findViewById(R.id.phi);
         tvmyphi = (TextView) findViewById(R.id.myphi);
         shareDialog = new ShareDialog(ProductDetail.this);
@@ -254,13 +267,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         // likeView.callOnClick();
         edquan = (EditText) findViewById(R.id.edquan);
         ses = new Session(this);
-//        prev = (Button) findViewById(R.id.btnpre);
-//        prev.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+
         deal = (Button) findViewById(R.id.btndeal);
         deal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -431,28 +438,30 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 j1.put("money", money1 + "");
                 j1.put("note", "");
                 j1.put("id", idprd);
+                j1.put("typeMoneyId",tym);
                 jsonArray.put(j1);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            if (OftenAdapter.arrcheck.size() > 0) {
-                for (int i = 0; i < OftenAdapter.arrcheck.size(); i++) {
+            if (arrcheck.size() > 0) {
+                for (int i = 0; i < arrcheck.size(); i++) {
 
                     JSONObject jo = new JSONObject();
 
                     try {
-                        jo.put("quantity", OftenAdapter.arrcheck.get(i).getQuanli() + "");
-                        jo.put("price", OftenAdapter.arrcheck.get(i).getPrice() + "");
-                        jo.put("tickKM", OftenAdapter.arrcheck.get(i).getTickkm() + "");
-                        jo.put("tickKM_percent", OftenAdapter.arrcheck.get(i).getTickkm2() + "");
-                        jo.put("tickKM_money", OftenAdapter.arrcheck.get(i).getTickkm3() + "");
-                        jo.put("barcode", OftenAdapter.arrcheck.get(i).getBarcode() + "");
-                        jo.put("code", OftenAdapter.arrcheck.get(i).getCode() + "");
-                        jo.put("title", OftenAdapter.arrcheck.get(i).getTitle() + "");
-                        jo.put("money", OftenAdapter.arrcheck.get(i).getMoney() + "");
-                        jo.put("note", OftenAdapter.arrcheck.get(i).getNote() + "");
-                        jo.put("id", OftenAdapter.arrcheck.get(i).getId() + "");
+                        jo.put("quantity", arrcheck.get(i).getQuanli() + "");
+                        jo.put("price", arrcheck.get(i).getPrice() + "");
+                        jo.put("tickKM", arrcheck.get(i).getTickkm() + "");
+                        jo.put("tickKM_percent", arrcheck.get(i).getTickkm2() + "");
+                        jo.put("tickKM_money", arrcheck.get(i).getTickkm3() + "");
+                        jo.put("barcode", arrcheck.get(i).getBarcode() + "");
+                        jo.put("code", arrcheck.get(i).getCode() + "");
+                        jo.put("title", arrcheck.get(i).getTitle() + "");
+                        jo.put("money", arrcheck.get(i).getMoney() + "");
+                        jo.put("note", arrcheck.get(i).getNote() + "");
+                        jo.put("id", arrcheck.get(i).getId() + "");
+                        jo.put("typeMoneyId",arrcheck.get(i).getTypeid());
                         jsonArray.put(jo);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -464,9 +473,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
             int money = 0;
 
-            if (OftenAdapter.arrcheck.size() > 0) {
-                for (int i = 0; i < OftenAdapter.arrcheck.size(); i++) {
-                    money = Integer.parseInt(OftenAdapter.arrcheck.get(i).getMoney()) + money;
+            if (arrcheck.size() > 0) {
+                for (int i = 0; i < arrcheck.size(); i++) {
+                    money = Integer.parseInt(arrcheck.get(i).getMoney()) + money;
                 }
             }
 
@@ -490,6 +499,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("map", map);
             it.putExtra("min", mnid);
             it.putExtra("stt", "nom");
+            it.putExtra("tymn",tym);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -522,6 +532,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 j1.put("money", money1 + "");
                 j1.put("note", "");
                 j1.put("id", idprd);
+                j1.put("typeMoneyId",tym);
                 jsonArray.put(j1);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -545,11 +556,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             // map.put("idUseronl",idu);
             map.put("idSeller", idsl);
 
+
             Intent it = new Intent(getApplicationContext(), Preview.class);
             it.putExtra("map", map);
             it.putExtra("min", mnid);
             it.putExtra("stt", stt);
             it.putExtra("num", ns);
+            it.putExtra("tymn",tym);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -582,6 +595,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 j1.put("money", money1 + "");
                 j1.put("note", "Sử dụng mã khuyến mại " + mkm);
                 j1.put("id", idprd);
+                j1.put("typeMoneyId",tym);
                 jsonArray.put(j1);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -609,6 +623,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("map", map);
             it.putExtra("min", mnid);
             it.putExtra("stt", "");
+            it.putExtra("tymn",tym);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -693,7 +708,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     howto.append(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
                     tvnameprd.setText(prd.getString("title"));
-                    String tym = prd.getString("typeMoneyId");
+                     tym = prd.getString("typeMoneyId");
                     String dvs = prd.getString("nameUnit");
                     titl = prd.getString("title");
                     namesl = prd.getString("nameSeller");
@@ -793,14 +808,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         JSONObject jo = ja.getJSONObject(i);
                         JSONObject prd = jo.getJSONObject("Product");
                         JSONArray jaimg = prd.getJSONArray("images");
-                        String typemn = prd.getString("typeMoneyId");
+                         typemn = prd.getString("typeMoneyId");
                         list = db.getMNid(typemn);
                         for (ListMN lu : list) {
                             mn = lu.getMn();
                         }
                         arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                "", prd.getString("id"), prd.getString("moneyShip")));
+                                "", prd.getString("id"), prd.getString("moneyShip"),typemn));
                     }
 
                     quanadapter.notifyDataSetChanged();
@@ -837,14 +852,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         JSONObject jo = ja.getJSONObject(i);
                         JSONObject prd = jo.getJSONObject("Product");
                         JSONArray jaimg = prd.getJSONArray("images");
-                        String typemn = prd.getString("typeMoneyId");
+                         typemn = prd.getString("typeMoneyId");
                         list = db.getMNid(typemn);
                         for (ListMN lu : list) {
                             mn = lu.getMn();
                         }
                         arrof.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                "", prd.getString("id"), prd.getString("moneyShip")));
+                                "", prd.getString("id"), prd.getString("moneyShip"),typemn));
                     }
 
                     adapterof1.notifyDataSetChanged();
@@ -881,7 +896,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         JSONObject jo = ja.getJSONObject(i);
                         JSONObject prd = jo.getJSONObject("Product");
                         JSONArray jaimg = prd.getJSONArray("images");
-                        String typemn = prd.getString("typeMoneyId");
+                         typemn = prd.getString("typeMoneyId");
                         list = db.getMNid(typemn);
                         for (ListMN lu : list) {
                             mn = lu.getMn();
@@ -889,7 +904,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                         arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
-                                "", prd.getString("id"), prd.getString("moneyShip")));
+                                "", prd.getString("id"), prd.getString("moneyShip"),typemn));
                     }
                     adapterof2.notifyDataSetChanged();
                     getAtach();
