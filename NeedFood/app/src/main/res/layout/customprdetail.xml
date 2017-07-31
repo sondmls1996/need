@@ -143,35 +143,7 @@
 Nestled in the quiet town of Warm River, in Southeastern Idaho, the ranch is surrounded by enormous pines, brilliant colored aspens and three enticing rivers, all within walking distance from the front step of your cabin. Three Rivers Ranch has "
                     android:textColor="@color/gray2" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/gray"
-                    android:orientation="horizontal"
-                    android:padding="3dp"
-                    android:visibility="gone">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Free "
-                        android:textColor="@color/red" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="with deal minimum "
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />]
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="70.000"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
