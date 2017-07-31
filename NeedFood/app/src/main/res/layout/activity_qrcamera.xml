@@ -14,6 +14,19 @@
         android:layout_margin="20dp"
         android:textSize="18sp"
         android:text="@string/qrc"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:translationZ="10dp"
+        android:textAlignment="center"
+        android:id="@+id/txtcode"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
+        android:layout_margin="20dp"
+
+        android:textSize="18sp"
+        />
     <com.dlazaro66.qrcodereaderview.QRCodeReaderView
         android:id="@+id/qrdecoderview"
         android:layout_width="match_parent"

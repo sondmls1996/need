@@ -138,26 +138,44 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                     arrcheck.get(0).setQuanli("1");
                                     arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
                                 }else{
+                                    for(int i = 0 ; i < arrcheck.size() ; i++){
+                                        if(ip.getId().equalsIgnoreCase(arrcheck.get(i).id)){
+                                            arrcheck.get(i).setQuanli(viewHolder.edo
+                                                    .getText().toString());
+                                            arrcheck.get(i).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
+                                        }
+                                    }
 
-                                    arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
-                                    arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
                                 }
+                                int prdmoney=0;
+                                for (int i2 = 0; i2<arrcheck.size();i2++){
+                                    prdmoney = Integer.parseInt(arrcheck.get(i2).getMoney())+ prdmoney;
+                                }
+                                Intent it = new Intent(getApplicationContext(),BubbleService.class);
+                                it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
+                                context.startService(it);
                             }else {
                                     if(arrcheck.size()==1){
                                         arrcheck.get(0).setQuanli(viewHolder.edo.getText().toString());
                                         arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
                                     }else{
-                                        arrcheck.get(position).setQuanli(viewHolder.edo.getText().toString());
-                                        arrcheck.get(position).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
+                                        for(int i = 0 ; i < arrcheck.size() ; i++){
+                                            if(ip.getId().equalsIgnoreCase(arrcheck.get(i).id)){
+                                                arrcheck.get(i).setQuanli(viewHolder.edo.getText().toString());
+                                                arrcheck.get(i).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt(viewHolder.edo.getText().toString())+"");
+                                            }
+                                        }
+
                                     }
+                                int prdmoney=0;
+                                for (int i2 = 0; i2<arrcheck.size();i2++){
+                                    prdmoney = Integer.parseInt(arrcheck.get(i2).getMoney())+ prdmoney;
+                                }
+                                Intent it = new Intent(getApplicationContext(),BubbleService.class);
+                                it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
+                                context.startService(it);
                             }
-                            int prdmoney=0;
-                            for (int i2 = 0; i2<arrcheck.size();i2++){
-                                prdmoney = Integer.parseInt(arrcheck.get(i2).getMoney())+ prdmoney;
-                            }
-                            Intent it = new Intent(getApplicationContext(),BubbleService.class);
-                            it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
-                            context.startService(it);
+
 
                         }
                     };
@@ -178,8 +196,14 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         arrcheck.remove(0);
                         ProductDetail.listship.remove(0);
                     }else{
-                        arrcheck.remove(position);
-                        ProductDetail.listship.remove(position);
+                        for(int i = 0 ; i < arrcheck.size() ; i++){
+                            if(ip.getId().equalsIgnoreCase(arrcheck.get(i).id)){
+                                arrcheck.remove(i);
+                                ProductDetail.listship.remove(i);
+                            }
+                        }
+
+
                     }
                     int prdmoney=0;
                     for (int i2 = 0; i2<arrcheck.size();i2++){
@@ -189,7 +213,6 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     it.putExtra("MN",prdmoney+Integer.parseInt(ProductDetail.priceprd)+"");
                     context.startService(it);
 
-                    Log.d("ARRSIZE",arrcheck.size()+"");
                 }
             }
         });

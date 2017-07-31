@@ -36,7 +36,6 @@ public class BubbleService extends Service implements View.OnClickListener {
     public int onStartCommand (Intent intent, int flags, int startId) {
         if(intent.hasExtra("MN")){
             int pr = Integer.parseInt(intent.getStringExtra("MN"));
-
             txtgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(pr));
         }
 
