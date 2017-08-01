@@ -939,9 +939,12 @@ getProductDT();
                         }
                     }
                     for (int i3 =0;i3<arrof.size();i3++){
-                        if(arrof.get(i3).getId().equals(arrof2.get(i3).getId())){
-                            arrof2.remove(i3);
+                        for(int i4 = 0 ;i4 < arrof2.size();i4++){
+                            if(arrof2.get(i4).getId().equals(arrof.get(i3).getId())){
+                                arrof2.remove(i4);
+                            }
                         }
+
                     }
 
                     adapterof2.notifyDataSetChanged();

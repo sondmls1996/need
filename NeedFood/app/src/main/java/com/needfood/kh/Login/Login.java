@@ -24,7 +24,6 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.needfood.kh.Constructor.ImageConstructor;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
