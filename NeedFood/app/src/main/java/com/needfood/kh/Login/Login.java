@@ -24,7 +24,6 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.needfood.kh.Constructor.ImageConstructor;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
@@ -39,7 +38,6 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 public class Login extends AppCompatActivity {
     LoginButton lgb;

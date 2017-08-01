@@ -125,19 +125,34 @@ public class QRCamera extends AppCompatActivity implements QRCodeReaderView.OnQR
 
                 //    String code = jo.getString("code");
                     if(jo.has("code")){
+                        String code = jo.getString("code");
+                        if(code.equals("0")){
+                            qrCodeReaderView.stopCamera();
+                            Intent it = new Intent(getApplicationContext(),ProductDetail.class);
+                            it.putExtra("idprd",idsp);
+                            startActivity(it);
+                            finish();
+                        }else if(code.equals("1")){
+                            txtcode.setVisibility(View.VISIBLE);
+                            view1.setVisibility(View.GONE);
+                            txtcode.setText(getResources().getString(R.string.noprd));
+                        }else{
+                            txtcode.setVisibility(View.VISIBLE);
+                            view1.setVisibility(View.GONE);
+                            txtcode.setText(getResources().getString(R.string.haslock));
+                        }
+
+                    }else {
                         txtcode.setVisibility(View.VISIBLE);
                         view1.setVisibility(View.GONE);
                         txtcode.setText(getResources().getString(R.string.noprd));
-                    }else {
-                        qrCodeReaderView.stopCamera();
-                        Intent it = new Intent(getApplicationContext(),ProductDetail.class);
-                        it.putExtra("idprd",idsp);
-                        startActivity(it);
-                        finish();
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    txtcode.setVisibility(View.VISIBLE);
+                    view1.setVisibility(View.GONE);
+                    txtcode.setText(getResources().getString(R.string.noprd));
                 }
             }
         };

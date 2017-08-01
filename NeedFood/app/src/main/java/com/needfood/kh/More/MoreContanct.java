@@ -25,11 +25,9 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.needfood.kh.Constructor.ImageConstructor;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Login.ChangePass;
-import com.needfood.kh.Login.Login;
 import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
@@ -68,7 +66,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
     String imageEncoded;
     String imageDecode;
     byte[] decodedString;
-    List<ImageConstructor> ls;
+
     String id_img;
     String img;
     String first;// this will contain "Fruit"

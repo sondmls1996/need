@@ -189,6 +189,7 @@
     <string name="checkfon">Số điện thoại không hợp lệ</string>
     <string name="coinn">Coins: \u0020</string>
     <string name="trancoin">Chuyển xu</string>
+    <string name="haslock">Tài khoản seller hoặc sản phẩm đã bị khóa</string>
     <string name="mis">Yêu cầu: \u0020</string>
     <string name="bc">Bởi người dùng</string>
     <string name="bn">Bởi NeedFood</string>

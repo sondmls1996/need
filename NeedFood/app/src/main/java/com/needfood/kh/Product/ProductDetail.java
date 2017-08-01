@@ -100,7 +100,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     OftenAdapter adapterof1, adapterof2;
     TextView tvco, tvcodes, tvprize, tvphi, tvmyphi;
     TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
-    ArrayList<OftenConstructor> arrof, arrof2;
+    ArrayList<OftenConstructor> arrof, arrof2,arrdelete;
     ArrayList<OftenConstructor> arrq;
     public static ArrayList<Integer> listship;
     OftenAdapter quanadapter;
@@ -636,6 +636,7 @@ getProductDT();
                     Log.d("PDR", response);
 
                     JSONObject jo = new JSONObject(response);
+
                     JSONObject prd = jo.getJSONObject("Product");
                     if (prd.has("linkFacebook")) {
 //                        lnf.setVisibility(View.VISIBLE);
@@ -937,16 +938,19 @@ getProductDT();
                             arrof2.remove(i2);
                         }
                     }
-//                    for (int i3 =0;i3<arrof.size();i3++){
-//                        if(arrof.get(i3).getId().equals(arrof2.get(i3).getId())){
-//                            arrof2.remove(i3);
-//                        }
-//                    }
+                    for (int i3 =0;i3<arrof.size();i3++){
+                        for(int i4 = 0 ;i4 < arrof2.size();i4++){
+                            if(arrof2.get(i4).getId().equals(arrof.get(i3).getId())){
+                                arrof2.remove(i4);
+                            }
+                        }
+
+                    }
 
                     adapterof2.notifyDataSetChanged();
                     getAtach();
 
-                } catch (JSONException e) {
+                    } catch (JSONException e) {
                     e.printStackTrace();
                 }
 

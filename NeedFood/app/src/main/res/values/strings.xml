@@ -157,6 +157,7 @@
     <string name="logout">Logout</string>
     <string name="tiengviet">Tiếng Việt</string>
     <string name="tienganh">English</string>
+    <string name="haslock">The seller account or product  is locked</string>
     <string name="new_">New</string>
     <string name="poli">Policy</string>
     <string name="policy">By clicking on the subscription you agree to our user and seller policies</string>
