@@ -99,7 +99,12 @@ public class NewsAdapter extends
         for (ListMN lu : list) {
             tymn = lu.getMn();
         }
-        viewHolder.tvname.setText(p.getName());
+        if (p.getName().length() < 30) {
+            viewHolder.tvname.setText(p.getName());
+        } else {
+            viewHolder.tvname.setText(p.getName().substring(0, 30) + "...");
+        }
+
 
         viewHolder.tvdv.setText(p.dv);
 

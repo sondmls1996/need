@@ -33,6 +33,7 @@ import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -453,10 +454,11 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
                     String ava = jo.getString("avatar");
-                    StringTokenizer tokenss = new StringTokenizer(ava, ",");
-                    first = tokenss.nextToken();// this will contain "Fruit"
-                    second = tokenss.nextToken();
+//                    StringTokenizer tokenss = new StringTokenizer(ava, ",");
+//                    first = tokenss.nextToken();// this will contain "Fruit"
+//                    second = tokenss.nextToken();
 //                    decode(second);
+                    Picasso.with(getApplicationContext()).load(ava).into(avt);
                     pro.setText(coin + " coins");
                     db.updateinfo(fullname, email, address, id, coin);
                 } catch (JSONException e) {

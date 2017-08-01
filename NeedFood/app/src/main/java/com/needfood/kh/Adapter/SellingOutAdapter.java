@@ -109,7 +109,11 @@ public class SellingOutAdapter  extends
         }
         long giocl = tl / 3600;
         long phutcl = (tl % 3600) / 60;
-        viewHolder.tvname.setText(p.getName());
+        if (p.getName().length() < 30) {
+            viewHolder.tvname.setText(p.getName());
+        } else {
+            viewHolder.tvname.setText(p.getName().substring(0, 30) + "...");
+        }
 
         viewHolder.tvdv.setText(p.dv);
         viewHolder.txttime.setVisibility(View.VISIBLE);

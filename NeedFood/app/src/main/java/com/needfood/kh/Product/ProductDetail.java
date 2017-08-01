@@ -48,6 +48,7 @@ import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.ProductDetail.CommentConstructor;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
+import com.needfood.kh.Login.Login;
 import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.StartActivity;
@@ -85,9 +86,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     CommentAdapter adapter;
     ImageView imgprd;
     public static String priceprd;
-    String  prdcode, titl;
+    String prdcode, titl;
     Session ses;
-    String uadr,tax;
+    String uadr, tax;
     String typemn;
     private SimpleDateFormat dateFormatter, timeformat;
     Calendar c;
@@ -95,12 +96,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     public DatePickerDialog fromDatePickerDialog;
     public TimePickerDialog timepicker;
     EditText edpickngay, edpickgio, edquan, edadrs, edghichu;
-    String cata,sellprice="";
+    String cata, sellprice = "";
     Button deal, bn;
     OftenAdapter adapterof1, adapterof2;
     TextView tvco, tvcodes, tvprize, tvphi, tvmyphi;
     TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
-    ArrayList<OftenConstructor> arrof, arrof2,arrdelete;
+    ArrayList<OftenConstructor> arrof, arrof2, arrdelete;
     ArrayList<OftenConstructor> arrq;
     public static ArrayList<Integer> listship;
     OftenAdapter quanadapter;
@@ -109,7 +110,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String discount, discountStart, discountEnd, text1, text2, time1, time2, priceDiscount, discountCode;
     List<InfoConstructor> listu;
     DataHandle db;
-    String idprd, idsl, namesl, access, idu, fullname, phone, bar,priceother;
+    String idprd, idsl, namesl, access, idu, fullname, phone, bar, priceother;
     EditText txt_comment;
     ImageView img_comment, imglike;
     Button imgshare;
@@ -124,7 +125,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ShareDialog shareDialog;
     ShareButton shareButton;
     int hieu;
-    String linkfbb,sttsell="";
+    String linkfbb, sttsell = "";
     Button sharee;
     TextView vote;
     String point;
@@ -150,7 +151,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
         khaibao();
-getProductDT();
+        getProductDT();
 
 
         //  getCommen();
@@ -168,6 +169,7 @@ getProductDT();
         super.onDestroy();
         stopService(new Intent(ProductDetail.this, BubbleService.class));
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -188,7 +190,7 @@ getProductDT();
         view1 = (LinearLayout) findViewById(R.id.v1);
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
-        if(it.hasExtra("sell")){
+        if (it.hasExtra("sell")) {
             sttsell = it.getStringExtra("sell");
         }
         OftenAdapter.arrcheck.clear();
@@ -206,13 +208,6 @@ getProductDT();
         next = (ImageView) findViewById(R.id.nextt);
         down = (ImageView) findViewById(R.id.downn);
         lnprd = (LinearLayout) findViewById(R.id.prd);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         lnprd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -426,7 +421,7 @@ getProductDT();
                 j1.put("money", money1 + "");
                 j1.put("note", "");
                 j1.put("id", idprd);
-                j1.put("typeMoneyId",tym);
+                j1.put("typeMoneyId", tym);
                 jsonArray.put(j1);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -449,7 +444,7 @@ getProductDT();
                         jo.put("money", arrcheck.get(i).getMoney() + "");
                         jo.put("note", arrcheck.get(i).getNote() + "");
                         jo.put("id", arrcheck.get(i).getId() + "");
-                        jo.put("typeMoneyId",arrcheck.get(i).getTypeid());
+                        jo.put("typeMoneyId", arrcheck.get(i).getTypeid());
                         jsonArray.put(jo);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -473,7 +468,7 @@ getProductDT();
             map.put("accessToken", access);
             map.put("listProduct", jsonArray.toString());
             map.put("money", money + "");
-            map.put("totalMoneyProduct", money + (money * (Integer.parseInt(tax)))/100+  "");
+            map.put("totalMoneyProduct", money + (money * (Integer.parseInt(tax))) / 100 + "");
             map.put("fullName", "");
             map.put("moneyShip", mnship + "");
             map.put("timeShiper", "");
@@ -487,13 +482,14 @@ getProductDT();
             it.putExtra("map", map);
             it.putExtra("min", mnid);
             it.putExtra("stt", "nom");
-            it.putExtra("tymn",tym);
+            it.putExtra("tymn", tym);
             startActivity(it);
             pro.dismiss();
         } else {
             pro.dismiss();
-            AlertDialog alertDialog = taoMotAlertDialog2();
-            alertDialog.show();
+            Intent i = new Intent(getApplicationContext(), Login.class);
+            startActivity(i);
+            finish();
         }
 
     }
@@ -520,7 +516,7 @@ getProductDT();
                 j1.put("money", money1 + "");
                 j1.put("note", "");
                 j1.put("id", idprd);
-                j1.put("typeMoneyId",tym);
+                j1.put("typeMoneyId", tym);
                 jsonArray.put(j1);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -550,7 +546,7 @@ getProductDT();
             it.putExtra("min", mnid);
             it.putExtra("stt", stt);
             it.putExtra("num", ns);
-            it.putExtra("tymn",tym);
+            it.putExtra("tymn", tym);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -583,7 +579,7 @@ getProductDT();
                 j1.put("money", money1 + "");
                 j1.put("note", "Sử dụng mã khuyến mại " + mkm);
                 j1.put("id", idprd);
-                j1.put("typeMoneyId",tym);
+                j1.put("typeMoneyId", tym);
                 jsonArray.put(j1);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -611,7 +607,7 @@ getProductDT();
             it.putExtra("map", map);
             it.putExtra("min", mnid);
             it.putExtra("stt", "");
-            it.putExtra("tymn",tym);
+            it.putExtra("tymn", tym);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -696,25 +692,31 @@ getProductDT();
                     howto = new StringBuilder("");
                     howto.append(prd.getString("info"));
                     cata = prd.getJSONArray("category").toString();
-                    tvnameprd.setText(prd.getString("title"));
-                     tym = prd.getString("typeMoneyId");
+                    String title = prd.getString("title");
+                    if (title.length() < 30) {
+                        tvnameprd.setText(title);
+                    } else {
+                        tvnameprd.setText(title.substring(0, 30) + "...");
+                    }
+
+                    tym = prd.getString("typeMoneyId");
                     String dvs = prd.getString("nameUnit");
                     titl = prd.getString("title");
                     namesl = prd.getString("nameSeller");
                     prdcode = prd.getString("code");
                     bar = prd.getString("barcode");
 
-                    if(sttsell.equals("true")){
-                            JSONObject selling = prd.getJSONObject("sellingOut");
-                            priceprd = selling.getString("price");
-                            priceother= prd.getString("price");
-                    }else{
+                    if (sttsell.equals("true")) {
+                        JSONObject selling = prd.getJSONObject("sellingOut");
+                        priceprd = selling.getString("price");
+                        priceother = prd.getString("price");
+                    } else {
                         priceprd = prd.getString("price");
-                        priceother= prd.getString("priceOther");
+                        priceother = prd.getString("priceOther");
                     }
 
-                    Intent i = new Intent(getApplicationContext(),BubbleService.class);
-                    i.putExtra("MN",priceprd);
+                    Intent i = new Intent(getApplicationContext(), BubbleService.class);
+                    i.putExtra("MN", priceprd);
                     startService(i);
 
                     namesel.setText(namesl);
@@ -797,20 +799,20 @@ getProductDT();
                         JSONObject jo = ja.getJSONObject(i);
                         JSONObject prd = jo.getJSONObject("Product");
                         JSONArray jaimg = prd.getJSONArray("images");
-                         typemn = prd.getString("typeMoneyId");
+                        typemn = prd.getString("typeMoneyId");
                         list = db.getMNid(typemn);
                         for (ListMN lu : list) {
                             mn = lu.getMn();
                         }
 
-                            arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                    prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                    "", prd.getString("id"), prd.getString("moneyShip"),typemn));
+                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
+                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
+                                "", prd.getString("id"), prd.getString("moneyShip"), typemn));
 
 
                     }
-                    for (int i2 =0;i2<arrq.size();i2++){
-                        if(arrq.get(i2).getId().equals(idprd)){
+                    for (int i2 = 0; i2 < arrq.size(); i2++) {
+                        if (arrq.get(i2).getId().equals(idprd)) {
                             arrq.remove(i2);
                         }
                     }
@@ -831,26 +833,26 @@ getProductDT();
 
 
     private void getBrand() {
-            final String link = getResources().getString(R.string.linkifsel);
-            Map<String, String> map = new HashMap<>();
-            map.put("idSeller", idsl);
-            Response.Listener<String> response = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.d("TAXXX", response);
-                    try {
-                        JSONObject jo = new JSONObject(response);
-                        JSONObject sl = jo.getJSONObject("Seller");
-                        tax = sl.getString("taxNumber");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+        final String link = getResources().getString(R.string.linkifsel);
+        Map<String, String> map = new HashMap<>();
+        map.put("idSeller", idsl);
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAXXX", response);
+                try {
+                    JSONObject jo = new JSONObject(response);
+                    JSONObject sl = jo.getJSONObject("Seller");
+                    tax = sl.getString("taxNumber");
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            };
-            PostCL get = new PostCL(link, map, response);
-            RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-            que.add(get);
-        }
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
+    }
 
 
     private void getPrdDK() {
@@ -873,19 +875,19 @@ getProductDT();
                         JSONObject jo = ja.getJSONObject(i);
                         JSONObject prd = jo.getJSONObject("Product");
                         JSONArray jaimg = prd.getJSONArray("images");
-                         typemn = prd.getString("typeMoneyId");
+                        typemn = prd.getString("typeMoneyId");
                         list = db.getMNid(typemn);
                         for (ListMN lu : list) {
                             mn = lu.getMn();
                         }
 
-                            arrof.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                    prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                    "", prd.getString("id"), prd.getString("moneyShip"),typemn));
+                        arrof.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
+                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
+                                "", prd.getString("id"), prd.getString("moneyShip"), typemn));
 
                     }
-                    for (int i2 =0;i2<arrof.size();i2++){
-                        if(arrof.get(i2).getId().equals(idprd)){
+                    for (int i2 = 0; i2 < arrof.size(); i2++) {
+                        if (arrof.get(i2).getId().equals(idprd)) {
                             arrof.remove(i2);
                         }
                     }
@@ -923,7 +925,7 @@ getProductDT();
                         JSONObject jo = ja.getJSONObject(i);
                         JSONObject prd = jo.getJSONObject("Product");
                         JSONArray jaimg = prd.getJSONArray("images");
-                         typemn = prd.getString("typeMoneyId");
+                        typemn = prd.getString("typeMoneyId");
                         list = db.getMNid(typemn);
                         for (ListMN lu : list) {
                             mn = lu.getMn();
@@ -931,16 +933,16 @@ getProductDT();
 
                         arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
-                                "", prd.getString("id"), prd.getString("moneyShip"),typemn));
+                                "", prd.getString("id"), prd.getString("moneyShip"), typemn));
                     }
-                    for (int i2 =0;i2<arrof2.size();i2++){
-                        if(arrof2.get(i2).getId().equals(idprd)){
+                    for (int i2 = 0; i2 < arrof2.size(); i2++) {
+                        if (arrof2.get(i2).getId().equals(idprd)) {
                             arrof2.remove(i2);
                         }
                     }
-                    for (int i3 =0;i3<arrof.size();i3++){
-                        for(int i4 = 0 ;i4 < arrof2.size();i4++){
-                            if(arrof2.get(i4).getId().equals(arrof.get(i3).getId())){
+                    for (int i3 = 0; i3 < arrof.size(); i3++) {
+                        for (int i4 = 0; i4 < arrof2.size(); i4++) {
+                            if (arrof2.get(i4).getId().equals(arrof.get(i3).getId())) {
                                 arrof2.remove(i4);
                             }
                         }
@@ -950,7 +952,7 @@ getProductDT();
                     adapterof2.notifyDataSetChanged();
                     getAtach();
 
-                    } catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
