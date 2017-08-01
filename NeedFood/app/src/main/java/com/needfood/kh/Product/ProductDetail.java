@@ -30,7 +30,6 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.easyandroidanimations.library.SlideInUnderneathAnimation;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -474,7 +473,7 @@ getProductDT();
             map.put("accessToken", access);
             map.put("listProduct", jsonArray.toString());
             map.put("money", money + "");
-            map.put("totalMoneyProduct", money * ((Integer.parseInt(tax)+1)/100) + "");
+            map.put("totalMoneyProduct", money + (money * (Integer.parseInt(tax)))/100+  "");
             map.put("fullName", "");
             map.put("moneyShip", mnship + "");
             map.put("timeShiper", "");
@@ -483,7 +482,7 @@ getProductDT();
             map.put("fone", "");
             // map.put("idUseronl",idu);
             map.put("idSeller", idsl);
-
+//             Log.d("GTGT",  (money * (Integer.parseInt(tax)+1))/100+  "");
             Intent it = new Intent(getApplicationContext(), Preview.class);
             it.putExtra("map", map);
             it.putExtra("min", mnid);
@@ -632,7 +631,7 @@ getProductDT();
             public void onResponse(String response) {
                 try {
                     view1.setVisibility(View.VISIBLE);
-                    new SlideInUnderneathAnimation(view1).setDuration(500).animate();
+
                     pr1.setVisibility(View.GONE);
                     Log.d("PDR", response);
 
@@ -837,7 +836,7 @@ getProductDT();
             Response.Listener<String> response = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Log.d("SLL", response);
+                    Log.d("TAXXX", response);
                     try {
                         JSONObject jo = new JSONObject(response);
                         JSONObject sl = jo.getJSONObject("Seller");
@@ -938,11 +937,11 @@ getProductDT();
                             arrof2.remove(i2);
                         }
                     }
-                    for (int i3 =0;i3<arrof.size();i3++){
-                        if(arrof.get(i3).getId().equals(arrof2.get(i3).getId())){
-                            arrof2.remove(i3);
-                        }
-                    }
+//                    for (int i3 =0;i3<arrof.size();i3++){
+//                        if(arrof.get(i3).getId().equals(arrof2.get(i3).getId())){
+//                            arrof2.remove(i3);
+//                        }
+//                    }
 
                     adapterof2.notifyDataSetChanged();
                     getAtach();

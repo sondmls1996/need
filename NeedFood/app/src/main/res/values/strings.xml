@@ -140,7 +140,8 @@
     <string name="linkupdate">http://needfood.webmantan.com/updateInfoUseronlAPI</string>
     <string name="linkorhis">http://needfood.webmantan.com/getHistoryOrderAPI</string>
     <string name="linkhotdeal">http://needfood.webmantan.com/getHotDealProductAPI</string>
-
+    <string name="linkrolesell">http://needfood.webmantan.com/getRoleSellerAPI</string>
+    <string name="linkroleuser">http://needfood.webmantan.com/getRoleUserAPI</string>
     <string name="linksavecm">http://needfood.webmantan.com/saveCommentProductAPI</string>
     <string name="linkgetcm">http://needfood.webmantan.com/getCommentProductAPI</string>
     <string name="linksavecmpr">http://needfood.webmantan.com/saveCommentProductAPI</string>
@@ -157,6 +158,8 @@
     <string name="tiengviet">Tiếng Việt</string>
     <string name="tienganh">English</string>
     <string name="new_">New</string>
+    <string name="poli">Policy</string>
+    <string name="policy">By clicking on the subscription you agree to our user and seller policies</string>
     <string name="topdeall">Top Deal</string>
     <string name="share">Share</string>
     <string name="CoinTran">Donate Coins</string>
@@ -217,6 +220,8 @@
     <string name="nointer">Not connected to Internet</string>
     <string name="exit">Are you sure you want to exit?</string>
     <string name="fre">Free food, free delivery</string>
+    <string name="upoli">User policies</string>
+    <string name="selpoli">Seller policies</string>
     <string name="sare">Share this product in public to reach our target shares quantity</string>
     <string name="phieu">Share</string>
     <string name="evs">Are you want to save and exit?</string>

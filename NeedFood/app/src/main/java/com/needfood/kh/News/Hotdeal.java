@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -220,6 +219,7 @@ public class Hotdeal extends Fragment implements View.OnClickListener {
         RequestQueue que = Volley.newRequestQueue(getActivity());
         que.add(post);
     }
+
 
     public void refresh() {
         arr.clear();
