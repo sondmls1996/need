@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Register extends AppCompatActivity {
-    TextView tvname, tvfone, tvmail, tvpass, tvpass2, tvadr;
+    EditText tvname, tvfone, tvmail, tvpass, tvpass2, tvadr;
+    TextView policy;
     Button btnokay;
     String fullname,email,adr;
 
@@ -43,12 +45,20 @@ public class Register extends AppCompatActivity {
         txt.setText(getResources().getString(R.string.regiss));
         final String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         final String regexStr = "^[0-9]$";
-        tvname = (TextView) findViewById(R.id.tvfn);
-        tvfone = (TextView) findViewById(R.id.tvf);
-        tvmail = (TextView) findViewById(R.id.tvem);
-        tvpass = (TextView) findViewById(R.id.tvp);
-        tvpass2 = (TextView) findViewById(R.id.tvpa);
-        tvadr = (TextView) findViewById(R.id.tvadr);
+        tvname = (EditText) findViewById(R.id.tvfn);
+        tvfone = (EditText) findViewById(R.id.tvf);
+        tvmail = (EditText) findViewById(R.id.tvem);
+        policy = (TextView) findViewById(R.id.policy);
+        policy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Intent it = new Intent(getApplicationContext(),Policy.class);
+                startActivity(it);
+            }
+        });
+        tvpass = (EditText) findViewById(R.id.tvp);
+        tvpass2 = (EditText) findViewById(R.id.tvpa);
+        tvadr = (EditText) findViewById(R.id.tvadr);
         btnokay = (Button) findViewById(R.id.btnreg);
         btnokay.setOnClickListener(new View.OnClickListener() {
             @Override

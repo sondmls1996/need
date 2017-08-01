@@ -30,7 +30,6 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.easyandroidanimations.library.SlideInUnderneathAnimation;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -101,7 +100,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     OftenAdapter adapterof1, adapterof2;
     TextView tvco, tvcodes, tvprize, tvphi, tvmyphi;
     TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
-    ArrayList<OftenConstructor> arrof, arrof2;
+    ArrayList<OftenConstructor> arrof, arrof2,arrdelete;
     ArrayList<OftenConstructor> arrq;
     public static ArrayList<Integer> listship;
     OftenAdapter quanadapter;
@@ -474,7 +473,7 @@ getProductDT();
             map.put("accessToken", access);
             map.put("listProduct", jsonArray.toString());
             map.put("money", money + "");
-            map.put("totalMoneyProduct", money * ((Integer.parseInt(tax)+1)/100) + "");
+            map.put("totalMoneyProduct", money + (money * (Integer.parseInt(tax)))/100+  "");
             map.put("fullName", "");
             map.put("moneyShip", mnship + "");
             map.put("timeShiper", "");
@@ -483,7 +482,7 @@ getProductDT();
             map.put("fone", "");
             // map.put("idUseronl",idu);
             map.put("idSeller", idsl);
-
+//             Log.d("GTGT",  (money * (Integer.parseInt(tax)+1))/100+  "");
             Intent it = new Intent(getApplicationContext(), Preview.class);
             it.putExtra("map", map);
             it.putExtra("min", mnid);
@@ -632,11 +631,12 @@ getProductDT();
             public void onResponse(String response) {
                 try {
                     view1.setVisibility(View.VISIBLE);
-                    new SlideInUnderneathAnimation(view1).setDuration(500).animate();
+
                     pr1.setVisibility(View.GONE);
                     Log.d("PDR", response);
 
                     JSONObject jo = new JSONObject(response);
+
                     JSONObject prd = jo.getJSONObject("Product");
                     if (prd.has("linkFacebook")) {
 //                        lnf.setVisibility(View.VISIBLE);
@@ -837,7 +837,7 @@ getProductDT();
             Response.Listener<String> response = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Log.d("SLL", response);
+                    Log.d("TAXXX", response);
                     try {
                         JSONObject jo = new JSONObject(response);
                         JSONObject sl = jo.getJSONObject("Seller");
@@ -950,7 +950,7 @@ getProductDT();
                     adapterof2.notifyDataSetChanged();
                     getAtach();
 
-                } catch (JSONException e) {
+                    } catch (JSONException e) {
                     e.printStackTrace();
                 }
 

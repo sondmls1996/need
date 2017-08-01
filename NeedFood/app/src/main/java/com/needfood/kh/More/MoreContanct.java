@@ -28,7 +28,6 @@ import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Login.ChangePass;
-import com.needfood.kh.Login.Login;
 import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
@@ -265,120 +264,120 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             que.add(post);
         }
     }
-
-    public void saveimage() {
-        final ProgressDialog progressDialog = DialogUtils.show(this, getResources().getString(R.string.wait));
-        final String namee = tvName.getText().toString();
-        final String emaill = email_id.getText().toString();
-        final String addresss = addr.getText().toString();
-        String link = getResources().getString(R.string.linkupdate);
-        Map<String, String> map = new HashMap<String, String>();
-        if (namee.matches("") || emaill.matches("") || addresss.matches("")) {
-            progressDialog.dismiss();
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
-        } else {
-            map.put("accessToken", token);
-            map.put("fullName", namee);
-            map.put("email", emaill);
-            map.put("address", addresss);
-            map.put("avatar", imageEncoded);
-            Response.Listener<String> response = new Response.Listener<String>() {
-
-                @Override
-                public void onResponse(String response) {
-                    try {
-
-                        db.updateinfo(namee, emaill, addresss, id, "");
-                        JSONObject jo = new JSONObject(response);
-                        String code = jo.getString("code");
-                        if (code.equals("0")) {
-                            progressDialog.dismiss();
-                            tvName.setEnabled(false);
-                            email_id.setEnabled(false);
-                            addr.setEnabled(false);
-                            Intent intent = getIntent();
-                            finish();
-                            startActivity(intent);
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
-                        } else if (code.equals("-1")) {
-                            AlertDialog alertDialog = taoMotAlertDialog();
-                            alertDialog.show();
-                        } else {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-
-                        }
-                    } catch (JSONException e) {
-                        progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                }
-            };
-            PostCL post = new PostCL(link, map, response);
-            RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-            que.add(post);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-
-
-            Bitmap bmp = null;
-            try {
-                bmp = getBitmapFromUri(selectedImage);
-
-                encodeTobase64(bmp);
-
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            saveimage();
-        }
-
-    }
-
-    public String encodeTobase64(Bitmap image) {
-        Bitmap immagex = image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immagex.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        b = baos.toByteArray();
-        imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-        decode(imageEncoded);
-        return imageEncoded;
-    }
-
-    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
-        ParcelFileDescriptor parcelFileDescriptor =
-                getContentResolver().openFileDescriptor(uri, "r");
-        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-        parcelFileDescriptor.close();
-
-        return image;
-    }
-
-    public void decode(String imageDecode) {
-        byte[] decodedString = Base64.decode(imageDecode, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        Log.d("LOGBITMAP", decodedByte + "");
-        avt.setImageBitmap(decodedByte);
-    }
+//
+//    public void saveimage() {
+//        final ProgressDialog progressDialog = DialogUtils.show(this, getResources().getString(R.string.wait));
+//        final String namee = tvName.getText().toString();
+//        final String emaill = email_id.getText().toString();
+//        final String addresss = addr.getText().toString();
+//        String link = getResources().getString(R.string.linkupdate);
+//        Map<String, String> map = new HashMap<String, String>();
+//        if (namee.matches("") || emaill.matches("") || addresss.matches("")) {
+//            progressDialog.dismiss();
+//            Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
+//        } else {
+//            map.put("accessToken", token);
+//            map.put("fullName", namee);
+//            map.put("email", emaill);
+//            map.put("address", addresss);
+//            map.put("avatar", imageEncoded);
+//            Response.Listener<String> response = new Response.Listener<String>() {
+//
+//                @Override
+//                public void onResponse(String response) {
+//                    try {
+//
+//                        db.updateinfo(namee, emaill, addresss, id, "");
+//                        JSONObject jo = new JSONObject(response);
+//                        String code = jo.getString("code");
+//                        if (code.equals("0")) {
+//                            progressDialog.dismiss();
+//                            tvName.setEnabled(false);
+//                            email_id.setEnabled(false);
+//                            addr.setEnabled(false);
+//                            Intent intent = getIntent();
+//                            finish();
+//                            startActivity(intent);
+//                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
+//                        } else if (code.equals("-1")) {
+//                            AlertDialog alertDialog = taoMotAlertDialog();
+//                            alertDialog.show();
+//                        } else {
+//                            progressDialog.dismiss();
+//                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+//
+//                        }
+//                    } catch (JSONException e) {
+//                        progressDialog.dismiss();
+//                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+//                        e.printStackTrace();
+//                    }
+//                }
+//            };
+//            PostCL post = new PostCL(link, map, response);
+//            RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+//            que.add(post);
+//        }
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+//            Uri selectedImage = data.getData();
+//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//
+//            Cursor cursor = getContentResolver().query(selectedImage,
+//                    filePathColumn, null, null, null);
+//            cursor.moveToFirst();
+//
+//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//            String picturePath = cursor.getString(columnIndex);
+//            cursor.close();
+//
+//
+//            Bitmap bmp = null;
+//            try {
+//                bmp = getBitmapFromUri(selectedImage);
+//
+//                encodeTobase64(bmp);
+//
+//            } catch (IOException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//            saveimage();
+//        }
+//
+//    }
+//
+//    public String encodeTobase64(Bitmap image) {
+//        Bitmap immagex = image;
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        immagex.compress(Bitmap.CompressFormat.PNG, 100, baos);
+//        b = baos.toByteArray();
+//        imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+//        decode(imageEncoded);
+//        return imageEncoded;
+//    }
+//
+//    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+//        ParcelFileDescriptor parcelFileDescriptor =
+//                getContentResolver().openFileDescriptor(uri, "r");
+//        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+//        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+//        parcelFileDescriptor.close();
+//
+//        return image;
+//    }
+//
+//    public void decode(String imageDecode) {
+//        byte[] decodedString = Base64.decode(imageDecode, Base64.DEFAULT);
+//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//        Log.d("LOGBITMAP", decodedByte + "");
+//        avt.setImageBitmap(decodedByte);
+//    }
 
     public void savechangee() {
         save.setVisibility(View.GONE);
@@ -457,7 +456,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                     StringTokenizer tokenss = new StringTokenizer(ava, ",");
                     first = tokenss.nextToken();// this will contain "Fruit"
                     second = tokenss.nextToken();
-                    decode(second);
+//                    decode(second);
                     pro.setText(coin + " coins");
                     db.updateinfo(fullname, email, address, id, coin);
                 } catch (JSONException e) {

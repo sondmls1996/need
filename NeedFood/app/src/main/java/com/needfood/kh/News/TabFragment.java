@@ -82,10 +82,13 @@ public class TabFragment extends Fragment {
         return v;
     }
 
+
     @Override
     public void onResume() {
         mlam.dispatchResume();
         super.onResume();
 
     }
+
+
 }

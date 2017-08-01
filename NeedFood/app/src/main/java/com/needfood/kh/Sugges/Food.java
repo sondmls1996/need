@@ -1,15 +1,18 @@
 package com.needfood.kh.Sugges;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -37,6 +40,7 @@ public class Food extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     int page = 1;
     TextView nop;
+    int check = 0;
     EndlessScroll endlessScroll;
     String namep = "food";
     SwipeRefreshLayout swipeRefreshLayout;
@@ -133,7 +137,38 @@ public class Food extends AppCompatActivity {
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(post);
     }
+    @Override
+    public void onBackPressed() {
+        check++;
+        if (check < 2) {
+            Toast.makeText(getBaseContext(), "Nhấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
+        } else if (check >= 2) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Food.this);
+            alertDialogBuilder.setTitle("Needfood");
+            alertDialogBuilder
+                    .setMessage("Bạn thực sự muốn thoát ứng dụng Manmo ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Không", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                            check = 0;
 
+                        }
+                    })
+                    .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            check = 0;
+                            moveTaskToBack(true);
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                            System.exit(0);
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        } else {
+
+        }
+    }
     public void refresh() {
         arr.clear();getData(1);
     }

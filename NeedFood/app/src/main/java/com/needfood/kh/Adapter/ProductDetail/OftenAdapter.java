@@ -109,6 +109,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(isChecked){
+
                     arrcheck.add(new CheckConstructor("1",
                             ip.getPrize(),"false",null,null,ip.getBar(),ip.getCode(),
                             ip.getName(),Integer.parseInt(ip.getPrize())+"",
@@ -133,10 +134,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         public void afterTextChanged(Editable s) {
 
                             if(viewHolder.edo.getText().toString().equals("")){
-//
-//                                if(arrcheck.size()==1){
-//                                    arrcheck.get(0).setQuanli("1");
-//                                    arrcheck.get(0).setMoney(Integer.parseInt(ip.getPrize())*Integer.parseInt("1")+"");
+
 //                                }else{
                                     for(int i = 0 ; i < arrcheck.size() ; i++){
                                         if(ip.getId().equalsIgnoreCase(arrcheck.get(i).id)){
@@ -208,8 +206,6 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                 ProductDetail.listship.remove(i);
                             }
                         }
-
-
                   //  }
                     int prdmoney=0;
                     for (int i2 = 0; i2<arrcheck.size();i2++){
