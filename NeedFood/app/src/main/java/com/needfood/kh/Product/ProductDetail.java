@@ -260,7 +260,7 @@ getProductDT();
         deal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                senKM2("0", "0", "deal", numshare);
+                senKM2("9000", "0", "deal", numshare);
             }
         });
         bn.setOnClickListener(new View.OnClickListener() {

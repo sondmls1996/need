@@ -143,9 +143,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/blue"
-                android:text="@string/conor"
-                android:textColor="@color/white" />
+                android:background="@color/yellow"
+                android:text="@string/buynow"
+                android:textColor="@color/black" />
 
 
         </LinearLayout>
