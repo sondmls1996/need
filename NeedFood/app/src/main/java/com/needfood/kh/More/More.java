@@ -4,12 +4,9 @@ package com.needfood.kh.More;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +27,6 @@ import com.needfood.kh.R;
 import com.needfood.kh.Setting.Setting;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
-import com.needfood.kh.SupportClass.TransImage;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -39,7 +35,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,10 +43,6 @@ public class More extends Fragment implements View.OnClickListener {
     ImageView imgavt;
 
     LinearLayout lntranf, lnself, lnset, lnhis, lnparent, lncontac;
-
-    String first;// this will contain "Fruit"
-    String second;
-    Button btnlog;
     View v;
     Session ses;
     TextView nameus;
@@ -101,13 +92,7 @@ public class More extends Fragment implements View.OnClickListener {
             }
 
         }
-//            Picasso.with(getContext()).load(R.drawable.logo).transform(new TransImage()).into(imgavt);
         addInfo();
-//            v = inflater.inflate(R.layout.fragment_frag_log, container, false);
-//            btnlog = (Button) v.findViewById(R.id.btnlog);
-//            btnlog.setOnClickListener(this);
-
-        // Inflate the layout for this fragment
 
 
         return v;
@@ -196,13 +181,6 @@ public class More extends Fragment implements View.OnClickListener {
         AlertDialog dialog = builder.create();
         return dialog;
     }
-//
-//    public void decode(String imageDecode) {
-//        byte[] decodedString = Base64.decode(imageDecode, Base64.DEFAULT);
-//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//        Log.d("LOGBITMAP", decodedByte + "");
-//        imgavt.setImageBitmap(decodedByte);
-//    }
 
     private void addInfo() {
         String linkk = getResources().getString(R.string.linkgetinfo);
@@ -224,10 +202,6 @@ public class More extends Fragment implements View.OnClickListener {
                     String coin = jo.getString("coin");
                     String ava = jo.getString("avatar");
                     Picasso.with(c).load(ava).into(imgavt);
-//                    StringTokenizer tokenss = new StringTokenizer(ava, ",");
-//                    first = tokenss.nextToken();// this will contain "Fruit"
-//                    second = tokenss.nextToken();
-//                    decode(second);
 
                     db.updateinfo(fullname, email, address, id, coin);
                 } catch (JSONException e) {

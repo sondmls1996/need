@@ -84,6 +84,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     ListView lvs;
     ArrayList<SearchConstructor> arrs;
     SearchAdapter adapter;
+    public static Toolbar toolbar;
     TextView nf, su, no, mo;
     TextView se;
     CoordinatorLayout activity_news;
@@ -94,7 +95,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         networkCheck = new NetworkCheck();
         Boolean conn = networkCheck.checkNow(getApplicationContext());

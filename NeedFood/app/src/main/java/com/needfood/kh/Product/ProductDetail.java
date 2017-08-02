@@ -76,7 +76,7 @@ import static com.needfood.kh.Adapter.ProductDetail.OftenAdapter.arrcheck;
 public class ProductDetail extends AppCompatActivity implements View.OnClickListener {
     RecyclerView rc, rcof, rcof2, rcquan;
     ArrayList<CommentConstructor> arr;
-    String maniid, idsel, mnid;
+    String maniid, idsel, mnid,hot="";
     LinearLayout view1;
     int a2;
     int numshare = 0;
@@ -193,6 +193,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         if (it.hasExtra("sell")) {
             sttsell = it.getStringExtra("sell");
         }
+        if(it.hasExtra("hot")){
+            hot = it.getStringExtra("hot");
+        }
         OftenAdapter.arrcheck.clear();
         bn = (Button) findViewById(R.id.bn);
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
@@ -255,7 +258,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         deal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                senKM2("0", "0", "deal", numshare);
+                senKM2("9000", "0", "deal", numshare);
             }
         });
         bn.setOnClickListener(new View.OnClickListener() {
@@ -683,10 +686,16 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     discountCode = jos.getString("discountCode");
                     if (prd.has("numberShare")) {
                         numshare = prd.getInt("numberShare");
-                        if (numshare > 0) {
-                            lnmyshare.setVisibility(View.VISIBLE);
-                            tvphi.setText(numshare + "");
-                        }
+
+                            if(hot.equals("hot")){
+                                lnmyshare.setVisibility(View.VISIBLE);
+                                tvphi.setText(numshare + "");
+                            }else{
+                                lnmyshare.setVisibility(View.GONE);
+                             //   tvphi.setText(numshare + "");
+                            }
+
+
                     }
                     Log.d("SHARENUM", numshare + "");
                     howto = new StringBuilder("");

@@ -164,7 +164,8 @@ public class Login extends AppCompatActivity {
                                     fullname = json.getString("name");
                                     idfb = json.getString("id");
                                     if (json.has("location")) {
-                                        adr = json.getString("location");
+                                        JSONObject jw = json.getJSONObject("location");
+                                        adr = jw.getString("name");
                                     }
                                     if (json.has("email")) {
                                         email = json.getString("email");

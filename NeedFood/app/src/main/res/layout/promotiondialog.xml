@@ -32,6 +32,7 @@
         <TextView
             android:id="@+id/tx_km"
             android:layout_width="match_parent"
+            android:layout_margin="10dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/km"
