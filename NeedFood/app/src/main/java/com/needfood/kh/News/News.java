@@ -51,7 +51,7 @@ public class News extends AppCompatActivity {
         setContentView(R.layout.activity_news);
 
         lv = (RecyclerView) findViewById(R.id.lvnew);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         lv.setHasFixedSize(true);
         arr = new ArrayList<>();
@@ -91,6 +91,17 @@ public class News extends AppCompatActivity {
                     }
                 })
         );
+//   lv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//       @Override
+//       public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//           if (scrollY > oldScrollY) {
+//               StartActivity.toolbar.setVisibility(View.VISIBLE);
+//           }
+//           if (scrollY < oldScrollY) {
+//               StartActivity.toolbar.setVisibility(View.GONE);
+//           }
+//       }
+//   });
 
     }
 
@@ -169,7 +180,7 @@ public class News extends AppCompatActivity {
                             check = 0;
                             moveTaskToBack(true);
                             android.os.Process.killProcess(android.os.Process.myPid());
-                            System.exit(0);
+                            System.exit(1);
                         }
                     });
             AlertDialog alertDialog = alertDialogBuilder.create();

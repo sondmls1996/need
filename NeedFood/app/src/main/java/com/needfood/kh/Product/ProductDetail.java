@@ -76,7 +76,7 @@ import static com.needfood.kh.Adapter.ProductDetail.OftenAdapter.arrcheck;
 public class ProductDetail extends AppCompatActivity implements View.OnClickListener {
     RecyclerView rc, rcof, rcof2, rcquan;
     ArrayList<CommentConstructor> arr;
-    String maniid, idsel, mnid;
+    String maniid, idsel, mnid,hot="";
     LinearLayout view1;
     int a2;
     int numshare = 0;
@@ -192,6 +192,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         idprd = it.getStringExtra("idprd");
         if (it.hasExtra("sell")) {
             sttsell = it.getStringExtra("sell");
+        }
+        if(it.hasExtra("hot")){
+            hot = it.getStringExtra("hot");
         }
         OftenAdapter.arrcheck.clear();
         bn = (Button) findViewById(R.id.bn);
@@ -683,10 +686,16 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     discountCode = jos.getString("discountCode");
                     if (prd.has("numberShare")) {
                         numshare = prd.getInt("numberShare");
-                        if (numshare > 0) {
-                            lnmyshare.setVisibility(View.VISIBLE);
-                            tvphi.setText(numshare + "");
-                        }
+
+                            if(hot.equals("hot")){
+                                lnmyshare.setVisibility(View.VISIBLE);
+                                tvphi.setText(numshare + "");
+                            }else{
+                                lnmyshare.setVisibility(View.GONE);
+                             //   tvphi.setText(numshare + "");
+                            }
+
+
                     }
                     Log.d("SHARENUM", numshare + "");
                     howto = new StringBuilder("");

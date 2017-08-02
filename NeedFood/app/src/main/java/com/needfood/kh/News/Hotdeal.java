@@ -102,7 +102,7 @@ public class Hotdeal extends Fragment implements View.OnClickListener {
                         public void onItemClick(View view, int position) {
                             Intent it = new Intent(getActivity(), ProductDetail.class);
                             it.putExtra("idprd", arr.get(position).getIdprd());
-                            it.putExtra("namesel", arr.get(position).getNameauth());
+                            it.putExtra("hot","hot");
                             it.putExtra("idsel", arr.get(position).getIdsl());
                             startActivity(it);
                             // TODO Handle item click

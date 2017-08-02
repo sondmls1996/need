@@ -1,14 +1,12 @@
 package com.needfood.kh.More;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +27,6 @@ import com.needfood.kh.R;
 import com.needfood.kh.Setting.Setting;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
-import com.needfood.kh.SupportClass.TransImage;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -38,7 +35,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,6 +53,7 @@ public class More extends Fragment implements View.OnClickListener {
     DataHandle db;
     List<InfoConstructor> list;
     String name;
+    Context c;
     String token, id;
 
     public More() {
@@ -72,7 +69,7 @@ public class More extends Fragment implements View.OnClickListener {
 
         v = inflater.inflate(R.layout.fragment_more, container, false);
 
-
+         c = getActivity().getApplicationContext();
         imgavt = (ImageView) v.findViewById(R.id.avt);
         nameus = (TextView) v.findViewById(R.id.nameuser);
         lnhis = (LinearLayout) v.findViewById(R.id.history);
@@ -222,7 +219,8 @@ public class More extends Fragment implements View.OnClickListener {
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
                     String ava = jo.getString("avatar");
-                    Picasso.with(getActivity()).load(ava).into(imgavt);
+
+                    Picasso.with(c).load(ava).into(imgavt);
 //                    StringTokenizer tokenss = new StringTokenizer(ava, ",");
 //                    first = tokenss.nextToken();// this will contain "Fruit"
 //                    second = tokenss.nextToken();
