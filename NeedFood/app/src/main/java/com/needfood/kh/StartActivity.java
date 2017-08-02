@@ -423,6 +423,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                     .setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             check = 0;
+                            finish();
                             moveTaskToBack(true);
                             android.os.Process.killProcess(android.os.Process.myPid());
                             System.exit(0);

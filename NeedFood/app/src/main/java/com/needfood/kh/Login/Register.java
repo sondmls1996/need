@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,13 +29,15 @@ public class Register extends AppCompatActivity {
     EditText tvname, tvfone, tvmail, tvpass, tvpass2, tvadr;
     TextView policy;
     Button btnokay;
-    String fullname,email,adr;
+    String fullname, email, adr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        this.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +55,7 @@ public class Register extends AppCompatActivity {
         policy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent it = new Intent(getApplicationContext(),Policy.class);
+                Intent it = new Intent(getApplicationContext(), Policy.class);
                 startActivity(it);
             }
         });

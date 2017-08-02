@@ -1,6 +1,7 @@
 package com.needfood.kh.More;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -62,7 +63,7 @@ public class More extends Fragment implements View.OnClickListener {
     public More() {
         // Required empty public constructor
     }
-
+    Context c;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,7 +72,7 @@ public class More extends Fragment implements View.OnClickListener {
         db = new DataHandle(getContext());
 
         v = inflater.inflate(R.layout.fragment_more, container, false);
-
+         c = getActivity().getApplicationContext();
 
         imgavt = (ImageView) v.findViewById(R.id.avt);
         nameus = (TextView) v.findViewById(R.id.nameuser);
@@ -222,7 +223,7 @@ public class More extends Fragment implements View.OnClickListener {
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
                     String ava = jo.getString("avatar");
-                    Picasso.with(getActivity()).load(ava).into(imgavt);
+                    Picasso.with(c).load(ava).into(imgavt);
 //                    StringTokenizer tokenss = new StringTokenizer(ava, ",");
 //                    first = tokenss.nextToken();// this will contain "Fruit"
 //                    second = tokenss.nextToken();
