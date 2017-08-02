@@ -13,7 +13,7 @@
     <string name="emailc">Email</string>
     <string name="phone">Số điện thoại\u0020</string>
     <string name="order">Đặt hàng</string>
-    <string name="conor">Xác nhận đơn hàng</string>
+    <string name="conor">Mua ngay</string>
     <string name="rein">Thông tin người nhận</string>
     <string name="name">Tên:\u0020</string>
     <string name="address">Địa chỉ\u0020</string>
@@ -83,7 +83,7 @@
     <string name="topdeal">Bán chạy</string>
     <string name="dontvmt">Không có bất kỳ bình luận nào</string>
     <string name="by">Bởi</string>
-    <string name="entercoin">Nhập số tiền cần chuyển</string>
+    <string name="entercoin">Nhập số coins cần tặng</string>
     <string name="send">Gửi</string>
     <string name="besqua">Chất lượng tốt nhất</string>
     <string name="sugg">Gợi ý</string>
@@ -172,7 +172,7 @@
     <string name="timeship">Thời gian nhận: \u0020</string>
     <string name="buyer">Người mua: \u0020</string>
     <string name="addr">Địa chỉ: \u0020</string>
-    <string name="selling">Selling out</string>
+    <string name="selling">Bán tháo</string>
     <string name="F_REF">com.needfood.kh.fcm_re</string>
     <string name="F_CM">com.needfood.kh.fcm_cm</string>
 
@@ -232,4 +232,5 @@
     <string name="km">Sản phẩm này hiện tại không có khuyến mại</string>
     <string name="checkin">Bạn vui lòng kiểm tra lại mạng kết nối internet!</string>
     <string name="ycc">Số xu hiện tại của bạn: \u0020</string>
+    <string name="byc">Bởi khách hàng</string>
 </resources>

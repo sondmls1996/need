@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -53,12 +54,11 @@ public class Setting extends AppCompatActivity {
     DataHandle db;
     List<InfoConstructor> list;
     String type, token;
-
-    String ngonngu[] = {"English", "Vietnamese"};
+    String lang;
+    String ngonngu[] = {"Language","English", "Vietnamese"};
     Spinner sp;
     Locale myLocale;
     List<Language> lt;
-    LocaleHelper localeHelper;
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
     private static final String Locale_Preference = "Locale Preference";
@@ -72,21 +72,20 @@ public class Setting extends AppCompatActivity {
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),StartActivity.class);
+                Intent i = new Intent(getApplicationContext(), StartActivity.class);
                 startActivity(i);
                 finish();
             }
         });
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.action_settings));
-        localeHelper = new LocaleHelper();
         ses = new Session(getApplicationContext());
         lgb = (LoginButton) findViewById(R.id.loginset);
         logout = (LinearLayout) findViewById(R.id.logout);
         callbackManager = CallbackManager.Factory.create();
 
         db = new DataHandle(getApplicationContext());
-        if(ses.loggedin()){
+        if (ses.loggedin()) {
             list = db.getAllInfor();
             for (InfoConstructor it : list) {
                 token = it.getAccesstoken();
@@ -97,7 +96,7 @@ public class Setting extends AppCompatActivity {
             } else {
                 logout.setVisibility(View.GONE);
             }
-        }else{
+        } else {
             lgb.setVisibility(View.GONE);
             logout.setVisibility(View.GONE);
         }
@@ -107,7 +106,7 @@ public class Setting extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
 
-        loadLocale();
+//        loadLocale();
         init();
         lgb.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -156,30 +155,18 @@ public class Setting extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 ngonngu);
         sp.setAdapter(spinnerArrayAdapter);
-        if (lt.get(lt.size() - 1).getId().equals("0")) {
-            sp.setSelection(1);
-        } else {
-            sp.setSelection(0);
-        }
+//        if (lt.get(lt.size() - 1).getId().equals("0")) {
+//            sp.setSelection(1);
+//        } else {
+//            sp.setSelection(0);
+//        }
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                String lang = "vi";
+
                 String a = ngonngu[position];
-
-                if (a == "English") {
-                    lang = "en";
-                    db.addCheckLan(new Language("1"));
-
-                } else if (a == "Vietnamese") {
-                    lang = "vi";
-                    db.addCheckLan(new Language("0"));
-
-                }
-                LocaleHelper.setLocale(getApplicationContext(), lang);
-                changeLang(lang);
-                loadLocale();
+                checklan(a);
 
             }
 
@@ -188,6 +175,25 @@ public class Setting extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void checklan(String a) {
+        if (a == "English") {
+            lang = "en";
+            db.addCheckLan(new Language("1"));
+            changeLang(lang);
+            Intent i = new Intent(getApplicationContext(), StartActivity.class);
+            startActivity(i);
+            finish();
+        } else if (a == "Vietnamese") {
+            lang = "vi";
+            db.addCheckLan(new Language("0"));
+            changeLang(lang);
+            Intent i = new Intent(getApplicationContext(), StartActivity.class);
+            startActivity(i);
+            finish();
+        }
+        loadLocale();
     }
 
     @Override
@@ -253,7 +259,7 @@ public class Setting extends AppCompatActivity {
         android.content.res.Configuration config = new android.content.res.Configuration();
         config.locale = myLocale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-//        resetActivity();
+
     }
 
 
@@ -267,9 +273,4 @@ public class Setting extends AppCompatActivity {
         }
     }
 
-    public void resetActivity() {
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
-    }
 }

@@ -232,5 +232,5 @@
     <string name="checkin">Please check your internet connection!</string>
     <string name="mis">Mission: </string>
     <string name="ycc">Your current cents: \u0020</string>
-
+    <string name="byc">By Customer</string>
 </resources>

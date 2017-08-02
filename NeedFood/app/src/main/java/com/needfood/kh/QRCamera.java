@@ -88,10 +88,6 @@ public class QRCamera extends AppCompatActivity implements QRCodeReaderView.OnQR
     public void onQRCodeRead(String text, PointF[] points) {
         idsp = text;
         getProductDT();
-//        Intent it = new Intent(getApplicationContext(), ProductDetail.class);
-//        it.putExtra("idprd",text);
-//        startActivity(it);
-//       finish();
     }
 
     @Override

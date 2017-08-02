@@ -57,7 +57,7 @@
                     android:id="@+id/tvname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="SEA FOOD"
+                    android:text="SEA FOOD AAAAAA AAAAAA AAAAAAA"
                     android:textColor="@color/red"
                     android:textSize="25sp" />
 
@@ -174,7 +174,12 @@
                         android:layout_width="wrap_content"
                         android:id="@+id/votecount"
                         android:layout_height="wrap_content"
-                        android:text="5 by Customer"
+                        android:text="5"
+                        android:textColor="@color/gray2" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/byc"
                         android:textColor="@color/gray2" />
                 </LinearLayout>
 

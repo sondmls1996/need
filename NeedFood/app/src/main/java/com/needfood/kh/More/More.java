@@ -195,13 +195,13 @@ public class More extends Fragment implements View.OnClickListener {
         AlertDialog dialog = builder.create();
         return dialog;
     }
-
-    public void decode(String imageDecode) {
-        byte[] decodedString = Base64.decode(imageDecode, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        Log.d("LOGBITMAP", decodedByte + "");
-        imgavt.setImageBitmap(decodedByte);
-    }
+//
+//    public void decode(String imageDecode) {
+//        byte[] decodedString = Base64.decode(imageDecode, Base64.DEFAULT);
+//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//        Log.d("LOGBITMAP", decodedByte + "");
+//        imgavt.setImageBitmap(decodedByte);
+//    }
 
     private void addInfo() {
         String linkk = getResources().getString(R.string.linkgetinfo);
@@ -222,10 +222,11 @@ public class More extends Fragment implements View.OnClickListener {
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
                     String ava = jo.getString("avatar");
-                    StringTokenizer tokenss = new StringTokenizer(ava, ",");
-                    first = tokenss.nextToken();// this will contain "Fruit"
-                    second = tokenss.nextToken();
-                    decode(second);
+                    Picasso.with(getActivity()).load(ava).into(imgavt);
+//                    StringTokenizer tokenss = new StringTokenizer(ava, ",");
+//                    first = tokenss.nextToken();// this will contain "Fruit"
+//                    second = tokenss.nextToken();
+//                    decode(second);
 
                     db.updateinfo(fullname, email, address, id, coin);
                 } catch (JSONException e) {
