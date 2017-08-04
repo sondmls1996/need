@@ -201,7 +201,13 @@ public class More extends Fragment implements View.OnClickListener {
                     String coin = jo.getString("coin");
                     if(jo.has("avatar")){
                         String ava = jo.getString("avatar");
-                        Picasso.with(c).load(ava).into(imgavt);
+                        Log.d("AVV",ava);
+                        if(ava.equals("")){
+                            Picasso.with(getContext()).load(R.drawable.logo).into(imgavt);
+                        }else{
+                            Picasso.with(c).load(ava).placeholder(R.drawable.logo).into(imgavt);
+                        }
+
                     }else{
                         Picasso.with(getContext()).load(R.drawable.logo).into(imgavt);
                     }
