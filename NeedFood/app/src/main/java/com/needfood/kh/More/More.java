@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -200,8 +199,13 @@ public class More extends Fragment implements View.OnClickListener {
                     String fone = jo.getString("fone");
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
-                    String ava = jo.getString("avatar");
-                    Picasso.with(c).load(ava).into(imgavt);
+                    if(jo.has("avatar")){
+                        String ava = jo.getString("avatar");
+                        Picasso.with(c).load(ava).into(imgavt);
+                    }else{
+                        Picasso.with(getContext()).load(R.drawable.logo).into(imgavt);
+                    }
+
 
                     db.updateinfo(fullname, email, address, id, coin);
                 } catch (JSONException e) {

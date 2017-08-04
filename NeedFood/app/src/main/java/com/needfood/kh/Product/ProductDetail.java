@@ -129,7 +129,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Button sharee;
     TextView vote;
     String point;
-    TextView nameseller, exp;
+    TextView nameseller, exp,txtcomp,txtof,txtbrand;
     LinearLayout lnpro;
     boolean checkclick = false;
     String sta;
@@ -207,7 +207,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         tvphi = (TextView) findViewById(R.id.phi);
         tvmyphi = (TextView) findViewById(R.id.myphi);
         shareDialog = new ShareDialog(ProductDetail.this);
-
+        txtcomp = (TextView)findViewById(R.id.txtcompo);
+        txtof = (TextView)findViewById(R.id.txtoften);
+        txtbrand = (TextView)findViewById(R.id.txtbrand);
         lnpro = (LinearLayout) findViewById(R.id.id_info_pro);
         next = (ImageView) findViewById(R.id.nextt);
         down = (ImageView) findViewById(R.id.downn);
@@ -816,6 +818,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 Log.d("EEE", response);
                 try {
                     JSONArray ja = new JSONArray(response);
+
                     for (int i = 0; i < ja.length(); i++) {
                         String mn = "";
                         JSONObject jo = ja.getJSONObject(i);
@@ -837,6 +840,23 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         if (arrq.get(i2).getId().equals(idprd)) {
                             arrq.remove(i2);
                         }
+                    }
+
+                    for (int i3 = 0; i3 < arrof.size(); i3++) {
+                        for (int i4 = 0; i4 < arrq.size(); i4++) {
+                            if (arrq.get(i4).getId().equals(arrof.get(i3).getId())) {
+                                arrq.remove(i4);
+                            }
+                        }
+
+                    }
+                    for (int i3 = 0; i3 < arrof2.size(); i3++) {
+                        for (int i4 = 0; i4 < arrq.size(); i4++) {
+                            if (arrq.get(i4).getId().equals(arrof2.get(i3).getId())) {
+                                arrq.remove(i4);
+                            }
+                        }
+
                     }
 
                     quanadapter.notifyDataSetChanged();
@@ -889,28 +909,35 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 Log.d("RSEEE", response);
                 try {
                     JSONArray ja = new JSONArray(response);
-                    for (int i = 0; i < ja.length(); i++) {
-                        String mn = "";
-                        JSONObject jo = ja.getJSONObject(i);
-                        JSONObject prd = jo.getJSONObject("Product");
-                        JSONArray jaimg = prd.getJSONArray("images");
-                        typemn = prd.getString("typeMoneyId");
-                        list = db.getMNid(typemn);
-                        for (ListMN lu : list) {
-                            mn = lu.getMn();
-                        }
+                    if(ja.length()==0){
+                        txtcomp.setVisibility(View.GONE);
+                    }else{
+                        txtcomp.setVisibility(View.VISIBLE);
+                        for (int i = 0; i < ja.length(); i++) {
+                            String mn = "";
+                            JSONObject jo = ja.getJSONObject(i);
+                            JSONObject prd = jo.getJSONObject("Product");
+                            JSONArray jaimg = prd.getJSONArray("images");
+                            typemn = prd.getString("typeMoneyId");
+                            list = db.getMNid(typemn);
+                            for (ListMN lu : list) {
+                                mn = lu.getMn();
+                            }
 
-                        arrof3.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                "", prd.getString("id"), prd.getString("moneyShip"), typemn));
+                            arrof3.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
+                                    prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
+                                    "", prd.getString("id"), prd.getString("moneyShip"), typemn));
+
+                        }
+                        for (int i2 = 0; i2 < arrof3.size(); i2++) {
+                            if (arrof3.get(i2).getId().equals(idprd)) {
+                                arrof3.remove(i2);
+                            }
+                        }
+                        adapterof3.notifyDataSetChanged();
 
                     }
-                    for (int i2 = 0; i2 < arrof3.size(); i2++) {
-                        if (arrof3.get(i2).getId().equals(idprd)) {
-                            arrof3.remove(i2);
-                        }
-                    }
-                    adapterof3.notifyDataSetChanged();
+
 //                    getPrdDH();
                     getPrdDK();
                 } catch (JSONException e) {
@@ -939,28 +966,37 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 Log.d("RE", response);
                 try {
                     JSONArray ja = new JSONArray(response);
-                    for (int i = 0; i < ja.length(); i++) {
-                        String mn = "";
-                        JSONObject jo = ja.getJSONObject(i);
-                        JSONObject prd = jo.getJSONObject("Product");
-                        JSONArray jaimg = prd.getJSONArray("images");
-                        typemn = prd.getString("typeMoneyId");
-                        list = db.getMNid(typemn);
-                        for (ListMN lu : list) {
-                            mn = lu.getMn();
-                        }
+                    if(ja.length()==0){
+                        txtof.setVisibility(View.GONE);
+                    }else{
+                        txtof.setVisibility(View.GONE);
+                        for (int i = 0; i < ja.length(); i++) {
+                            String mn = "";
+                            JSONObject jo = ja.getJSONObject(i);
+                            JSONObject prd = jo.getJSONObject("Product");
+                            JSONArray jaimg = prd.getJSONArray("images");
+                            typemn = prd.getString("typeMoneyId");
+                            list = db.getMNid(typemn);
+                            for (ListMN lu : list) {
+                                mn = lu.getMn();
+                            }
 
-                        arrof.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                "", prd.getString("id"), prd.getString("moneyShip"), typemn));
+                            arrof.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
+                                    prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
+                                    "", prd.getString("id"), prd.getString("moneyShip"), typemn));
 
-                    }
-                    for (int i2 = 0; i2 < arrof.size(); i2++) {
-                        if (arrof.get(i2).getId().equals(idprd)) {
-                            arrof.remove(i2);
                         }
+                        for (int i2 = 0; i2 < arrof.size(); i2++) {
+                            if (arrof.get(i2).getId().equals(idprd)) {
+                                arrof.remove(i2);
+                            }
+                        }
+                        if(arrof.size()==0){
+                            txtof.setVisibility(View.GONE);
+                        }
+                        adapterof1.notifyDataSetChanged();
                     }
-                    adapterof1.notifyDataSetChanged();
+
                     getPrdDH();
 
                 } catch (JSONException e) {
@@ -989,36 +1025,45 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 Log.d("RE", response);
                 try {
                     JSONArray ja = new JSONArray(response);
-                    for (int i = 0; i < ja.length(); i++) {
-                        String mn = "";
-                        JSONObject jo = ja.getJSONObject(i);
-                        JSONObject prd = jo.getJSONObject("Product");
-                        JSONArray jaimg = prd.getJSONArray("images");
-                        typemn = prd.getString("typeMoneyId");
-                        list = db.getMNid(typemn);
-                        for (ListMN lu : list) {
-                            mn = lu.getMn();
-                        }
+                    if(ja.length()==0){
+                        txtbrand.setVisibility(View.GONE);
+                    }else{
+                        txtbrand.setVisibility(View.VISIBLE);
+                        for (int i = 0; i < ja.length(); i++) {
+                            String mn = "";
+                            JSONObject jo = ja.getJSONObject(i);
+                            JSONObject prd = jo.getJSONObject("Product");
+                            JSONArray jaimg = prd.getJSONArray("images");
+                            typemn = prd.getString("typeMoneyId");
+                            list = db.getMNid(typemn);
+                            for (ListMN lu : list) {
+                                mn = lu.getMn();
+                            }
 
-                        arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
-                                "", prd.getString("id"), prd.getString("moneyShip"), typemn));
-                    }
-                    for (int i2 = 0; i2 < arrof2.size(); i2++) {
-                        if (arrof2.get(i2).getId().equals(idprd)) {
-                            arrof2.remove(i2);
+                            arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
+                                    prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
+                                    "", prd.getString("id"), prd.getString("moneyShip"), typemn));
                         }
-                    }
-                    for (int i3 = 0; i3 < arrof.size(); i3++) {
-                        for (int i4 = 0; i4 < arrof2.size(); i4++) {
-                            if (arrof2.get(i4).getId().equals(arrof.get(i3).getId())) {
-                                arrof2.remove(i4);
+                        for (int i2 = 0; i2 < arrof2.size(); i2++) {
+                            if (arrof2.get(i2).getId().equals(idprd)) {
+                                arrof2.remove(i2);
                             }
                         }
+                        for (int i3 = 0; i3 < arrof.size(); i3++) {
+                            for (int i4 = 0; i4 < arrof2.size(); i4++) {
+                                if (arrof2.get(i4).getId().equals(arrof.get(i3).getId())) {
+                                    arrof2.remove(i4);
+                                }
+                            }
 
+                        }
+                        if(arrof2.size()==0){
+                            txtof.setVisibility(View.GONE);
+                        }
+
+                        adapterof2.notifyDataSetChanged();
                     }
 
-                    adapterof2.notifyDataSetChanged();
                     getAtach();
 
                 } catch (JSONException e) {
