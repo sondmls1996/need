@@ -42,7 +42,7 @@
     <string name="drink">Drink</string>
     <string name="brandprs">Brand`s products</string>
     <string name="item">Items</string>
-    <string name="noprd">No products to display</string>
+    <string name="noprd">Sorry, no products were found on the system</string>
     <string name="nomal">No manual</string>
     <string name="menu">Menu</string>
     <string name="cancel">Cancel</string>
@@ -235,4 +235,5 @@
     <string name="mis">Mission: </string>
     <string name="ycc">Your current cents: \u0020</string>
     <string name="byc">By Customer</string>
+    <string name="noprdd">No products to display</string>
 </resources>

@@ -235,4 +235,5 @@
     <string name="checkin">Bạn vui lòng kiểm tra lại mạng kết nối internet!</string>
     <string name="ycc">Số xu hiện tại của bạn: \u0020</string>
     <string name="byc">Bởi khách hàng</string>
+    <string name="noprdd">Không có sản phẩm nào để hiển thị</string>
 </resources>
