@@ -203,13 +203,13 @@ public class More extends Fragment implements View.OnClickListener {
                         String ava = jo.getString("avatar");
                         Log.d("AVV",ava);
                         if(ava.equals("")){
-                            Picasso.with(getContext()).load(R.drawable.logo).into(imgavt);
+                            Picasso.with(c).load(R.drawable.logo).into(imgavt);
                         }else{
                             Picasso.with(c).load(ava).placeholder(R.drawable.logo).into(imgavt);
                         }
 
                     }else{
-                        Picasso.with(getContext()).load(R.drawable.logo).into(imgavt);
+                        Picasso.with(c).load(R.drawable.logo).into(imgavt);
                     }
 
 

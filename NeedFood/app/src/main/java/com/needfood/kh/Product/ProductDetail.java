@@ -969,7 +969,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     if(ja.length()==0){
                         txtof.setVisibility(View.GONE);
                     }else{
-                        txtof.setVisibility(View.GONE);
+                        txtof.setVisibility(View.VISIBLE);
                         for (int i = 0; i < ja.length(); i++) {
                             String mn = "";
                             JSONObject jo = ja.getJSONObject(i);
@@ -990,6 +990,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             if (arrof.get(i2).getId().equals(idprd)) {
                                 arrof.remove(i2);
                             }
+                        }
+                        for (int i3 = 0; i3 < arrof3.size(); i3++) {
+                            for (int i4 = 0; i4 < arrof.size(); i4++) {
+                                if (arrof.get(i4).getId().equals(arrof3.get(i3).getId())) {
+                                    arrof.remove(i4);
+                                }
+                            }
+
                         }
                         if(arrof.size()==0){
                             txtof.setVisibility(View.GONE);
@@ -1022,7 +1030,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(String response) {
 
-                Log.d("RE", response);
+                Log.d("REDH", response);
                 try {
                     JSONArray ja = new JSONArray(response);
                     if(ja.length()==0){
@@ -1041,7 +1049,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             }
 
                             arrof2.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                    prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), "",
+                                    prd.getString("price"), mn, prd.getString("nameUnit"),
+                                    false, prd.getString("id"), prd.getString("code"),
                                     "", prd.getString("id"), prd.getString("moneyShip"), typemn));
                         }
                         for (int i2 = 0; i2 < arrof2.size(); i2++) {
@@ -1052,6 +1061,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         for (int i3 = 0; i3 < arrof.size(); i3++) {
                             for (int i4 = 0; i4 < arrof2.size(); i4++) {
                                 if (arrof2.get(i4).getId().equals(arrof.get(i3).getId())) {
+                                    arrof2.remove(i4);
+                                }
+                            }
+
+                        }
+                        for (int i3 = 0; i3 < arrof3.size(); i3++) {
+                            for (int i4 = 0; i4 < arrof2.size(); i4++) {
+                                if (arrof2.get(i4).getId().equals(arrof3.get(i3).getId())) {
                                     arrof2.remove(i4);
                                 }
                             }
