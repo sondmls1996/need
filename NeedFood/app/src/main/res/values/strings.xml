@@ -69,6 +69,7 @@
     <string name="Deal">Deal</string>
     <string name="fb_login_protocol_scheme">fb144493206000726</string>
     <string name="productoften">Products often bought together</string>
+    <string name="procomt">Component of the product</string>
     <string name="inven">Inventory</string>
     <string name="inven2">Inventory:\u0020</string>
     <string name="usname">User name</string>
@@ -118,6 +119,7 @@
     <string name="linkorder">http://needfood.webmantan.com/saveOrderAPI</string>
     <string name="linksug">http://needfood.webmantan.com/getProductSuggestionAPI</string>
     <string name="linkspch">http://needfood.webmantan.com/getProductManufacturerAPI</string>
+    <string name="linkprcom">http://needfood.webmantan.com/getProductComponentAPI</string>
     <string name="linkprdat">http://needfood.webmantan.com/getProductAttachAPI</string>
     <string name="linkifsel">http://needfood.webmantan.com/getInfoSellerAPI</string>
     <string name="linkbest">http://needfood.webmantan.com/getProductBestAPI</string>

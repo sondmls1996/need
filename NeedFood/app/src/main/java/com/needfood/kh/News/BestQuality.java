@@ -77,6 +77,7 @@ public class BestQuality extends AppCompatActivity {
                         it.putExtra("idprd", arr.get(position).getIdprd());
                         it.putExtra("namesel", arr.get(position).getNameauth());
                         it.putExtra("idsel", arr.get(position).getIdsl());
+                        it.putExtra("statuss","new");
                         startActivity(it);
                         // TODO Handle item click
                     }

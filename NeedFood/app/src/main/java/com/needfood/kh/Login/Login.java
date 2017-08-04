@@ -206,6 +206,7 @@ public class Login extends AppCompatActivity {
         map.put("email", email);
         map.put("fone", fone);
         map.put("address", adr);
+        map.put("avatar","");
         Response.Listener<String> response = new Response.Listener<String>() {
 
             @Override
@@ -215,6 +216,7 @@ public class Login extends AppCompatActivity {
                 try {
                     progressDialog.dismiss();
                     ses.setLoggedin(true);
+                    Log.d("JSRE",response);
                     JSONObject jo = new JSONObject(response);
                     JSONObject js = jo.getJSONObject("Useronl");
 //                                    String fullname = jo.getString("fullName");

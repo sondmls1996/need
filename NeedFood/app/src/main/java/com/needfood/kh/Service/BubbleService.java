@@ -28,14 +28,17 @@ public class BubbleService extends Service implements View.OnClickListener {
     LinearLayout lnb;
     TextView txtgia;
     int edtgia;
+
     public BubbleService() {
     }
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
-    public int onStartCommand (Intent intent, int flags, int startId) {
-        if(intent.hasExtra("MN")){
+
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent.hasExtra("MN")) {
             int pr = Integer.parseInt(intent.getStringExtra("MN"));
             txtgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(pr));
         }
@@ -66,28 +69,28 @@ public class BubbleService extends Service implements View.OnClickListener {
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mWindowManager.addView(mChatHeadView, params);
 
-        txtgia = (TextView)mChatHeadView.findViewById(R.id.txthang);
+        txtgia = (TextView) mChatHeadView.findViewById(R.id.txthang);
 
-            txtgia.setText("0");
+        txtgia.setText("0");
 
-        lnb = (LinearLayout)mChatHeadView.findViewById(R.id.lnbn);
+        lnb = (LinearLayout) mChatHeadView.findViewById(R.id.lnbn);
         lnb.setOnTouchListener(new View.OnTouchListener() {
-            private int lastAction;
-            private int initialX;
-            private int initialY;
-            private float initialTouchX;
+                                   private int lastAction;
+                                   private int initialX;
+                                   private int initialY;
+                                   private float initialTouchX;
 
-            private static final int MAX_CLICK_DURATION = 1000;
+                                   private static final int MAX_CLICK_DURATION = 1000;
 
-            /**
-             * Max allowed distance to move during a "click", in DP.
-             */
-            private static final int MAX_CLICK_DISTANCE = 15;
+                                   /**
+                                    * Max allowed distance to move during a "click", in DP.
+                                    */
+                                   private static final int MAX_CLICK_DISTANCE = 15;
 
-            private long pressStartTime;
-            private float initialTouchY;
+                                   private long pressStartTime;
+                                   private float initialTouchY;
 
-            @Override
+                                   @Override
                                    public boolean onTouch(View v, MotionEvent event) {
                                        switch (event.getAction()) {
                                            case MotionEvent.ACTION_DOWN:
@@ -106,11 +109,11 @@ public class BubbleService extends Service implements View.OnClickListener {
                                                //As we implemented on touch listener with ACTION_MOVE,
                                                //we have to check if the previous action was ACTION_DOWN
                                                //to identify if the user clicked the view or not.
-                                               long totime =System.currentTimeMillis();
-                                               long endtime = totime-pressStartTime;
+                                               long totime = System.currentTimeMillis();
+                                               long endtime = totime - pressStartTime;
                                                int Xdiff = (int) (event.getRawX() - initialTouchX);
                                                int Ydiff = (int) (event.getRawY() - initialTouchY);
-                                               if (endtime<200) {
+                                               if (endtime < 200) {
                                                    //Open the chat conversation click.
                                                    //  startService(new Intent(QBService.this, BubbleService2.class));
                                                }
@@ -145,11 +148,7 @@ public class BubbleService extends Service implements View.OnClickListener {
     public void onClick(View view) {
 
 
-
     }
-
-
-
 
 
 }

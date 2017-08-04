@@ -74,9 +74,9 @@ import java.util.Map;
 import static com.needfood.kh.Adapter.ProductDetail.OftenAdapter.arrcheck;
 
 public class ProductDetail extends AppCompatActivity implements View.OnClickListener {
-    RecyclerView rc, rcof, rcof2, rcquan;
+    RecyclerView rc, rcof, rcof2, rcquan, rctp;
     ArrayList<CommentConstructor> arr;
-    String maniid, idsel, mnid,hot="";
+    String maniid, idsel, mnid, hot = "";
     LinearLayout view1;
     int a2;
     int numshare = 0;
@@ -98,10 +98,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     EditText edpickngay, edpickgio, edquan, edadrs, edghichu;
     String cata, sellprice = "";
     Button deal, bn;
-    OftenAdapter adapterof1, adapterof2;
+    OftenAdapter adapterof1, adapterof2, adapterof3;
     TextView tvco, tvcodes, tvprize, tvphi, tvmyphi;
     TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
-    ArrayList<OftenConstructor> arrof, arrof2, arrdelete;
+    ArrayList<OftenConstructor> arrof, arrof2, arrdelete, arrof3;
     ArrayList<OftenConstructor> arrq;
     public static ArrayList<Integer> listship;
     OftenAdapter quanadapter;
@@ -132,7 +132,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     TextView nameseller, exp;
     LinearLayout lnpro;
     boolean checkclick = false;
-
+    String sta;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -193,9 +193,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         if (it.hasExtra("sell")) {
             sttsell = it.getStringExtra("sell");
         }
-        if(it.hasExtra("hot")){
+        if (it.hasExtra("hot")) {
             hot = it.getStringExtra("hot");
         }
+        sta = it.getStringExtra("statuss");
         OftenAdapter.arrcheck.clear();
         bn = (Button) findViewById(R.id.bn);
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
@@ -278,6 +279,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             lnshare.setVisibility(View.VISIBLE);
 
         }
+//        if(sta.equals("new")){
+//            imgshare.setVisibility(View.VISIBLE);
+//        }else{
+//            imgshare.setVisibility(View.GONE);
+//        }
         tvco = (TextView) findViewById(R.id.tvco);
         tvcodes = (TextView) findViewById(R.id.tvcodes);
         tvprize = (TextView) findViewById(R.id.tvprize);
@@ -304,6 +310,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         imageView = (ImageView) findViewById(R.id.imageView);
         arrof = new ArrayList<>();
         arrof2 = new ArrayList<>();
+        arrof3 = new ArrayList<>();
         arrq = new ArrayList<>();
         tvpr = (TextView) findViewById(R.id.tvpro);
         tvpr.setOnClickListener(new View.OnClickListener() {
@@ -326,29 +333,34 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rc = (RecyclerView) findViewById(R.id.recycm);
         rcof = (RecyclerView) findViewById(R.id.rcprd);
         rcof2 = (RecyclerView) findViewById(R.id.rcprd2);
+        rctp = (RecyclerView) findViewById(R.id.rcprd3);
 
         adapter = new CommentAdapter(getApplicationContext(), arr);
         adapterof1 = new OftenAdapter(getApplicationContext(), arrof);
         adapterof2 = new OftenAdapter(getApplicationContext(), arrof2);
         quanadapter = new OftenAdapter(getApplicationContext(), arrq);
+        adapterof3 = new OftenAdapter(getApplicationContext(), arrof3);
 
         rcof.setAdapter(adapterof1);
         rcof2.setAdapter(adapterof2);
         rcquan.setAdapter(quanadapter);
         rc.setAdapter(adapter);
+        rctp.setAdapter(adapterof3);
 
         rcof.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rcof2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rcquan.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rc.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rctp.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager3 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager2 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);// (int spanCount, int orientation)
+        StaggeredGridLayoutManager mStaggeredVerticalLayoutManager4 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         rcof.setLayoutManager(mStaggeredVerticalLayoutManager);
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
         rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
-
+        rctp.setLayoutManager(mStaggeredVerticalLayoutManager4);
     }
 
     private void getNumberShare() {
@@ -687,13 +699,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     if (prd.has("numberShare")) {
                         numshare = prd.getInt("numberShare");
 
-                            if(hot.equals("hot")){
-                                lnmyshare.setVisibility(View.VISIBLE);
-                                tvphi.setText(numshare + "");
-                            }else{
-                                lnmyshare.setVisibility(View.GONE);
-                             //   tvphi.setText(numshare + "");
-                            }
+                        if (hot.equals("hot")) {
+                            lnmyshare.setVisibility(View.VISIBLE);
+                            tvphi.setText(numshare + "");
+                        } else {
+                            lnmyshare.setVisibility(View.GONE);
+                            //   tvphi.setText(numshare + "");
+                        }
 
 
                     }
@@ -756,8 +768,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     String time_hsd = ex.getString("time");
                     exp.setText(txt_hsd);
                     nameseller.setText(titl);
-                    getPrdDK();
+
                     getCommen();
+                    getPrdCompo();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -863,6 +876,53 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
+    public void getPrdCompo() {
+        final String link = getResources().getString(R.string.linkprcom);
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("idProduct", idprd);
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.d("RSEEE", response);
+                try {
+                    JSONArray ja = new JSONArray(response);
+                    for (int i = 0; i < ja.length(); i++) {
+                        String mn = "";
+                        JSONObject jo = ja.getJSONObject(i);
+                        JSONObject prd = jo.getJSONObject("Product");
+                        JSONArray jaimg = prd.getJSONArray("images");
+                        typemn = prd.getString("typeMoneyId");
+                        list = db.getMNid(typemn);
+                        for (ListMN lu : list) {
+                            mn = lu.getMn();
+                        }
+
+                        arrof3.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
+                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
+                                "", prd.getString("id"), prd.getString("moneyShip"), typemn));
+
+                    }
+                    for (int i2 = 0; i2 < arrof3.size(); i2++) {
+                        if (arrof3.get(i2).getId().equals(idprd)) {
+                            arrof3.remove(i2);
+                        }
+                    }
+                    adapterof3.notifyDataSetChanged();
+//                    getPrdDH();
+                    getPrdDK();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
+    }
 
     private void getPrdDK() {
         final String link = getResources().getString(R.string.linkprdcata);

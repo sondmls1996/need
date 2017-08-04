@@ -74,7 +74,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -163,8 +162,6 @@ Nestled in the quiet town of Warm River, in Southeastern Idaho, the ranch is sur
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
-
                           >
 
                             <LinearLayout

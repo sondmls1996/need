@@ -71,6 +71,7 @@
     <string name="fb_login_protocol_scheme">fb144493206000726</string>
     <string name="coins2">Coins:\u0020</string>
     <string name="productoften">Sản phẩm liên quan</string>
+    <string name="procomt">Thành phần của sản phẩm</string>
     <string name="inven">Hàng tồn kho</string>
     <string name="inven2">Hàng tồn kho:\u0020</string>
     <string name="usname">Tên người dùng</string>
@@ -95,7 +96,7 @@
     <string name="wrreg">Không được để trống</string>
     <string name="sento">Gửi cho:</string>
     <string name="wrpass">Mật khẩu xác nhận không khớp</string>
-    <string name="messel">Ghi chú</string>
+    <string name="messel">Nhập yêu cầu thêm cho sản phẩm</string>
     <string name="shortpass">Mật khẩu phải có 6 ký tự trở lên</string>
     <string name="contact">Liên hệ</string>
     <string name="shiptime">Thời gian vận chuyển</string>
@@ -140,6 +141,7 @@
     <string name="linkgetcode">http://needfood.webmantan.com/sendCodePassUseronlAPI</string>
     <string name="linksearch">http://needfood.webmantan.com/searchProductAPI</string>
     <string name="linktypecode">http://needfood.webmantan.com/sendPassUseronlAPI</string>
+    <string name="linkprcom">http://needfood.webmantan.com/getProductComponentAPI</string>
     <string name="linkupdate">http://needfood.webmantan.com/updateInfoUseronlAPI</string>
     <string name="linkorhis">http://needfood.webmantan.com/getHistoryOrderAPI</string>
     <string name="linkhotdeal">http://needfood.webmantan.com/getHotDealProductAPI</string>
@@ -164,7 +166,7 @@
     <string name="CoinTran">Tặng Coins</string>
     <string name="his">Lịch sử</string>
     <string name="Pwu">Hợp tác với chúng tôi</string>
-    <string name="noprd">Không có sản phẩm để hiển thị</string>
+    <string name="noprd">Xin lỗi, ko tim sản phẩm này trên hệ thống</string>
     <string name="qrc">Quét mã QR code sản phẩm</string>
     <string name="loginn">Đăng nhập</string>
     <string name="yhl">Bạn chưa đăng nhập?</string>
@@ -172,7 +174,7 @@
     <string name="timeship">Thời gian nhận: \u0020</string>
     <string name="buyer">Người mua: \u0020</string>
     <string name="addr">Địa chỉ: \u0020</string>
-    <string name="selling">Bán tháo</string>
+    <string name="selling">Đại hạ giá</string>
     <string name="F_REF">com.needfood.kh.fcm_re</string>
     <string name="F_CM">com.needfood.kh.fcm_cm</string>
 

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,12 +28,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 public class QRCamera extends AppCompatActivity implements QRCodeReaderView.OnQRCodeReadListener {
     private QRCodeReaderView qrCodeReaderView;
     String idsp;
     DataHandle db;
-    TextView tvpr, namesel, tvnameprd, tvgia1, tvgia2, dess, tvdv1, tvdv2,txtcode;
+    TextView tvpr, namesel, tvnameprd, tvgia1, tvgia2, dess, tvdv1, tvdv2, txtcode;
     ImageView imgprd;
     RelativeLayout rl;
     List<ListMN> list;
@@ -47,7 +49,7 @@ public class QRCamera extends AppCompatActivity implements QRCodeReaderView.OnQR
         qrCodeReaderView = (QRCodeReaderView) findViewById(R.id.qrdecoderview);
         qrCodeReaderView.setOnQRCodeReadListener(this);
         tvgia1 = (TextView) findViewById(R.id.pr1);
-        txtcode = (TextView)findViewById(R.id.txtcode);
+        txtcode = (TextView) findViewById(R.id.txtcode);
         tvnameprd = (TextView) findViewById(R.id.tvname2);
         rl = (RelativeLayout) findViewById(R.id.rlmain);
         rl.setVisibility(View.GONE);
@@ -86,8 +88,42 @@ public class QRCamera extends AppCompatActivity implements QRCodeReaderView.OnQR
 
     @Override
     public void onQRCodeRead(String text, PointF[] points) {
-        idsp = text;
-        getProductDT();
+//        getProductDT(text);
+        if (!text.equals("")) {
+            Toast.makeText(getApplicationContext(),"demo",Toast.LENGTH_SHORT).show();
+            if (text.equals("{‘idProduct’")) {
+                Toast.makeText(getApplicationContext(),"demo1",Toast.LENGTH_SHORT).show();
+                String[] split = text.split("=>’");
+                String firstSubString = split[0];
+                String secondSubString = split[1];
+                String[] split1 = secondSubString.split("’");
+                String fpli = split1[0];
+                Log.d("ABCCAC", text + "-" + firstSubString + "-" + secondSubString + "-" + fpli);
+                if (firstSubString.equals("{‘idProduct’")) {
+                    Toast.makeText(getApplicationContext(),"demo2",Toast.LENGTH_SHORT).show();
+                    idsp = fpli;
+                    getProductDT(idsp);
+                } else {
+                    Toast.makeText(getApplicationContext(),"demo3",Toast.LENGTH_SHORT).show();
+                    txtcode.setVisibility(View.VISIBLE);
+                    view1.setVisibility(View.GONE);
+                    txtcode.setText(getResources().getString(R.string.noprd));
+                }
+            } else {
+                Toast.makeText(getApplicationContext(),"demo4",Toast.LENGTH_SHORT).show();
+                txtcode.setVisibility(View.VISIBLE);
+                view1.setVisibility(View.GONE);
+                txtcode.setText(getResources().getString(R.string.noprd));
+            }
+
+        } else {
+            txtcode.setVisibility(View.VISIBLE);
+            view1.setVisibility(View.GONE);
+            txtcode.setText(getResources().getString(R.string.noprd));
+            Log.d("ABCCAC", "demo");
+        }
+
+
     }
 
     @Override
@@ -102,14 +138,21 @@ public class QRCamera extends AppCompatActivity implements QRCodeReaderView.OnQR
         qrCodeReaderView.stopCamera();
     }
 
-    private void getProductDT() {
+    private void getProductDT(final String idsp) {
         final String link = getResources().getString(R.string.linkprdde);
         Map<String, String> map = new HashMap<>();
         map.put("idProduct", idsp);
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("FFFFUU",response);
+                Log.d("FFFFUU", response);
+                if (response.length() > 1) {
+
+                } else {
+                    txtcode.setVisibility(View.VISIBLE);
+                    view1.setVisibility(View.GONE);
+                    txtcode.setText(getResources().getString(R.string.noprd));
+                }
                 try {
 
                     view1.setVisibility(View.GONE);
@@ -119,26 +162,15 @@ public class QRCamera extends AppCompatActivity implements QRCodeReaderView.OnQR
 
                     JSONObject jo = new JSONObject(response);
 
-                //    String code = jo.getString("code");
-                    if(jo.has("code")){
-                        String code = jo.getString("code");
-                        if(code.equals("0")){
-                            qrCodeReaderView.stopCamera();
-                            Intent it = new Intent(getApplicationContext(),ProductDetail.class);
-                            it.putExtra("idprd",idsp);
-                            startActivity(it);
-                            finish();
-                        }else if(code.equals("1")){
-                            txtcode.setVisibility(View.VISIBLE);
-                            view1.setVisibility(View.GONE);
-                            txtcode.setText(getResources().getString(R.string.noprd));
-                        }else{
-                            txtcode.setVisibility(View.VISIBLE);
-                            view1.setVisibility(View.GONE);
-                            txtcode.setText(getResources().getString(R.string.haslock));
-                        }
+                    //    String code = jo.getString("code");
+                    if (response.length() > 1) {
+                        qrCodeReaderView.stopCamera();
+                        Intent it = new Intent(getApplicationContext(), ProductDetail.class);
+                        it.putExtra("idprd", idsp);
+                        startActivity(it);
+                        finish();
 
-                    }else {
+                    } else {
                         txtcode.setVisibility(View.VISIBLE);
                         view1.setVisibility(View.GONE);
                         txtcode.setText(getResources().getString(R.string.noprd));
