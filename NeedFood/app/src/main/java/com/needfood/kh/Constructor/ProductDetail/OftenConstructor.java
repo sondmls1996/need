@@ -15,7 +15,6 @@ public class OftenConstructor {
     public String code;
     public String note;
     public String id;
-
     public String  nmship;
     public String tymn;
 

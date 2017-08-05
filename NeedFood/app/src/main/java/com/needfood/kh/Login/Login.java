@@ -170,8 +170,6 @@ public class Login extends AppCompatActivity {
                                     if (json.has("email")) {
                                         email = json.getString("email");
                                     }
-
-//
                                     regisFB();
 //
                                 } catch (JSONException e) {
@@ -206,7 +204,7 @@ public class Login extends AppCompatActivity {
         map.put("email", email);
         map.put("fone", fone);
         map.put("address", adr);
-        map.put("avatar","");
+        map.put("avatar","https://graph.facebook.com/" + idfb + "/picture?type=large");
         Response.Listener<String> response = new Response.Listener<String>() {
 
             @Override
@@ -220,7 +218,7 @@ public class Login extends AppCompatActivity {
                     JSONObject jo = new JSONObject(response);
                     JSONObject js = jo.getJSONObject("Useronl");
 //                                    String fullname = jo.getString("fullName");
-//                                    String email = jo.getString("email");
+//                                    String  email = jo.getString("email");
 //                                    String fone = jo.getString("fone");
 //                                    String address = jo.getString("address");
 //                                    String coin = jo.getString("coin");

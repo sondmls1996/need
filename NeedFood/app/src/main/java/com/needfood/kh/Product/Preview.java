@@ -85,7 +85,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         Intent intent = getIntent();
         hashMap = (HashMap<String, String>) intent.getSerializableExtra("map");
         json = hashMap.get("listProduct");
-
+        Log.d("JIO",json.toString());
         idsl = hashMap.get("idSeller");
         total = Double.parseDouble(hashMap.get("totalMoneyProduct"));
         mnship = hashMap.get("moneyShip");

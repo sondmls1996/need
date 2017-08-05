@@ -3,18 +3,11 @@ package com.needfood.kh.More;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -38,13 +31,9 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileDescriptor;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import static com.needfood.kh.R.id.proper;
 
@@ -453,12 +442,18 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                     String fone = jo.getString("fone");
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
-                    String ava = jo.getString("avatar");
-//                    StringTokenizer tokenss = new StringTokenizer(ava, ",");
-//                    first = tokenss.nextToken();// this will contain "Fruit"
-//                    second = tokenss.nextToken();
-//                    decode(second);
-                    Picasso.with(getApplicationContext()).load(ava).into(avt);
+                    if(jo.has("avatar")){
+                        String ava = jo.getString("avatar");
+                        Log.d("AVV",ava);
+                        if(ava.equals("")){
+                            Picasso.with(getApplicationContext()).load(R.drawable.logo).into(avt);
+                        }else{
+                            Picasso.with(getApplicationContext()).load(ava).placeholder(R.drawable.logo).into(avt);
+                        }
+
+                    }else{
+                        Picasso.with(getApplicationContext()).load(R.drawable.logo).into(avt);
+                    }
                     pro.setText(coin + " coins");
                     db.updateinfo(fullname, email, address, id, coin);
                 } catch (JSONException e) {
