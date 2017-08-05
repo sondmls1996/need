@@ -84,7 +84,7 @@ public class News extends AppCompatActivity {
 
                         Intent it = new Intent(getApplicationContext(), ProductDetail.class);
                         it.putExtra("idprd", arr.get(position).getIdprd());
-                        it.putExtra("statuss","new");
+                        it.putExtra("new","new");
                         startActivity(it);
 
                         // TODO Handle item click

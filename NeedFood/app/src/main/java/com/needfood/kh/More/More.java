@@ -201,7 +201,7 @@ public class More extends Fragment implements View.OnClickListener {
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
                     String ava = jo.getString("avatar");
-                    Picasso.with(c).load(ava).into(imgavt);
+//                    Picasso.with(c).load(ava).into(imgavt);
 
                     db.updateinfo(fullname, email, address, id, coin);
                 } catch (JSONException e) {

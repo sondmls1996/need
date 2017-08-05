@@ -196,7 +196,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         if (it.hasExtra("hot")) {
             hot = it.getStringExtra("hot");
         }
-        sta = it.getStringExtra("statuss");
+        if(it.hasExtra("new")){
+            sta = it.getStringExtra("new");
+        }
+
         OftenAdapter.arrcheck.clear();
         bn = (Button) findViewById(R.id.bn);
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
@@ -229,7 +232,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
             }
         });
-
+        Toast.makeText(getApplicationContext(),sta,Toast.LENGTH_SHORT).show();
+        if(sta.equals("new")){
+            imgshare.setVisibility(View.GONE);
+        }else{
+            imgshare.setVisibility(View.VISIBLE);
+        }
         imgshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -279,11 +287,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             lnshare.setVisibility(View.VISIBLE);
 
         }
-//        if(sta.equals("new")){
-//            imgshare.setVisibility(View.VISIBLE);
-//        }else{
-//            imgshare.setVisibility(View.GONE);
-//        }
+
         tvco = (TextView) findViewById(R.id.tvco);
         tvcodes = (TextView) findViewById(R.id.tvcodes);
         tvprize = (TextView) findViewById(R.id.tvprize);
