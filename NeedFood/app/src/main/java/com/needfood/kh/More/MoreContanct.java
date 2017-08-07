@@ -3,11 +3,20 @@ package com.needfood.kh.More;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -26,11 +35,15 @@ import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -254,120 +267,115 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             que.add(post);
         }
     }
-//
-//    public void saveimage() {
-//        final ProgressDialog progressDialog = DialogUtils.show(this, getResources().getString(R.string.wait));
-//        final String namee = tvName.getText().toString();
-//        final String emaill = email_id.getText().toString();
-//        final String addresss = addr.getText().toString();
-//        String link = getResources().getString(R.string.linkupdate);
-//        Map<String, String> map = new HashMap<String, String>();
-//        if (namee.matches("") || emaill.matches("") || addresss.matches("")) {
-//            progressDialog.dismiss();
-//            Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
-//        } else {
-//            map.put("accessToken", token);
-//            map.put("fullName", namee);
-//            map.put("email", emaill);
-//            map.put("address", addresss);
-//            map.put("avatar", imageEncoded);
-//            Response.Listener<String> response = new Response.Listener<String>() {
-//
-//                @Override
-//                public void onResponse(String response) {
-//                    try {
-//
-//                        db.updateinfo(namee, emaill, addresss, id, "");
-//                        JSONObject jo = new JSONObject(response);
-//                        String code = jo.getString("code");
-//                        if (code.equals("0")) {
-//                            progressDialog.dismiss();
-//                            tvName.setEnabled(false);
-//                            email_id.setEnabled(false);
-//                            addr.setEnabled(false);
-//                            Intent intent = getIntent();
-//                            finish();
-//                            startActivity(intent);
-//                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
-//                        } else if (code.equals("-1")) {
-//                            AlertDialog alertDialog = taoMotAlertDialog();
-//                            alertDialog.show();
-//                        } else {
-//                            progressDialog.dismiss();
-//                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-//
-//                        }
-//                    } catch (JSONException e) {
-//                        progressDialog.dismiss();
-//                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-//                        e.printStackTrace();
-//                    }
-//                }
-//            };
-//            PostCL post = new PostCL(link, map, response);
-//            RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-//            que.add(post);
-//        }
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-//            Uri selectedImage = data.getData();
-//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//
-//            Cursor cursor = getContentResolver().query(selectedImage,
-//                    filePathColumn, null, null, null);
-//            cursor.moveToFirst();
-//
-//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//            String picturePath = cursor.getString(columnIndex);
-//            cursor.close();
-//
-//
-//            Bitmap bmp = null;
-//            try {
-//                bmp = getBitmapFromUri(selectedImage);
-//
-//                encodeTobase64(bmp);
-//
-//            } catch (IOException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            }
-//            saveimage();
-//        }
-//
-//    }
-//
-//    public String encodeTobase64(Bitmap image) {
-//        Bitmap immagex = image;
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        immagex.compress(Bitmap.CompressFormat.PNG, 100, baos);
-//        b = baos.toByteArray();
-//        imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-//        decode(imageEncoded);
-//        return imageEncoded;
-//    }
-//
-//    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
-//        ParcelFileDescriptor parcelFileDescriptor =
-//                getContentResolver().openFileDescriptor(uri, "r");
-//        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-//        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-//        parcelFileDescriptor.close();
-//
-//        return image;
-//    }
-//
-//    public void decode(String imageDecode) {
-//        byte[] decodedString = Base64.decode(imageDecode, Base64.DEFAULT);
-//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//        Log.d("LOGBITMAP", decodedByte + "");
-//        avt.setImageBitmap(decodedByte);
-//    }
+
+    public void saveimage(String imageEncoded) {
+        final ProgressDialog progressDialog = DialogUtils.show(this, getResources().getString(R.string.wait));
+        final String namee = tvName.getText().toString();
+        final String emaill = email_id.getText().toString();
+        final String addresss = addr.getText().toString();
+        String link = getResources().getString(R.string.linkupdate);
+        Map<String, String> map = new HashMap<String, String>();
+        if (namee.matches("") || emaill.matches("") || addresss.matches("")) {
+            progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
+        } else {
+            map.put("accessToken", token);
+            map.put("fullName", namee);
+            map.put("email", emaill);
+            map.put("address", addresss);
+            map.put("avatar", imageEncoded);
+            Response.Listener<String> response = new Response.Listener<String>() {
+
+                @Override
+                public void onResponse(String response) {
+                    try {
+
+                        db.updateinfo(namee, emaill, addresss, id, "");
+                        JSONObject jo = new JSONObject(response);
+                        String code = jo.getString("code");
+                        if (code.equals("0")) {
+                            progressDialog.dismiss();
+                            tvName.setEnabled(false);
+                            email_id.setEnabled(false);
+                            addr.setEnabled(false);
+
+                            Intent intent = getIntent();
+                            finish();
+                            startActivity(intent);
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
+                            addInfo();
+                        } else if (code.equals("-1")) {
+                            AlertDialog alertDialog = taoMotAlertDialog();
+                            alertDialog.show();
+                        } else {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+
+                        }
+                    } catch (JSONException e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                }
+            };
+            PostCL post = new PostCL(link, map, response);
+            RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+            que.add(post);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+
+            Bitmap bmp = null;
+            try {
+                bmp = getBitmapFromUri(selectedImage);
+
+                encodeTobase64(bmp);
+
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    public String encodeTobase64(Bitmap image) {
+        Bitmap immagex = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immagex.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        b = baos.toByteArray();
+        imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+        saveimage(imageEncoded);
+        return imageEncoded;
+    }
+
+    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =
+                getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+
+        return image;
+    }
 
     public void savechangee() {
         save.setVisibility(View.GONE);
@@ -442,18 +450,24 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                     String fone = jo.getString("fone");
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
-                    if(jo.has("avatar")){
+                    if (jo.has("avatar")) {
                         String ava = jo.getString("avatar");
-                        Log.d("AVV",ava);
-                        if(ava.equals("")){
-                            Picasso.with(getApplicationContext()).load(R.drawable.logo).into(avt);
-                        }else{
-                            Picasso.with(getApplicationContext()).load(ava).placeholder(R.drawable.logo).into(avt);
+                        Log.d("AVV", ava);
+                        if (ava.equals("")) {
+                         //   Toast.makeText(getApplicationContext(),"DEMo",Toast.LENGTH_SHORT).show();
+                            Picasso.with(getApplicationContext()).load(R.drawable.logo).networkPolicy(NetworkPolicy.NO_CACHE).into(avt);
+                        } else {
+                        //    Toast.makeText(getApplicationContext(),"DEMo1",Toast.LENGTH_SHORT).show();
+
+                            Picasso.with(getApplicationContext()).load(ava).networkPolicy(NetworkPolicy.NO_CACHE).placeholder(R.drawable.logo).into(avt);
+
                         }
 
-                    }else{
-                        Picasso.with(getApplicationContext()).load(R.drawable.logo).into(avt);
+                    } else {
+                        Picasso.with(getApplicationContext()).load(R.drawable.logo).networkPolicy(NetworkPolicy.NO_CACHE).into(avt);
                     }
+
+
                     pro.setText(coin + " coins");
                     db.updateinfo(fullname, email, address, id, coin);
                 } catch (JSONException e) {

@@ -77,6 +77,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     LinearLayout imgnewss, imgsug, imgnotif, imgmore;
     Class fragmentClass;
     DataHandle db;
+    final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
     public static int pg = 0;
     ImageView img0;
     List<ListMN> list;
@@ -109,6 +110,13 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         } else {
             startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
         }
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (!Settings.canDrawOverlays(StartActivity.this)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, 1234);
+            }
+        }
         activity_news = (CoordinatorLayout) findViewById(R.id.activity_news);
         edsearch = (EditText) findViewById(R.id.edsearch);
         edsearch.setInputType(InputType.TYPE_NULL);
@@ -116,9 +124,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         db = new DataHandle(this);
         arrs = new ArrayList<>();
         contf = (FrameLayout) findViewById(R.id.contentContainer);
-        if (db.isMoneyEmpty()) {
-            getMoney();
-        }
+//        if (db.isMoneyEmpty()) {
+//            getMoney();
+//        }
         lt = db.getLan();
         if (lt.size() > 0) {
 
@@ -169,7 +177,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         imgsug = (LinearLayout) findViewById(R.id.sug);
         imgnotif = (LinearLayout) findViewById(R.id.notif);
         imgmore = (LinearLayout) findViewById(R.id.more);
-        insertDummyContactWrapper();
+//        insertDummyContactWrapper();
 
         img0.setOnClickListener(this);
         imgnewss.setOnClickListener(this);
@@ -269,29 +277,29 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void getMoney() {
-        String link = getResources().getString(R.string.linkmn);
-        Response.Listener<String> response = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("MNT", response);
-                try {
-                    JSONObject jo = new JSONObject(response);
-
-                    for (int i2 = 1; i2 < jo.length(); i2++) {
-
-                        JSONObject jo2 = jo.getJSONObject(i2 + "");
-                        db.addMN(new ListMN(jo2.getString("id"), jo2.getString("name")));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        GetCL get = new GetCL(link, response);
-        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-        que.add(get);
-    }
+//    private void getMoney() {
+//        String link = getResources().getString(R.string.linkmn);
+//        Response.Listener<String> response = new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                Log.d("MNT", response);
+//                try {
+//                    JSONObject jo = new JSONObject(response);
+//
+//                    for (int i2 = 1; i2 < jo.length(); i2++) {
+//
+//                        JSONObject jo2 = jo.getJSONObject(i2 + "");
+//                        db.addMN(new ListMN(jo2.getString("id"), jo2.getString("name")));
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//        GetCL get = new GetCL(link, response);
+//        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+//        que.add(get);
+//    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(main, menu);
@@ -353,60 +361,60 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         }
     }
-
-    final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
-
-    private void insertDummyContactWrapper() {
-        List<String> permissionsNeeded = new ArrayList<String>();
-        if(Build.VERSION.SDK_INT >= 23) {
-            if (!Settings.canDrawOverlays(StartActivity.this)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + getPackageName()));
-                startActivityForResult(intent, 1234);
-            }
-        }
-        final List<String> permissionsList = new ArrayList<String>();
-        if (!addPermission(permissionsList, Manifest.permission.CAMERA))
-            permissionsNeeded.add("Camera");
-        if (!addPermission(permissionsList, Manifest.permission.READ_CALENDAR))
-            permissionsNeeded.add("Calendar");
-        if (!addPermission(permissionsList, android.Manifest.permission.ACCESS_FINE_LOCATION))
-            permissionsNeeded.add("GPS");
-        if (!addPermission(permissionsList, android.Manifest.permission.ACCESS_COARSE_LOCATION))
-            permissionsNeeded.add("GPS-LOCAL");
-        if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            permissionsNeeded.add("Write Storage");
-        if (!addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE))
-            permissionsNeeded.add("Read Storage");
-        if (permissionsList.size() > 0) {
-            if (permissionsNeeded.size() > 0) {
-                // hien thi tắt
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
-                            REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
-                }
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
-                        REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
-            }
-            return;
-        }
-
-    }
-
-    // luu lai su lua chon
-    private boolean addPermission(List<String> permissionsList, String permission) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-                permissionsList.add(permission);
-                // Check for Rationale Option
-                if (!shouldShowRequestPermissionRationale(permission))
-                    return false;
-            }
-        }
-        return true;
-    }
+//
+//    final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
+//
+//    private void insertDummyContactWrapper() {
+//        List<String> permissionsNeeded = new ArrayList<String>();
+//        if(Build.VERSION.SDK_INT >= 23) {
+//            if (!Settings.canDrawOverlays(StartActivity.this)) {
+//                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+//                        Uri.parse("package:" + getPackageName()));
+//                startActivityForResult(intent, 1234);
+//            }
+//        }
+//        final List<String> permissionsList = new ArrayList<String>();
+//        if (!addPermission(permissionsList, Manifest.permission.CAMERA))
+//            permissionsNeeded.add("Camera");
+//        if (!addPermission(permissionsList, Manifest.permission.READ_CALENDAR))
+//            permissionsNeeded.add("Calendar");
+//        if (!addPermission(permissionsList, android.Manifest.permission.ACCESS_FINE_LOCATION))
+//            permissionsNeeded.add("GPS");
+//        if (!addPermission(permissionsList, android.Manifest.permission.ACCESS_COARSE_LOCATION))
+//            permissionsNeeded.add("GPS-LOCAL");
+//        if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+//            permissionsNeeded.add("Write Storage");
+//        if (!addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE))
+//            permissionsNeeded.add("Read Storage");
+//        if (permissionsList.size() > 0) {
+//            if (permissionsNeeded.size() > 0) {
+//                // hien thi tắt
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+//                            REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+//                }
+//            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+//                        REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+//            }
+//            return;
+//        }
+//
+//    }
+//
+//    // luu lai su lua chon
+//    private boolean addPermission(List<String> permissionsList, String permission) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+//                permissionsList.add(permission);
+//                // Check for Rationale Option
+//                if (!shouldShowRequestPermissionRationale(permission))
+//                    return false;
+//            }
+//        }
+//        return true;
+//    }
 
     public void changeLocale(String lang) {
 
@@ -418,6 +426,27 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         config.locale = myLocale;//set config locale as selected locale
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());//Update the config
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS: {
+                // Check for ACCESS_FINE_LOCATION
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // All Permissions Granted
+
+                } else {
+                    // Permission Denied
+//                    Toast.makeText(WellcomeActivity.this, "Some Permission is Denied", Toast.LENGTH_SHORT)
+//                            .show();
+                }
+            }
+            break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
 

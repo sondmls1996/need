@@ -26,6 +26,7 @@ import com.needfood.kh.R;
 import com.needfood.kh.Setting.Setting;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -95,6 +96,12 @@ public class More extends Fragment implements View.OnClickListener {
 
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        addInfo();
     }
 
     @Override
@@ -205,11 +212,11 @@ public class More extends Fragment implements View.OnClickListener {
                         if(ava.equals("")){
                             Picasso.with(c).load(R.drawable.logo).into(imgavt);
                         }else{
-                            Picasso.with(c).load(ava).placeholder(R.drawable.logo).into(imgavt);
+                            Picasso.with(c).load(ava).networkPolicy(NetworkPolicy.NO_CACHE).placeholder(R.drawable.logo).networkPolicy(NetworkPolicy.NO_CACHE).into(imgavt);
                         }
 
                     }else{
-                        Picasso.with(c).load(R.drawable.logo).into(imgavt);
+                        Picasso.with(c).load(R.drawable.logo).networkPolicy(NetworkPolicy.NO_CACHE).into(imgavt);
                     }
 
 

@@ -199,9 +199,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         if (it.hasExtra("hot")) {
             hot = it.getStringExtra("hot");
         }
-        if (it.hasExtra("new")) {
-            sta = it.getStringExtra("new");
-        }
 
         OftenAdapter.arrcheck.clear();
         bn = (Button) findViewById(R.id.bn);
@@ -235,11 +232,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
             }
         });
-        if (sta.equals("new")) {
-            imgshare.setVisibility(View.GONE);
-        } else {
-            imgshare.setVisibility(View.VISIBLE);
-        }
+
         imgshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -707,8 +700,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         if (hot.equals("hot")) {
                             lnmyshare.setVisibility(View.VISIBLE);
                             tvphi.setText(numshare + "");
+                            imgshare.setVisibility(View.VISIBLE);
                         } else {
                             lnmyshare.setVisibility(View.GONE);
+                            imgshare.setVisibility(View.GONE);
                             //   tvphi.setText(numshare + "");
                         }
 
@@ -1170,7 +1165,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 if (!a.equals(discountCode)) {
                     getDiscountAdmin(a);
                     double pridekm = (Integer.parseInt(priceprd)%100)*Double.parseDouble(percentkm);
-                    String pridekm2 = Integer.parseInt(priceprd)-pridekm+"";
+                    String pridekm2 = Double.parseDouble(priceprd)-pridekm+"";
                     senKM(a,percentkm,pridekm2);
                 } else {
                     if (a1 < timenow && timenow < b) {
