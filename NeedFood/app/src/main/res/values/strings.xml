@@ -155,7 +155,7 @@
     <string name="linksaveShare">http://needfood.webmantan.com/saveShareHotDealAPI</string>
     <string name="linkvote">http://needfood.webmantan.com/updateVoteProductAPI</string>
     <string name="linktimenow">http://needfood.webmantan.com/getTimeServerAPI</string>
-
+    <string name="linkgetdiscountadmin">http://needfood.webmantan.com/checkDiscountAdminAPI</string>
     <string name="logout">Logout</string>
     <string name="tiengviet">Tiếng Việt</string>
     <string name="tienganh">English</string>
@@ -236,4 +236,8 @@
     <string name="ycc">Your current cents: \u0020</string>
     <string name="byc">By Customer</string>
     <string name="noprdd">No products to display</string>
+    <string name="code1">Enter the wrong Promotional code</string>
+    <string name="code2">Promotional code is locked</string>
+    <string name="code3">Promotional code expires</string>
+    <string name="code4">The number of promotional offers has run out</string>
 </resources>

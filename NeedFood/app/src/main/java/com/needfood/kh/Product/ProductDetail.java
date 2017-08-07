@@ -129,10 +129,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Button sharee;
     TextView vote;
     String point;
-    TextView nameseller, exp,txtcomp,txtof,txtbrand;
+    TextView nameseller, exp, txtcomp, txtof, txtbrand;
     LinearLayout lnpro;
     boolean checkclick = false;
-    String sta;
+    String sta = "";
+    String percentkm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +145,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
         listship = new ArrayList<>();
+        txtof = (TextView)findViewById(R.id.txtoften);
         ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,7 +199,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         if (it.hasExtra("hot")) {
             hot = it.getStringExtra("hot");
         }
-        if(it.hasExtra("new")){
+        if (it.hasExtra("new")) {
             sta = it.getStringExtra("new");
         }
 
@@ -208,11 +211,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         lnmyshare = (LinearLayout) findViewById(R.id.lnmhysh);
         imgshare = (Button) findViewById(R.id.imgshare);
         tvphi = (TextView) findViewById(R.id.phi);
+        txtbrand = (TextView)findViewById(R.id.txtbrand);
         tvmyphi = (TextView) findViewById(R.id.myphi);
         shareDialog = new ShareDialog(ProductDetail.this);
-        txtcomp = (TextView)findViewById(R.id.txtcompo);
-        txtof = (TextView)findViewById(R.id.txtoften);
-        txtbrand = (TextView)findViewById(R.id.txtbrand);
         lnpro = (LinearLayout) findViewById(R.id.id_info_pro);
         next = (ImageView) findViewById(R.id.nextt);
         down = (ImageView) findViewById(R.id.downn);
@@ -234,10 +235,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
             }
         });
-        Toast.makeText(getApplicationContext(),sta,Toast.LENGTH_SHORT).show();
-        if(sta.equals("new")){
+        if (sta.equals("new")) {
             imgshare.setVisibility(View.GONE);
-        }else{
+        } else {
             imgshare.setVisibility(View.VISIBLE);
         }
         imgshare.setOnClickListener(new View.OnClickListener() {
@@ -285,7 +285,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             fullname = listu.get(listu.size() - 1).getFullname();
             phone = listu.get(listu.size() - 1).getFone();
             uadr = listu.get(listu.size() - 1).getAddress();
-            imgshare.setVisibility(View.VISIBLE);
+          //  imgshare.setVisibility(View.VISIBLE);
             lnshare.setVisibility(View.VISIBLE);
 
         }
@@ -577,23 +577,22 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
 
     }
-
-    private void senKM(String mkm) {
+    private void senKM(String mkm,String pers,String pride) {
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
             String quan = "1";
 
-            int money1 = Integer.parseInt(quan) * Integer.parseInt(priceDiscount);
+            int money1 = Integer.parseInt(quan) * Integer.parseInt(pride);
             JSONArray jsonArray = new JSONArray();
             JSONObject j1 = new JSONObject();
 
             try {
                 j1.put("quantity", "1");
-                j1.put("price", priceDiscount);
+                j1.put("price", pride);
                 j1.put("tickKM", "1");
                 j1.put("tickKM_percent", "");
-                j1.put("tickKM_money", Integer.parseInt(priceprd) - Integer.parseInt(priceDiscount));
+                j1.put("tickKM_money", Integer.parseInt(priceprd) - Integer.parseInt(pride));
                 j1.put("barcode", idprd);
                 j1.put("code", prdcode);
                 j1.put("title", titl);
@@ -862,6 +861,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         }
 
                     }
+                    for (int i3 = 0; i3 < arrof3.size(); i3++) {
+                        for (int i4 = 0; i4 < arrq.size(); i4++) {
+                            if (arrq.get(i4).getId().equals(arrof3.get(i3).getId())) {
+                                arrq.remove(i4);
+                            }
+                        }
+
+                    }
 
                     quanadapter.notifyDataSetChanged();
 
@@ -913,10 +920,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 Log.d("RSEEE", response);
                 try {
                     JSONArray ja = new JSONArray(response);
-                    if(ja.length()==0){
-                        txtcomp.setVisibility(View.GONE);
-                    }else{
-                        txtcomp.setVisibility(View.VISIBLE);
+                    if (ja.length() == 0) {
+//                        txtcomp.setVisibility(View.GONE);
+                    } else {
+//                        txtcomp.setVisibility(View.VISIBLE);
                         for (int i = 0; i < ja.length(); i++) {
                             String mn = "";
                             JSONObject jo = ja.getJSONObject(i);
@@ -970,9 +977,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 Log.d("RE", response);
                 try {
                     JSONArray ja = new JSONArray(response);
-                    if(ja.length()==0){
+                    if (ja.length() == 0) {
                         txtof.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         txtof.setVisibility(View.VISIBLE);
                         for (int i = 0; i < ja.length(); i++) {
                             String mn = "";
@@ -1003,7 +1010,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             }
 
                         }
-                        if(arrof.size()==0){
+                        if (arrof.size() == 0) {
                             txtof.setVisibility(View.GONE);
                         }
                         adapterof1.notifyDataSetChanged();
@@ -1037,9 +1044,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 Log.d("REDH", response);
                 try {
                     JSONArray ja = new JSONArray(response);
-                    if(ja.length()==0){
+                    if (ja.length() == 0) {
                         txtbrand.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         txtbrand.setVisibility(View.VISIBLE);
                         for (int i = 0; i < ja.length(); i++) {
                             String mn = "";
@@ -1078,8 +1085,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             }
 
                         }
-                        if(arrof2.size()==0){
-                            txtof.setVisibility(View.GONE);
+                        if (arrof2.size() == 0) {
+                            txtbrand.setVisibility(View.GONE);
                         }
 
                         adapterof2.notifyDataSetChanged();
@@ -1154,23 +1161,25 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         final double timenow = c.getTimeInMillis();
         final double a1 = Long.parseLong(time1);
         final double b = Long.parseLong(time2);
-        if (discountCode.isEmpty()) {
-            txt.setVisibility(View.VISIBLE);
-            lnn.setVisibility(View.GONE);
-        }
+
         Button clo = (Button) dialog.findViewById(R.id.proc);
         clo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String a = edpro.getText().toString();
                 if (!a.equals(discountCode)) {
-                    txt.setVisibility(View.GONE);
-                    lnn.setVisibility(View.VISIBLE);
-                } else if (a1 < timenow && timenow < b) {
-                    txt.setVisibility(View.GONE);
-                    lnn.setVisibility(View.VISIBLE);
+                    getDiscountAdmin(a);
+                    double pridekm = (Integer.parseInt(priceprd)%100)*Double.parseDouble(percentkm);
+                    String pridekm2 = Integer.parseInt(priceprd)-pridekm+"";
+                    senKM(a,percentkm,pridekm2);
                 } else {
-                    senKM(a);
+                    if (a1 < timenow && timenow < b) {
+                        txt.setVisibility(View.GONE);
+                        lnn.setVisibility(View.VISIBLE);
+                    } else {
+                        senKM(a,"",priceDiscount);
+                    }
+
                 }
             }
         });
@@ -1182,6 +1191,52 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 dialog.cancel();
             }
         });
+
+    }
+
+    public void getDiscountAdmin(String codekm) {
+        final String link = getResources().getString(R.string.linkgetdiscountadmin);
+        Map<String, String> map = new HashMap<>();
+        map.put("code", codekm);
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.d("REEEE", response);
+                try {
+                    JSONObject ja = new JSONObject(response);
+                    String code = ja.getString("code");
+                    if (code.equals("0")) {
+                        percentkm = ja.getString("percent");
+
+                    } else if (code.equals("-1")) {
+                        AlertDialog alertDialog = taoMotAlertDialog();
+                        alertDialog.show();
+                    } else if (code.equals("1")) {
+
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.code1), Toast.LENGTH_SHORT).show();
+                    } else if (code.equals("2")) {
+
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.code2), Toast.LENGTH_SHORT).show();
+                    } else if (code.equals("3")) {
+
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.code3), Toast.LENGTH_SHORT).show();
+                    } else if (code.equals("4")) {
+
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.code4), Toast.LENGTH_SHORT).show();
+                    }
+                    if (ses.loggedin()) {
+                        getNumberShare();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
 
     }
 

@@ -154,6 +154,7 @@
     <string name="linklogfb">http://needfood.webmantan.com/checkRegisterFacebookAPI</string>
     <string name="linksaveShare">http://needfood.webmantan.com/saveShareHotDealAPI</string>
     <string name="linktimenow">http://needfood.webmantan.com/getTimeServerAPI</string>
+    <string name="linkgetdiscountadmin">http://needfood.webmantan.com/checkDiscountAdminAPI</string>
 
     <string name="logout">Đăng xuất</string>
     <string name="ssor">Đặt hàng thành công</string>
@@ -236,4 +237,8 @@
     <string name="ycc">Số xu hiện tại của bạn: \u0020</string>
     <string name="byc">Bởi khách hàng</string>
     <string name="noprdd">Không có sản phẩm nào để hiển thị</string>
+    <string name="code1">Nhập sai mã khuyến mại</string>
+    <string name="code2">Mã khuyến mại bị khóa</string>
+    <string name="code3">Mã khuyến mại hết thời gian hiệu lực</string>
+    <string name="code4">Hết số lượng người sử dụng</string>
 </resources>
