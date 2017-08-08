@@ -258,6 +258,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         deal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                typeDiscount="3";
                 senKM2("9000", "0", "deal", numshare);
             }
         });
@@ -1198,6 +1199,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         lnn.setVisibility(View.VISIBLE);
                         dialog.dismiss();
                     } else {
+                        typeDiscount="1";
                         senKM(a, "", priceDiscount);
                         dialog.dismiss();
                     }
@@ -1231,6 +1233,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     JSONObject ja = new JSONObject(response);
                     String code = ja.getString("code");
                     if (code.equals("0")) {
+                        typeDiscount="2";
                         percentkm = ja.getDouble("percent");
                         int pridekm = (int) ((pri1 / 100) * percentkm);
                         int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));

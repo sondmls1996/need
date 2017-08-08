@@ -210,6 +210,8 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             hashMap.put("address", adr);
             hashMap.put("note", note);
             hashMap.put("fone", phone);
+            hashMap.put("typeDiscount", ProductDetail.typeDiscount);
+            Log.d("TYPEH",ProductDetail.typeDiscount);
             Log.d("total",total+"");
 
             Response.Listener<String> response = new Response.Listener<String>() {
