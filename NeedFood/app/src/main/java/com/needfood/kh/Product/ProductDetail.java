@@ -51,6 +51,7 @@ import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
+import com.needfood.kh.SupportClass.VerticalScrollview;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -108,6 +109,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Button imgshare;
 
     String comment;
+    VerticalScrollview ver;
     ShareLinkContent content;
     CallbackManager callbackManager;
 
@@ -123,7 +125,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     TextView nameseller, exp, txtof, txtbrand;
     LinearLayout lnpro;
     boolean checkclick = false;
-    String percentkm;
+
+    double percentkm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +138,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
+        ver = (VerticalScrollview) findViewById(R.id.vers);
         listship = new ArrayList<>();
-        txtof = (TextView)findViewById(R.id.txtoften);
+        txtof = (TextView) findViewById(R.id.txtoften);
         ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,6 +179,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 //        it.putExtra("MN",prdmoney+Integer.parseInt(priceprd)+"");
 //        startService(it);
         getNumberShare();
+//        getupdateView();
     }
 
 
@@ -198,7 +204,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         lnmyshare = (LinearLayout) findViewById(R.id.lnmhysh);
         imgshare = (Button) findViewById(R.id.imgshare);
         tvphi = (TextView) findViewById(R.id.phi);
-        txtbrand = (TextView)findViewById(R.id.txtbrand);
+        txtbrand = (TextView) findViewById(R.id.txtbrand);
         tvmyphi = (TextView) findViewById(R.id.myphi);
         shareDialog = new ShareDialog(ProductDetail.this);
         lnpro = (LinearLayout) findViewById(R.id.id_info_pro);
@@ -268,7 +274,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             fullname = listu.get(listu.size() - 1).getFullname();
             phone = listu.get(listu.size() - 1).getFone();
             uadr = listu.get(listu.size() - 1).getAddress();
-          //  imgshare.setVisibility(View.VISIBLE);
+            //  imgshare.setVisibility(View.VISIBLE);
             lnshare.setVisibility(View.VISIBLE);
 
         }
@@ -535,7 +541,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("accessToken", access);
             map.put("listProduct", jsonArray.toString());
             map.put("money", money + "");
-            map.put("totalMoneyProduct", (money * 1.1) + "");
+            map.put("totalMoneyProduct", money + (money * (Integer.parseInt(tax))) / 100 + "");
             map.put("fullName", "");
             map.put("moneyShip", ship);
             map.put("timeShiper", "");
@@ -561,7 +567,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
 
     }
-    private void senKM(String mkm,String pers,String pride) {
+
+    private void senKM(String mkm, String pers, String pride) {
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
@@ -575,12 +582,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 j1.put("quantity", "1");
                 j1.put("price", pride);
                 j1.put("tickKM", "1");
-                j1.put("tickKM_percent", "");
+                j1.put("tickKM_percent", pers);
                 j1.put("tickKM_money", Integer.parseInt(priceprd) - Integer.parseInt(pride));
                 j1.put("barcode", idprd);
                 j1.put("code", prdcode);
                 j1.put("title", titl);
-                j1.put("money", money1 + "");
+                j1.put("money", pride + "");
                 j1.put("note", "Sử dụng mã khuyến mại " + mkm);
                 j1.put("id", idprd);
                 j1.put("typeMoneyId", tym);
@@ -597,7 +604,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("accessToken", access);
             map.put("listProduct", jsonArray.toString());
             map.put("money", money + "");
-            map.put("totalMoneyProduct", (money * 1.1) + "");
+            map.put("totalMoneyProduct", money + (money * (Integer.parseInt(tax))) / 100 + "");
             map.put("fullName", "");
             map.put("moneyShip", strship.toString());
             map.put("timeShiper", "");
@@ -757,11 +764,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     JSONObject ex = prd.getJSONObject("expiryDate");
                     String txt_hsd = ex.getString("text");
                     String time_hsd = ex.getString("time");
+                    ver.setVisibility(View.VISIBLE);
                     exp.setText(txt_hsd);
                     nameseller.setText(titl);
-
+                    tvpr.setVisibility(View.VISIBLE);
+                    getBrand();
                     getCommen();
                     getPrdCompo();
+                    getupdateView();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -858,7 +868,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                     quanadapter.notifyDataSetChanged();
 
-                    getBrand();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -937,6 +947,28 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
 //                    getPrdDH();
                     getPrdDK();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
+    }
+
+    private void getupdateView() {
+        final String link = getResources().getString(R.string.linkupdateViewProductAPI);
+        Map<String, String> map = new HashMap<>();
+        map.put("idProduct", idprd);
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jo = new JSONObject(response);
+                    String code = jo.getString("code");
+                    Log.d("CODEE",code);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1148,25 +1180,30 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         final double a1 = Long.parseLong(time1);
         final double b = Long.parseLong(time2);
 
+
         Button clo = (Button) dialog.findViewById(R.id.proc);
         clo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String a = edpro.getText().toString();
-                if (!a.equals(discountCode)) {
+                if (a.equals("")) {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
+                } else if (!a.equals(discountCode)) {
                     getDiscountAdmin(a);
-                    double pridekm = (Integer.parseInt(priceprd)%100)*Double.parseDouble(percentkm);
-                    String pridekm2 = Double.parseDouble(priceprd)-pridekm+"";
-                    senKM(a,percentkm,pridekm2);
+
+
                 } else {
                     if (a1 < timenow && timenow < b) {
                         txt.setVisibility(View.GONE);
                         lnn.setVisibility(View.VISIBLE);
+                        dialog.dismiss();
                     } else {
-                        senKM(a,"",priceDiscount);
+                        senKM(a, "", priceDiscount);
+                        dialog.dismiss();
                     }
 
                 }
+
             }
         });
         ImageView close = (ImageView) dialog.findViewById(R.id.img_close);
@@ -1180,10 +1217,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    public void getDiscountAdmin(String codekm) {
+    public void getDiscountAdmin(final String codekm) {
         final String link = getResources().getString(R.string.linkgetdiscountadmin);
         Map<String, String> map = new HashMap<>();
         map.put("code", codekm);
+        final int pri1 = Integer.parseInt(priceprd);
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -1193,8 +1231,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     JSONObject ja = new JSONObject(response);
                     String code = ja.getString("code");
                     if (code.equals("0")) {
-                        percentkm = ja.getString("percent");
-
+                        percentkm = ja.getDouble("percent");
+                        int pridekm = (int) ((pri1 / 100) * percentkm);
+                        int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
+                        Log.d("KM22", pridekm + "-" + pridekm2);
+                        String pridekm3 = String.valueOf(pridekm2);
+                        senKM(codekm, percentkm + "", pridekm3);
                     } else if (code.equals("-1")) {
                         AlertDialog alertDialog = taoMotAlertDialog();
                         alertDialog.show();

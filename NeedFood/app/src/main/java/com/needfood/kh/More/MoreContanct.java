@@ -35,6 +35,7 @@ import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -44,6 +45,8 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +76,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
     String img;
     String first;// this will contain "Fruit"
     String second;
+    String ava;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -451,20 +455,23 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
                     if (jo.has("avatar")) {
-                        String ava = jo.getString("avatar");
+                        ava = jo.getString("avatar");
                         Log.d("AVV", ava);
                         if (ava.equals("")) {
-                         //   Toast.makeText(getApplicationContext(),"DEMo",Toast.LENGTH_SHORT).show();
-                            Picasso.with(getApplicationContext()).load(R.drawable.logo).networkPolicy(NetworkPolicy.NO_CACHE).into(avt);
+
+                            Picasso.with(getApplicationContext()).load(R.drawable.logo).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(avt);
                         } else {
-                        //    Toast.makeText(getApplicationContext(),"DEMo1",Toast.LENGTH_SHORT).show();
-
-                            Picasso.with(getApplicationContext()).load(ava).networkPolicy(NetworkPolicy.NO_CACHE).placeholder(R.drawable.logo).into(avt);
-
+                            Picasso.with(getApplicationContext())
+                                    .load(ava)
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                                    .error(R.drawable.logo)
+                                    .noFade()
+                                    .into(avt);
                         }
 
                     } else {
-                        Picasso.with(getApplicationContext()).load(R.drawable.logo).networkPolicy(NetworkPolicy.NO_CACHE).into(avt);
+                        Picasso.with(getApplicationContext()).load(R.drawable.logo).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(avt);
                     }
 
 

@@ -12,6 +12,8 @@
 
     <com.needfood.kh.SupportClass.VerticalScrollview
         android:layout_width="match_parent"
+        android:id="@+id/vers"
+        android:visibility="gone"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -48,6 +50,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
                         android:text="ThichAnPho"
+
                         android:textColor="@color/white" />
 
                 </LinearLayout>
@@ -58,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="end"
+                    android:visibility="gone"
                     android:text="@string/promo"
                     android:textColor="@color/blue" />
 
