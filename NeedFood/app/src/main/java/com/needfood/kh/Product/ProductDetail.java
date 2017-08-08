@@ -399,8 +399,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             .setHashtag("#NeedFood")
                             .build())
                     .build();
-
-
             shareDialog.show(content);
         }
     }
