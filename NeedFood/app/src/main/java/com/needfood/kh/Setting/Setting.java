@@ -35,6 +35,7 @@ import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.LocaleHelper;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
+import com.needfood.kh.WellcomeActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -155,11 +156,11 @@ public class Setting extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 ngonngu);
         sp.setAdapter(spinnerArrayAdapter);
-//        if (lt.get(lt.size() - 1).getId().equals("0")) {
-//            sp.setSelection(1);
-//        } else {
-//            sp.setSelection(0);
-//        }
+        if (lt.get(lt.size() - 1).getId().equals("0")) {
+            sp.setSelection(1);
+        } else {
+            sp.setSelection(0);
+        }
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -182,14 +183,14 @@ public class Setting extends AppCompatActivity {
             lang = "en";
             db.addCheckLan(new Language("1"));
             changeLang(lang);
-            Intent i = new Intent(getApplicationContext(), StartActivity.class);
+            Intent i = new Intent(getApplicationContext(), WellcomeActivity.class);
             startActivity(i);
             finish();
         } else if (a == "Vietnamese") {
             lang = "vi";
             db.addCheckLan(new Language("0"));
             changeLang(lang);
-            Intent i = new Intent(getApplicationContext(), StartActivity.class);
+            Intent i = new Intent(getApplicationContext(), WellcomeActivity.class);
             startActivity(i);
             finish();
         }
