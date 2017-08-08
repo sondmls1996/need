@@ -1,9 +1,7 @@
 package com.needfood.kh.Product;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -37,8 +35,6 @@ import com.facebook.FacebookSdk;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.LikeView;
-import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
 import com.needfood.kh.Adapter.ProductDetail.CommentAdapter;
 import com.needfood.kh.Adapter.ProductDetail.OftenAdapter;
@@ -62,7 +58,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -76,11 +71,12 @@ import static com.needfood.kh.Adapter.ProductDetail.OftenAdapter.arrcheck;
 public class ProductDetail extends AppCompatActivity implements View.OnClickListener {
     RecyclerView rc, rcof, rcof2, rcquan, rctp;
     ArrayList<CommentConstructor> arr;
-    String maniid, idsel, mnid, hot = "";
+    String maniid, mnid, hot = "";
     LinearLayout view1;
     int a2;
     int numshare = 0;
     ProgressBar pr1;
+    public static String typeDiscount="0";
     String tym;
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
@@ -90,49 +86,43 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Session ses;
     String uadr, tax;
     String typemn;
-    private SimpleDateFormat dateFormatter, timeformat;
-    Calendar c;
-    int day, month2, year2, hour, minitus;
-    public DatePickerDialog fromDatePickerDialog;
-    public TimePickerDialog timepicker;
-    EditText edpickngay, edpickgio, edquan, edadrs, edghichu;
-    String cata, sellprice = "";
+
+    EditText edquan;
+    String cata;
     Button deal, bn;
     OftenAdapter adapterof1, adapterof2, adapterof3;
     TextView tvco, tvcodes, tvprize, tvphi, tvmyphi;
     TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
-    ArrayList<OftenConstructor> arrof, arrof2, arrdelete, arrof3;
+    ArrayList<OftenConstructor> arrof, arrof2, arrof3;
     ArrayList<OftenConstructor> arrq;
     public static ArrayList<Integer> listship;
     OftenAdapter quanadapter;
-    LinearLayout lnby, lnf, htu, lnshare, lnmyshare, lnprd;
+    LinearLayout lnby, htu, lnshare, lnmyshare, lnprd;
     List<ListMN> list;
-    String discount, discountStart, discountEnd, text1, text2, time1, time2, priceDiscount, discountCode;
+    String text1, text2, time1, time2, priceDiscount, discountCode;
     List<InfoConstructor> listu;
     DataHandle db;
     String idprd, idsl, namesl, access, idu, fullname, phone, bar, priceother;
     EditText txt_comment;
-    ImageView img_comment, imglike;
+    ImageView img_comment;
     Button imgshare;
-    RecyclerView re_comment;
+
     String comment;
     ShareLinkContent content;
     CallbackManager callbackManager;
-    LikeView likeView;
+
     StringBuilder howto, simg, strship;
     String cmt, time, iduser, fullnameus;
     ImageView imageView, next, down;
     ShareDialog shareDialog;
-    ShareButton shareButton;
-    int hieu;
+
     String linkfbb, sttsell = "";
-    Button sharee;
+
     TextView vote;
     String point;
-    TextView nameseller, exp, txtcomp, txtof, txtbrand;
+    TextView nameseller, exp, txtof, txtbrand;
     LinearLayout lnpro;
     boolean checkclick = false;
-    String sta = "";
     String percentkm;
 
     @Override
@@ -412,6 +402,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
+            typeDiscount = "0";
             String quan;
             int mnship = Collections.max(listship);
             if (edquan.equals("")) {
