@@ -156,11 +156,11 @@ public class Setting extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 ngonngu);
         sp.setAdapter(spinnerArrayAdapter);
-        if (lt.get(lt.size() - 1).getId().equals("0")) {
-            sp.setSelection(1);
-        } else {
-            sp.setSelection(0);
-        }
+//        if (lt.get(lt.size() - 1).getId().equals("0")) {
+//            sp.setSelection(1);
+//        } else {
+//            sp.setSelection(0);
+//        }
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
