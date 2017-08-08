@@ -210,6 +210,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             hashMap.put("address", adr);
             hashMap.put("note", note);
             hashMap.put("fone", phone);
+            hashMap.put("codeDiscount",ProductDetail.codeDiscount);
             hashMap.put("typeDiscount", ProductDetail.typeDiscount);
             Log.d("TYPEH",ProductDetail.typeDiscount);
             Log.d("total",total+"");
@@ -223,7 +224,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
                         JSONObject jo = new JSONObject(response);
                         String code = jo.getString("code");
                         if (code.equals("0")) {
-                            if (stt.equals("deal")) {
+                            if (stt.equals("hotdeal9k")) {
                                 saveShare();
                             }
                             pro.dismiss();

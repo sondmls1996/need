@@ -78,6 +78,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     int numshare = 0;
     ProgressBar pr1;
     public static String typeDiscount="0";
+    public static String codeDiscount = "";
     String tym;
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
@@ -171,6 +172,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
+        typeDiscount="0";
+        codeDiscount="";
 //        int prdmoney=0;
 //        for (int i2 = 0; i2<OftenAdapter.arrcheck.size();i2++){
 //            prdmoney = Integer.parseInt(OftenAdapter.arrcheck.get(i2).getMoney())+ prdmoney;
@@ -259,7 +262,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 typeDiscount="3";
-                senKM2("9000", "0", "deal", numshare);
+                senKM2("9000", "0", "hotdeal9k", numshare);
             }
         });
         bn.setOnClickListener(new View.OnClickListener() {
@@ -509,7 +512,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
             String quan = "1";
-
+            codeDiscount = stt;
             int money1 = Integer.parseInt(quan) * Integer.parseInt(prices);
             JSONArray jsonArray = new JSONArray();
             JSONObject j1 = new JSONObject();
@@ -572,7 +575,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
             String quan = "1";
-
+            codeDiscount = mkm;
             int money1 = Integer.parseInt(quan) * Integer.parseInt(pride);
             JSONArray jsonArray = new JSONArray();
             JSONObject j1 = new JSONObject();
@@ -1189,7 +1192,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
                 } else if (!a.equals(discountCode)) {
                     getDiscountAdmin(a);
-
 
                 } else {
                     if (a1 < timenow && timenow < b) {
