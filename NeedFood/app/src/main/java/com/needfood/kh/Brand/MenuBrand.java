@@ -20,6 +20,7 @@ import com.needfood.kh.Constructor.MenuBrandConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
+import com.needfood.kh.SupportClass.EndlessScroll;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.RecyclerItemClickListener;
 
@@ -42,8 +43,10 @@ public class MenuBrand extends Fragment {
     String idl;
     List<ListMN> list;
     RecyclerView rc1;
+    LinearLayoutManager layoutManager;
     DataHandle db;
     String money;
+    EndlessScroll endlessScroll;
     MenuBrandAdapter adapter1,adapter2,adapter3;
     ArrayList<MenuBrandConstructor> arr1,arr2,arr3;
     public MenuBrand() {
@@ -55,15 +58,15 @@ public class MenuBrand extends Fragment {
         BrandDetail activity = (BrandDetail) getActivity();
          idl = activity.getMyData();
         db = new DataHandle(getApplicationContext());
-        getPRDSell();
+        getPRDSell(1);
         View v = inflater.inflate(R.layout.fragment_menu_brand, container, false);
         rc1 = (RecyclerView)v.findViewById(R.id.rc1);
         arr1 = new ArrayList<>();
-
+        layoutManager = new LinearLayoutManager(getContext());
 
         adapter1 = new MenuBrandAdapter(getContext(),arr1);
         rc1.setAdapter(adapter1);
-        rc1.setLayoutManager(new LinearLayoutManager(getContext()));
+        rc1.setLayoutManager(layoutManager);
         rc1.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
@@ -77,15 +80,23 @@ public class MenuBrand extends Fragment {
                     }
                 })
         );
+        endlessScroll = new EndlessScroll(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                page++;
+                getPRDSell(page);
+            }
+        };
+        rc1.addOnScrollListener(endlessScroll);
         // Inflate the layout for this fragment
         return v;
     }
 
-    private void getPRDSell() {
+    private void getPRDSell(int mypg) {
         final String link = getResources().getString(R.string.linkprdsell);
         Map<String,String> map = new HashMap<>();
         map.put("idSeller",idl);
-        map.put("page",page+"");
+        map.put("page",mypg+"");
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
