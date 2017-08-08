@@ -155,6 +155,7 @@
     <string name="linksaveShare">http://needfood.webmantan.com/saveShareHotDealAPI</string>
     <string name="linktimenow">http://needfood.webmantan.com/getTimeServerAPI</string>
     <string name="linkgetdiscountadmin">http://needfood.webmantan.com/checkDiscountAdminAPI</string>
+    <string name="linkupdateViewProductAPI">http://needfood.webmantan.com/updateViewProductAPI</string>
 
     <string name="logout">Đăng xuất</string>
     <string name="ssor">Đặt hàng thành công</string>

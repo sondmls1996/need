@@ -156,6 +156,8 @@
     <string name="linkvote">http://needfood.webmantan.com/updateVoteProductAPI</string>
     <string name="linktimenow">http://needfood.webmantan.com/getTimeServerAPI</string>
     <string name="linkgetdiscountadmin">http://needfood.webmantan.com/checkDiscountAdminAPI</string>
+    <string name="linkupdateViewProductAPI">http://needfood.webmantan.com/updateViewProductAPI</string>
+
     <string name="logout">Logout</string>
     <string name="tiengviet">Tiếng Việt</string>
     <string name="tienganh">English</string>

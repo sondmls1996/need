@@ -146,7 +146,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
-        ver = (VerticalScrollview)findViewById(R.id.vers);
+        ver = (VerticalScrollview) findViewById(R.id.vers);
         listship = new ArrayList<>();
         txtof = (TextView) findViewById(R.id.txtoften);
         ImageView imgb = (ImageView) findViewById(R.id.immgb);
@@ -187,6 +187,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 //        it.putExtra("MN",prdmoney+Integer.parseInt(priceprd)+"");
 //        startService(it);
         getNumberShare();
+//        getupdateView();
     }
 
 
@@ -777,6 +778,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     getBrand();
                     getCommen();
                     getPrdCompo();
+                    getupdateView();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -952,6 +954,28 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
 //                    getPrdDH();
                     getPrdDK();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
+    }
+
+    private void getupdateView() {
+        final String link = getResources().getString(R.string.linkupdateViewProductAPI);
+        Map<String, String> map = new HashMap<>();
+        map.put("idProduct", idprd);
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jo = new JSONObject(response);
+                    String code = jo.getString("code");
+                    Log.d("CODEE",code);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1169,9 +1193,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 String a = edpro.getText().toString();
-                if(a.equals("")){
+                if (a.equals("")) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
-                }else if (!a.equals(discountCode)) {
+                } else if (!a.equals(discountCode)) {
                     getDiscountAdmin(a);
 
 
