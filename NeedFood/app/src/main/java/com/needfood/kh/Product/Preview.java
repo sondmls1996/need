@@ -139,7 +139,6 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             edadr.setText(lu.getAddress());
             edphome.setText(lu.getFone());
             acess = lu.getAccesstoken();
-
         }
         getNumberShare();
         lv = (RecyclerView) findViewById(R.id.lvpre);
