@@ -139,7 +139,6 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             edadr.setText(lu.getAddress());
             edphome.setText(lu.getFone());
             acess = lu.getAccesstoken();
-
         }
         getNumberShare();
         lv = (RecyclerView) findViewById(R.id.lvpre);
@@ -210,6 +209,9 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             hashMap.put("address", adr);
             hashMap.put("note", note);
             hashMap.put("fone", phone);
+            hashMap.put("codeDiscount",ProductDetail.codeDiscount);
+            hashMap.put("typeDiscount", ProductDetail.typeDiscount);
+            Log.d("TYPEH",ProductDetail.typeDiscount);
             Log.d("total",total+"");
 
             Response.Listener<String> response = new Response.Listener<String>() {
@@ -221,7 +223,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
                         JSONObject jo = new JSONObject(response);
                         String code = jo.getString("code");
                         if (code.equals("0")) {
-                            if (stt.equals("deal")) {
+                            if (stt.equals("hotdeal9k")) {
                                 saveShare();
                             }
                             pro.dismiss();
