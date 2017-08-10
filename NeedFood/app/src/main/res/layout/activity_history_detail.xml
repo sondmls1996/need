@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.needfood.kh.More.History.HistoryDetail">
+
     <include
-        layout="@layout/toolbar"
         android:id="@+id/th"
-        ></include>
+        layout="@layout/toolbar"></include>
+
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/th"
+        android:id="@+id/rchgis"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rchgis"></android.support.v7.widget.RecyclerView>
+        android:layout_below="@id/th"></android.support.v7.widget.RecyclerView>
 </RelativeLayout>
