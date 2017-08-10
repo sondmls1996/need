@@ -128,7 +128,7 @@ public class Login extends AppCompatActivity {
                                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                                     startActivity(it);
                                     finish();
-                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
+                              //      Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
 
                                 } else {
                                     progressDialog.dismiss();
@@ -231,6 +231,7 @@ public class Login extends AppCompatActivity {
                     addInfo(accesstoken, id, "1");
                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                     startActivity(it);
+                    finish();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
