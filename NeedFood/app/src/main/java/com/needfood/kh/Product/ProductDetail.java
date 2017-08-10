@@ -1186,8 +1186,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         final double timenow = c.getTimeInMillis();
         final double a1 = Long.parseLong(time1);
         final double b = Long.parseLong(time2);
-
-
         Button clo = (Button) dialog.findViewById(R.id.proc);
         clo.setOnClickListener(new View.OnClickListener() {
             @Override
