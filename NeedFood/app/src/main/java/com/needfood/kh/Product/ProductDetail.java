@@ -80,7 +80,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     public static String typeDiscount="0";
     public static String codeDiscount = "";
     String tym;
-    private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
+    private final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
     ImageView imgprd;
     public static String priceprd;
@@ -123,7 +123,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     TextView vote;
     String point;
-    TextView nameseller, exp, txtof, txtbrand;
+    TextView nameseller, exp, txtof, txtbrand,txtcomp;
     LinearLayout lnpro;
     boolean checkclick = false;
 
@@ -141,6 +141,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         ver = (VerticalScrollview) findViewById(R.id.vers);
         listship = new ArrayList<>();
         txtof = (TextView) findViewById(R.id.txtoften);
+        txtcomp = (TextView)findViewById(R.id.txtcompo);
         ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -918,9 +919,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 try {
                     JSONArray ja = new JSONArray(response);
                     if (ja.length() == 0) {
-//                        txtcomp.setVisibility(View.GONE);
+                        txtcomp.setVisibility(View.GONE);
                     } else {
-//                        txtcomp.setVisibility(View.VISIBLE);
+                        txtcomp.setVisibility(View.VISIBLE);
                         for (int i = 0; i < ja.length(); i++) {
                             String mn = "";
                             JSONObject jo = ja.getJSONObject(i);
@@ -1191,7 +1192,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
                 } else if (!a.equals(discountCode)) {
                     getDiscountAdmin(a);
-
+                    dialog.dismiss();
                 } else {
                     if (a1 < timenow && timenow < b) {
                         txt.setVisibility(View.GONE);
