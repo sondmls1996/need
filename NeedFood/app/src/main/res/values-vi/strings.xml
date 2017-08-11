@@ -67,6 +67,7 @@
     <string name="promo2">Mã khuyến mãi</string>
     <string name="login">Đăng nhập</string>
     <string name="lan">Ngôn ngữ</string>
+    <string name="tax">Thuế</string>
     <string name="regiss">Đăng ký</string>
     <string name="forget">Quên mật khẩu</string>
     <string name="Deal">Thỏa thuận</string>
@@ -108,6 +109,7 @@
     <string name="howtou">Hướng dẫn sử dụng</string>
     <string name="transuc">Chuyển khoản thành công</string>
     <string name="prddetail">Chi tiết sản phẩm</string>
+    <string name="listprd">Danh sách sản phẩm</string>
     <string name="aro">Tìm xung quanh</string>
     <string name="search">Tìm kiếm...</string>
     <string name="ok">Đồng ý</string>
@@ -175,7 +177,9 @@
     <string name="qrc">Quét mã QR code sản phẩm</string>
     <string name="loginn">Đăng nhập</string>
     <string name="yhl">Bạn chưa đăng nhập?</string>
+    <string name="giam">Giảm giá:</string>
     <string name="price">Giá: \u0020</string>
+    <string name="orcode">Mã đơn hàng</string>
     <string name="timeship">Thời gian nhận: \u0020</string>
     <string name="buyer">Người mua: \u0020</string>
     <string name="addr">Địa chỉ: \u0020</string>

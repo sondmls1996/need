@@ -92,6 +92,7 @@
     <string name="emailwr">Email invalidate</string>
     <string name="order">Order</string>
     <string name="name">Name:\u0020</string>
+    <string name="tax">Tax</string>
     <string name="phonenum2">Phone:\u0020</string>
     <string name="wait">Waiting...</string>
     <string name="wrreg">Can not be empty</string>
@@ -100,7 +101,10 @@
     <string name="contact">Contact</string>
     <string name="shiptime">Shipping time</string>
     <string name="rein">Receiver\'s information</string>
+    <string name="giam">Discount:</string>
     <string name="orif">Order info</string>
+    <string name="orcode">Order code</string>
+    <string name="listprd">List products</string>
     <string name="howtou">How to use?</string>
     <string name="qrc">Scan product QR code</string>
     <string name="prddetail">Product detail</string>
