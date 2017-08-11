@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -77,7 +78,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     int a2;
     int numshare = 0;
     ProgressBar pr1;
-    public static String typeDiscount="0";
+    public static String typeDiscount = "0";
     public static String codeDiscount = "";
     String tym;
     private final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
@@ -123,7 +124,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     TextView vote;
     String point;
-    TextView nameseller, exp, txtof, txtbrand,txtcomp;
+    TextView nameseller, exp, txtof, txtbrand, txtcomp;
     LinearLayout lnpro;
     boolean checkclick = false;
 
@@ -141,7 +142,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         ver = (VerticalScrollview) findViewById(R.id.vers);
         listship = new ArrayList<>();
         txtof = (TextView) findViewById(R.id.txtoften);
-        txtcomp = (TextView)findViewById(R.id.txtcompo);
+        txtcomp = (TextView) findViewById(R.id.txtcompo);
         ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +152,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         });
         khaibao();
         getProductDT();
-
+        getInfoDevice();
 
         //  getCommen();
     }
@@ -172,8 +173,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        typeDiscount="0";
-        codeDiscount="";
+        typeDiscount = "0";
+        codeDiscount = "";
 //        int prdmoney=0;
 //        for (int i2 = 0; i2<OftenAdapter.arrcheck.size();i2++){
 //            prdmoney = Integer.parseInt(OftenAdapter.arrcheck.get(i2).getMoney())+ prdmoney;
@@ -264,7 +265,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         deal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                typeDiscount="3";
+                typeDiscount = "3";
                 senKM2("9000", "0", "hotdeal9k", numshare);
             }
         });
@@ -976,7 +977,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 try {
                     JSONObject jo = new JSONObject(response);
                     String code = jo.getString("code");
-                    Log.d("CODEE",code);
+                    Log.d("CODEE", code);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1203,7 +1204,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         lnn.setVisibility(View.VISIBLE);
                         dialog.dismiss();
                     } else {
-                        typeDiscount="1";
+                        typeDiscount = "1";
                         senKM(a, "", priceDiscount);
                         dialog.dismiss();
                     }
@@ -1237,7 +1238,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     JSONObject ja = new JSONObject(response);
                     String code = ja.getString("code");
                     if (code.equals("0")) {
-                        typeDiscount="2";
+                        typeDiscount = "2";
                         percentkm = ja.getDouble("percent");
                         int pridekm = (int) ((pri1 / 100) * percentkm);
                         int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
@@ -1394,5 +1395,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         }
 
+    }
+
+    public void getInfoDevice() {
+        String name = Build.MANUFACTURER + " - " + Build.MODEL + "-" + Build.PRODUCT;
+//        Log.d("infodevice", name);
     }
 }

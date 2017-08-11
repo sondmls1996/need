@@ -29,7 +29,7 @@ import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.PreConstructor;
 import com.needfood.kh.Database.DataHandle;
-import com.needfood.kh.R;
+
 import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.PostCL;
@@ -49,7 +49,9 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Preview extends AppCompatActivity implements View.OnClickListener {
+
     String json, mid, stt, mnship, idsl, acess,tax;
+
     RecyclerView lv;
     private SimpleDateFormat dateFormatter, timeformat;
     ArrayList<PreConstructor> arr;
@@ -86,7 +88,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         Intent intent = getIntent();
         hashMap = (HashMap<String, String>) intent.getSerializableExtra("map");
         json = hashMap.get("listProduct");
-        Log.d("JIO",json.toString());
+        Log.d("JIO", json.toString());
         idsl = hashMap.get("idSeller");
         total = Integer.parseInt(hashMap.get("totalMoneyProduct"));
         mnship = hashMap.get("moneyShip");
@@ -203,23 +205,29 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         String phone = edphome.getText().toString();
         String note = edghichu.getText().toString();
 
-        if (adr.equals("")||phone.equals("")) {
+        if (adr.equals("") || phone.equals("")) {
             pro.dismiss();
             btno.setEnabled(true);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
         } else {
             btno.setEnabled(true);
-            hashMap.put("totalMoneyProduct",total+Integer.parseInt(mnship)+"");
+            hashMap.put("totalMoneyProduct", total + Integer.parseInt(mnship) + "");
             hashMap.put("fullName", name);
             hashMap.put("timeShiper", day + "/" + (month2 + 1) + "/" + year2 + " " + hour + ":" + minitus);
             hashMap.put("address", adr);
             hashMap.put("note", note);
             hashMap.put("fone", phone);
-            hashMap.put("codeDiscount",ProductDetail.codeDiscount);
+            hashMap.put("codeDiscount", ProductDetail.codeDiscount);
             hashMap.put("typeDiscount", ProductDetail.typeDiscount);
+<<<<<<< HEAD
             hashMap.put("idSeller",idsl);
             Log.d("TYPEH",ProductDetail.typeDiscount);
             Log.d("total",total+"");
+=======
+            hashMap.put("idSeller", idsl);
+            Log.d("TYPEH", ProductDetail.typeDiscount);
+            Log.d("total", total + "");
+>>>>>>> ad2120b7e3c690350fb0b146512ec941a06ed6b6
 
             Response.Listener<String> response = new Response.Listener<String>() {
 
