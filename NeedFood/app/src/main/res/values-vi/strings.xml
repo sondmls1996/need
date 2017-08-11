@@ -34,6 +34,7 @@
     <string name="more">Thêm</string>
     <string name="shipmn">Tiền ship</string>
     <string name="yourin">Thông tin của bạn</string>
+    <string name="shipin">Thông tin giao hàng</string>
     <string name="buynow">Mua ngay</string>
     <string name="precart">Xem trước và chỉnh sửa giỏ hàng</string>
     <string name="fruits">Hoa quả</string>
@@ -46,6 +47,7 @@
     <string name="brandprs">Sản phẩm cùng thương hiệu</string>
     <string name="hisord">Lịch sử đặt hàng</string>
     <string name="item">Mặt hàng</string>
+    <string name="where">Vị trí shipper</string>
     <string name="menu">Thực đơn</string>
     <string name="cancel">Hủy</string>
     <string name="oldp">Mật khẩu cũ</string>

@@ -181,7 +181,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 //        Intent it = new Intent(getApplicationContext(),BubbleService.class);
 //        it.putExtra("MN",prdmoney+Integer.parseInt(priceprd)+"");
 //        startService(it);
-        getNumberShare();
+        if(ses.loggedin()){
+            getNumberShare();
+        }
+
 //        getupdateView();
     }
 
@@ -496,6 +499,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("min", mnid);
             it.putExtra("stt", "nom");
             it.putExtra("tymn", tym);
+            it.putExtra("tax",tax);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -560,6 +564,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("stt", stt);
             it.putExtra("num", ns);
             it.putExtra("tymn", tym);
+            it.putExtra("tax",tax);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -621,6 +626,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("min", mnid);
             it.putExtra("stt", "");
             it.putExtra("tymn", tym);
+            it.putExtra("tax",tax);
             startActivity(it);
             pro.dismiss();
         } else {

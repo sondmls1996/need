@@ -165,6 +165,7 @@
     <string name="haslock">The seller account or product  is locked</string>
     <string name="new_">New</string>
     <string name="poli">Policy</string>
+    <string name="shipin">Delivery information</string>
     <string name="policy">By clicking on the subscription you agree to our user and seller policies</string>
     <string name="topdeall">Top Deal</string>
     <string name="share">Share</string>
@@ -176,9 +177,9 @@
     <string name="loginn">Login</string>
     <string name="yhl">You have not login</string>
     <string name="price">Price: \u0020</string>
-    <string name="timeship">Time ship/receive: \u0020</string>
+    <string name="timeship">Time receive: \u0020</string>
     <string name="buyer">Buyer: \u0020</string>
-
+    <string name="where">Shipper location</string>
     <string name="addr">Address: \u0020</string>
 
     <string name="F_REF">com.needfood.kh.fcm_re</string>
