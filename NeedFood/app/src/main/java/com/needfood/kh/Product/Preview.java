@@ -29,7 +29,7 @@ import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.PreConstructor;
 import com.needfood.kh.Database.DataHandle;
-
+import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.PostCL;
@@ -219,15 +219,11 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             hashMap.put("fone", phone);
             hashMap.put("codeDiscount", ProductDetail.codeDiscount);
             hashMap.put("typeDiscount", ProductDetail.typeDiscount);
-<<<<<<< HEAD
-            hashMap.put("idSeller",idsl);
-            Log.d("TYPEH",ProductDetail.typeDiscount);
-            Log.d("total",total+"");
-=======
+
             hashMap.put("idSeller", idsl);
             Log.d("TYPEH", ProductDetail.typeDiscount);
             Log.d("total", total + "");
->>>>>>> ad2120b7e3c690350fb0b146512ec941a06ed6b6
+
 
             Response.Listener<String> response = new Response.Listener<String>() {
 
