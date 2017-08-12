@@ -1394,5 +1394,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     public void getInfoDevice() {
         String name = Build.MANUFACTURER + " - " + Build.MODEL + "-" + Build.PRODUCT;
 //        Log.d("infodevice", name);
+        soso();
+    }
+    public void soso(){
+        String aca = "Chu Thanh Tùng";
+        if(aca.contains("Tùng")){
+            Toast.makeText(getApplicationContext(),"DEmo1",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(),"DEmo2",Toast.LENGTH_SHORT).show();
+        }
     }
 }
