@@ -121,7 +121,7 @@ public class TransferHistory extends AppCompatActivity {
                             nop.setVisibility(View.GONE);
                         }
                     } else {
-                        nop.setVisibility(View.GONE);
+                         nop.setVisibility(View.GONE);
                         Log.d("id", jo.length() + "");
                         for (int i = 0; i < jo.length(); i++) {
                             JSONObject js = jo.getJSONObject(i);
