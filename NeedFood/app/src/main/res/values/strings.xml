@@ -92,6 +92,7 @@
     <string name="emailwr">Email invalidate</string>
     <string name="order">Order</string>
     <string name="name">Name:\u0020</string>
+    <string name="tax">Tax</string>
     <string name="phonenum2">Phone:\u0020</string>
     <string name="wait">Waiting...</string>
     <string name="wrreg">Can not be empty</string>
@@ -100,7 +101,10 @@
     <string name="contact">Contact</string>
     <string name="shiptime">Shipping time</string>
     <string name="rein">Receiver\'s information</string>
+    <string name="giam">Discount:</string>
     <string name="orif">Order info</string>
+    <string name="orcode">Order code</string>
+    <string name="listprd">List products</string>
     <string name="howtou">How to use?</string>
     <string name="qrc">Scan product QR code</string>
     <string name="prddetail">Product detail</string>
@@ -165,6 +169,7 @@
     <string name="haslock">The seller account or product  is locked</string>
     <string name="new_">New</string>
     <string name="poli">Policy</string>
+    <string name="shipin">Delivery information</string>
     <string name="policy">By clicking on the subscription you agree to our user and seller policies</string>
     <string name="topdeall">Top Deal</string>
     <string name="share">Share</string>
@@ -176,9 +181,9 @@
     <string name="loginn">Login</string>
     <string name="yhl">You have not login</string>
     <string name="price">Price: \u0020</string>
-    <string name="timeship">Time ship/receive: \u0020</string>
+    <string name="timeship">Time receive: \u0020</string>
     <string name="buyer">Buyer: \u0020</string>
-
+    <string name="where">Shipper location</string>
     <string name="addr">Address: \u0020</string>
 
     <string name="F_REF">com.needfood.kh.fcm_re</string>

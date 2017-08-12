@@ -49,7 +49,9 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Preview extends AppCompatActivity implements View.OnClickListener {
-    String json, mid, stt, mnship, idsl, acess, idmn;
+
+    String json, mid, stt, mnship, idsl, acess,tax;
+
     RecyclerView lv;
     private SimpleDateFormat dateFormatter, timeformat;
     ArrayList<PreConstructor> arr;
@@ -57,11 +59,12 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
     List<ListMN> list;
     List<InfoConstructor> listif;
     Session ses;
-    TextView shipm;
+
+    TextView shipm,txtgia,txtdv;
     HashMap<String, String> hashMap;
     EditText edname, edadr, edphome, edemail, edghichu, edpickngay, edpickgio;
     Calendar c;
-    double total;
+    int total;
     int day, month2, year2, hour, minitus, numshare;
     public DatePickerDialog fromDatePickerDialog;
     public TimePickerDialog timepicker;
@@ -87,9 +90,10 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         json = hashMap.get("listProduct");
         Log.d("JIO", json.toString());
         idsl = hashMap.get("idSeller");
-        total = Double.parseDouble(hashMap.get("totalMoneyProduct"));
+        total = Integer.parseInt(hashMap.get("totalMoneyProduct"));
         mnship = hashMap.get("moneyShip");
         stt = intent.getStringExtra("stt");
+        tax=intent.getStringExtra("tax");
         if (intent.hasExtra("num")) {
             numshare = intent.getIntExtra("num", 0);
         }
@@ -103,6 +107,10 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         year2 = c.get(Calendar.YEAR);
         hour = c.get(Calendar.HOUR_OF_DAY);
         minitus = c.get(Calendar.MINUTE);
+        txtgia=(TextView) findViewById(R.id.mntong);
+        txtgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(total)+"");
+        txtdv=(TextView) findViewById(R.id.dvtong);
+        txtdv.setText(mid +" ("+tax+"%"+" VAT"+")");
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = dateFormatter.format(c.getTime());
 
@@ -211,9 +219,11 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             hashMap.put("fone", phone);
             hashMap.put("codeDiscount", ProductDetail.codeDiscount);
             hashMap.put("typeDiscount", ProductDetail.typeDiscount);
+
             hashMap.put("idSeller", idsl);
             Log.d("TYPEH", ProductDetail.typeDiscount);
             Log.d("total", total + "");
+
 
             Response.Listener<String> response = new Response.Listener<String>() {
 

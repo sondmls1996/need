@@ -217,17 +217,12 @@ public class Login extends AppCompatActivity {
                     Log.d("JSRE",response);
                     JSONObject jo = new JSONObject(response);
                     JSONObject js = jo.getJSONObject("Useronl");
-//                                    String fullname = jo.getString("fullName");
-//                                    String  email = jo.getString("email");
-//                                    String fone = jo.getString("fone");
-//                                    String address = jo.getString("address");
-//                                    String coin = jo.getString("coin");
+
                     String id = js.getString("id");
                     String accesstoken = js.getString("accessToken");
 //                                    String pass = jo.getString("pass");
 
                     postToken(accesstoken);
-
                     addInfo(accesstoken, id, "1");
                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                     startActivity(it);
