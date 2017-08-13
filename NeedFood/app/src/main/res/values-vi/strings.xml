@@ -250,4 +250,12 @@
     <string name="code3">Mã khuyến mại hết thời gian hiệu lực</string>
     <string name="code4">Hết số lượng người sử dụng</string>
     <string name="supmn">Được hỗ trợ bởi Mantan Việt Nam</string>
+    <string name="man">Đàn ông</string>
+    <string name="sex">Giới tính</string>
+    <string name="wm">Phụ nữ</string>
+    <string name="lh">Linh hoạt</string>
+    <string name="birt">Ngày sinh</string>
+    <string name="areapr">Mã khuyến mãi không được áp dụng do bạn nằm ngoài khu vực khuyến mãi</string>
+    <string name="phonepr">Mã khuyến mãi không được áp dụng cho số điện thoại này</string>
+    <string name="nameprr">Mã khuyến mãi không được áp dụng cho tài khoản này</string>
 </resources>

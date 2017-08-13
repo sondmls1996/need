@@ -42,9 +42,8 @@ public class DataHandle extends SQLiteOpenHelper {
     public static final String IDINFO = "idin";
     public static final String ACCESSTK = "accessToken";
     public static final String COIN = "coin";
-    public static final String IMAGE = "avatar";
-    public static final String ID_IMG ="id_img";
-    public static final String TAB_IMAGE = "image_tb";
+    public static final String BIRTHDAY = "birthday";
+    public static final String SEX = "sex";
 
     public static final String CHECK_LAN = "language";
     public static final String ID_LANGUAGE = "id_language";
@@ -76,7 +75,9 @@ public class DataHandle extends SQLiteOpenHelper {
                         IDINFO + " TEXT NOT NULL PRIMARY KEY," +
                         ACCESSTK + " TEXT NOT NULL," +
                         COIN + " TEXT NOT NULL," +
-                        TYPE + " TEXT NOT NULL" +
+                        TYPE + " TEXT NOT NULL," +
+                        BIRTHDAY + " TEXT NOT NULL," +
+                        SEX + " TEXT NOT NULL" +
 
                         ");";
         String CREATE_TABLE_LAN =
@@ -132,6 +133,8 @@ public class DataHandle extends SQLiteOpenHelper {
         values.put(ACCESSTK, in.getAccesstoken()); // Contact accessToken
         values.put(COIN, in.getCoin());
         values.put(TYPE, in.getType());
+        values.put(BIRTHDAY, in.getBirtday());
+        values.put(SEX, in.getSex());
         db.insert(INFO, null, values);
         db.close(); // Closing database connection
     }
@@ -231,6 +234,8 @@ public class DataHandle extends SQLiteOpenHelper {
                     contact.setAccesstoken(cursor.getString(6));
                     contact.setCoin(cursor.getString(7));
                     contact.setType(cursor.getString(8));
+                    contact.setBirtday(cursor.getString(9));
+                    contact.setSex(cursor.getString(10));
                     // Adding contact to list
                     contactList.add(contact);
                 } while (cursor.moveToNext());
@@ -301,6 +306,7 @@ public class DataHandle extends SQLiteOpenHelper {
         db.update(INFO, values, IDINFO + " = ?", new String[]{id});
         return true;
     }
+
     public int getNotesCount() {
         String countQuery = "SELECT  * FROM " + TABLE_NOTI;
         SQLiteDatabase db = this.getReadableDatabase();

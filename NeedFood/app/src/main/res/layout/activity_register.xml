@@ -100,6 +100,46 @@
                 android:layout_marginBottom="10dp"
                 android:hint="@string/ad"
                 />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/gray"
+                android:padding="5dp"
+                android:id="@+id/tvbirt"
+                android:gravity="center_vertical"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/birt"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/birt"
+                />
+            <RadioGroup
+                android:layout_marginBottom="5dp"
+                android:id="@+id/radiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/gray">
+                <RadioButton
+                    android:layout_weight="1"
+                    android:id="@+id/man"
+                    android:checked="true"
+                    android:hint="@string/man"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:hint="@string/wm"
+                    android:layout_weight="1"
+                    android:id="@+id/wonman"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:hint="@string/lh"
+                    android:layout_weight="1"
+                    android:id="@+id/fix"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

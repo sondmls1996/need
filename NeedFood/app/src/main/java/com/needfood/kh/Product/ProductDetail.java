@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.maps.model.LatLng;
 import com.needfood.kh.Adapter.ProductDetail.CommentAdapter;
 import com.needfood.kh.Adapter.ProductDetail.OftenAdapter;
 import com.needfood.kh.Brand.BrandDetail;
@@ -50,6 +52,7 @@ import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
+import com.needfood.kh.SupportClass.GPSTracker;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
 import com.needfood.kh.SupportClass.VerticalScrollview;
@@ -59,6 +62,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -67,6 +71,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import static com.needfood.kh.Adapter.ProductDetail.OftenAdapter.arrcheck;
 
@@ -89,7 +94,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Session ses;
     String uadr, tax;
     String typemn;
-
+    String sexxx, coordinates, numberBuy, headFone, nameman, birthdayy, typedevice;
     EditText edquan;
     String cata;
     Button deal, bn;
@@ -114,7 +119,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     VerticalScrollview ver;
     ShareLinkContent content;
     CallbackManager callbackManager;
-
+    String linkkhoangcach;
     StringBuilder howto, simg, strship;
     String cmt, time, iduser, fullnameus;
     ImageView imageView, next, down;
@@ -127,9 +132,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     TextView nameseller, exp, txtof, txtbrand, txtcomp;
     LinearLayout lnpro;
     boolean checkclick = false;
-
+    String sex, birthday;
     double percentkm;
-
+    GPSTracker tracker;
+    double latitude, longitude, lat, lo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,8 +158,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         });
         khaibao();
         getProductDT();
-        getInfoDevice();
-
+        tracker = new GPSTracker(this);
+        if (!tracker.canGetLocation()) {
+            tracker.showSettingsAlert();
+        } else {
+            latitude = tracker.getLatitude();
+            longitude = tracker.getLongitude();
+        }
         //  getCommen();
     }
 
@@ -182,7 +193,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 //        Intent it = new Intent(getApplicationContext(),BubbleService.class);
 //        it.putExtra("MN",prdmoney+Integer.parseInt(priceprd)+"");
 //        startService(it);
-        if(ses.loggedin()){
+        if (ses.loggedin()) {
             getNumberShare();
         }
 
@@ -282,6 +293,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             fullname = listu.get(listu.size() - 1).getFullname();
             phone = listu.get(listu.size() - 1).getFone();
             uadr = listu.get(listu.size() - 1).getAddress();
+            sex = listu.get(listu.size() - 1).getSex();
+            birthday = listu.get(listu.size() - 1).getBirtday();
+
             //  imgshare.setVisibility(View.VISIBLE);
             lnshare.setVisibility(View.VISIBLE);
 
@@ -365,6 +379,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
         rctp.setLayoutManager(mStaggeredVerticalLayoutManager4);
     }
+
 
     private void getNumberShare() {
         String link = getResources().getString(R.string.linkgetnum);
@@ -500,7 +515,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("min", mnid);
             it.putExtra("stt", "nom");
             it.putExtra("tymn", tym);
-            it.putExtra("tax",tax);
+            it.putExtra("tax", tax);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -565,7 +580,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("stt", stt);
             it.putExtra("num", ns);
             it.putExtra("tymn", tym);
-            it.putExtra("tax",tax);
+            it.putExtra("tax", tax);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -627,7 +642,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("min", mnid);
             it.putExtra("stt", "");
             it.putExtra("tymn", tym);
-            it.putExtra("tax",tax);
+            it.putExtra("tax", tax);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -1240,11 +1255,106 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     if (code.equals("0")) {
                         typeDiscount = "2";
                         percentkm = ja.getDouble("percent");
-                        int pridekm = (int) ((pri1 / 100) * percentkm);
-                        int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
-                        Log.d("KM22", pridekm + "-" + pridekm2);
-                        String pridekm3 = String.valueOf(pridekm2);
-                        senKM(codekm, percentkm + "", pridekm3);
+                        if (ja.has("typeDevice")) {
+                            typedevice = ja.getString("typeDevice");
+
+                        }
+                        if (ja.has("sex")) {
+                            sexxx = ja.getString("sex");
+                        }
+                        if (ja.has("birthday")) {
+                            birthdayy = ja.getString("birthday");
+                        }
+                        if (ja.has("name")) {
+                            nameman = ja.getString("name");
+                        }
+                        if (ja.has("headFone")) {
+                            headFone = ja.getString("headFone");
+                        }
+                        if (ja.has("numberBuy")) {
+                            numberBuy = ja.getString("numberBuy");
+                        }
+                        if (ja.has("coordinates")) {
+                            coordinates = ja.getString("coordinates");
+                        }
+
+                        if (!typedevice.equals("")) {
+                            if (typedevice.equals("android")) {
+                                int pridekm = (int) ((pri1 / 100) * percentkm);
+                                int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
+                                String pridekm3 = String.valueOf(pridekm2);
+                                senKM(codekm, percentkm + "", pridekm3);
+                            } else {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.nameprr), Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else if (!sexxx.equals("")) {
+                            Log.d("ABCCCA", sexxx + "-" + sex);
+                            if (sexxx.equals(sex)) {
+                                int pridekm = (int) ((pri1 / 100) * percentkm);
+                                int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
+                                String pridekm3 = String.valueOf(pridekm2);
+                                senKM(codekm, percentkm + "", pridekm3);
+                            } else {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.nameprr), Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else if (!birthdayy.equals("")) {
+                            if (birthdayy.equals(birthday)) {
+                                int pridekm = (int) ((pri1 / 100) * percentkm);
+                                int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
+                                String pridekm3 = String.valueOf(pridekm2);
+                                senKM(codekm, percentkm + "", pridekm3);
+                            } else {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.nameprr), Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else if (!nameman.equals("")) {
+                            if (fullname.contains(nameman)) {
+                                int pridekm = (int) ((pri1 / 100) * percentkm);
+                                int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
+                                String pridekm3 = String.valueOf(pridekm2);
+                                senKM(codekm, percentkm + "", pridekm3);
+                            } else {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.nameprr), Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else if (!headFone.equals("")) {
+                            String phonex = phone.substring(0, headFone.length());
+                            Log.d("ABCCCA", phonex);
+                            if (phonex.contains(headFone)) {
+                                int pridekm = (int) ((pri1 / 100) * percentkm);
+                                int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
+                                String pridekm3 = String.valueOf(pridekm2);
+                                senKM(codekm, percentkm + "", pridekm3);
+                            } else {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.phonepr), Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        } else if (!coordinates.equals("")) {
+                            String[] separated = coordinates.split(",");
+                            linkkhoangcach = getDistance(new LatLng(latitude, longitude), new LatLng(Double.parseDouble(separated[0].toString()), Double.parseDouble(separated[1].toString())));
+
+                            String[] spe = linkkhoangcach.split(",");
+                            int khoangcach = Integer.parseInt(spe[0]);
+                            Log.d("ABCCCA", linkkhoangcach + "-" + khoangcach);
+                            if (khoangcach <= 5) {
+                                int pridekm = (int) ((pri1 / 100) * percentkm);
+                                int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
+                                String pridekm3 = String.valueOf(pridekm2);
+                                senKM(codekm, percentkm + "", pridekm3);
+                            } else {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.areapr), Toast.LENGTH_SHORT).show();
+                            }
+                        } else if (!numberBuy.equals("")) {
+                            int pridekm = (int) ((pri1 / 100) * percentkm);
+                            int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
+                            String pridekm3 = String.valueOf(pridekm2);
+                            senKM(codekm, percentkm + "", pridekm3);
+                        }
+
+
                     } else if (code.equals("-1")) {
                         AlertDialog alertDialog = taoMotAlertDialog();
                         alertDialog.show();
@@ -1397,17 +1507,23 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    public void getInfoDevice() {
-        String name = Build.MANUFACTURER + " - " + Build.MODEL + "-" + Build.PRODUCT;
-//        Log.d("infodevice", name);
-        soso();
-    }
-    public void soso(){
-        String aca = "Chu Thanh Tùng";
-        if(aca.contains("Tùng")){
-            Toast.makeText(getApplicationContext(),"DEmo1",Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(getApplicationContext(),"DEmo2",Toast.LENGTH_SHORT).show();
+    public String getDistance(LatLng my_latlong, LatLng frnd_latlong) {
+        Location l1 = new Location("One");
+        l1.setLatitude(my_latlong.latitude);
+        l1.setLongitude(my_latlong.longitude);
+
+        Location l2 = new Location("Two");
+        l2.setLatitude(frnd_latlong.latitude);
+        l2.setLongitude(frnd_latlong.longitude);
+        // ep kieu du lieu
+        DecimalFormat precision = new DecimalFormat("0.0");
+        float distance = l1.distanceTo(l2);
+        String dist = precision.format(distance) + " m";
+
+        if (distance > 1000.0f) {
+            distance = distance / 1000.0f;
+            dist = precision.format(distance) + " km";
         }
+        return dist;
     }
 }

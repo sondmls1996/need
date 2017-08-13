@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Database.DataHandle;
+import com.needfood.kh.SupportClass.GPSTracker;
 import com.needfood.kh.SupportClass.GetCL;
 import com.needfood.kh.SupportClass.NetworkCheck;
 
@@ -44,20 +45,23 @@ public class WellcomeActivity extends AppCompatActivity {
     NetworkCheck networkCheck;
     DataHandle db;
     final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
+    GPSTracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wellcome);
         db = new DataHandle(this);
+        tracker = new GPSTracker(this);
         insertDummyContactWrapper();
         networkCheck = new NetworkCheck();
         Boolean conn = networkCheck.checkNow(getApplicationContext());
-        if (conn != true) {
-            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+        if (conn == false) {
+            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
         }
-
-
+        if (!tracker.canGetLocation()) {
+            tracker.showSettingsAlert();
+        }
 
 
     }
@@ -65,13 +69,13 @@ public class WellcomeActivity extends AppCompatActivity {
     private void checkDB() {
         if (db.isMoneyEmpty()) {
             getMoney();
-        }else{
-            new Handler().postDelayed(new Runnable(){
+        } else {
+            new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
 
                 /* Create an Intent that will start the Menu-Activity. */
-                    Intent mainIntent = new Intent(WellcomeActivity.this,StartActivity.class);
+                    Intent mainIntent = new Intent(WellcomeActivity.this, StartActivity.class);
                     WellcomeActivity.this.startActivity(mainIntent);
                     WellcomeActivity.this.finish();
                 }
@@ -94,7 +98,7 @@ public class WellcomeActivity extends AppCompatActivity {
                         JSONObject jo2 = jo.getJSONObject(i2 + "");
                         db.addMN(new ListMN(jo2.getString("id"), jo2.getString("name")));
                     }
-                checkDB();
+                    checkDB();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -120,15 +124,15 @@ public class WellcomeActivity extends AppCompatActivity {
             permissionsNeeded.add("Camera");
         if (!addPermission(permissionsList, android.Manifest.permission.READ_CALENDAR))
             permissionsNeeded.add("Calendar");
-        if (!addPermission(permissionsList, android.Manifest.permission.ACCESS_FINE_LOCATION)){
+        if (!addPermission(permissionsList, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
             permissionsNeeded.add("GPS");
-        }else{
+        } else {
             checkDB();
         }
 
 
         if (permissionsList.size() > 0) {
-            if (permissionsNeeded.size() >0) {
+            if (permissionsNeeded.size() > 0) {
                 // hien thi tắt
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
@@ -146,8 +150,7 @@ public class WellcomeActivity extends AppCompatActivity {
         }
 
         return;
-        }
-
+    }
 
 
     // luu lai su lua chon
@@ -171,7 +174,7 @@ public class WellcomeActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
-                checkDB();
+                    checkDB();
                 } else {
                     // Permission Denied
 //                    Toast.makeText(WellcomeActivity.this, "Some Permission is Denied", Toast.LENGTH_SHORT)

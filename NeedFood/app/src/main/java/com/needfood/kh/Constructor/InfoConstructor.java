@@ -14,11 +14,13 @@ public class InfoConstructor {
     String accesstoken;
     String coin;
     String type;
+    String birtday;
+    String sex;
 
     public InfoConstructor() {
     }
 
-    public InfoConstructor(String fullname, String email, String fone, String pass, String address, String id, String accesstoken, String coin, String type) {
+    public InfoConstructor(String fullname, String email, String fone, String pass, String address, String id, String accesstoken, String coin, String type, String birtday, String sex) {
         this.fullname = fullname;
         this.email = email;
         this.fone = fone;
@@ -28,6 +30,8 @@ public class InfoConstructor {
         this.accesstoken = accesstoken;
         this.coin = coin;
         this.type = type;
+        this.birtday = birtday;
+        this.sex = sex;
     }
 
     public String getFullname() {
@@ -100,5 +104,21 @@ public class InfoConstructor {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getBirtday() {
+        return birtday;
+    }
+
+    public void setBirtday(String birtday) {
+        this.birtday = birtday;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }
