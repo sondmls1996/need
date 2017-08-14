@@ -81,6 +81,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String maniid, mnid, hot = "";
     LinearLayout view1;
     int a2;
+    String a3;
     int numshare = 0;
     ProgressBar pr1;
     public static String typeDiscount = "0";
@@ -158,13 +159,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         });
         khaibao();
         getProductDT();
-        tracker = new GPSTracker(this);
-        if (!tracker.canGetLocation()) {
-            tracker.showSettingsAlert();
-        } else {
-            latitude = tracker.getLatitude();
-            longitude = tracker.getLongitude();
-        }
+
         //  getCommen();
     }
 
@@ -298,7 +293,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
             //  imgshare.setVisibility(View.VISIBLE);
             lnshare.setVisibility(View.VISIBLE);
-
+            getNumberBuy();
+            tracker = new GPSTracker(this);
+            if (!tracker.canGetLocation()) {
+                tracker.showSettingsAlert();
+            } else {
+                latitude = tracker.getLatitude();
+                longitude = tracker.getLongitude();
+            }
         }
 
         tvco = (TextView) findViewById(R.id.tvco);
@@ -378,6 +380,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
         rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
         rctp.setLayoutManager(mStaggeredVerticalLayoutManager4);
+
     }
 
 
@@ -412,6 +415,27 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
+    private void getNumberBuy() {
+        String link = getResources().getString(R.string.linkgetnumberbuy);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", access);
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("LOGNUM", response);
+                if (response.equals("{\"code\":-1}")) {
+                    AlertDialog alertDialog = taoMotAlertDialog();
+                    alertDialog.show();
+                } else {
+                    a3 = response;
+
+                }
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
+    }
 
     private void shareOnFB() {
         if (ShareDialog.canShow(ShareLinkContent.class)) {
@@ -1348,10 +1372,15 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.areapr), Toast.LENGTH_SHORT).show();
                             }
                         } else if (!numberBuy.equals("")) {
-                            int pridekm = (int) ((pri1 / 100) * percentkm);
-                            int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
-                            String pridekm3 = String.valueOf(pridekm2);
-                            senKM(codekm, percentkm + "", pridekm3);
+                            if (a3.equals(numberBuy)) {
+                                int pridekm = (int) ((pri1 / 100) * percentkm);
+                                int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
+                                String pridekm3 = String.valueOf(pridekm2);
+                                senKM(codekm, percentkm + "", pridekm3);
+                            } else {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.nameprr), Toast.LENGTH_SHORT).show();
+                            }
+
                         }
 
 

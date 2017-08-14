@@ -62,8 +62,6 @@ public class WellcomeActivity extends AppCompatActivity {
         if (!tracker.canGetLocation()) {
             tracker.showSettingsAlert();
         }
-
-
     }
 
     private void checkDB() {

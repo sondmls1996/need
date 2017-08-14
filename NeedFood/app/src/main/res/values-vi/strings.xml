@@ -140,6 +140,7 @@
     <string name="linkroleuser">http://needfood.webmantan.com/getRoleUserAPI</string>
     <string name="linkreg">http://needfood.webmantan.com/checkRegisterUseronlAPI</string>
     <string name="linkgetnum">http://needfood.webmantan.com/getNumberShareAPI</string>
+    <string name="linkgetnumberbuy">http://needfood.webmantan.com/getNumberOrderDoneAPI</string>
     <string name="linklogin">http://needfood.webmantan.com/checkLoginUseronlAPI</string>
     <string name="linkchangep">http://needfood.webmantan.com/changePassUseronlAPI</string>
     <string name="linkgetcode">http://needfood.webmantan.com/sendCodePassUseronlAPI</string>
