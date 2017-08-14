@@ -57,26 +57,18 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
 
     TextView change, changepass, save, pro;
     ImageView avt;
-    EditText name_id, email_id, phone_id, pay, tvName, addr;
+    EditText name_id, email_id, phone_id, pay, tvName, addr, sex_id, birt_id;
     DataHandle db;
     String id_name, email, phone, coin;
     List<InfoConstructor> list;
     String fname, fone, address, id, token, pass;
     Session ses;
-    Class fragmentClass;
-    int achan = 1;
-    int bsave = 2;
     boolean check = false;
     int RESULT_LOAD_IMAGE = 1;
     static byte[] b;
     String imageEncoded;
-    String imageDecode;
-    byte[] decodedString;
-    String id_img;
-    String img;
-    String first;// this will contain "Fruit"
-    String second;
     String ava;
+    String sex, birthday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +119,8 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             fone = it.getFone();
             address = it.getAddress();
             email = it.getEmail();
+            sex = it.getSex();
+            birthday = it.getBirtday();
         }
 
         avt = (ImageView) findViewById(R.id.avt);
@@ -134,6 +128,8 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         name_id = (EditText) findViewById(R.id.acc_id);
         email_id = (EditText) findViewById(R.id.email_id);
         phone_id = (EditText) findViewById(R.id.fone_id);
+        sex_id = (EditText) findViewById(R.id.sex_id);
+        birt_id = (EditText) findViewById(R.id.birt_id);
 
         pro = (TextView) findViewById(proper);
         change = (TextView) findViewById(R.id.change);
@@ -147,6 +143,15 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         email_id.setText(email);
         phone_id.setText(fone);
         addr.setText(address);
+
+        if (sex.equals("man")) {
+            sex_id.setText(getResources().getString(R.string.man));
+        } else if (sex.equals("wonman")) {
+            sex_id.setText(getResources().getString(R.string.wm));
+        } else {
+            sex_id.setText(getResources().getString(R.string.lh));
+        }
+        birt_id.setText(birthday);
 
         tvName.setEnabled(false);
         name_id.setEnabled(false);
@@ -232,6 +237,8 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             map.put("email", emaill);
             map.put("address", addresss);
             map.put("avatar", "");
+            map.put("sex", sex);
+            map.put("birthday", birthday);
             Response.Listener<String> response = new Response.Listener<String>() {
 
                 @Override
@@ -240,7 +247,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
 
                         JSONObject jo = new JSONObject(response);
                         String code = jo.getString("code");
-                        Log.d("CODE", code);
+                        Log.d("ABBBB", response);
                         if (code.equals("0")) {
                             db.updateinfo(namee, emaill, addresss, id, "");
                             progressDialog.dismiss();
@@ -288,6 +295,8 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             map.put("email", emaill);
             map.put("address", addresss);
             map.put("avatar", imageEncoded);
+            map.put("sex", sex);
+            map.put("birthday", birthday);
             Response.Listener<String> response = new Response.Listener<String>() {
 
                 @Override
@@ -399,6 +408,8 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             map.put("email", emaill);
             map.put("address", addresss);
             map.put("avatar", "");
+            map.put("sex", sex);
+            map.put("birthday", birthday);
             Response.Listener<String> response = new Response.Listener<String>() {
 
                 @Override
@@ -407,6 +418,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
 
                         JSONObject jo = new JSONObject(response);
                         String code = jo.getString("code");
+                        Log.d("ABBBB1", response);
                         if (code.equals("0")) {
                             db.updateinfo(namee, emaill, addresss, id, "");
                             progressDialog.dismiss();

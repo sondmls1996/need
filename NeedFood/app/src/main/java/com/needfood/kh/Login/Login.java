@@ -258,9 +258,10 @@ public class Login extends AppCompatActivity {
                     String fone = jo.getString("fone");
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
-
+                    String birthday = jo.getString("birthday");
+                    String sex = jo.getString("sex");
                     Log.d("ABCLOG", token + "-" + id + "-" + fullname + "-" + email + "-" + fone + "-" + address + "-" + coin);
-                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin, type));
+                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin, type,birthday,sex));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

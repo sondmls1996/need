@@ -132,7 +132,11 @@
     <string name="linknew">http://needfood.webmantan.com/getProductNewAPI</string>
     <string name="linkprdde">http://needfood.webmantan.com/getProductAPI</string>
     <string name="linkgetnum">http://needfood.webmantan.com/getNumberShareAPI</string>
+
     <string name="linkgetShipper">http://needfood.webmantan.com/checkInfoShiperAPI</string>
+
+    <string name="linkgetnumberbuy">http://needfood.webmantan.com/getNumberOrderDoneAPI</string>
+
     <string name="linkmn">http://needfood.webmantan.com/getTypeMoneyAPI</string>
     <string name="linkprdsell">http://needfood.webmantan.com/getProductSellerAPI</string>
     <string name="linklogout">http://needfood.webmantan.com/checkLogoutUseronlAPI</string>
@@ -252,4 +256,12 @@
     <string name="code3">Promotional code expires</string>
     <string name="code4">The number of promotional offers has run out</string>
     <string name="supmn">Supported by Mantan Vietnam</string>
+    <string name="sex">Sex</string>
+    <string name="man">Man</string>
+    <string name="wm">Wonman</string>
+    <string name="lh">Flexible</string>
+    <string name="birt">Birthday</string>
+    <string name="areapr">Promotion code is not applied because you are outside the promotion area</string>
+    <string name="phonepr">Promotional codes are not applied to this number</string>
+    <string name="nameprr">Promotional codes are not applied to this account</string>
 </resources>

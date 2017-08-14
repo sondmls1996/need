@@ -1,14 +1,21 @@
 package com.needfood.kh.Login;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,14 +29,21 @@ import com.needfood.kh.SupportClass.PostCL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Register extends AppCompatActivity {
-    EditText tvname, tvfone, tvmail, tvpass, tvpass2, tvadr;
+    EditText tvname, tvfone, tvmail, tvpass, tvpass2, tvadr, tvbirth;
     TextView policy;
     Button btnokay;
     String fullname, email, adr;
+    private RadioGroup radioSexGroup;
+    private RadioButton radioSexButton;
+    String sex = "man";
+    String birtday;
+    static final int DATE_DIALOG_ID = 0;
+    private int mYear, mMonth, mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +60,34 @@ public class Register extends AppCompatActivity {
         });
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.regiss));
+
+        Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
         final String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         final String regexStr = "^[0-9]$";
         tvname = (EditText) findViewById(R.id.tvfn);
         tvfone = (EditText) findViewById(R.id.tvf);
         tvmail = (EditText) findViewById(R.id.tvem);
         policy = (TextView) findViewById(R.id.policy);
+        radioSexGroup = (RadioGroup) findViewById(R.id.radiogroup);
+        radioSexGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                switch (checkedId) {
+                    case R.id.man:
+                        sex = "man";
+                        break;
+                    case R.id.wonman:
+                        sex = "wonman";
+                        break;
+                    case R.id.fix:
+                        sex = "flexible";
+                        break;
+                }
+            }
+        });
         policy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,17 +99,25 @@ public class Register extends AppCompatActivity {
         tvpass2 = (EditText) findViewById(R.id.tvpa);
         tvadr = (EditText) findViewById(R.id.tvadr);
         btnokay = (Button) findViewById(R.id.btnreg);
+        tvbirth = (EditText) findViewById(R.id.tvbirt);
+        tvbirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(DATE_DIALOG_ID);
+            }
+        });
         btnokay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final ProgressDialog progressDialog = DialogUtils.show(Register.this, getResources().getString(R.string.wait));
-
                 String name = tvname.getText().toString();
                 String fone = tvfone.getText().toString();
                 String mail = tvmail.getText().toString();
                 String pass = tvpass.getText().toString();
                 String pass2 = tvpass2.getText().toString();
                 String adr = tvadr.getText().toString();
+                String birtt = tvbirth.getText().toString();
+
                 String link = getResources().getString(R.string.linkreg);
                 Map<String, String> map = new HashMap<String, String>();
 
@@ -93,13 +137,15 @@ public class Register extends AppCompatActivity {
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.emailwr), Toast.LENGTH_SHORT).show();
                 } else {
-
+                    map.put("sex", sex);
+                    map.put("birthday", birtt);
                     map.put("fullName", name);
                     map.put("email", mail);
                     map.put("fone", fone);
                     map.put("pass", pass);
                     map.put("passAgain", pass2);
                     map.put("address", adr);
+                    Log.d("LOGABC",sex+"-"+birtt);
                     Response.Listener<String> response = new Response.Listener<String>() {
 
                         @Override
@@ -132,4 +178,31 @@ public class Register extends AppCompatActivity {
         });
 
     }
+
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_DIALOG_ID:
+                return new DatePickerDialog(this,
+                        mDateSetListener,
+                        mYear, mMonth, mDay);
+
+        }
+
+        return null;
+
+    }
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            mYear = year;
+            mMonth = monthOfYear;
+            mDay = dayOfMonth;
+            tvbirth.setText(new StringBuilder().append(mDay).append("/").append(mMonth + 1).append("/").append(mYear));
+
+        }
+
+    };
+
 }
