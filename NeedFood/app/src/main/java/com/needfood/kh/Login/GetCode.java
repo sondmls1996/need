@@ -33,14 +33,14 @@ public class GetCode extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_code);
-        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        TextView txt = (TextView)findViewById(R.id.titletxt);
+        TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.forget));
         btnnext = (Button) findViewById(R.id.btnn1);
         ed1 = (EditText) findViewById(R.id.edphonenum);
@@ -68,7 +68,7 @@ public class GetCode extends AppCompatActivity {
                     try {
                         JSONObject json = new JSONObject(response);
                         String code = json.getString("code");
-                        Log.d("LOGr",code);
+                        Log.d("LOGr", code);
                         if (code.equals("0")) {
                             pro.dismiss();
                             Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();

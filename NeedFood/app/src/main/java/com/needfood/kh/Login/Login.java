@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
     Session ses;
     EditText edus, edpass;
     DataHandle db;
-    String fullname, idfb, email = "", fone = "", adr = "",sex;
+    String fullname, idfb, email = "", fone = "", adr = "", sex;
     String dvtoken;
 
     @Override
@@ -128,7 +128,7 @@ public class Login extends AppCompatActivity {
                                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                                     startActivity(it);
                                     finish();
-                              //      Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
+                                    //      Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
 
                                 } else {
                                     progressDialog.dismiss();
@@ -164,7 +164,7 @@ public class Login extends AppCompatActivity {
                                     fullname = json.getString("name");
                                     idfb = json.getString("id");
                                     sex = json.getString("gender");
-                                    Log.d("SEX",sex);
+                                    Log.d("SEX", sex);
                                     if (json.has("location")) {
                                         JSONObject jw = json.getJSONObject("location");
                                         adr = jw.getString("name");
@@ -206,15 +206,15 @@ public class Login extends AppCompatActivity {
         map.put("email", email);
         map.put("fone", fone);
         map.put("address", adr);
-        if(sex.equals("male")){
-            map.put("sex","man");
-        }else if(sex.equals("female")){
-            map.put("sex","woman");
-        }else{
-            map.put("sex","flexible");
+        if (sex.equals("male")) {
+            map.put("sex", "man");
+        } else if (sex.equals("female")) {
+            map.put("sex", "woman");
+        } else {
+            map.put("sex", "flexible");
         }
         map.put("birthday", "");
-        map.put("avatar","https://graph.facebook.com/" + idfb + "/picture?type=large");
+        map.put("avatar", "https://graph.facebook.com/" + idfb + "/picture?type=large");
         Response.Listener<String> response = new Response.Listener<String>() {
 
             @Override
@@ -224,7 +224,7 @@ public class Login extends AppCompatActivity {
                 try {
                     progressDialog.dismiss();
                     ses.setLoggedin(true);
-                    Log.d("JSRE",response);
+                    Log.d("JSRE", response);
                     JSONObject jo = new JSONObject(response);
                     JSONObject js = jo.getJSONObject("Useronl");
 
@@ -240,8 +240,8 @@ public class Login extends AppCompatActivity {
                     String birthday = js.getString("birthday");
                     String sex = js.getString("sex");
                     postToken(accesstoken);
-                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, accesstoken, coin, "1",birthday,sex));
-                   // addInfo(accesstoken, id, "1");
+                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, accesstoken, coin, "1", birthday, sex));
+                    // addInfo(accesstoken, id, "1");
                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                     startActivity(it);
                     finish();
@@ -279,8 +279,8 @@ public class Login extends AppCompatActivity {
                     String coin = jo.getString("coin");
                     String birthday = jo.getString("birthday");
                     String sex = jo.getString("sex");
-                  //  Log.d("ABCLOG", token + "-" + id + "-" + fullname + "-" + email + "-" + fone + "-" + address + "-" + coin);
-                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin, type,birthday,sex));
+                    //  Log.d("ABCLOG", token + "-" + id + "-" + fullname + "-" + email + "-" + fone + "-" + address + "-" + coin);
+                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin, type, birthday, sex));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

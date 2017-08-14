@@ -35,14 +35,14 @@ public class GetPass extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_pass);
-        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        TextView txt = (TextView)findViewById(R.id.titletxt);
+        TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.forget));
         Intent it = getIntent();
         fone = it.getStringExtra("fone");
@@ -72,7 +72,7 @@ public class GetPass extends AppCompatActivity {
                     try {
                         JSONObject json = new JSONObject(response);
                         String code = json.getString("code");
-                        Log.d("LOGr",code);
+                        Log.d("LOGr", code);
                         if (code.equals("0")) {
                             pro.dismiss();
                             Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
