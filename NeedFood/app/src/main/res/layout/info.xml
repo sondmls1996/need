@@ -84,7 +84,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:id="@+id/taxx"
                 android:layout_margin="3dp"
                 android:textColor="@color/black"
                 android:layout_gravity="center_vertical"
@@ -156,7 +156,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:id="@+id/txtadr"
                 android:layout_margin="3dp"
                 android:textColor="@color/black"
                 android:layout_gravity="center_vertical"

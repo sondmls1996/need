@@ -206,6 +206,7 @@ public class More extends Fragment implements View.OnClickListener {
                     String fone = jo.getString("fone");
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
+                    String birth = jo.getString("birthday");
                     if(jo.has("avatar")){
                         String ava = jo.getString("avatar");
                         Log.d("AVV",ava);
@@ -220,7 +221,7 @@ public class More extends Fragment implements View.OnClickListener {
                     }
 
 
-                    db.updateinfo(fullname, email, address, id, coin);
+                    db.updateinfo(fullname, email, address, id, coin,birth);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
