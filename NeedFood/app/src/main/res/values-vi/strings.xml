@@ -61,6 +61,8 @@
     <string name="promo">Mã khuyến mại / Coins</string>
     <string name="phonenum">Số điện thoại</string>
     <string name="phonenum2">Số điện thoại:\u0020</string>
+    <string name="tax2">Thuế:</string>
+    <string name="shipmn2">Tiền ship:</string>
     <string name="concode">Mã xác nhận</string>
     <string name="next">Tiếp theo</string>
     <string name="vericode">Mã xác nhận đã được gửi đến email của bạn</string>
@@ -115,6 +117,9 @@
     <string name="ok">Đồng ý</string>
     <string name="action_settings">Cài đặt</string>
 
+
+
+
     <string name="linkselling">http://needfood.webmantan.com/getProductSellingOutAPI</string>
     <string name="linkgetcoin">http://needfood.webmantan.com/getInfoUserAPI</string>
     <string name="linktranf">http://needfood.webmantan.com/changeCoinAPI</string>
@@ -125,6 +130,7 @@
     <string name="linkbest">http://needfood.webmantan.com/getProductBestAPI</string>
     <string name="linknew">http://needfood.webmantan.com/getProductNewAPI</string>
     <string name="linkshare">http://needfood.webmantan.com/saveShareHotDealAPI</string>
+    <string name="linkgetShipper">http://needfood.webmantan.com/checkInfoShiperAPI</string>
     <string name="linksavecmpr">http://needfood.webmantan.com/saveCommentProductAPI</string>
     <string name="linkgetcmpr">http://needfood.webmantan.com/getCommentProductAPI</string>
     <string name="linkvote">http://needfood.webmantan.com/updateVoteProductAPI</string>

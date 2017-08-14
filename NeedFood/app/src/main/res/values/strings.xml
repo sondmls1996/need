@@ -48,6 +48,7 @@
     <string name="cancel">Cancel</string>
     <string name="oldp">Old password</string>
     <string name="shipmn">Money ship</string>
+    <string name="shipmn2">Money ship:</string>
     <string name="newp">New password</string>
     <string name="conpass">Confirm password</string>
     <string name="comment">Comment</string>
@@ -92,6 +93,7 @@
     <string name="emailwr">Email invalidate</string>
     <string name="order">Order</string>
     <string name="name">Name:\u0020</string>
+    <string name="tax2">Tax:</string>
     <string name="tax">Tax</string>
     <string name="phonenum2">Phone:\u0020</string>
     <string name="wait">Waiting...</string>
@@ -130,7 +132,11 @@
     <string name="linknew">http://needfood.webmantan.com/getProductNewAPI</string>
     <string name="linkprdde">http://needfood.webmantan.com/getProductAPI</string>
     <string name="linkgetnum">http://needfood.webmantan.com/getNumberShareAPI</string>
+
+    <string name="linkgetShipper">http://needfood.webmantan.com/checkInfoShiperAPI</string>
+
     <string name="linkgetnumberbuy">http://needfood.webmantan.com/getNumberOrderDoneAPI</string>
+
     <string name="linkmn">http://needfood.webmantan.com/getTypeMoneyAPI</string>
     <string name="linkprdsell">http://needfood.webmantan.com/getProductSellerAPI</string>
     <string name="linklogout">http://needfood.webmantan.com/checkLogoutUseronlAPI</string>

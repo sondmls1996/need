@@ -1,9 +1,10 @@
 package com.needfood.kh.More;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,14 +12,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,8 +47,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,14 +67,20 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
     boolean check = false;
     int RESULT_LOAD_IMAGE = 1;
     static byte[] b;
+    private int mYear, mMonth, mDay;
     String imageEncoded;
     String ava;
+    static final int DATE_DIALOG_ID = 0;
     String sex, birthday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_contanct);
+        Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
         ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +137,14 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         phone_id = (EditText) findViewById(R.id.fone_id);
         sex_id = (EditText) findViewById(R.id.sex_id);
         birt_id = (EditText) findViewById(R.id.birt_id);
-
+        birt_id.setInputType(InputType.TYPE_NULL);
+        birt_id.requestFocus();
+        birt_id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(DATE_DIALOG_ID);
+            }
+        });
         pro = (TextView) findViewById(proper);
         change = (TextView) findViewById(R.id.change);
         save = (TextView) findViewById(R.id.save);
@@ -197,6 +211,11 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                 tvName.setEnabled(true);
                 email_id.setEnabled(true);
                 addr.setEnabled(true);
+                if(birt_id.getText().toString().equals("")){
+                    birt_id.setEnabled(true);
+                }else{
+                    birt_id.setEnabled(false);
+                }
                 break;
             case R.id.save:
 
@@ -238,7 +257,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             map.put("address", addresss);
             map.put("avatar", "");
             map.put("sex", sex);
-            map.put("birthday", birthday);
+            map.put("birthday", birt_id.getText().toString());
             Response.Listener<String> response = new Response.Listener<String>() {
 
                 @Override
@@ -249,11 +268,12 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                         String code = jo.getString("code");
                         Log.d("ABBBB", response);
                         if (code.equals("0")) {
-                            db.updateinfo(namee, emaill, addresss, id, "");
+                            db.updateinfo(namee, emaill, addresss, id, "",birt_id.getText().toString());
                             progressDialog.dismiss();
                             tvName.setEnabled(false);
                             email_id.setEnabled(false);
                             addr.setEnabled(false);
+                            birt_id.setEnabled(false);
                             Intent intent = getIntent();
                             finish();
                             startActivity(intent);
@@ -296,14 +316,14 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             map.put("address", addresss);
             map.put("avatar", imageEncoded);
             map.put("sex", sex);
-            map.put("birthday", birthday);
+            map.put("birthday", birt_id.getText().toString());
             Response.Listener<String> response = new Response.Listener<String>() {
 
                 @Override
                 public void onResponse(String response) {
                     try {
 
-                        db.updateinfo(namee, emaill, addresss, id, "");
+                        db.updateinfo(namee, emaill, addresss, id, "",birt_id.getText().toString());
                         JSONObject jo = new JSONObject(response);
                         String code = jo.getString("code");
                         if (code.equals("0")) {
@@ -409,7 +429,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             map.put("address", addresss);
             map.put("avatar", "");
             map.put("sex", sex);
-            map.put("birthday", birthday);
+            map.put("birthday", birt_id.getText().toString());
             Response.Listener<String> response = new Response.Listener<String>() {
 
                 @Override
@@ -420,7 +440,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                         String code = jo.getString("code");
                         Log.d("ABBBB1", response);
                         if (code.equals("0")) {
-                            db.updateinfo(namee, emaill, addresss, id, "");
+                            db.updateinfo(namee, emaill, addresss, id, "",birt_id.getText().toString());
                             progressDialog.dismiss();
                             tvName.setEnabled(false);
                             email_id.setEnabled(false);
@@ -488,7 +508,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
 
 
                     pro.setText(coin + " coins");
-                    db.updateinfo(fullname, email, address, id, coin);
+                    db.updateinfo(fullname, email, address, id, coin,birt_id.getText().toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -558,5 +578,30 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_DIALOG_ID:
+                return new DatePickerDialog(this,
+                        mDateSetListener,
+                        mYear, mMonth, mDay);
+
+        }
+
+        return null;
+
+    }
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            mYear = year;
+            mMonth = monthOfYear;
+            mDay = dayOfMonth;
+            birt_id.setText(new StringBuilder().append(mDay).append("/").append(mMonth + 1).append("/").append(mYear));
+
+        }
+
+    };
 
 }

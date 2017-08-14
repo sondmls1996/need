@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.media.Image;
 import android.util.Log;
 
 import com.needfood.kh.Constructor.InfoConstructor;
@@ -295,14 +294,14 @@ public class DataHandle extends SQLiteOpenHelper {
         return contactList;
     }
 
-    public boolean updateinfo(String name, String email, String addr, String id, String coin) {
+    public boolean updateinfo(String name, String email, String addr, String id, String coin,String birth) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(FULLNAME, name);
         values.put(EMAIL, email);
         values.put(ADDRESS, addr);
         values.put(COIN, coin);
-
+        values.put(BIRTHDAY, birth);
         db.update(INFO, values, IDINFO + " = ?", new String[]{id});
         return true;
     }

@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
     Session ses;
     EditText edus, edpass;
     DataHandle db;
-    String fullname, idfb, email = "", fone = "", adr = "";
+    String fullname, idfb, email = "", fone = "", adr = "",sex;
     String dvtoken;
 
     @Override
@@ -163,6 +163,8 @@ public class Login extends AppCompatActivity {
                                 try {
                                     fullname = json.getString("name");
                                     idfb = json.getString("id");
+                                    sex = json.getString("gender");
+                                    Log.d("SEX",sex);
                                     if (json.has("location")) {
                                         JSONObject jw = json.getJSONObject("location");
                                         adr = jw.getString("name");
@@ -178,7 +180,7 @@ public class Login extends AppCompatActivity {
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,location");
+                parameters.putString("fields", "id,name,email,gender,location,birthday");
                 request.setParameters(parameters);
                 request.executeAsync();
             }
@@ -204,6 +206,14 @@ public class Login extends AppCompatActivity {
         map.put("email", email);
         map.put("fone", fone);
         map.put("address", adr);
+        if(sex.equals("male")){
+            map.put("sex","man");
+        }else if(sex.equals("female")){
+            map.put("sex","woman");
+        }else{
+            map.put("sex","flexible");
+        }
+        map.put("birthday", "");
         map.put("avatar","https://graph.facebook.com/" + idfb + "/picture?type=large");
         Response.Listener<String> response = new Response.Listener<String>() {
 
@@ -221,9 +231,17 @@ public class Login extends AppCompatActivity {
                     String id = js.getString("id");
                     String accesstoken = js.getString("accessToken");
 //                                    String pass = jo.getString("pass");
+                    String address = js.getString("address");
+                    String fullname = js.getString("fullName");
+                    String email = js.getString("email");
+                    String fone = js.getString("fone");
 
+                    String coin = js.getString("coin");
+                    String birthday = js.getString("birthday");
+                    String sex = js.getString("sex");
                     postToken(accesstoken);
-                    addInfo(accesstoken, id, "1");
+                    db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, accesstoken, coin, "1",birthday,sex));
+                   // addInfo(accesstoken, id, "1");
                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                     startActivity(it);
                     finish();
@@ -253,14 +271,15 @@ public class Login extends AppCompatActivity {
                     Log.d("LOGA", response);
                     JSONObject js = new JSONObject(response);
                     JSONObject jo = js.getJSONObject("Useronl");
+                    String address = jo.getString("address");
                     String fullname = jo.getString("fullName");
                     String email = jo.getString("email");
                     String fone = jo.getString("fone");
-                    String address = jo.getString("address");
+
                     String coin = jo.getString("coin");
                     String birthday = jo.getString("birthday");
                     String sex = jo.getString("sex");
-                    Log.d("ABCLOG", token + "-" + id + "-" + fullname + "-" + email + "-" + fone + "-" + address + "-" + coin);
+                  //  Log.d("ABCLOG", token + "-" + id + "-" + fullname + "-" + email + "-" + fone + "-" + address + "-" + coin);
                     db.addInfo(new InfoConstructor(fullname, email, fone, "", address, id, token, coin, type,birthday,sex));
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -36,7 +36,7 @@ import java.util.Locale;
 public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallback {
     String js,mn;
     RecyclerView rchis;
-    TextView txtgia,txtdv,texttime,textship;
+    TextView txtgia,txtdv,texttime,textship,txttax,txtadr;
     ArrayList<PreConstructor> arr;
     LinearLayout shiplo;
     GoogleMap mMap;
@@ -69,7 +69,9 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
         txtgia=(TextView) findViewById(R.id.mntong);
         txtdv=(TextView) findViewById(R.id.dvtong);
         texttime = (TextView)findViewById(R.id.retime);
+        txtadr = (TextView)findViewById(R.id.txtadr);
         textship = (TextView)findViewById(R.id.shipmn);
+        txttax = (TextView)findViewById(R.id.taxx);
         shiplo = (LinearLayout)findViewById(R.id.shiplo);
         shiplo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +92,7 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
             JSONArray list = jo.getJSONArray("listProduct");
             JSONObject ino = jo.getJSONObject("infoOrder");
             int total = ino.getInt("totalMoneyProduct");
+            JSONObject incus = jo.getJSONObject("infoCustomer");
             String tax = ino.getString("percentTaxAll");
             String times = ino.getString("timeShiper");
             String mns = ino.getString("moneyShip");
@@ -102,10 +105,11 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
                 arr.add(new PreConstructor(idx.getString("title"), idx.getString("quantity"), idx.getString("money"), mn));
             }
             adapter.notifyDataSetChanged();
-
+            txtadr.setText(incus.getString("address"));
             txtgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(total)+"");
 
-            txtdv.setText(mn +" ("+tax+"%"+" VAT"+")");
+        //    txtdv.setText(mn +" ("+tax+"%"+" VAT"+")");
+            txttax.setText(tax+"%");
             texttime.setText(times);
             textship.setText(mns+" "+mn);
         } catch (JSONException e) {
