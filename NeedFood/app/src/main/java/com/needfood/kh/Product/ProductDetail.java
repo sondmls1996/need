@@ -51,8 +51,10 @@ import com.needfood.kh.Login.Login;
 import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.StartActivity;
+import com.needfood.kh.SupportClass.ChangeTimestamp;
 import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.GPSTracker;
+import com.needfood.kh.SupportClass.GetCL;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
 import com.needfood.kh.SupportClass.VerticalScrollview;
@@ -64,14 +66,17 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.TimeZone;
 
 import static com.needfood.kh.Adapter.ProductDetail.OftenAdapter.arrcheck;
 
@@ -115,7 +120,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     EditText txt_comment;
     ImageView img_comment;
     Button imgshare;
-
+    long now;
     String comment;
     VerticalScrollview ver;
     ShareLinkContent content;
@@ -127,7 +132,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ShareDialog shareDialog;
 
     String linkfbb, sttsell = "";
-
+    ChangeTimestamp change;
     TextView vote;
     String point;
     TextView nameseller, exp, txtof, txtbrand, txtcomp;
@@ -198,6 +203,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     private void khaibao() {
         db = new DataHandle(this);
+        change = new ChangeTimestamp();
         Intent it = getIntent();
         view1 = (LinearLayout) findViewById(R.id.v1);
         pr1 = (ProgressBar) findViewById(R.id.prg1);
@@ -294,6 +300,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             //  imgshare.setVisibility(View.VISIBLE);
             lnshare.setVisibility(View.VISIBLE);
             getNumberBuy();
+            getTime();
+            addInfo();
             tracker = new GPSTracker(this);
             if (!tracker.canGetLocation()) {
                 tracker.showSettingsAlert();
@@ -1324,11 +1332,18 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             }
 
                         } else if (!birthdayy.equals("")) {
-                            if (birthdayy.equals(birthday)) {
-                                int pridekm = (int) ((pri1 / 100) * percentkm);
-                                int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
-                                String pridekm3 = String.valueOf(pridekm2);
-                                senKM(codekm, percentkm + "", pridekm3);
+                            if (birthdayy.equals("yes")) {
+                                String bir = birthday.substring(0, 5);
+                                String timeee = change.getCurrentDay(now);
+                                if (bir.equals(timeee)) {
+                                    int pridekm = (int) ((pri1 / 100) * percentkm);
+                                    int pridekm2 = Integer.parseInt(String.valueOf(pri1 - pridekm));
+                                    String pridekm3 = String.valueOf(pridekm2);
+                                    senKM(codekm, percentkm + "", pridekm3);
+                                } else {
+                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.nameprr), Toast.LENGTH_SHORT).show();
+                                }
+
                             } else {
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.nameprr), Toast.LENGTH_SHORT).show();
                             }
@@ -1555,4 +1570,57 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
         return dist;
     }
+
+    private void getTime() {
+
+        final String link = getResources().getString(R.string.linktimenow);
+        Response.Listener<String> response = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jo = new JSONObject(response);
+                    now = jo.getLong("0");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        GetCL get = new GetCL(link, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
+    }
+    private void addInfo() {
+        String linkk = getResources().getString(R.string.linkgetinfo);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", access);
+        map.put("idUseronl", idu);
+        Response.Listener<String> response = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d("LOGA", response);
+                    JSONObject js = new JSONObject(response);
+                    JSONObject jo = js.getJSONObject("Useronl");
+                    String fullname = jo.getString("fullName");
+                    String email = jo.getString("email");
+                    String fone = jo.getString("fone");
+                    String address = jo.getString("address");
+                    String coin = jo.getString("coin");
+                    String birthday = jo.getString("birthday");
+                    String sex = jo.getString("sex");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        PostCL post = new PostCL(linkk, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(post);
+
+    }
+
 }
