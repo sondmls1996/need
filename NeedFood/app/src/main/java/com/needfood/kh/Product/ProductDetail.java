@@ -100,7 +100,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Session ses;
     String uadr, tax;
     String typemn;
-    String sexxx, coordinates, numberBuy, headFone, nameman, birthdayy, typedevice;
+    String sexxx, coordinates, numberBuy, headFone, nameman, birthdayy, typedevice,namelower;
     EditText edquan;
     String cata;
     Button deal, bn;
