@@ -77,7 +77,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
 
-                android:text="@string/tax"
+                android:text="@string/tax2"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_weight="3"/>
@@ -125,14 +125,14 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
 
-                android:text="@string/shipmn"
+                android:text="@string/shipmn2"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_weight="3"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:id="@+id/shipmn"
                 android:layout_margin="3dp"
                 android:textColor="@color/black"
                 android:layout_gravity="center_vertical"
@@ -149,14 +149,14 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
 
-                android:text="@string/shipmn"
+                android:text="@string/addr"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_weight="3"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/shipmn"
+
                 android:layout_margin="3dp"
                 android:textColor="@color/black"
                 android:layout_gravity="center_vertical"
