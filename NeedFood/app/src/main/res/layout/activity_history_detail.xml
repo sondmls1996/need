@@ -26,6 +26,23 @@
             android:text="@string/where"
             android:textColor="@color/white" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/shipvote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/red"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/vott"
+            android:textColor="@color/white" />
+    </LinearLayout>
 
     <com.needfood.kh.SupportClass.VerticalScrollview
         android:layout_width="match_parent"
@@ -50,6 +67,10 @@
                 android:layout_height="10dp" />
 
             <include layout="@layout/orif"></include>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <include layout="@layout/voteshiper"></include>
         </LinearLayout>
     </com.needfood.kh.SupportClass.VerticalScrollview>
 
