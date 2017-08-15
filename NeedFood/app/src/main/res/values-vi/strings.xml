@@ -168,6 +168,7 @@
     <string name="linkgetdiscountadmin">http://needfood.webmantan.com/checkDiscountAdminAPI</string>
     <string name="linkupdateViewProductAPI">http://needfood.webmantan.com/updateViewProductAPI</string>
     <string name="linkupdateViewSellerAPI">http://needfood.webmantan.com/updateViewSellerAPI</string>
+    <string name="linkshipper">http://needfood.webmantan.com/checkInfoShiperAPI</string>
 
     <string name="logout">Đăng xuất</string>
     <string name="ssor">Đặt hàng thành công</string>

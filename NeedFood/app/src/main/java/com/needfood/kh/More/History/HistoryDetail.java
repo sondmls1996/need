@@ -7,22 +7,32 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.needfood.kh.Adapter.PreAdapter;
+import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.PreConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
+import com.needfood.kh.SupportClass.PostCL;
+import com.needfood.kh.SupportClass.Session;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,8 +40,10 @@ import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallback {
     String js,mn;
@@ -41,6 +53,8 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
     LinearLayout shiplo;
     GoogleMap mMap;
     View v;
+    List<InfoConstructor> listu;
+    String idprd, idsl, namesl, access, idu, fullname, phone, bar, priceother;
     private View rootView;
     List<ListMN> listmn;
     Context context;
@@ -48,6 +62,8 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
     SupportMapFragment mapFragment;
     private android.support.v4.app.FragmentManager fragmentManager;
     PreAdapter adapter;
+    String idshipper;
+    Session ses;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +80,7 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.orif));
         db = new DataHandle(this);
+        ses = new Session(this);
        // v = (View) LayoutInflater.from(this).inflate(R.layout.maplayout, null);
 
         txtgia=(TextView) findViewById(R.id.mntong);
@@ -79,6 +96,14 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
                 dialogShip();
             }
         });
+        if(ses.loggedin()){
+            listu = db.getAllInfor();
+            access = listu.get(listu.size() - 1).getAccesstoken();
+            idu = listu.get(listu.size() - 1).getId();
+            fullname = listu.get(listu.size() - 1).getFullname();
+            phone = listu.get(listu.size() - 1).getFone();
+        }
+
         Intent it = getIntent();
         js = it.getStringExtra("js");
         rchis = (RecyclerView)findViewById(R.id.lvpre);
@@ -86,13 +111,15 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
         adapter = new PreAdapter(getApplicationContext(),arr);
         rchis.setAdapter(adapter);
         rchis.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
+        Log.d("IDSHIPPER",js);
         try {
             JSONObject jo = new JSONObject(js);
             JSONArray list = jo.getJSONArray("listProduct");
             JSONObject ino = jo.getJSONObject("infoOrder");
             int total = ino.getInt("totalMoneyProduct");
+
             JSONObject incus = jo.getJSONObject("infoCustomer");
+            idshipper = ino.getString("idShiper");
             String tax = ino.getString("percentTaxAll");
             String times = ino.getString("timeShiper");
             String mns = ino.getString("moneyShip");
@@ -116,6 +143,7 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
 
             e.printStackTrace();
         }
+        getLocalShipper();
     }
 
     private void dialogShip() {
@@ -141,6 +169,24 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+    }
+    private void getLocalShipper() {
+        String linkk = getResources().getString(R.string.linkshipper);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", access);
+        map.put("idShiper", idshipper);
+        Response.Listener<String> response = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d("LOGA", response);
+
+            }
+        };
+        PostCL post = new PostCL(linkk, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(post);
+
     }
 
 }
