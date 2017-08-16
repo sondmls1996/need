@@ -43,8 +43,9 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:divider="?android:attr/listDivider"
+            android:showDividers="middle"
             android:orientation="vertical"
-            android:showDividers="middle">
+>
 
             <LinearLayout
                 android:id="@+id/lntran"
