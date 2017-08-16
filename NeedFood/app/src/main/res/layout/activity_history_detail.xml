@@ -5,50 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.needfood.kh.More.History.HistoryDetail">
+
     <include
-        layout="@layout/toolbar"
         android:id="@+id/th"
-        ></include>
+        layout="@layout/toolbar"></include>
+
     <LinearLayout
+        android:id="@+id/shiplo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:id="@+id/shiplo"
-        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
         android:background="@color/red"
-        android:layout_alignParentBottom="true">
+        android:gravity="center"
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:layout_margin="10dp"
-            android:text="@string/where"/>
+            android:text="@string/where"
+            android:textColor="@color/white" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/shipvote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/red"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/vott"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
     <com.needfood.kh.SupportClass.VerticalScrollview
         android:layout_width="match_parent"
-android:padding="10dp"
         android:layout_height="match_parent"
-        android:layout_below="@+id/th"
         android:layout_above="@id/shiplo"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/th"
+        android:padding="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
 
-            <include
-                layout="@layout/info"
-                ></include>
-            <include
-                layout="@layout/deliif"
-                ></include>
+            <include layout="@layout/info"></include>
+
+            <include layout="@layout/deliif"></include>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="10dp"/>
-            <include
-                layout="@layout/orif"
-                ></include>
+                android:layout_height="10dp" />
+
+            <include layout="@layout/orif"></include>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <include layout="@layout/voteshiper"></include>
         </LinearLayout>
     </com.needfood.kh.SupportClass.VerticalScrollview>
 

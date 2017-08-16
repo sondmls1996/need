@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class TransferHistory extends AppCompatActivity {
     ListView lv;
-    int page=1;
+    int page = 1;
     DataHandle db;
     List<InfoConstructor> list;
     String token;
@@ -46,20 +46,20 @@ public class TransferHistory extends AppCompatActivity {
     ChangeTimestamp chan;
     List<TranfConstructor> arr;
     TranfHisAdapter adapter;
-    TextView nop,tit;
+    TextView nop, tit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_history);
-        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -68,33 +68,35 @@ public class TransferHistory extends AppCompatActivity {
         tit.setText(getResources().getString(R.string.histran));
         db = new DataHandle(this);
         chan = new ChangeTimestamp();
+        arr = new ArrayList<>();
         lv = (ListView) findViewById(R.id.lvtran);
         list = db.getAllInfor();
         for (InfoConstructor ic : list) {
             token = ic.getAccesstoken();
+
         }
-        arr = new ArrayList<>();
+
         adapter = new TranfHisAdapter(getApplicationContext(), arr);
         lv.setAdapter(adapter);
-        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
-            int firstVisibleItem, visibleItemCount, totalItemCount;
-
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                final int lastItem = firstVisibleItem + visibleItemCount;
-                if (lastItem == totalItemCount && scrollState == SCROLL_STATE_IDLE) {
-                    page++;
-                    getHisTran(page);
-                }
-            }
-
-            public void onScroll(AbsListView view, int firstVisibleItemm, int visibleItemCountt, int totalItemCountt) {
-                firstVisibleItem = firstVisibleItemm;
-                visibleItemCount = visibleItemCountt;
-                totalItemCount = totalItemCountt;
-            }
-        });
-
         getHisTran(page);
+//        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+//            int firstVisibleItem, visibleItemCount, totalItemCount;
+//
+//            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//                final int lastItem = firstVisibleItem + visibleItemCount;
+//                if (lastItem == totalItemCount && scrollState == SCROLL_STATE_IDLE) {
+//                    page++;
+//                    getHisTran(page);
+//                }
+//            }
+//
+//            public void onScroll(AbsListView view, int firstVisibleItemm, int visibleItemCountt, int totalItemCountt) {
+//                firstVisibleItem = firstVisibleItemm;
+//                visibleItemCount = visibleItemCountt;
+//                totalItemCount = totalItemCountt;
+//            }
+//        });
+
 
     }
 
@@ -105,14 +107,14 @@ public class TransferHistory extends AppCompatActivity {
         Map<String, String> map = new HashMap<String, String>();
         map.put("accessToken", token);
         map.put("page", page + "");
+        Log.d("IMGGA", token+page);
         Response.Listener<String> response = new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(),"Demooo",Toast.LENGTH_SHORT).show();
                 try {
                     Log.d("IMGGA", response);
-                    progressDialog.dismiss();
-
                     JSONArray jo = new JSONArray(response);
                     if (jo.length() == 0) {
                         if (arr.size() == 0) {
@@ -121,7 +123,7 @@ public class TransferHistory extends AppCompatActivity {
                             nop.setVisibility(View.GONE);
                         }
                     } else {
-                         nop.setVisibility(View.GONE);
+                        nop.setVisibility(View.GONE);
                         Log.d("id", jo.length() + "");
                         for (int i = 0; i < jo.length(); i++) {
                             JSONObject js = jo.getJSONObject(i);
@@ -134,6 +136,7 @@ public class TransferHistory extends AppCompatActivity {
                             String timedate = chan.getDateCurrentTimeZone(time);
                             arr.add(new TranfConstructor(id, mess, timedate, coin, idu, ""));
                         }
+                        progressDialog.dismiss();
                         adapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {

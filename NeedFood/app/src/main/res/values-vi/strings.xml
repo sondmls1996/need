@@ -168,6 +168,9 @@
     <string name="linkgetdiscountadmin">http://needfood.webmantan.com/checkDiscountAdminAPI</string>
     <string name="linkupdateViewProductAPI">http://needfood.webmantan.com/updateViewProductAPI</string>
     <string name="linkupdateViewSellerAPI">http://needfood.webmantan.com/updateViewSellerAPI</string>
+    <string name="linkshipper">http://needfood.webmantan.com/checkInfoShiperAPI</string>
+    <string name="linkvotshiper">http://needfood.webmantan.com/updateVoteShiperAPI</string>
+    <string name="linkvoteseller">http://needfood.webmantan.com/updateVoteSellerAPI</string>
 
     <string name="logout">Đăng xuất</string>
     <string name="ssor">Đặt hàng thành công</string>
@@ -265,4 +268,8 @@
     <string name="areapr">Mã khuyến mãi không được áp dụng do bạn nằm ngoài khu vực khuyến mãi</string>
     <string name="phonepr">Mã khuyến mãi không được áp dụng cho số điện thoại này</string>
     <string name="nameprr">Mã khuyến mãi không được áp dụng cho tài khoản này</string>
+    <string name="votship">Bỏ phiếu cho người giao hàng</string>
+    <string name="votpro">Bỏ phiếu cho sản phẩm</string>
+    <string name="vott">Bỏ phiếu</string>
+
 </resources>

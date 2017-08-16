@@ -169,7 +169,9 @@
     <string name="linkgetdiscountadmin">http://needfood.webmantan.com/checkDiscountAdminAPI</string>
     <string name="linkupdateViewProductAPI">http://needfood.webmantan.com/updateViewProductAPI</string>
     <string name="linkupdateViewSellerAPI">http://needfood.webmantan.com/updateViewSellerAPI</string>
-
+    <string name="linkshipper">http://needfood.webmantan.com/checkInfoShiperAPI</string>
+    <string name="linkvotshiper">http://needfood.webmantan.com/updateVoteShiperAPI</string>
+    <string name="linkvoteseller">http://needfood.webmantan.com/updateVoteSellerAPI</string>
     <string name="logout">Logout</string>
     <string name="tiengviet">Tiếng Việt</string>
     <string name="tienganh">English</string>
@@ -191,6 +193,7 @@
     <string name="timeship">Time receive: \u0020</string>
     <string name="buyer">Buyer: \u0020</string>
     <string name="where">Shipper location</string>
+    <string name="vott">Vote</string>
     <string name="addr">Address: \u0020</string>
 
     <string name="F_REF">com.needfood.kh.fcm_re</string>
@@ -264,4 +267,7 @@
     <string name="areapr">Promotion code is not applied because you are outside the promotion area</string>
     <string name="phonepr">Promotional codes are not applied to this number</string>
     <string name="nameprr">Promotional codes are not applied to this account</string>
+
+    <string name="votship">Vote for Shipper</string>
+    <string name="votpro">Vote for Product</string>
 </resources>
