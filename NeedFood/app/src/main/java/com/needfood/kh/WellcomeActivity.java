@@ -59,9 +59,7 @@ public class WellcomeActivity extends AppCompatActivity {
         if (conn == false) {
             startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
         }
-        if (!tracker.canGetLocation()) {
-            tracker.showSettingsAlert();
-        }
+
     }
 
     private void checkDB() {

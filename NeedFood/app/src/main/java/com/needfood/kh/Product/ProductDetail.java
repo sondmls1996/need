@@ -302,13 +302,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             getNumberBuy();
             getTime();
             addInfo();
-            tracker = new GPSTracker(this);
-            if (!tracker.canGetLocation()) {
-                tracker.showSettingsAlert();
-            } else {
-                latitude = tracker.getLatitude();
-                longitude = tracker.getLongitude();
-            }
+
         }
 
         tvco = (TextView) findViewById(R.id.tvco);
@@ -1224,10 +1218,18 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     }
 
     private void dialogPro() {
+
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.promotiondialog);
         dialog.show();
+        tracker = new GPSTracker(this);
+        if (!tracker.canGetLocation()) {
+            tracker.showSettingsAlert();
+        } else {
+            latitude = tracker.getLatitude();
+            longitude = tracker.getLongitude();
+        }
         final TextView txt = (TextView) dialog.findViewById(R.id.tx_km);
         final EditText edpro = (EditText) dialog.findViewById(R.id.promotion);
         final LinearLayout lnn = (LinearLayout) dialog.findViewById(R.id.lnn);
