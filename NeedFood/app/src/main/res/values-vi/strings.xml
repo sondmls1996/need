@@ -268,8 +268,8 @@
     <string name="areapr">Mã khuyến mãi không được áp dụng do bạn nằm ngoài khu vực khuyến mãi</string>
     <string name="phonepr">Mã khuyến mãi không được áp dụng cho số điện thoại này</string>
     <string name="nameprr">Mã khuyến mãi không được áp dụng cho tài khoản này</string>
-    <string name="votship">Bỏ phiếu cho người giao hàng</string>
-    <string name="votpro">Bỏ phiếu cho sản phẩm</string>
+    <string name="votship">Đánh giá cho người giao hàng</string>
+    <string name="votpro">Đánh giá chất lượng cửa hàng</string>
     <string name="vott">Bỏ phiếu</string>
-
+    <string name="ordersuc">Bạn đã đặt hàng thành công. Xin cảm ơn!</string>
 </resources>

@@ -133,7 +133,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     String linkfbb, sttsell = "";
     ChangeTimestamp change;
-    TextView vote;
+    TextView vote,inven;
     String point;
     TextView nameseller, exp, txtof, txtbrand, txtcomp;
     LinearLayout lnpro;
@@ -141,6 +141,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String sex, birthday;
     double percentkm;
     GPSTracker tracker;
+    String quantity;
     double latitude, longitude, lat, lo;
 
     @Override
@@ -255,7 +256,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
 
-
+        inven = (TextView) findViewById(R.id.txt_inven);
         htu = (LinearLayout) findViewById(R.id.htu);
         htu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -767,14 +768,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     } else {
                         tvnameprd.setText(title.substring(0, 30) + "...");
                     }
-
+                    quantity = prd.getString("quantity");
                     tym = prd.getString("typeMoneyId");
                     String dvs = prd.getString("nameUnit");
                     titl = prd.getString("title");
                     namesl = prd.getString("nameSeller");
                     prdcode = prd.getString("code");
                     bar = prd.getString("barcode");
-
+                    inven.setText(quantity);
                     if (sttsell.equals("true")) {
                         JSONObject selling = prd.getJSONObject("sellingOut");
                         priceprd = selling.getString("price");
