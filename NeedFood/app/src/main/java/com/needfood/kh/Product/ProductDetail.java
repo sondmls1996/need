@@ -383,7 +383,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
         rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
         rctp.setLayoutManager(mStaggeredVerticalLayoutManager4);
+        if(!hot.isEmpty()){
+            tvpr.setVisibility(View.GONE);
+        }else{
 
+        }
     }
 
 
