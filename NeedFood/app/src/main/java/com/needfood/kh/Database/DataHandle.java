@@ -75,17 +75,19 @@ public class DataHandle extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE_CART = "CREATE TABLE " + TABLEPRD + "(" +
-                IDPRD + " TEXT NOT NULL," +
-                TITLEPRD + " TEXT," +
-                PRICE + " TEXT," +
                 QUAN + " TEXT," +
+                PRICE + " TEXT," +
                 TICKKM + " TEXT," +
                 TICKKMPER + " TEXT," +
                 TICKKMMN + " TEXT," +
                 BARCODE + " TEXT," +
                 CODE + " TEXT," +
-                TYPEMN + " TEXT," +
-                NOTE + " TEXT" +
+                TITLEPRD + " TEXT," +
+                NOTE + " TEXT," +
+                IDPRD + " TEXT NOT NULL," +
+
+                TYPEMN + " TEXT" +
+
                 ");";
         String CREATE_TABLE_USER =
                 "CREATE TABLE " + MONEYTB + "(" +

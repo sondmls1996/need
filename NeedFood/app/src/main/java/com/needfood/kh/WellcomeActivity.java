@@ -158,11 +158,10 @@ public class WellcomeActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
-//                    if (!tracker.canGetLocation()) {
-//                        tracker.showSettingsAlert();
-//                    } else {
-//                        checkDB();
-//                    }
+                    if (!tracker.canGetLocation()) {
+                        tracker.showSettingsAlert();
+                    }
+                    checkDB();
                 } else {
                     // Permission Denied
 //                    Toast.makeText(WellcomeActivity.this, "Some Permission is Denied", Toast.LENGTH_SHORT)
