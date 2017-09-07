@@ -122,53 +122,6 @@ public class QRCamera extends AppCompatActivity implements QRCodeReaderView.OnQR
         it.putExtra("idprd",idsp);
         startActivity(it);
         finish();
-//        final String link = getResources().getString(R.string.linkprdde);
-//        Map<String, String> map = new HashMap<>();
-//        map.put("idProduct", idsp);
-//        Response.Listener<String> response = new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Log.d("FFFFUU", response);
-//                if (response.length() > 1) {
-//
-//                } else {
-//                    txtcode.setVisibility(View.VISIBLE);
-//                    view1.setVisibility(View.GONE);
-//                    txtcode.setText(getResources().getString(R.string.noprd));
-//                }
-//                try {
-//
-//                    view1.setVisibility(View.GONE);
-//                    txtcode.setVisibility(View.GONE);
-//                    pr1.setVisibility(View.GONE);
-//                    rl.setVisibility(View.GONE);
-//
-//                    JSONObject jo = new JSONObject(response);
-//
-//                    //    String code = jo.getString("code");
-//                    if (response.length() > 1) {
-//                        qrCodeReaderView.stopCamera();
-//                        Intent it = new Intent(getApplicationContext(), ProductDetail.class);
-//                        it.putExtra("idprd", idsp);
-//                        startActivity(it);
-//                        finish();
-//
-//                    } else {
-//                        txtcode.setVisibility(View.VISIBLE);
-//                        view1.setVisibility(View.GONE);
-//                        txtcode.setText(getResources().getString(R.string.noprd));
-//                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    txtcode.setVisibility(View.VISIBLE);
-//                    view1.setVisibility(View.GONE);
-//                    txtcode.setText(getResources().getString(R.string.noprd));
-//                }
-//            }
-//        };
-//        PostCL get = new PostCL(link, map, response);
-//        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-//        que.add(get);
+
     }
 }

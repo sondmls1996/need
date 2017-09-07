@@ -6,17 +6,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -39,6 +41,7 @@ import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.maps.model.LatLng;
+import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
 import com.needfood.kh.Adapter.ProductDetail.CommentAdapter;
 import com.needfood.kh.Adapter.ProductDetail.OftenAdapter;
 import com.needfood.kh.Brand.BrandDetail;
@@ -49,7 +52,6 @@ import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Login.Login;
 import com.needfood.kh.R;
-import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.ChangeTimestamp;
 import com.needfood.kh.SupportClass.DialogUtils;
@@ -66,19 +68,13 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.TimeZone;
-
-import static com.needfood.kh.Adapter.ProductDetail.OftenAdapter.arrcheck;
 
 public class ProductDetail extends AppCompatActivity implements View.OnClickListener {
     RecyclerView rc, rcof, rcof2, rcquan, rctp;
@@ -113,6 +109,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     OftenAdapter quanadapter;
     LinearLayout lnby, htu, lnshare, lnmyshare, lnprd;
     List<ListMN> list;
+    List<CheckConstructor> listcheck;
     String text1, text2, time1, time2, priceDiscount, discountCode;
     List<InfoConstructor> listu;
     DataHandle db;
@@ -149,6 +146,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_product_detail);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarr);
+        setSupportActionBar(toolbar);
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
         ver = (VerticalScrollview) findViewById(R.id.vers);
@@ -172,13 +171,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onPause() {
         super.onPause();
-        stopService(new Intent(ProductDetail.this, BubbleService.class));
+     //   stopService(new Intent(ProductDetail.this, BubbleService.class));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(new Intent(ProductDetail.this, BubbleService.class));
+   //     stopService(new Intent(ProductDetail.this, BubbleService.class));
     }
 
     @Override
@@ -271,6 +270,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         });
         // likeView.callOnClick();
         edquan = (EditText) findViewById(R.id.edquan);
+        edquan.setText("1");
         ses = new Session(this);
 
         deal = (Button) findViewById(R.id.btndeal);
@@ -465,7 +465,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             String quan;
             int mnship = Collections.max(listship);
             if (edquan.equals("")) {
-                quan = "1";
+                quan = "0";
             } else {
                 quan = edquan.getText().toString();
             }
@@ -491,40 +491,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 e.printStackTrace();
             }
 
-            if (arrcheck.size() > 0) {
-                for (int i = 0; i < arrcheck.size(); i++) {
 
-                    JSONObject jo = new JSONObject();
-
-                    try {
-                        jo.put("quantity", arrcheck.get(i).getQuanli() + "");
-                        jo.put("price", arrcheck.get(i).getPrice() + "");
-                        jo.put("tickKM", arrcheck.get(i).getTickkm() + "");
-                        jo.put("tickKM_percent", arrcheck.get(i).getTickkm2() + "");
-                        jo.put("tickKM_money", arrcheck.get(i).getTickkm3() + "");
-                        jo.put("barcode", arrcheck.get(i).getBarcode() + "");
-                        jo.put("code", arrcheck.get(i).getCode() + "");
-                        jo.put("title", arrcheck.get(i).getTitle() + "");
-                        jo.put("money", arrcheck.get(i).getMoney() + "");
-                        jo.put("note", arrcheck.get(i).getNote() + "");
-                        jo.put("id", arrcheck.get(i).getId() + "");
-                        jo.put("typeMoneyId", arrcheck.get(i).getTypeid());
-                        jsonArray.put(jo);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
 
             Log.d("HAJAR", jsonArray.toString());
 
             int money = 0;
 
-            if (arrcheck.size() > 0) {
-                for (int i = 0; i < arrcheck.size(); i++) {
-                    money = Integer.parseInt(arrcheck.get(i).getMoney()) + money;
-                }
-            }
+
 
             money = money + money1;
 
@@ -558,6 +531,25 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_brand_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.report) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private void senKM2(String prices, String ship, String stt, int ns) {
 
@@ -761,7 +753,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             //   tvphi.setText(numshare + "");
                         }
 
-
                     }
                     Log.d("SHARENUM", numshare + "");
                     howto = new StringBuilder("");
@@ -773,7 +764,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     } else {
                         tvnameprd.setText(title.substring(0, 30) + "...");
                     }
-
                     tym = prd.getString("typeMoneyId");
                     String dvs = prd.getString("nameUnit");
                     titl = prd.getString("title");
@@ -789,10 +779,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         priceprd = prd.getString("price");
                         priceother = prd.getString("priceOther");
                     }
+//                    db.addPDR(new CheckConstructor("1",
+//                            ip.getPrize(),"false","","",ip.getBar(),ip.getCode(),
+//                            ip.getName(),
+//                            ip.getNote(),ip.getId(),ip.getTymn()));
 
-                    Intent i = new Intent(getApplicationContext(), BubbleService.class);
-                    i.putExtra("MN", priceprd);
-                    startService(i);
+//                    Intent i = new Intent(getApplicationContext(), BubbleService.class);
+//                    i.putExtra("MN", priceprd);
+//                    startService(i);
 
                     namesel.setText(namesl);
                     idsl = prd.getString("idSeller");
@@ -959,7 +953,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
-    public void getPrdCompo() {
+        public void getPrdCompo() {
         final String link = getResources().getString(R.string.linkprcom);
 
         Map<String, String> map = new HashMap<>();

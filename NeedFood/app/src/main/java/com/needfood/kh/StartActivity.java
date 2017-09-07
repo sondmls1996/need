@@ -1,6 +1,5 @@
 package com.needfood.kh;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,10 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.content.res.Configuration;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -54,7 +50,6 @@ import com.needfood.kh.News.TabFragment;
 import com.needfood.kh.Notif.Notif;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.Sugges.SuggessFrag;
-import com.needfood.kh.SupportClass.GetCL;
 import com.needfood.kh.SupportClass.NetworkCheck;
 import com.needfood.kh.SupportClass.PostCL;
 
@@ -110,13 +105,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         } else {
             startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
         }
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (!Settings.canDrawOverlays(StartActivity.this)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + getPackageName()));
-                startActivityForResult(intent, 1234);
-            }
-        }
+
         activity_news = (CoordinatorLayout) findViewById(R.id.activity_news);
         edsearch = (EditText) findViewById(R.id.edsearch);
         edsearch.setInputType(InputType.TYPE_NULL);
