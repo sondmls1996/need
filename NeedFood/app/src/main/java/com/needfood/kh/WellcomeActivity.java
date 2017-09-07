@@ -4,10 +4,9 @@ package com.needfood.kh;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Handler;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 
@@ -110,9 +109,9 @@ public class WellcomeActivity extends AppCompatActivity {
         } else {
             if (!tracker.canGetLocation()) {
                 tracker.showSettingsAlert();
-            } else {
-                checkDB();
             }
+                checkDB();
+
         }
 
 
@@ -159,11 +158,11 @@ public class WellcomeActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
-                    if (!tracker.canGetLocation()) {
-                        tracker.showSettingsAlert();
-                    } else {
-                        checkDB();
-                    }
+//                    if (!tracker.canGetLocation()) {
+//                        tracker.showSettingsAlert();
+//                    } else {
+//                        checkDB();
+//                    }
                 } else {
                     // Permission Denied
 //                    Toast.makeText(WellcomeActivity.this, "Some Permission is Denied", Toast.LENGTH_SHORT)

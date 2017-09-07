@@ -111,6 +111,7 @@
     <string name="qrc">Scan product QR code</string>
     <string name="prddetail">Product detail</string>
     <string name="conor">Confirm the order</string>
+    <string name="edcart">Edit cart</string>
     <string name="note">Note</string>
     <string name="search">Search...</string>
     <string name="tranhis">Transfer history</string>

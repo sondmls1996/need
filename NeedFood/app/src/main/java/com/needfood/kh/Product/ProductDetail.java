@@ -41,12 +41,14 @@ import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.maps.model.LatLng;
+import com.needfood.kh.Adapter.DialogPreAdapter;
 import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
 import com.needfood.kh.Adapter.ProductDetail.CommentAdapter;
 import com.needfood.kh.Adapter.ProductDetail.OftenAdapter;
 import com.needfood.kh.Brand.BrandDetail;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.ListMN;
+import com.needfood.kh.Constructor.PreDialogConstructor;
 import com.needfood.kh.Constructor.ProductDetail.CommentConstructor;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
@@ -76,8 +78,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.android.volley.Request.Method.HEAD;
-
 public class ProductDetail extends AppCompatActivity implements View.OnClickListener {
     RecyclerView rc, rcof, rcof2, rcquan, rctp;
     ArrayList<CommentConstructor> arr;
@@ -88,6 +88,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     int numshare = 0;
     ProgressBar pr1;
     public static String typeDiscount = "0";
+    ArrayList<PreDialogConstructor> precons;
+
     public static String codeDiscount = "";
     String tym;
     private final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
@@ -120,6 +122,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ImageView img_comment;
     Button imgshare;
     long now;
+
     String comment;
     VerticalScrollview ver;
     ShareLinkContent content;
@@ -139,6 +142,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     boolean checkclick = false;
     String sex, birthday;
     double percentkm;
+    Button btnedc;
     GPSTracker tracker;
     String quantity;
     double latitude, longitude, lat, lo;
@@ -155,6 +159,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         txt.setText(getResources().getString(R.string.prddetail));
         ver = (VerticalScrollview) findViewById(R.id.vers);
         listship = new ArrayList<>();
+        btnedc = (Button)findViewById(R.id.bnedit) ;
+        btnedc.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View v) {
+                                          showPreDialog();
+                                      }
+                                  }
+        );
         txtof = (TextView) findViewById(R.id.txtoften);
         txtcomp = (TextView) findViewById(R.id.txtcompo);
         ImageView imgb = (ImageView) findViewById(R.id.immgb);
@@ -168,6 +180,28 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         getProductDT();
 
         //  getCommen();
+    }
+
+    private void showPreDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialogprev);
+        precons = new ArrayList<>();
+        RecyclerView rcp = (RecyclerView)dialog.findViewById(R.id.rcpre);
+        DialogPreAdapter preadap = new DialogPreAdapter(getApplicationContext(),precons);
+        rcp.setAdapter(preadap);
+        LinearLayoutManager lnm = new LinearLayoutManager(getApplicationContext());
+        rcp.setLayoutManager(lnm);
+        listcheck = db.getPrd();
+        for (CheckConstructor lu:listcheck){
+            Log.d("DATAB","quan: "+lu.getQuanli()+"\n"+"price:"+lu.getPrice()+"\n"+"tickKm:"+lu.getTickkm()
+                    +"\n"+"tickKM2:"+lu.getTickkm2()+"\n"+"tickKM3:"+lu.getTickkm3()+"\n"+"Bar:"+lu.getBarcode()
+                    +"\n"+"Code:"+lu.getCode()+"\n"+"Title:"+lu.getTitle()+"\n"+"note:"+lu.getNote()+"\n"+"ID"+lu.getId()
+                    +"\n"+"TYPE"+lu.getTypeid());
+            precons.add(new PreDialogConstructor(lu.getQuanli(),lu.getPrice(),lu.getTitle(),lu.getId(),lu.getTypeid()));
+        }
+        preadap.notifyDataSetChanged();
+        dialog.show();
     }
 
 
@@ -220,7 +254,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         OftenAdapter.arrcheck.clear();
         bn = (Button) findViewById(R.id.bn);
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
-
+        inven = (TextView)findViewById(R.id.txt_inven);
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
         lnmyshare = (LinearLayout) findViewById(R.id.lnmhysh);
         imgshare = (Button) findViewById(R.id.imgshare);
@@ -257,7 +291,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        
+
         htu = (LinearLayout) findViewById(R.id.htu);
         htu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -783,10 +817,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         priceprd = prd.getString("price");
                         priceother = prd.getString("priceOther");
                     }
-//                    db.addPDR(new CheckConstructor("1",
-//                            ip.getPrize(),"false","","",ip.getBar(),ip.getCode(),
-//                            ip.getName(),
-//                            ip.getNote(),ip.getId(),ip.getTymn()));
+                    db.addPDR(new CheckConstructor("1",
+                            priceprd,"false","","",bar,prdcode
+                            ,titl,
+                            "",idprd,tym));
 
 //                    Intent i = new Intent(getApplicationContext(), BubbleService.class);
 //                    i.putExtra("MN", priceprd);

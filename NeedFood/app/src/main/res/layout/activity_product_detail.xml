@@ -152,6 +152,14 @@
                 android:background="@drawable/buttonz"
                 android:text="@string/buynow"
                 android:textColor="@color/white" />
+            <Button
+                android:id="@+id/bnedit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edc"
+                android:text="@string/edcart"
+                android:textColor="@color/white" />
 
 
         </LinearLayout>
