@@ -45,6 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     List<MapConstructor> list;
     String brandName, fullName, fone, address, id, lat, lo;
     String linkbrand, linkname, linkfone, linkadd, linkid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-       // mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
+        // mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(sydney)

@@ -267,7 +267,7 @@
     <string name="areapr">Promotion code is not applied because you are outside the promotion area</string>
     <string name="phonepr">Promotional codes are not applied to this number</string>
     <string name="nameprr">Promotional codes are not applied to this account</string>
-
+    <string name="ordersuc">You order successfully. Thank you!</string>
     <string name="votship">Vote for Shipper</string>
     <string name="votpro">Vote for Product</string>
 </resources>

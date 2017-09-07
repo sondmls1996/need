@@ -29,6 +29,8 @@ import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.PreConstructor;
 import com.needfood.kh.Database.DataHandle;
+import com.needfood.kh.More.History.HistoryDetail;
+import com.needfood.kh.More.History.OrderHistory;
 import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
@@ -50,7 +52,7 @@ import java.util.Map;
 
 public class Preview extends AppCompatActivity implements View.OnClickListener {
 
-    String json, mid, stt, mnship, idsl, acess,tax;
+    String json, mid, stt, mnship, idsl, acess, tax;
 
     RecyclerView lv;
     private SimpleDateFormat dateFormatter, timeformat;
@@ -60,7 +62,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
     List<InfoConstructor> listif;
     Session ses;
 
-    TextView shipm,txtgia,txtdv;
+    TextView shipm, txtgia, txtdv;
     HashMap<String, String> hashMap;
     EditText edname, edadr, edphome, edemail, edghichu, edpickngay, edpickgio;
     Calendar c;
@@ -93,7 +95,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         total = Integer.parseInt(hashMap.get("totalMoneyProduct"));
         mnship = hashMap.get("moneyShip");
         stt = intent.getStringExtra("stt");
-        tax=intent.getStringExtra("tax");
+        tax = intent.getStringExtra("tax");
         if (intent.hasExtra("num")) {
             numshare = intent.getIntExtra("num", 0);
         }
@@ -107,10 +109,10 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         year2 = c.get(Calendar.YEAR);
         hour = c.get(Calendar.HOUR_OF_DAY);
         minitus = c.get(Calendar.MINUTE);
-        txtgia=(TextView) findViewById(R.id.mntong);
-        txtgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(total)+"");
-        txtdv=(TextView) findViewById(R.id.dvtong);
-        txtdv.setText(mid +" ("+tax+"%"+" VAT"+")");
+        txtgia = (TextView) findViewById(R.id.mntong);
+        txtgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(total) + "");
+        txtdv = (TextView) findViewById(R.id.dvtong);
+        txtdv.setText(mid + " (" + tax + "%" + " VAT" + ")");
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = dateFormatter.format(c.getTime());
 
@@ -238,8 +240,8 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
                                 saveShare();
                             }
                             pro.dismiss();
-                            finish();
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.ssor), Toast.LENGTH_SHORT).show();
+                            AlertDialog alertDialog = taoMotAlertDialog1();
+                            alertDialog.show();
                         } else if (code.equals("-1")) {
                             pro.dismiss();
                             taoMotAlertDialog();
@@ -254,8 +256,6 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             RequestQueue que = Volley.newRequestQueue(getApplicationContext());
             que.add(get);
         }
-
-
     }
 
     public void saveShare() {
@@ -309,6 +309,28 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         } else if (v == edpickgio) {
             timepicker.show();
         }
+    }
+
+    private AlertDialog taoMotAlertDialog1() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Thiết lập tiêu đề hiển thị
+        builder.setTitle(getResources().getString(R.string.succ));
+        //Thiết lập thông báo hiển thị
+
+        builder.setMessage(getResources().getString(R.string.ordersuc));
+        builder.setCancelable(false);
+        //Tạo nút Chu hang
+        builder.setNegativeButton(getResources().getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent i = new Intent(getApplicationContext(), OrderHistory.class);
+                        startActivity(i);
+                        finish();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        return dialog;
     }
 
     private AlertDialog taoMotAlertDialog() {

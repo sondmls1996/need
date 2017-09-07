@@ -131,7 +131,7 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
         adapter = new PreAdapter(getApplicationContext(), arr);
         rchis.setAdapter(adapter);
         rchis.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        Log.d("IDSHIPPER", js);
+//        Log.d("IDSHIPPER", js);
         try {
             JSONObject jo = new JSONObject(js);
             JSONArray list = jo.getJSONArray("listProduct");

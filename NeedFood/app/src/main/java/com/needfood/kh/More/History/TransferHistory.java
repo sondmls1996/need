@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Adapter.TranfHisAdapter;
 import com.needfood.kh.Constructor.InfoConstructor;
@@ -21,6 +22,7 @@ import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.SupportClass.ChangeTimestamp;
 import com.needfood.kh.SupportClass.DialogUtils;
+import com.needfood.kh.SupportClass.GetHisCoin;
 import com.needfood.kh.SupportClass.PostCL;
 
 import org.json.JSONArray;
@@ -78,25 +80,25 @@ public class TransferHistory extends AppCompatActivity {
 
         adapter = new TranfHisAdapter(getApplicationContext(), arr);
         lv.setAdapter(adapter);
-        getHisTran(page);
-//        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
-//            int firstVisibleItem, visibleItemCount, totalItemCount;
-//
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//                final int lastItem = firstVisibleItem + visibleItemCount;
-//                if (lastItem == totalItemCount && scrollState == SCROLL_STATE_IDLE) {
-//                    page++;
-//                    getHisTran(page);
-//                }
-//            }
-//
-//            public void onScroll(AbsListView view, int firstVisibleItemm, int visibleItemCountt, int totalItemCountt) {
-//                firstVisibleItem = firstVisibleItemm;
-//                visibleItemCount = visibleItemCountt;
-//                totalItemCount = totalItemCountt;
-//            }
-//        });
 
+        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            int firstVisibleItem, visibleItemCount, totalItemCount;
+
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                final int lastItem = firstVisibleItem + visibleItemCount;
+                if (lastItem == totalItemCount && scrollState == SCROLL_STATE_IDLE) {
+                    page++;
+                    getHisTran(page);
+                }
+            }
+
+            public void onScroll(AbsListView view, int firstVisibleItemm, int visibleItemCountt, int totalItemCountt) {
+                firstVisibleItem = firstVisibleItemm;
+                visibleItemCount = visibleItemCountt;
+                totalItemCount = totalItemCountt;
+            }
+        });
+        getHisTran(page);
 
     }
 
@@ -107,14 +109,14 @@ public class TransferHistory extends AppCompatActivity {
         Map<String, String> map = new HashMap<String, String>();
         map.put("accessToken", token);
         map.put("page", page + "");
-        Log.d("IMGGA", token+page);
+        Log.d("IMGGA", token + page);
         Response.Listener<String> response = new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getApplicationContext(),"Demooo",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
                 try {
-                    Log.d("IMGGA", response);
+
                     JSONArray jo = new JSONArray(response);
                     if (jo.length() == 0) {
                         if (arr.size() == 0) {
@@ -146,8 +148,15 @@ public class TransferHistory extends AppCompatActivity {
                 }
             }
         };
+        new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getMessage().toString(), Toast.LENGTH_LONG).show();
+            }
+        };
         PostCL post = new PostCL(link, map, response);
-        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue que = Volley.newRequestQueue(TransferHistory.this);
         que.add(post);
+
     }
 }

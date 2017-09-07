@@ -1,22 +1,15 @@
 package com.needfood.kh;
 
-import android.*;
+
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,16 +23,11 @@ import com.needfood.kh.SupportClass.NetworkCheck;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static com.needfood.kh.R.menu.main;
+
 
 public class WellcomeActivity extends AppCompatActivity {
     NetworkCheck networkCheck;
@@ -53,31 +41,24 @@ public class WellcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wellcome);
         db = new DataHandle(this);
         tracker = new GPSTracker(this);
-        insertDummyContactWrapper();
+
         networkCheck = new NetworkCheck();
         Boolean conn = networkCheck.checkNow(getApplicationContext());
         if (conn == false) {
             startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+        }else{
+            insertDummyContactWrapper();
         }
-        if (!tracker.canGetLocation()) {
-            tracker.showSettingsAlert();
-        }
+
     }
 
     private void checkDB() {
         if (db.isMoneyEmpty()) {
             getMoney();
         } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-
-                /* Create an Intent that will start the Menu-Activity. */
-                    Intent mainIntent = new Intent(WellcomeActivity.this, StartActivity.class);
-                    WellcomeActivity.this.startActivity(mainIntent);
-                    WellcomeActivity.this.finish();
-                }
-            }, 2000);
+            Intent mainIntent = new Intent(WellcomeActivity.this, StartActivity.class);
+            WellcomeActivity.this.startActivity(mainIntent);
+            WellcomeActivity.this.finish();
         }
     }
 
@@ -96,7 +77,9 @@ public class WellcomeActivity extends AppCompatActivity {
                         JSONObject jo2 = jo.getJSONObject(i2 + "");
                         db.addMN(new ListMN(jo2.getString("id"), jo2.getString("name")));
                     }
-                    checkDB();
+                    Intent mainIntent = new Intent(WellcomeActivity.this, StartActivity.class);
+                    WellcomeActivity.this.startActivity(mainIntent);
+                    WellcomeActivity.this.finish();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -125,7 +108,11 @@ public class WellcomeActivity extends AppCompatActivity {
         if (!addPermission(permissionsList, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
             permissionsNeeded.add("GPS");
         } else {
-            checkDB();
+            if (!tracker.canGetLocation()) {
+                tracker.showSettingsAlert();
+            } else {
+                checkDB();
+            }
         }
 
 
@@ -172,7 +159,11 @@ public class WellcomeActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
-                    checkDB();
+                    if (!tracker.canGetLocation()) {
+                        tracker.showSettingsAlert();
+                    } else {
+                        checkDB();
+                    }
                 } else {
                     // Permission Denied
 //                    Toast.makeText(WellcomeActivity.this, "Some Permission is Denied", Toast.LENGTH_SHORT)
