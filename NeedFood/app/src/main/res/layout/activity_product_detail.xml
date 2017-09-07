@@ -9,11 +9,13 @@
     tools:context=".Product.ProductDetail">
 
     <include layout="@layout/toolbar" />
-
+    <include
+        layout="@layout/buynow"
+        ></include>
     <com.needfood.kh.SupportClass.VerticalScrollview
         android:layout_width="match_parent"
         android:id="@+id/vers"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -149,6 +151,14 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/buttonz"
                 android:text="@string/buynow"
+                android:textColor="@color/white" />
+            <Button
+                android:id="@+id/bnedit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edc"
+                android:text="@string/edcart"
                 android:textColor="@color/white" />
 
 

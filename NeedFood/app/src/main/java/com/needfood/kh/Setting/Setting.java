@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,7 +31,6 @@ import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
-import com.needfood.kh.SupportClass.LocaleHelper;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
 import com.needfood.kh.WellcomeActivity;
@@ -73,8 +71,7 @@ public class Setting extends AppCompatActivity {
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), StartActivity.class);
-                startActivity(i);
+
                 finish();
             }
         });

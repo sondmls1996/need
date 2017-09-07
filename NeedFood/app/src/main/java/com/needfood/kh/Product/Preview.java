@@ -221,9 +221,9 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             hashMap.put("fone", phone);
             hashMap.put("codeDiscount", ProductDetail.codeDiscount);
             hashMap.put("typeDiscount", ProductDetail.typeDiscount);
-
             hashMap.put("idSeller", idsl);
-            Log.d("TYPEH", ProductDetail.typeDiscount);
+
+            Log.d("TYPEH", hashMap.toString());
             Log.d("total", total + "");
 
 

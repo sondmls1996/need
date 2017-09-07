@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Constructor.ListMN;
@@ -26,6 +27,20 @@ public class DataHandle extends SQLiteOpenHelper {
     public static final String DB_NAME = "needfooddt.db";
     public static final int DB_VERSION = 1;
 
+    public static final String TABLEPRD = "tableprd";
+
+    public static final String IDPRD = "idprd";
+    public static final String TITLEPRD = "title";
+    public static final String PRICE = "price";
+    public static final String QUAN = "quanlity";
+    public static final String TICKKM = "tickKM";
+    public static final String TICKKMPER = "tickKMper";
+    public static final String TICKKMMN = "tickKMMN";
+    public static final String BARCODE = "barcode";
+    public static final String CODE = "code";
+    public static final String TYPEMN = "typemn";
+    public static final String NOTE = "note";
+    public static final String TOTALMN = "totalmn";
 
     public static final String MONEYTB = "money";
     public static final String IDMN = "idmn";
@@ -59,6 +74,21 @@ public class DataHandle extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        String CREATE_TABLE_CART = "CREATE TABLE " + TABLEPRD + "(" +
+                QUAN + " TEXT," +
+                PRICE + " TEXT," +
+                TICKKM + " TEXT," +
+                TICKKMPER + " TEXT," +
+                TICKKMMN + " TEXT," +
+                BARCODE + " TEXT," +
+                CODE + " TEXT," +
+                TITLEPRD + " TEXT," +
+                NOTE + " TEXT," +
+                IDPRD + " TEXT NOT NULL," +
+
+                TYPEMN + " TEXT" +
+
+                ");";
         String CREATE_TABLE_USER =
                 "CREATE TABLE " + MONEYTB + "(" +
                         IDMN + " TEXT NOT NULL," +
@@ -96,6 +126,7 @@ public class DataHandle extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_INFO);
         db.execSQL(CREATE_TABLE_LAN);
         db.execSQL(CREATE_TABLE_NOTI);
+        db.execSQL(CREATE_TABLE_CART);
         Log.d("TAG", TAG);
 
     }
@@ -106,9 +137,111 @@ public class DataHandle extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS" + INFO);
         db.execSQL("DROP TABLE IF EXISTS" + CHECK_LAN);
         db.execSQL("DROP TABLE IF EXISTS" + TABLE_NOTI);
+        db.execSQL("DROP TABLE IF EXISTS" + TABLEPRD);
         onCreate(db);
     }
+    public void addPDR(CheckConstructor listu) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(IDPRD, listu.getId()); // Contact Name
+        values.put(TITLEPRD, listu.getTitle()); // Contact Phone
+        values.put(PRICE, listu.getPrice()); // Contact Phone
+        values.put(QUAN, listu.getQuanli()); // Contact Phone
+        values.put(TICKKM, listu.getTickkm()); // Contact Phone
+        values.put(TICKKMPER, listu.getTickkm2()); // Contact Phone
+        values.put(TICKKMMN, listu.getTickkm3()); // Contact Phone
+        values.put(BARCODE, listu.getBarcode()); // Contact Phone
+        values.put(CODE, listu.getCode()); // Contact Phone
+        values.put(TYPEMN, listu.getTypeid()); // Contact Phone
+        values.put(NOTE, listu.getNote()); // Contact Phone// Contact Phone
+
+
+        db.insert(TABLEPRD, null, values);
+        db.close(); // Closing database connection
+    }
+    public boolean updatePrd(String id,String qua) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(QUAN, qua);
+
+        db.update(TABLEPRD, values, IDPRD + " = ?", new String[]{id});
+        return true;
+    }
+    public List<CheckConstructor> getPRDID(String id) {
+        List<CheckConstructor> contactList = new ArrayList<CheckConstructor>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLEPRD + " WHERE " + IDPRD + " = " + id;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                CheckConstructor contact = new CheckConstructor();
+                contact.setQuanli(cursor.getString(0));
+                contact.setPrice(cursor.getString(1));
+                contact.setTickkm(cursor.getString(2));
+                contact.setTickkm2(cursor.getString(3));
+                contact.setTickkm3(cursor.getString(4));
+                contact.setBarcode(cursor.getString(5));
+                contact.setCode(cursor.getString(6));
+                contact.setTitle(cursor.getString(7));
+                contact.setNote(cursor.getString(8));
+                contact.setId(cursor.getString(9));
+                contact.setTypeid(cursor.getString(10));
+
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        // return contact list　
+        return contactList;
+    }
+    public void deletePrd(String id) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLEPRD, IDPRD + " = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
+    }
+    public List<CheckConstructor> getPrd() {
+        List<CheckConstructor> contactList = new ArrayList<CheckConstructor>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLEPRD;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        CheckConstructor contact = new CheckConstructor();
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            if (cursor.getCount() > 0) {
+                do {
+
+                    contact.setQuanli(cursor.getString(0));
+                    contact.setPrice(cursor.getString(1));
+                    contact.setTickkm(cursor.getString(2));
+                    contact.setTickkm2(cursor.getString(3));
+                    contact.setTickkm3(cursor.getString(4));
+                    contact.setBarcode(cursor.getString(5));
+                    contact.setCode(cursor.getString(6));
+                    contact.setTitle(cursor.getString(7));
+                    contact.setNote(cursor.getString(8));
+                    contact.setId(cursor.getString(9));
+                    contact.setTypeid(cursor.getString(10));
+                    // Adding contact to list
+                    contactList.add(contact);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor.close();
+
+        // return contact list　
+        return contactList;
+    }
     public void addMN(ListMN listu) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -186,6 +319,8 @@ public class DataHandle extends SQLiteOpenHelper {
         return contactList;
     }
 
+
+
     public List<ListMN> getMNid(String id) {
         List<ListMN> contactList = new ArrayList<ListMN>();
         // Select All Query
@@ -210,6 +345,8 @@ public class DataHandle extends SQLiteOpenHelper {
         // return contact list　
         return contactList;
     }
+
+
 
     public List<InfoConstructor> getAllInfor() {
         List<InfoConstructor> contactList = new ArrayList<InfoConstructor>();
@@ -306,6 +443,7 @@ public class DataHandle extends SQLiteOpenHelper {
         return true;
     }
 
+
     public int getNotesCount() {
         String countQuery = "SELECT  * FROM " + TABLE_NOTI;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -343,6 +481,7 @@ public class DataHandle extends SQLiteOpenHelper {
                 new String[]{String.valueOf(id)});
         db.close();
     }
+
 
     public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
