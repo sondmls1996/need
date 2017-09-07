@@ -195,8 +195,6 @@ public class Hotdeal extends Fragment implements View.OnClickListener {
                                 JSONArray imgs = prd.getJSONArray("images");
 
                                 JSONObject vote = prd.getJSONObject("vote");
-
-
                                 arr.add(new HotdealConstructor("http://needfood.webmantan.com" + imgs.getString(0), prd.getString("id"),
                                         prd.getString("idSeller"),
                                         prd.getString("title"), prd.getString("nameSeller"), prd.getString("price")

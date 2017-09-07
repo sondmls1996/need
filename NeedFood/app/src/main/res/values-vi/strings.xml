@@ -272,4 +272,7 @@
     <string name="votpro">Đánh giá chất lượng cửa hàng</string>
     <string name="vott">Bỏ phiếu</string>
     <string name="ordersuc">Bạn đã đặt hàng thành công. Xin cảm ơn!</string>
+    <string name="scanc">Bạn muốn quét loại mã nào?</string>
+
+
 </resources>

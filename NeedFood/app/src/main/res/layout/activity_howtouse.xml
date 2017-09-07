@@ -63,5 +63,5 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <include layout="@layout/htucontent" />
+    <!--<include layout="@layout/htucontent" />-->
 </android.support.design.widget.CoordinatorLayout>

@@ -107,22 +107,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return true;
             }
         });
-//        for (int j = 0; j < list.size(); j++) {
-//            mMap.addMarker(new MarkerOptions()
-//                    .position(new LatLng(Double.parseDouble(list.get(j).getLat()), Double.parseDouble(list.get(j).getLo())))
-//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-//                    .title(list.get(j).getBrandname().toString()));
-//        }
-//        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//            @Override
-//            public boolean onMarkerClick(Marker marker) {
-//                for (int i = 0; i < list.size(); i++) {
-//
-//                }
-//
-//                return true;
-//            }
-//        });
+
     }
 
     private void getMoney() {
@@ -162,8 +147,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         que.add(get);
     }
 
-    public void showMap(Double latitude, Double longitude) {
-        LatLng yourlocal = new LatLng(latitude, longitude);
+    public void showMap(Double latitudee, Double longitudee) {
+        LatLng yourlocal = new LatLng(latitudee, longitudee);
         mMap.clear();
         mMap.addMarker(new MarkerOptions().position(yourlocal).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(getResources().getString(R.string.loc))).showInfoWindow();
         CameraPosition cameraPosition = new CameraPosition.Builder().target(yourlocal).zoom(14).build();
@@ -176,6 +161,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                     .title(list.get(j).getBrandname().toString()));
         }
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                mMap.clear();
+                latitude = latLng.latitude;
+                longitude = latLng.longitude;
+
+                mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                        .title(getResources().getString(R.string.loc)));
+                CameraPosition update = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(14).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(update));
+
+                for (int j = 0; j < list.size(); j++) {
+
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(Double.parseDouble(list.get(j).getLat()), Double.parseDouble(list.get(j).getLo())))
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                            .title(list.get(j).getBrandname().toString()));
+                }
+            }
+        });
 
     }
 

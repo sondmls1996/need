@@ -73,12 +73,12 @@ public class More extends Fragment implements View.OnClickListener {
         lnset = (LinearLayout) v.findViewById(R.id.lnset);
         lntranf = (LinearLayout) v.findViewById(R.id.lntran);
         lnparent = (LinearLayout) v.findViewById(R.id.lnparent);
-        lncontac = (LinearLayout) v.findViewById(R.id.lncont);
+//        lncontac = (LinearLayout) v.findViewById(R.id.lncont);
         lnset.setOnClickListener(this);
         lnself.setOnClickListener(this);
         lntranf.setOnClickListener(this);
         lnparent.setOnClickListener(this);
-        lncontac.setOnClickListener(this);
+//        lncontac.setOnClickListener(this);
         if (ses.loggedin()) {
             list = db.getAllInfor();
             Log.d("ABCCA", list.size() + "");
@@ -129,10 +129,10 @@ public class More extends Fragment implements View.OnClickListener {
                     Intent it4 = new Intent(getContext(), ParentUs.class);
                     startActivity(it4);
                     break;
-                case R.id.lncont:
-                    Intent it5 = new Intent(getContext(), Contact.class);
-                    startActivity(it5);
-                    break;
+//                case R.id.lncont:
+//                    Intent it5 = new Intent(getContext(), Contact.class);
+//                    startActivity(it5);
+//                    break;
                 case R.id.history:
                     Intent it6 = new Intent(getContext(), MoreHistory.class);
                     startActivity(it6);
@@ -156,10 +156,10 @@ public class More extends Fragment implements View.OnClickListener {
                     Intent it4 = new Intent(getContext(), ParentUs.class);
                     startActivity(it4);
                     break;
-                case R.id.lncont:
-                    Intent it5 = new Intent(getContext(), Contact.class);
-                    startActivity(it5);
-                    break;
+//                case R.id.lncont:
+//                    Intent it5 = new Intent(getContext(), Contact.class);
+//                    startActivity(it5);
+//                    break;
                 case R.id.history:
                     taoMotAlertDialog2();
                     break;

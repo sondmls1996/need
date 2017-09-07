@@ -277,30 +277,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-//    private void getMoney() {
-//        String link = getResources().getString(R.string.linkmn);
-//        Response.Listener<String> response = new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Log.d("MNT", response);
-//                try {
-//                    JSONObject jo = new JSONObject(response);
-//
-//                    for (int i2 = 1; i2 < jo.length(); i2++) {
-//
-//                        JSONObject jo2 = jo.getJSONObject(i2 + "");
-//                        db.addMN(new ListMN(jo2.getString("id"), jo2.getString("name")));
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//        GetCL get = new GetCL(link, response);
-//        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-//        que.add(get);
-//    }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(main, menu);
         return super.onCreateOptionsMenu(menu);
@@ -311,8 +287,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cam:
-                Intent it = new Intent(getApplicationContext(), QRCamera.class);
-                startActivity(it);
+                Dialogchoice();
                 break;
             case R.id.mark:
                 Intent i = new Intent(getApplicationContext(), MapsActivity.class);
@@ -361,61 +336,31 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         }
     }
-//
-//    final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
-//
-//    private void insertDummyContactWrapper() {
-//        List<String> permissionsNeeded = new ArrayList<String>();
-//        if(Build.VERSION.SDK_INT >= 23) {
-//            if (!Settings.canDrawOverlays(StartActivity.this)) {
-//                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-//                        Uri.parse("package:" + getPackageName()));
-//                startActivityForResult(intent, 1234);
-//            }
-//        }
-//        final List<String> permissionsList = new ArrayList<String>();
-//        if (!addPermission(permissionsList, Manifest.permission.CAMERA))
-//            permissionsNeeded.add("Camera");
-//        if (!addPermission(permissionsList, Manifest.permission.READ_CALENDAR))
-//            permissionsNeeded.add("Calendar");
-//        if (!addPermission(permissionsList, android.Manifest.permission.ACCESS_FINE_LOCATION))
-//            permissionsNeeded.add("GPS");
-//        if (!addPermission(permissionsList, android.Manifest.permission.ACCESS_COARSE_LOCATION))
-//            permissionsNeeded.add("GPS-LOCAL");
-//        if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-//            permissionsNeeded.add("Write Storage");
-//        if (!addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE))
-//            permissionsNeeded.add("Read Storage");
-//        if (permissionsList.size() > 0) {
-//            if (permissionsNeeded.size() > 0) {
-//                // hien thi tắt
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
-//                            REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
-//                }
-//            }
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
-//                        REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
-//            }
-//            return;
-//        }
-//
-//    }
-//
-//    // luu lai su lua chon
-//    private boolean addPermission(List<String> permissionsList, String permission) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-//                permissionsList.add(permission);
-//                // Check for Rationale Option
-//                if (!shouldShowRequestPermissionRationale(permission))
-//                    return false;
-//            }
-//        }
-//        return true;
-//    }
+    public void Dialogchoice(){
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_scan);
+        dialog.show();
+        LinearLayout lnqr = (LinearLayout) dialog.findViewById(R.id.lnqr);
+        LinearLayout lnbar = (LinearLayout) dialog.findViewById(R.id.lnbar);
+        lnqr.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(getApplicationContext(), QRCamera.class);
+                startActivity(it);
+
+            }
+        });
+        lnbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(getApplicationContext(), BarcodeCamera.class);
+                startActivity(it);
+            }
+        });
+
+    }
     public void changeLocale(String lang) {
 
         if (lang.equalsIgnoreCase(""))

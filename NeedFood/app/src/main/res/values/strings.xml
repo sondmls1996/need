@@ -270,4 +270,7 @@
     <string name="ordersuc">You order successfully. Thank you!</string>
     <string name="votship">Vote for Shipper</string>
     <string name="votpro">Vote for Product</string>
+    <string name="scanc">What kind of code would you like to scan?</string>
+
+
 </resources>

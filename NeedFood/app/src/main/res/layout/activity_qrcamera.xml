@@ -6,26 +6,26 @@
     android:layout_height="match_parent"
     tools:context="com.needfood.kh.QRCamera">
 
-    <com.dlazaro66.qrcodereaderview.QRCodeReaderView
-        android:id="@+id/qrdecoderview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
-        <include
-            layout="@layout/customprdetail"
-            ></include>
+    <!--<com.dlazaro66.qrcodereaderview.QRCodeReaderView-->
+        <!--android:id="@+id/qrdecoderview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<include-->
+            <!--layout="@layout/customprdetail"-->
+            <!--&gt;</include>-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:translationZ="10dp"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/red"
         android:layout_margin="20dp"
         android:textSize="18sp"
         android:text="@string/qrc"/>
@@ -39,7 +39,6 @@
         android:layout_alignParentBottom="true"
         android:textColor="@color/white"
         android:layout_margin="20dp"
-
         android:textSize="18sp"
         />
 </RelativeLayout>
