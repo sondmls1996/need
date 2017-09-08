@@ -2,20 +2,14 @@ package com.needfood.kh.Service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.os.IBinder;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.needfood.kh.R;
+import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
+import com.needfood.kh.Database.DataHandle;
 
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.util.List;
 
 
 /**
@@ -23,11 +17,11 @@ import java.util.Locale;
  */
 
 public class BubbleService extends Service implements View.OnClickListener {
-    private WindowManager mWindowManager;
-    private View mChatHeadView;
-    LinearLayout lnb;
-    TextView txtgia;
-    int edtgia;
+    DataHandle db;
+    List<CheckConstructor> arr;
+
+    public static final String ACTION_LOCATION_BROADCAST = BubbleService.class.getName() + "LocationBroadcast",
+            INTENTNAME = "itn";
 
     public BubbleService() {
     }
@@ -38,102 +32,30 @@ public class BubbleService extends Service implements View.OnClickListener {
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.hasExtra("MN")) {
-            int pr = Integer.parseInt(intent.getStringExtra("MN"));
-            txtgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(pr));
+        arr = db.getPrd();
+        int tong = 0;
+        for (CheckConstructor lu:arr){
+            tong = Integer.parseInt(lu.getPrice())*Integer.parseInt(lu.getQuanli())+tong;
         }
+        sendBroadcastMessage(tong);
 
         return START_STICKY;
     }
+    private void sendBroadcastMessage(Integer tong) {
+        if (tong != null) {
+            Intent intent = new Intent(ACTION_LOCATION_BROADCAST);
+            intent.putExtra(INTENTNAME, tong);
 
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        }
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        db = new DataHandle(this);
+
         //Inflate the chat head layout we created
-
-        mChatHeadView = LayoutInflater.from(this).inflate(R.layout.buynow, null);
-
-
-        //Add the view to the window.
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSPARENT);
-        params.gravity = Gravity.TOP | Gravity.LEFT;        //Initially view will be added to top-left corner
-        params.x = 0;
-        params.y = 100;
-
-        mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        mWindowManager.addView(mChatHeadView, params);
-
-        txtgia = (TextView) mChatHeadView.findViewById(R.id.txthang);
-
-        txtgia.setText("0");
-
-        lnb = (LinearLayout) mChatHeadView.findViewById(R.id.lnbn);
-        lnb.setOnTouchListener(new View.OnTouchListener() {
-                                   private int lastAction;
-                                   private int initialX;
-                                   private int initialY;
-                                   private float initialTouchX;
-
-                                   private static final int MAX_CLICK_DURATION = 1000;
-
-                                   /**
-                                    * Max allowed distance to move during a "click", in DP.
-                                    */
-                                   private static final int MAX_CLICK_DISTANCE = 15;
-
-                                   private long pressStartTime;
-                                   private float initialTouchY;
-
-                                   @Override
-                                   public boolean onTouch(View v, MotionEvent event) {
-                                       switch (event.getAction()) {
-                                           case MotionEvent.ACTION_DOWN:
-                                               pressStartTime = System.currentTimeMillis();
-                                               //remember the initial position.
-                                               initialX = params.x;
-                                               initialY = params.y;
-                                               initialTouchX = event.getRawX();
-                                               initialTouchY = event.getRawY();
-
-                                               lastAction = event.getAction();
-                                               return true;
-
-
-                                           case MotionEvent.ACTION_UP:
-                                               //As we implemented on touch listener with ACTION_MOVE,
-                                               //we have to check if the previous action was ACTION_DOWN
-                                               //to identify if the user clicked the view or not.
-                                               long totime = System.currentTimeMillis();
-                                               long endtime = totime - pressStartTime;
-                                               int Xdiff = (int) (event.getRawX() - initialTouchX);
-                                               int Ydiff = (int) (event.getRawY() - initialTouchY);
-                                               if (endtime < 200) {
-                                                   //Open the chat conversation click.
-                                                   //  startService(new Intent(QBService.this, BubbleService2.class));
-                                               }
-                                               lastAction = event.getAction();
-                                               return true;
-                                           case MotionEvent.ACTION_MOVE:
-                                               //Calculate the X and Y coordinates of the view.
-                                               params.x = initialX + (int) (event.getRawX() - initialTouchX);
-                                               params.y = initialY + (int) (event.getRawY() - initialTouchY);
-
-                                               //Update the layout with new X & Y coordinate
-                                               mWindowManager.updateViewLayout(mChatHeadView, params);
-                                               lastAction = event.getAction();
-                                               return true;
-
-                                       }
-                                       return false;
-                                   }
-                               }
-        );
 
     }
 
@@ -141,7 +63,7 @@ public class BubbleService extends Service implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mChatHeadView != null) mWindowManager.removeView(mChatHeadView);
+
     }
 
     @Override

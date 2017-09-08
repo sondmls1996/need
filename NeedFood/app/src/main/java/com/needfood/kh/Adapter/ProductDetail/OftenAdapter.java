@@ -1,6 +1,7 @@
 package com.needfood.kh.Adapter.ProductDetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +19,7 @@ import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
+import com.needfood.kh.Service.BubbleService;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
@@ -112,7 +114,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                             ip.getPrize(),"false","","",ip.getBar(),ip.getCode(),
                             ip.getName(),
                             ip.getNote(),ip.getId(),ip.getTymn()));
-
+                    context.startService(new Intent(context, BubbleService.class));
                     viewHolder.edo.setEnabled(true);
 
                     ProductDetail.listship.add(Integer.parseInt(ip.getNmship()));
@@ -135,10 +137,10 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                             db.updatePrd(ip.getId(),"1");
 
                             }else {
-                                db.updatePrd(ip.getId(),viewHolder.edo.getText().toString());
+                             db.updatePrd(ip.getId(),viewHolder.edo.getText().toString());
 
                             }
-
+                            context.startService(new Intent(context, BubbleService.class));
 
                         }
                     };
@@ -148,9 +150,8 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     viewHolder.edo.setEnabled(false);
                     viewHolder.edo.removeTextChangedListener(viewHolder.textWatcher);
                     viewHolder.edo.setText(null);
-
-                        db.deletePrd(ip.getId());
-
+                    db.deletePrd(ip.getId());
+                    context.startService(new Intent(context, BubbleService.class));
                 }
             }
         });

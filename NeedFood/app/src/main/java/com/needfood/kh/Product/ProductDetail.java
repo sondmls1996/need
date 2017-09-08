@@ -2,19 +2,25 @@ package com.needfood.kh.Product;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.Menu;
@@ -54,6 +60,7 @@ import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Login.Login;
 import com.needfood.kh.R;
+import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.ChangeTimestamp;
 import com.needfood.kh.SupportClass.DialogUtils;
@@ -89,7 +96,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ProgressBar pr1;
     public static String typeDiscount = "0";
     ArrayList<PreDialogConstructor> precons;
-
+    TextWatcher textWatcher;
     public static String codeDiscount = "";
     String tym;
     private final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
@@ -106,6 +113,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Button deal, bn;
     OftenAdapter adapterof1, adapterof2, adapterof3;
     TextView tvco, tvcodes, tvprize, tvphi, tvmyphi;
+     TextView txthang;
     TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
     ArrayList<OftenConstructor> arrof, arrof2, arrof3;
     ArrayList<OftenConstructor> arrq;
@@ -122,7 +130,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ImageView img_comment;
     Button imgshare;
     long now;
-
     String comment;
     VerticalScrollview ver;
     ShareLinkContent content;
@@ -132,7 +139,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String cmt, time, iduser, fullnameus;
     ImageView imageView, next, down;
     ShareDialog shareDialog;
-
     String linkfbb, sttsell = "";
     ChangeTimestamp change;
     TextView vote,inven;
@@ -159,6 +165,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         txt.setText(getResources().getString(R.string.prddetail));
         ver = (VerticalScrollview) findViewById(R.id.vers);
         listship = new ArrayList<>();
+
         btnedc = (Button)findViewById(R.id.bnedit) ;
         btnedc.setOnClickListener(new View.OnClickListener() {
                                       @Override
@@ -174,6 +181,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 finish();
+                db.deleteAllPRD();
             }
         });
         khaibao();
@@ -182,24 +190,31 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         //  getCommen();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        db.deleteAllPRD();
+    }
+
     private void showPreDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialogprev);
         precons = new ArrayList<>();
+        int tong = 0;
         RecyclerView rcp = (RecyclerView)dialog.findViewById(R.id.rcpre);
+        TextView txttong = (TextView)dialog.findViewById(R.id.txttong);
         DialogPreAdapter preadap = new DialogPreAdapter(getApplicationContext(),precons);
         rcp.setAdapter(preadap);
         LinearLayoutManager lnm = new LinearLayoutManager(getApplicationContext());
         rcp.setLayoutManager(lnm);
         listcheck = db.getPrd();
         for (CheckConstructor lu:listcheck){
-            Log.d("DATAB","quan: "+lu.getQuanli()+"\n"+"price:"+lu.getPrice()+"\n"+"tickKm:"+lu.getTickkm()
-                    +"\n"+"tickKM2:"+lu.getTickkm2()+"\n"+"tickKM3:"+lu.getTickkm3()+"\n"+"Bar:"+lu.getBarcode()
-                    +"\n"+"Code:"+lu.getCode()+"\n"+"Title:"+lu.getTitle()+"\n"+"note:"+lu.getNote()+"\n"+"ID"+lu.getId()
-                    +"\n"+"TYPE"+lu.getTypeid());
+            tong = Integer.parseInt(lu.getPrice())*Integer.parseInt(lu.getQuanli())+tong;
+            Log.d("SHOWALL","quanli:"+lu.getQuanli()+"\n"+"price:"+lu.getPrice()+"\n"+"ID:"+lu.getId()+"name:"+lu.getTitle());
             precons.add(new PreDialogConstructor(lu.getQuanli(),lu.getPrice(),lu.getTitle(),lu.getId(),lu.getTypeid()));
         }
+        txttong.setText(NumberFormat.getNumberInstance(Locale.UK).format(tong));
         preadap.notifyDataSetChanged();
         dialog.show();
     }
@@ -214,6 +229,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        db.deleteAllPRD();
    //     stopService(new Intent(ProductDetail.this, BubbleService.class));
     }
 
@@ -250,7 +266,17 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         if (it.hasExtra("hot")) {
             hot = it.getStringExtra("hot");
         }
+        txthang = (TextView)findViewById(R.id.txthang);
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        int tong = intent.getIntExtra(BubbleService.INTENTNAME, 0);
 
+                        txthang.setText(NumberFormat.getNumberInstance(Locale.UK).format(tong));
+                    }
+                }, new IntentFilter(BubbleService.ACTION_LOCATION_BROADCAST)
+        );
         OftenAdapter.arrcheck.clear();
         bn = (Button) findViewById(R.id.bn);
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
@@ -308,6 +334,30 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         // likeView.callOnClick();
         edquan = (EditText) findViewById(R.id.edquan);
         edquan.setText("1");
+
+        textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(edquan.getText().toString().equals("")){
+                    db.updatePrd(idprd,"1");
+                }else{
+                    db.updatePrd(idprd,edquan.getText().toString());
+
+                }
+                startService(new Intent(ProductDetail.this, BubbleService.class));
+            }
+        };
+        edquan.addTextChangedListener(textWatcher);
         ses = new Session(this);
 
         deal = (Button) findViewById(R.id.btndeal);
@@ -496,32 +546,36 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
+            int tong = 0;
             typeDiscount = "0";
             String quan;
             int mnship = Collections.max(listship);
-            if (edquan.equals("")) {
-                quan = "0";
-            } else {
-                quan = edquan.getText().toString();
-            }
-            int money1 = Integer.parseInt(quan) * Integer.parseInt(priceprd);
+
+
             JSONArray jsonArray = new JSONArray();
-            JSONObject j1 = new JSONObject();
+
 
             try {
-                j1.put("quantity", quan);
-                j1.put("price", priceprd);
-                j1.put("tickKM", "false");
-                j1.put("tickKM_percent", "");
-                j1.put("tickKM_money", "");
-                j1.put("barcode", idprd);
-                j1.put("code", prdcode);
-                j1.put("title", titl);
-                j1.put("money", money1 + "");
-                j1.put("note", "");
-                j1.put("id", idprd);
-                j1.put("typeMoneyId", tym);
-                jsonArray.put(j1);
+                listcheck = db.getPrd();
+                for (CheckConstructor lu:listcheck){
+                    JSONObject j1 = new JSONObject();
+                    tong =  Integer.parseInt(lu.getQuanli())*Integer.parseInt(lu.getPrice())+tong;
+                    j1.put("quantity", lu.getQuanli());
+                    j1.put("price", lu.getPrice());
+                    j1.put("tickKM", lu.getTickkm());
+                    j1.put("tickKM_percent", lu.getTickkm2());
+                    j1.put("tickKM_money", lu.getTickkm3());
+                    j1.put("barcode", lu.getBarcode());
+                    j1.put("code", lu.getCode());
+                    j1.put("title", lu.getTitle());
+                    j1.put("money", Integer.parseInt(lu.getQuanli())*Integer.parseInt(lu.getPrice()));
+                    j1.put("note", lu.getNote());
+                    j1.put("id", lu.getId());
+                    j1.put("typeMoneyId", lu.getTypeid());
+                    jsonArray.put(j1);
+                }
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -532,15 +586,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
             int money = 0;
 
-
-
-            money = money + money1;
-
             HashMap<String, String> map = new HashMap<>();
             map.put("accessToken", access);
             map.put("listProduct", jsonArray.toString());
-            map.put("money", money + "");
-            map.put("totalMoneyProduct", money + (money * (Integer.parseInt(tax))) / 100 + "");
+            map.put("money", tong + "");
+            map.put("totalMoneyProduct", tong + (tong * (Integer.parseInt(tax))) / 100 + "");
             map.put("fullName", "");
             map.put("moneyShip", mnship + "");
             map.put("timeShiper", "");
@@ -563,6 +613,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             Intent i = new Intent(getApplicationContext(), Login.class);
             startActivity(i);
             finish();
+            db.deleteAllPRD();
         }
 
     }
@@ -821,6 +872,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             priceprd,"false","","",bar,prdcode
                             ,titl,
                             "",idprd,tym));
+                  startService(new Intent(ProductDetail.this, BubbleService.class));
+                    Log.d("IDS",titl);
 
 //                    Intent i = new Intent(getApplicationContext(), BubbleService.class);
 //                    i.putExtra("MN", priceprd);
@@ -1550,7 +1603,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         //Thiết lập tiêu đề hiển thị
         builder.setTitle(getResources().getString(R.string.er));
         //Thiết lập thông báo hiển thị
-
         builder.setMessage(getResources().getString(R.string.lostss));
         builder.setCancelable(false);
         //Tạo nút Chu hang
@@ -1564,6 +1616,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         Intent i = new Intent(getApplicationContext(), StartActivity.class);
                         startActivity(i);
                         finish();
+                        db.deleteAllPRD();
                     }
                 });
         AlertDialog dialog = builder.create();
