@@ -162,6 +162,7 @@ public class QRCamera extends AppCompatActivity implements ZXingScannerView.Resu
     private void getProductDT(final String idsp) {
         Intent it = new Intent(getApplicationContext(), ProductDetail.class);
         it.putExtra("idprd", idsp);
+        it.putExtra("icheck", "id");
         startActivity(it);
         finish();
 

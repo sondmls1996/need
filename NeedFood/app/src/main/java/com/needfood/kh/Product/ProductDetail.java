@@ -100,7 +100,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Session ses;
     String uadr, tax;
     String typemn;
-    String sexxx, coordinates, numberBuy, headFone, nameman, birthdayy, typedevice,namelower;
+    String sexxx, coordinates, numberBuy, headFone, nameman, birthdayy, typedevice, namelower;
     EditText edquan;
     String cata;
     Button deal, bn;
@@ -133,9 +133,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ImageView imageView, next, down;
     ShareDialog shareDialog;
 
-    String linkfbb, sttsell = "";
+    String linkfbb, sttsell = "", icheck = "";
     ChangeTimestamp change;
-    TextView vote,inven;
+    TextView vote, inven;
     String point;
     TextView nameseller, exp, txtof, txtbrand, txtcomp;
     LinearLayout lnpro;
@@ -147,19 +147,20 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String quantity;
     double latitude, longitude, lat, lo;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_product_detail);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarr);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarr);
         setSupportActionBar(toolbar);
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
         ver = (VerticalScrollview) findViewById(R.id.vers);
         listship = new ArrayList<>();
-        btnedc = (Button)findViewById(R.id.bnedit) ;
+        btnedc = (Button) findViewById(R.id.bnedit);
         btnedc.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
@@ -177,7 +178,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
         khaibao();
-        getProductDT();
+
 
         //  getCommen();
     }
@@ -187,18 +188,18 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialogprev);
         precons = new ArrayList<>();
-        RecyclerView rcp = (RecyclerView)dialog.findViewById(R.id.rcpre);
-        DialogPreAdapter preadap = new DialogPreAdapter(getApplicationContext(),precons);
+        RecyclerView rcp = (RecyclerView) dialog.findViewById(R.id.rcpre);
+        DialogPreAdapter preadap = new DialogPreAdapter(getApplicationContext(), precons);
         rcp.setAdapter(preadap);
         LinearLayoutManager lnm = new LinearLayoutManager(getApplicationContext());
         rcp.setLayoutManager(lnm);
         listcheck = db.getPrd();
-        for (CheckConstructor lu:listcheck){
-            Log.d("DATAB","quan: "+lu.getQuanli()+"\n"+"price:"+lu.getPrice()+"\n"+"tickKm:"+lu.getTickkm()
-                    +"\n"+"tickKM2:"+lu.getTickkm2()+"\n"+"tickKM3:"+lu.getTickkm3()+"\n"+"Bar:"+lu.getBarcode()
-                    +"\n"+"Code:"+lu.getCode()+"\n"+"Title:"+lu.getTitle()+"\n"+"note:"+lu.getNote()+"\n"+"ID"+lu.getId()
-                    +"\n"+"TYPE"+lu.getTypeid());
-            precons.add(new PreDialogConstructor(lu.getQuanli(),lu.getPrice(),lu.getTitle(),lu.getId(),lu.getTypeid()));
+        for (CheckConstructor lu : listcheck) {
+            Log.d("DATAB", "quan: " + lu.getQuanli() + "\n" + "price:" + lu.getPrice() + "\n" + "tickKm:" + lu.getTickkm()
+                    + "\n" + "tickKM2:" + lu.getTickkm2() + "\n" + "tickKM3:" + lu.getTickkm3() + "\n" + "Bar:" + lu.getBarcode()
+                    + "\n" + "Code:" + lu.getCode() + "\n" + "Title:" + lu.getTitle() + "\n" + "note:" + lu.getNote() + "\n" + "ID" + lu.getId()
+                    + "\n" + "TYPE" + lu.getTypeid());
+            precons.add(new PreDialogConstructor(lu.getQuanli(), lu.getPrice(), lu.getTitle(), lu.getId(), lu.getTypeid()));
         }
         preadap.notifyDataSetChanged();
         dialog.show();
@@ -208,13 +209,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onPause() {
         super.onPause();
-     //   stopService(new Intent(ProductDetail.this, BubbleService.class));
+        //   stopService(new Intent(ProductDetail.this, BubbleService.class));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-   //     stopService(new Intent(ProductDetail.this, BubbleService.class));
+        //     stopService(new Intent(ProductDetail.this, BubbleService.class));
     }
 
     @Override
@@ -250,11 +251,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         if (it.hasExtra("hot")) {
             hot = it.getStringExtra("hot");
         }
+        if (it.hasExtra("icheck")) {
+            icheck = it.getStringExtra("icheck");
+        }
 
         OftenAdapter.arrcheck.clear();
         bn = (Button) findViewById(R.id.bn);
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
-        inven = (TextView)findViewById(R.id.txt_inven);
+        inven = (TextView) findViewById(R.id.txt_inven);
         lnshare = (LinearLayout) findViewById(R.id.lnshare);
         lnmyshare = (LinearLayout) findViewById(R.id.lnmhysh);
         imgshare = (Button) findViewById(R.id.imgshare);
@@ -419,11 +423,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
         rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
         rctp.setLayoutManager(mStaggeredVerticalLayoutManager4);
-        if(!hot.isEmpty()){
+        if (!hot.isEmpty()) {
             tvpr.setVisibility(View.GONE);
-        }else{
+        } else {
 
         }
+        getProductDT();
     }
 
 
@@ -527,11 +532,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
 
 
-
             Log.d("HAJAR", jsonArray.toString());
 
             int money = 0;
-
 
 
             money = money + money1;
@@ -566,6 +569,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -716,6 +720,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         final String link = getResources().getString(R.string.linkprdde);
         Map<String, String> map = new HashMap<>();
         map.put("idProduct", idprd);
+        map.put("type", icheck);
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -818,9 +823,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         priceother = prd.getString("priceOther");
                     }
                     db.addPDR(new CheckConstructor("1",
-                            priceprd,"false","","",bar,prdcode
-                            ,titl,
-                            "",idprd,tym));
+                            priceprd, "false", "", "", bar, prdcode
+                            , titl,
+                            "", idprd, tym));
 
 //                    Intent i = new Intent(getApplicationContext(), BubbleService.class);
 //                    i.putExtra("MN", priceprd);
@@ -991,7 +996,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
-        public void getPrdCompo() {
+    public void getPrdCompo() {
         final String link = getResources().getString(R.string.linkprcom);
 
         Map<String, String> map = new HashMap<>();
@@ -1631,6 +1636,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(get);
     }
+
     private void addInfo() {
         String linkk = getResources().getString(R.string.linkgetinfo);
         Map<String, String> map = new HashMap<>();
