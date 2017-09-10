@@ -41,11 +41,9 @@ public class DataHandle extends SQLiteOpenHelper {
     public static final String TYPEMN = "typemn";
     public static final String NOTE = "note";
     public static final String TOTALMN = "totalmn";
-
     public static final String MONEYTB = "money";
     public static final String IDMN = "idmn";
     public static final String NAMEMN = "namemn";
-
     public static final String INFO = "infomation";
     public static final String FULLNAME = "fullName";
     public static final String TYPE = "type";
