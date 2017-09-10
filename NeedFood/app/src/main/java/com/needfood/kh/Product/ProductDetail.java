@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -146,7 +147,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     GPSTracker tracker;
     String quantity;
     double latitude, longitude, lat, lo;
-
+    String dia_comment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -584,6 +585,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.report) {
+
+            dialogRe();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -1669,4 +1672,89 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void dialogRe() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.htucontent);
+        dialog.show();
+        final RatingBar ratingbar = (RatingBar) dialog.findViewById(R.id.ratingBar1);
+        EditText edtcoment = (EditText) dialog.findViewById(R.id.dia_comment);
+        dia_comment = edtcoment.getText().toString();
+        Button bbtn1 = (Button) dialog.findViewById(R.id.button1);
+        bbtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Getting the rating and displaying it on the toast
+                String rating = String.valueOf(ratingbar.getRating());
+                final String link = getResources().getString(R.string.linkvote);
+
+                Map<String, String> map = new HashMap<>();
+                map.put("idProduct", idprd);
+                map.put("accessToken", access);
+                map.put("point", rating);
+
+                Response.Listener<String> response = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("EEE", response);
+                        try {
+                            JSONObject jo = new JSONObject(response);
+                            String code = jo.getString("code");
+                            if (code.equals("0")) {
+
+
+
+                            } else if (code.equals("-1")) {
+                                dialog.dismiss();
+                                AlertDialog alertDialog = taoMotAlertDialog();
+                                alertDialog.show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                };
+                PostCL get = new PostCL(link, map, response);
+                RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+                que.add(get);
+            }
+
+
+        });
+    }
+    public void getReport(String text){
+        final ProgressDialog progressDialog = new ProgressDialog(getApplicationContext());
+        progressDialog.setMessage(getResources().getString(R.string.wait));
+        progressDialog.show();
+        String link = getResources().getString(R.string.linkreport);
+        Map<String, String> map = new HashMap<>();
+        map.put("idProduct", idprd);
+        map.put("accessToken", access);
+        map.put("comment", text);
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jo = new JSONObject(response);
+                    String code = jo.getString("code");
+                    if(code.equals("0")){
+                        progressDialog.dismiss();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        PostCL po = new PostCL(link,map,response);
+        RequestQueue re = Volley.newRequestQueue(getApplicationContext());
+        re.add(po);
+    }
 }

@@ -173,6 +173,9 @@
     <string name="linkshipper">http://needfood.webmantan.com/checkInfoShiperAPI</string>
     <string name="linkvotshiper">http://needfood.webmantan.com/updateVoteShiperAPI</string>
     <string name="linkvoteseller">http://needfood.webmantan.com/updateVoteSellerAPI</string>
+    <string name="linkreport">http://needfood.webmantan.com/saveReportProductAPI</string>
+
+
     <string name="logout">Logout</string>
     <string name="tiengviet">Tiếng Việt</string>
     <string name="tienganh">English</string>
@@ -272,6 +275,6 @@
     <string name="votship">Vote for Shipper</string>
     <string name="votpro">Vote for Product</string>
     <string name="scanc">What kind of code would you like to scan?</string>
-
+    <string name="nx">Product Reviews</string>
 
 </resources>
