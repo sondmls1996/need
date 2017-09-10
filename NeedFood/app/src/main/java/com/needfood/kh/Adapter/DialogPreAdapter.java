@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.needfood.kh.Constructor.PreDialogConstructor;
+import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.SupportClass.ChangeTimestamp;
 
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class DialogPreAdapter  extends
         RecyclerView.Adapter<DialogPreAdapter.RecyclerViewHolder> {
-
+    public DataHandle db;
     private List<PreDialogConstructor> listData = new ArrayList<>();
     Context context;
     public DialogPreAdapter(Context context,List<PreDialogConstructor> listData) {
@@ -39,12 +40,13 @@ public class DialogPreAdapter  extends
         public ImageView img;
         public TextView prename;
 
+
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-            prename = (TextView) itemView.findViewById(R.id.prename);
-            prequan = (TextView)itemView.findViewById(R.id.prequan);
-            premn = (TextView)itemView.findViewById(R.id.pretot);
-
+            db = new DataHandle(context);
+            prename = (TextView) itemView.findViewById(R.id.prename2);
+            prequan = (TextView)itemView.findViewById(R.id.prequan2);
+            img = (ImageView)itemView.findViewById(R.id.imgclose);
 
         }
 
@@ -58,16 +60,23 @@ public class DialogPreAdapter  extends
     public RecyclerViewHolder onCreateViewHolder(ViewGroup viewGroup,
                                                  int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.cuspre, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.cuspredialog, viewGroup, false);
         return new RecyclerViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolder viewHolder, int position) {
-        PreDialogConstructor ip = listData.get(position);
+    public void onBindViewHolder(final RecyclerViewHolder viewHolder, final int position) {
+        final PreDialogConstructor ip = listData.get(position);
         viewHolder.prename.setText(ip.getTitle());
 
         viewHolder.prequan.setText(ip.getQuanli());
+        viewHolder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.deletePrd(ip.getId());
+                removeItem(position);
+            }
+        });
 
 
     }

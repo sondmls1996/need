@@ -29,7 +29,6 @@ import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.PreConstructor;
 import com.needfood.kh.Database.DataHandle;
-import com.needfood.kh.More.History.HistoryDetail;
 import com.needfood.kh.More.History.OrderHistory;
 import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
@@ -236,6 +235,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
                         JSONObject jo = new JSONObject(response);
                         String code = jo.getString("code");
                         if (code.equals("0")) {
+
                             if (stt.equals("hotdeal9k")) {
                                 saveShare();
                             }
@@ -326,7 +326,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
                         dialog.dismiss();
                         Intent i = new Intent(getApplicationContext(), OrderHistory.class);
                         startActivity(i);
-                        finish();
+
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -352,6 +352,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
                         Intent i = new Intent(getApplicationContext(), StartActivity.class);
                         startActivity(i);
                         finish();
+                        dataHandle.deleteAllPRD();
                     }
                 });
         AlertDialog dialog = builder.create();

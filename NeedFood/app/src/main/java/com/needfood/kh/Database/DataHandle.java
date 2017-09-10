@@ -41,11 +41,9 @@ public class DataHandle extends SQLiteOpenHelper {
     public static final String TYPEMN = "typemn";
     public static final String NOTE = "note";
     public static final String TOTALMN = "totalmn";
-
     public static final String MONEYTB = "money";
     public static final String IDMN = "idmn";
     public static final String NAMEMN = "namemn";
-
     public static final String INFO = "infomation";
     public static final String FULLNAME = "fullName";
     public static final String TYPE = "type";
@@ -84,7 +82,7 @@ public class DataHandle extends SQLiteOpenHelper {
                 CODE + " TEXT," +
                 TITLEPRD + " TEXT," +
                 NOTE + " TEXT," +
-                IDPRD + " TEXT NOT NULL," +
+                IDPRD + " TEXT NOT NULL PRIMARY KEY," +
 
                 TYPEMN + " TEXT" +
 
@@ -208,19 +206,23 @@ public class DataHandle extends SQLiteOpenHelper {
                 new String[]{String.valueOf(id)});
         db.close();
     }
+    public void deleteAllPRD() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLEPRD, null, null);
+        db.close();
+    }
     public List<CheckConstructor> getPrd() {
         List<CheckConstructor> contactList = new ArrayList<CheckConstructor>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLEPRD;
+        String selectQuery = "SELECT * FROM " + TABLEPRD;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        CheckConstructor contact = new CheckConstructor();
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             if (cursor.getCount() > 0) {
                 do {
-
+                    CheckConstructor contact = new CheckConstructor();
                     contact.setQuanli(cursor.getString(0));
                     contact.setPrice(cursor.getString(1));
                     contact.setTickkm(cursor.getString(2));
@@ -235,10 +237,10 @@ public class DataHandle extends SQLiteOpenHelper {
                     // Adding contact to list
                     contactList.add(contact);
                 } while (cursor.moveToNext());
-            }
-        }
-        cursor.close();
 
+            }
+            cursor.close();
+        }
         // return contact list　
         return contactList;
     }
@@ -293,7 +295,7 @@ public class DataHandle extends SQLiteOpenHelper {
     public List<NotiConstructor> getNoti() {
         List<NotiConstructor> contactList = new ArrayList<NotiConstructor>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_NOTI;
+        String selectQuery = "SELECT * FROM " + TABLE_NOTI;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
