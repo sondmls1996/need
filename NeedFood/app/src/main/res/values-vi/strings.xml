@@ -276,6 +276,9 @@
     <string name="vott">Bỏ phiếu</string>
     <string name="ordersuc">Bạn đã đặt hàng thành công. Xin cảm ơn!</string>
     <string name="scanc">Bạn muốn quét loại mã nào?</string>
-    <string name="nx">Nhận xét về sản phẩm</string>
-
+    <string name="nx">Báo cáo về sản phẩm</string>
+    <string name="vote">Đánh giá về sản phẩm</string>
+    <string name="tbao">Bạn vui lòng đăng nhập trước khi sử dụng chức năng này</string>
+    <string name="tkre">Cảm ơn bạn đã báo cáo về cho chúng tôi</string>
+    <string name="tkvote">Cảm ơn bạn đã đánh giá sản phẩm</string>
 </resources>

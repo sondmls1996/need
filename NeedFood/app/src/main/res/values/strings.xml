@@ -275,6 +275,10 @@
     <string name="votship">Vote for Shipper</string>
     <string name="votpro">Vote for Product</string>
     <string name="scanc">What kind of code would you like to scan?</string>
-    <string name="nx">Product Reviews</string>
+    <string name="nx">Product Report</string>
+    <string name="vote">Product Reviews</string>
+    <string name="tbao">Please login before using this feature</string>
+    <string name="tkre">Thank you for reporting to us</string>
+    <string name="tkvote">Thank you for product evaluation</string>
 
 </resources>

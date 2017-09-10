@@ -74,13 +74,13 @@ public class Howtouse extends AppCompatActivity {
         idpr = intent.getStringExtra("idpr");
         idsl = intent.getStringExtra("idsl");
         txtht = (TextView) findViewById(R.id.txtht);
-        nom = (TextView) findViewById(R.id.nom);
+//        nom = (TextView) findViewById(R.id.nom);
         txts = (TextView) findViewById(R.id.txtsp);
         img = (ImageView) findViewById(R.id.imgsp);
         if (htu.equals("")) {
-            nom.setVisibility(View.VISIBLE);
+//             nom.setVisibility(View.VISIBLE);
         } else {
-            nom.setVisibility(View.GONE);
+            //            nom.setVisibility(View.GONE);
             txtht.setText(Html.fromHtml(Html.fromHtml(htu).toString()));
         }
 
