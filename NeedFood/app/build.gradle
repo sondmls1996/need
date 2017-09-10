@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'needkh'
             keyPassword '123456'
-            storeFile file('D:/github/need/keystore/needkh.jks')
+            storeFile file('/Users/admin/Desktop/DESTOP/GITHUB/NF/need/keystore/needkh.jks')
             storePassword '123456'
         }
     }
@@ -54,8 +54,9 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.android.gms:play-services-maps:11.0.1'
     compile 'com.google.firebase:firebase-messaging:11.0.1'
-    compile 'com.google.zxing:core:3.2.1'
-    compile 'me.dm7.barcodescanner:zxing:1.9.4'
+    compile 'com.google.zxing:core:3.1.0'
+    compile 'com.google.zxing:android-integration:3.1.0'
+    compile 'me.dm7.barcodescanner:zxing:1.8.4'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -31,9 +31,7 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize|adjustPan"
         tools:replace="android:icon">
-        <activity android:name=".StartActivity">
-
-        </activity>
+        <activity android:name=".StartActivity"></activity>
         <activity android:name=".News.BestQuality" />
         <activity android:name=".Sugges.RawFood" />
         <activity android:name=".Sugges.Food" />
@@ -102,7 +100,6 @@
             android:name=".More.History.OrderHistory"
             android:parentActivityName=".More.History.MoreHistory" />
 
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -144,7 +141,6 @@
         <activity
             android:name=".More.History.TransferHistory"
             android:parentActivityName=".StartActivity" />
-
         <activity android:name=".More.Contact" />
         <activity android:name=".More.ParentUs" />
         <activity android:name=".News.SellingOut" />
@@ -158,6 +154,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".BarcodeCamera"></activity>
     </application>
 
 </manifest>

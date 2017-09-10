@@ -86,8 +86,9 @@ public class Howtouse extends AppCompatActivity {
 
         Picasso.with(getApplicationContext()).load(simg).into(img);
         txts.setText(titl);
-        addListenerOnButtonClick();
+//        addListenerOnButtonClick();
     }
+
     private class ImageGetter implements Html.ImageGetter {
 
         public Drawable getDrawable(String source) {
@@ -103,63 +104,62 @@ public class Howtouse extends AppCompatActivity {
             if (id == 0) {
                 // prevent a crash if the resource still can't be found
                 return null;
-            }
-            else {
+            } else {
                 Drawable d = getResources().getDrawable(id);
-                d.setBounds(0,0,d.getIntrinsicWidth(),d.getIntrinsicHeight());
+                d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
                 return d;
             }
         }
 
     }
-    public void addListenerOnButtonClick() {
-        ratingbar = (RatingBar) findViewById(R.id.ratingBar1);
-        submit = (Button) findViewById(R.id.button1);
-        //Performing action on Button Click
-        submit.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                //Getting the rating and displaying it on the toast
-                String rating = String.valueOf(ratingbar.getRating());
-                final String link = getResources().getString(R.string.linkvote);
-
-                Map<String, String> map = new HashMap<>();
-                map.put("idProduct", idpr);
-                map.put("accessToken", access);
-                map.put("point", rating);
-
-                Response.Listener<String> response = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        Log.d("EEE", response);
-                        try {
-                            JSONObject jo = new JSONObject(response);
-                            String code = jo.getString("code");
-                            if (code.equals("0")) {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
-
-                            } else if (code.equals("-1")) {
-                                AlertDialog alertDialog = taoMotAlertDialog();
-                                alertDialog.show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                };
-                PostCL get = new PostCL(link, map, response);
-                RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-                que.add(get);
-            }
-
-        });
-    }
+//    public void addListenerOnButtonClick() {
+//        ratingbar = (RatingBar) findViewById(R.id.ratingBar1);
+//        submit = (Button) findViewById(R.id.button1);
+//        //Performing action on Button Click
+//        submit.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+//                //Getting the rating and displaying it on the toast
+//                String rating = String.valueOf(ratingbar.getRating());
+//                final String link = getResources().getString(R.string.linkvote);
+//
+//                Map<String, String> map = new HashMap<>();
+//                map.put("idProduct", idpr);
+//                map.put("accessToken", access);
+//                map.put("point", rating);
+//
+//                Response.Listener<String> response = new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        Log.d("EEE", response);
+//                        try {
+//                            JSONObject jo = new JSONObject(response);
+//                            String code = jo.getString("code");
+//                            if (code.equals("0")) {
+//                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
+//
+//                            } else if (code.equals("-1")) {
+//                                AlertDialog alertDialog = taoMotAlertDialog();
+//                                alertDialog.show();
+//                            } else {
+//                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//                };
+//                PostCL get = new PostCL(link, map, response);
+//                RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+//                que.add(get);
+//            }
+//
+//        });
+//    }
 
     private AlertDialog taoMotAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
