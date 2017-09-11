@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,12 +39,13 @@ public class MenuBrandAdapter extends
         public TextView tvName;
         public TextView tvgia;
         public TextView tvunit;
-
+        public CheckBox cb;
         public TextView stt;
         public ImageView img;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
+            cb = (CheckBox)itemView.findViewById(R.id.cbbrand);
             tvName = (TextView)itemView.findViewById(R.id.namemn);
             tvgia = (TextView)itemView.findViewById(R.id.mnmn);
             tvunit = (TextView)itemView.findViewById(R.id.unitmn);

@@ -123,16 +123,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                         .title(getResources().getString(R.string.loc)));
-                CameraPosition update = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(14).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(update));
 
-                for (int j = 0; j < list.size(); j++) {
-
-                    mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(Double.parseDouble(list.get(j).getLat()), Double.parseDouble(list.get(j).getLo())))
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                            .title(list.get(j).getBrandname().toString()));
-                }
+               getMoney();
             }
         });
 
@@ -178,13 +170,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void showMap(Double latitudee, Double longitudee) {
 
         mMap.clear();
-        if(latitude!=0&&longitude!=0){
-            LatLng sydney = new LatLng(latitude, longitude);
+        if(latitudee!=0&&longitudee!=0){
+            LatLng sydney = new LatLng(latitudee, longitudee);
 
             Marker mylo = mMap.addMarker(new MarkerOptions().position(sydney)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                     .title(getResources().getString(R.string.yourin)));
-            CameraPosition update2 = new CameraPosition.Builder().target(sydney).zoom(14).build();
+            CameraPosition update2 = new CameraPosition.Builder().target(sydney).zoom(10).build();
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(update2));
         }else{
             LatLng vm = new LatLng(21.028663, 105.836454);
