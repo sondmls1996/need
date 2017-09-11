@@ -211,9 +211,9 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                 tvName.setEnabled(true);
                 email_id.setEnabled(true);
                 addr.setEnabled(true);
-                if(birt_id.getText().toString().equals("")){
+                if (birt_id.getText().toString().equals("")) {
                     birt_id.setEnabled(true);
-                }else{
+                } else {
                     birt_id.setEnabled(false);
                 }
                 break;
@@ -268,7 +268,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                         String code = jo.getString("code");
                         Log.d("ABBBB", response);
                         if (code.equals("0")) {
-                            db.updateinfo(namee, emaill, addresss, id, "",birt_id.getText().toString());
+                            db.updateinfo(namee, emaill, addresss, id, "", birt_id.getText().toString());
                             progressDialog.dismiss();
                             tvName.setEnabled(false);
                             email_id.setEnabled(false);
@@ -323,7 +323,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                 public void onResponse(String response) {
                     try {
 
-                        db.updateinfo(namee, emaill, addresss, id, "",birt_id.getText().toString());
+                        db.updateinfo(namee, emaill, addresss, id, "", birt_id.getText().toString());
                         JSONObject jo = new JSONObject(response);
                         String code = jo.getString("code");
                         if (code.equals("0")) {
@@ -336,7 +336,6 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                             finish();
                             startActivity(intent);
                             Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
-                            addInfo();
                         } else if (code.equals("-1")) {
                             AlertDialog alertDialog = taoMotAlertDialog();
                             alertDialog.show();
@@ -385,7 +384,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-
+            avt.setImageBitmap(bmp);
         }
 
     }
@@ -440,7 +439,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                         String code = jo.getString("code");
                         Log.d("ABBBB1", response);
                         if (code.equals("0")) {
-                            db.updateinfo(namee, emaill, addresss, id, "",birt_id.getText().toString());
+                            db.updateinfo(namee, emaill, addresss, id, "", birt_id.getText().toString());
                             progressDialog.dismiss();
                             tvName.setEnabled(false);
                             email_id.setEnabled(false);
@@ -508,7 +507,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
 
 
                     pro.setText(coin + " coins");
-                    db.updateinfo(fullname, email, address, id, coin,birt_id.getText().toString());
+                    db.updateinfo(fullname, email, address, id, coin, birt_id.getText().toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -578,6 +577,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case DATE_DIALOG_ID:

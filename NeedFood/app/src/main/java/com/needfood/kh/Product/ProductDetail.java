@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -113,7 +114,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Button deal, bn;
     OftenAdapter adapterof1, adapterof2, adapterof3;
     TextView tvco, tvcodes, tvprize, tvphi, tvmyphi;
-     TextView txthang;
+    TextView txthang;
     TextView tvpr, namesel, tvnameprd, shipm, tvgia1, tvgia2, dess, tvdv1, tvdv2;
     ArrayList<OftenConstructor> arrof, arrof2, arrof3;
     ArrayList<OftenConstructor> arrq;
@@ -155,6 +156,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     GPSTracker tracker;
     String quantity;
     double latitude, longitude, lat, lo;
+    String dia_comment;
+    ProgressBar prbar;
+    LinearLayout liner;
 
 
     @Override
@@ -169,9 +173,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         txt.setText(getResources().getString(R.string.prddetail));
         ver = (VerticalScrollview) findViewById(R.id.vers);
         listship = new ArrayList<>();
-
+        liner = (LinearLayout) findViewById(R.id.liner);
         btnedc = (Button) findViewById(R.id.bnedit);
-
+        prbar = (ProgressBar) findViewById(R.id.progressbar);
         btnedc.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
@@ -208,19 +212,19 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         precons = new ArrayList<>();
 
         int tong = 0;
-        RecyclerView rcp = (RecyclerView)dialog.findViewById(R.id.rcpre);
-        TextView txttong = (TextView)dialog.findViewById(R.id.txttong);
-        DialogPreAdapter preadap = new DialogPreAdapter(getApplicationContext(),precons);
+        RecyclerView rcp = (RecyclerView) dialog.findViewById(R.id.rcpre);
+        TextView txttong = (TextView) dialog.findViewById(R.id.txttong);
+        DialogPreAdapter preadap = new DialogPreAdapter(getApplicationContext(), precons);
 
         rcp.setAdapter(preadap);
         LinearLayoutManager lnm = new LinearLayoutManager(getApplicationContext());
         rcp.setLayoutManager(lnm);
         listcheck = db.getPrd();
 
-        for (CheckConstructor lu:listcheck){
-            tong = Integer.parseInt(lu.getPrice())*Integer.parseInt(lu.getQuanli())+tong;
-            Log.d("SHOWALL","quanli:"+lu.getQuanli()+"\n"+"price:"+lu.getPrice()+"\n"+"ID:"+lu.getId()+"name:"+lu.getTitle());
-            precons.add(new PreDialogConstructor(lu.getQuanli(),lu.getPrice(),lu.getTitle(),lu.getId(),lu.getTypeid()));
+        for (CheckConstructor lu : listcheck) {
+            tong = Integer.parseInt(lu.getPrice()) * Integer.parseInt(lu.getQuanli()) + tong;
+            Log.d("SHOWALL", "quanli:" + lu.getQuanli() + "\n" + "price:" + lu.getPrice() + "\n" + "ID:" + lu.getId() + "name:" + lu.getTitle());
+            precons.add(new PreDialogConstructor(lu.getQuanli(), lu.getPrice(), lu.getTitle(), lu.getId(), lu.getTypeid()));
 
         }
         txttong.setText(NumberFormat.getNumberInstance(Locale.UK).format(tong));
@@ -240,7 +244,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         super.onDestroy();
 
         db.deleteAllPRD();
-   //     stopService(new Intent(ProductDetail.this, BubbleService.class));
+        //     stopService(new Intent(ProductDetail.this, BubbleService.class));
 
     }
 
@@ -278,7 +282,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             hot = it.getStringExtra("hot");
         }
 
-        txthang = (TextView)findViewById(R.id.txthang);
+        txthang = (TextView) findViewById(R.id.txthang);
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 new BroadcastReceiver() {
                     @Override
@@ -365,10 +369,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(edquan.getText().toString().equals("")){
-                    db.updatePrd(idprd,"1");
-                }else{
-                    db.updatePrd(idprd,edquan.getText().toString());
+                if (edquan.getText().toString().equals("")) {
+                    db.updatePrd(idprd, "1");
+                } else {
+                    db.updatePrd(idprd, edquan.getText().toString());
 
                 }
                 startService(new Intent(ProductDetail.this, BubbleService.class));
@@ -575,9 +579,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
             try {
                 listcheck = db.getPrd();
-                for (CheckConstructor lu:listcheck){
+                for (CheckConstructor lu : listcheck) {
                     JSONObject j1 = new JSONObject();
-                    tong =  Integer.parseInt(lu.getQuanli())*Integer.parseInt(lu.getPrice())+tong;
+                    tong = Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()) + tong;
                     j1.put("quantity", lu.getQuanli());
                     j1.put("price", lu.getPrice());
                     j1.put("tickKM", lu.getTickkm());
@@ -586,7 +590,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     j1.put("barcode", lu.getBarcode());
                     j1.put("code", lu.getCode());
                     j1.put("title", lu.getTitle());
-                    j1.put("money", Integer.parseInt(lu.getQuanli())*Integer.parseInt(lu.getPrice()));
+                    j1.put("money", Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()));
                     j1.put("note", lu.getNote());
                     j1.put("id", lu.getId());
                     j1.put("typeMoneyId", lu.getTypeid());
@@ -650,6 +654,22 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.report) {
+            if (access == null) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.tbao), Toast.LENGTH_SHORT).show();
+            } else {
+                getReport();
+            }
+
+
+            return true;
+        }
+        if (id == R.id.vote) {
+            if (access == null) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.tbao), Toast.LENGTH_SHORT).show();
+            } else {
+                dialogRe();
+            }
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -792,8 +812,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             public void onResponse(String response) {
                 try {
                     view1.setVisibility(View.VISIBLE);
-
+                    prbar.setVisibility(View.GONE);
                     pr1.setVisibility(View.GONE);
+                    liner.setVisibility(View.VISIBLE);
                     Log.d("PDR", response);
 
                     JSONObject jo = new JSONObject(response);
@@ -890,11 +911,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     }
                     db.addPDR(new CheckConstructor("1",
 
-                            priceprd,"false","","",bar,prdcode
-                            ,titl,
-                            "",idprd,tym));
-                  startService(new Intent(ProductDetail.this, BubbleService.class));
-                    Log.d("IDS",titl);
+                            priceprd, "false", "", "", bar, prdcode
+                            , titl,
+                            "", idprd, tym));
+                    startService(new Intent(ProductDetail.this, BubbleService.class));
+                    Log.d("IDS", titl);
 
 
 //                    Intent i = new Intent(getApplicationContext(), BubbleService.class);
@@ -1739,4 +1760,136 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void dialogRe() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.htucontent);
+        dialog.show();
+
+        TextView txtht = (TextView) dialog.findViewById(R.id.txtht);
+        TextView txtvote = (TextView) dialog.findViewById(R.id.txt_votee);
+        final RatingBar ratingbar = (RatingBar) dialog.findViewById(R.id.ratingBar1);
+        EditText edtcoment = (EditText) dialog.findViewById(R.id.dia_comment);
+        txtht.setVisibility(View.GONE);
+        edtcoment.setVisibility(View.GONE);
+        Button bbtn1 = (Button) dialog.findViewById(R.id.button1);
+        bbtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Getting the rating and displaying it on the toast
+                String rating = String.valueOf(ratingbar.getRating());
+                final String link = getResources().getString(R.string.linkvote);
+                final ProgressDialog progressDialog = new ProgressDialog(ProductDetail.this);
+                progressDialog.setMessage(getResources().getString(R.string.wait));
+                progressDialog.show();
+                Map<String, String> map = new HashMap<>();
+                map.put("idProduct", idprd);
+                map.put("accessToken", access);
+                map.put("point", rating);
+                Log.d("checkcc", idprd + "-" + access + "-" + rating);
+                Response.Listener<String> response = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("checkcc", response);
+                        try {
+                            JSONObject jo = new JSONObject(response);
+                            String code = jo.getString("code");
+                            if (code.equals("0")) {
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.tkvote), Toast.LENGTH_SHORT).show();
+                                dialog.cancel();
+
+                            } else if (code.equals("-1")) {
+                                dialog.dismiss();
+                                progressDialog.dismiss();
+                                AlertDialog alertDialog = taoMotAlertDialog();
+                                alertDialog.show();
+                            } else {
+                                dialog.dismiss();
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                };
+                PostCL get = new PostCL(link, map, response);
+                RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+                que.add(get);
+            }
+
+
+        });
+    }
+
+    public void getReport() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.htucontent);
+        dialog.show();
+        TextView txtht = (TextView) dialog.findViewById(R.id.txtht);
+        TextView txtvote = (TextView) dialog.findViewById(R.id.txt_votee);
+        final RatingBar ratingbar = (RatingBar) dialog.findViewById(R.id.ratingBar1);
+        final EditText edtcoment = (EditText) dialog.findViewById(R.id.dia_comment);
+        ratingbar.setVisibility(View.GONE);
+        txtvote.setVisibility(View.GONE);
+
+        Button bbtn1 = (Button) dialog.findViewById(R.id.button1);
+        bbtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(ProductDetail.this);
+                progressDialog.setMessage(getResources().getString(R.string.wait));
+                progressDialog.show();
+                String link = getResources().getString(R.string.linkreport);
+                dia_comment = edtcoment.getText().toString();
+                if (dia_comment.equals("")) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
+                } else {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("idProduct", idprd);
+                    map.put("accessToken", access);
+                    map.put("comment", dia_comment);
+                    Response.Listener<String> response = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                Log.d("checkcc", response);
+                                JSONObject jo = new JSONObject(response);
+                                String code = jo.getString("code");
+                                if (code.equals("0")) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.tkre), Toast.LENGTH_SHORT).show();
+                                    dialog.cancel();
+
+                                } else if (code.equals("-1")) {
+                                    dialog.dismiss();
+                                    progressDialog.dismiss();
+                                    AlertDialog alertDialog = taoMotAlertDialog();
+                                    alertDialog.show();
+                                } else {
+                                    dialog.dismiss();
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    PostCL po = new PostCL(link, map, response);
+                    RequestQueue re = Volley.newRequestQueue(getApplicationContext());
+                    re.add(po);
+                }
+            }
+        });
+    }
 }
