@@ -49,10 +49,11 @@
     <string name="item">Mặt hàng</string>
     <string name="where">Vị trí shipper</string>
     <string name="menu">Thực đơn</string>
-    <string name="cancel">Hủy</string>
+    <string name="cancel">Hủy bỏ</string>
     <string name="oldp">Mật khẩu cũ</string>
-    <string name="newp">Mật khẩu mới</string>
+    <string name="newp">Nhập mật khẩu mới</string>
     <string name="conpass">Xác nhận mật khẩu</string>
+    <string name="repass">Nhập lại mật khẩu mới</string>
     <string name="comment">Bình luận</string>
     <string name="prd">Sản phẩm\u0020</string>
     <string name="er">Lỗi</string>
@@ -233,7 +234,7 @@
     <string name="loc">Vị trí của bạn</string>
     <string name="fn">Họ và tên</string>
     <string name="em">Email</string>
-    <string name="pa">Mật khẩu</string>
+    <string name="pa">Mật khẩu cần ít nhất 6 ký tự</string>
     <string name="cpas">Xác nhận lại mật khẩu</string>
     <string name="ad">Địa chỉ</string>
     <string name="cust">Khách hàng</string>

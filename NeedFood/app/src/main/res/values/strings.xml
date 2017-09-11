@@ -9,7 +9,7 @@
     <string name="dissmiss">Dissmiss to use time shipping</string>
     <string name="food">Food</string>
     <string name="acid">Account ID\u0020</string>
-    <string name="emailc">Email contact</string>
+    <string name="emailc">Email address</string>
     <string name="phone">Mobile phone\u0020</string>
     <string name="address">Address contact\u0020</string>
     <string name="save">Save</string>
@@ -49,8 +49,9 @@
     <string name="oldp">Old password</string>
     <string name="shipmn">Money ship</string>
     <string name="shipmn2">Money ship:</string>
-    <string name="newp">New password</string>
+    <string name="newp">Enter new password</string>
     <string name="conpass">Confirm password</string>
+    <string name="repass">Reenter password</string>
     <string name="comment">Comment</string>
     <string name="prd">Pruduct\u0020</string>
     <string name="er">Error</string>
@@ -232,7 +233,7 @@
     <string name="loc">Your Location</string>
     <string name="fn">Full Name</string>
     <string name="em">Email</string>
-    <string name="pa">Password</string>
+    <string name="pa">Password requires at least 6 characters</string>
     <string name="cpas">Confirm Password</string>
     <string name="ad">Address</string>
     <string name="selling">Selling out</string>
@@ -263,7 +264,7 @@
     <string name="code3">Promotional code expires</string>
     <string name="code4">The number of promotional offers has run out</string>
     <string name="supmn">Supported by Mantan Vietnam</string>
-    <string name="sex">Sex</string>
+    <string name="sex">Gender</string>
     <string name="man">Man</string>
     <string name="wm">Wonman</string>
     <string name="lh">Flexible</string>

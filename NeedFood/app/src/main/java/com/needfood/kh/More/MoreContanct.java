@@ -58,11 +58,11 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
 
     TextView change, changepass, save, pro;
     ImageView avt;
-    EditText name_id, email_id, phone_id, pay, tvName, addr, sex_id, birt_id;
+    EditText name_id, email_id, phone_id,tvName, addr, sex_id, birt_id;
     DataHandle db;
-    String id_name, email, phone, coin;
+    String email;
     List<InfoConstructor> list;
-    String fname, fone, address, id, token, pass;
+    String fname, fone, address, id, token;
     Session ses;
     boolean check = false;
     int RESULT_LOAD_IMAGE = 1;
@@ -177,18 +177,6 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         save.setOnClickListener(this);
         save.setVisibility(View.GONE);
         avt.setOnClickListener(this);
-
-    }
-
-    public void ReplaceFrag(Class fragmentClass) {
-        Fragment fragment = null;
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.contentContainer, fragment).commit();
 
     }
 
