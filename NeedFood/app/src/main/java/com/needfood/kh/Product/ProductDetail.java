@@ -1013,8 +1013,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             mn = lu.getMn();
                         }
 
-                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
+                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" +
+                                jaimg.getString(0), prd.getString("title"),
+                                prd.getString("price"), mn, prd.getString("nameUnit"),
+                                false, prd.getString("id"), prd.getString("code"),
                                 "", prd.getString("id"), prd.getString("moneyShip"), typemn));
 
 

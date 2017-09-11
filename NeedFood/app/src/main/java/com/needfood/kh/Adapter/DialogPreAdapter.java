@@ -1,6 +1,7 @@
 package com.needfood.kh.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.needfood.kh.Constructor.PreDialogConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
+import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.SupportClass.ChangeTimestamp;
 
 import java.util.ArrayList;
@@ -75,6 +77,7 @@ public class DialogPreAdapter  extends
             public void onClick(View v) {
                 db.deletePrd(ip.getId());
                 removeItem(position);
+                context.startService(new Intent(context, BubbleService.class));
             }
         });
 
