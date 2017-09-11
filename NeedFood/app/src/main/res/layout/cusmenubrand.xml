@@ -59,39 +59,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+
             android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray2"
-                android:layout_marginRight="7dp"
-                android:textStyle="bold"
-                android:text="Quanlity"
-                />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginRight="5dp"
 
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/plustb"
-                android:background="@color/gray"
-                />
+
             <EditText
                 android:layout_width="100dp"
                 android:padding="3dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/commentedt"
                 />
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_marginLeft="5dp"
-                android:layout_height="20dp"
-                android:src="@drawable/removeb"
-                android:layout_gravity="center_vertical"
-                android:background="@color/gray"></ImageView>
+
 
         </LinearLayout>
 
