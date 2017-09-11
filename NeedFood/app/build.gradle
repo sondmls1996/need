@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'needkh'
             keyPassword '123456'
-            storeFile file('/Users/admin/Desktop/DESTOP/GITHUB/NF/need/keystore/needkh.jks')
+            storeFile file('D:/github/need/keystore/needkh.jks')
             storePassword '123456'
         }
     }
