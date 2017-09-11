@@ -58,7 +58,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallback {
+public class HistoryDetail extends AppCompatActivity {
     String js, mn;
     RecyclerView rchis;
     TextView txtgia, txtdv, texttime, textship, txttax, txtadr, textshiptime, txttotal;
@@ -192,16 +192,31 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
     }
 
     private void dialogShip() {
-        Dialog dialog = new Dialog(this);
+        Dialog dialog = new Dialog(HistoryDetail.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.maplayout);
         dialog.show();
-        MapsInitializer.initialize(this);
-
         MapView mMapView = (MapView) dialog.findViewById(R.id.mapView);
+        MapsInitializer.initialize(HistoryDetail.this);
+
+
         mMapView.onCreate(dialog.onSaveInstanceState());
-        mMapView.onResume();// needed to get the map to display immediately
-        mMapView.getMapAsync(this);
+        mMapView.onResume();
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(final GoogleMap googleMap) {
+                mMap = googleMap;
+                LatLng latLng = new LatLng(lat, lo);
+
+                if (mMap != null) {
+                    mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker()).title(fullnamee).snippet("Shipper"));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+                    mMap.getUiSettings().setZoomControlsEnabled(true);
+// Zoom in, animating the camera.
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
+                }
+            }
+        });
 
     }
 
@@ -291,20 +306,6 @@ public class HistoryDetail extends AppCompatActivity implements OnMapReadyCallba
         });
 
 
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        LatLng latLng = new LatLng(lat, lo);
-
-        if (mMap != null) {
-            mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker()).title(fullnamee).snippet("Shipper"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
-
-// Zoom in, animating the camera.
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
-        }
     }
 
     private void getLocalShipper() {

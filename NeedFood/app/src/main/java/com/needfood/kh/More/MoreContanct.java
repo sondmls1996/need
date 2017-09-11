@@ -331,7 +331,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                             tvName.setEnabled(false);
                             email_id.setEnabled(false);
                             addr.setEnabled(false);
-
+                            addInfo();
                             Intent intent = getIntent();
                             finish();
                             startActivity(intent);
