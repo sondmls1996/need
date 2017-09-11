@@ -21,7 +21,7 @@ public class MoreHistory extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_history);
-        ImageView imgb = (ImageView)findViewById(R.id.immgb);
+        ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,18 +42,6 @@ public class MoreHistory extends AppCompatActivity implements View.OnClickListen
         histr = (LinearLayout) findViewById(R.id.histr);
         histr.setOnClickListener(this);
     }
-
-    public void ReplaceFrag(Class fragmentClass) {
-        Fragment fragment = null;
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.contentContainer, fragment).commit();
-    }
-
 
     @Override
     public void onClick(View v) {

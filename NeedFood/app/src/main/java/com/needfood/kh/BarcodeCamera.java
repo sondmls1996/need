@@ -2,23 +2,48 @@ package com.needfood.kh;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.Spanned;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.zxing.Result;
+import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Product.ProductDetail;
+import com.needfood.kh.Service.BubbleService;
+import com.needfood.kh.SupportClass.PostCL;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -37,37 +62,8 @@ public class BarcodeCamera extends AppCompatActivity implements ZXingScannerView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_qrcamera);
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         setContentView(mScannerView);
-//        qrCodeReaderView = (QRCodeReaderView) findViewById(R.id.qrdecoderview);
-//        qrCodeReaderView.setOnQRCodeReadListener(this);
-//        tvgia1 = (TextView) findViewById(R.id.pr1);
-//        txtcode = (TextView) findViewById(R.id.txtcode);
-//        tvnameprd = (TextView) findViewById(R.id.tvname2);
-//        rl = (RelativeLayout) findViewById(R.id.rlmain);
-//        rl.setVisibility(View.GONE);
-//        rl.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent it = new Intent(getApplicationContext(), ProductDetail.class);
-//                it.putExtra("idprd", idsp);
-//                startActivity(it);
-//                finish();
-//            }
-//        });
-//        tvgia2 = (TextView) findViewById(R.id.pr2);
-//        tvdv1 = (TextView) findViewById(R.id.donvi1);
-//        dess = (TextView) findViewById(R.id.des);
-//
-//        tvdv2 = (TextView) findViewById(R.id.donvi2);
-//        imgprd = (ImageView) findViewById(R.id.imgnews);
-//        view1 = (LinearLayout) findViewById(R.id.v1);
-//        pr1 = (ProgressBar) findViewById(R.id.prg1);
-//        // Use this function to enable/disable decoding
-//        qrCodeReaderView.setQRDecodingEnabled(true);
-//
-
     }
 
 
@@ -86,24 +82,13 @@ public class BarcodeCamera extends AppCompatActivity implements ZXingScannerView
 
     @Override
     public void handleResult(Result rawResult) {
-        // Do something with the result here
-        // Log.v("tag", rawResult.getText()); // Prints scan results
-        // Log.v("tag", rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
 
         String text = rawResult.getText();
         if (!text.equals("")) {
-//            txtcode.setVisibility(View.GONE);
             getProductDT(text);
         } else {
-//            txtcode.setVisibility(View.VISIBLE);
-//            view1.setVisibility(View.GONE);
             diaglog();
         }
-
-//        onBackPressed();
-
-        // If you would like to resume scanning, call this method below:
-        //mScannerView.resumeCameraPreview(this);
     }
 
     public void diaglog() {
@@ -122,12 +107,38 @@ public class BarcodeCamera extends AppCompatActivity implements ZXingScannerView
         alertDialog.show();
     }
 
-    //}
-    private void getProductDT(final String idsp) {
-        Intent it = new Intent(getApplicationContext(), ProductDetail.class);
-        it.putExtra("idprd", idsp);
-        it.putExtra("icheck", "barcode");
-        startActivity(it);
-        finish();
+    public void getProductDT(final String idsp) {
+        final String link = getResources().getString(R.string.linkprdde);
+        Map<String, String> map = new HashMap<>();
+        map.put("idProduct", idsp);
+        map.put("type", "barcode");
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.length() > 3 && response != null) {
+                    Intent it = new Intent(getApplicationContext(), ProductDetail.class);
+                    it.putExtra("idprd", idsp);
+                    it.putExtra("icheck", "barcode");
+                    startActivity(it);
+                    finish();
+                } else {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(BarcodeCamera.this);
+                    dialog.setTitle(getResources().getString(R.string.notif));
+                    dialog.setMessage(getResources().getString(R.string.xl)).setCancelable(false).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mScannerView.setResultHandler(BarcodeCamera.this); // Register ourselves as a handler for scan results.
+                            mScannerView.startCamera();
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = dialog.create();
+                    alertDialog.show();
+                }
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
     }
 }

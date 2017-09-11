@@ -157,6 +157,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String quantity;
     double latitude, longitude, lat, lo;
     String dia_comment;
+    ProgressBar prbar;
+    LinearLayout liner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,9 +173,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         txt.setText(getResources().getString(R.string.prddetail));
         ver = (VerticalScrollview) findViewById(R.id.vers);
         listship = new ArrayList<>();
-
+        liner = (LinearLayout) findViewById(R.id.liner);
         btnedc = (Button) findViewById(R.id.bnedit);
-
+        prbar = (ProgressBar) findViewById(R.id.progressbar);
         btnedc.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
@@ -652,7 +655,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         int id = item.getItemId();
         if (id == R.id.report) {
             if (access == null) {
-                Toast.makeText(getApplicationContext(),getResources().getString(R.string.tbao),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.tbao), Toast.LENGTH_SHORT).show();
             } else {
                 getReport();
             }
@@ -662,7 +665,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
         if (id == R.id.vote) {
             if (access == null) {
-               Toast.makeText(getApplicationContext(),getResources().getString(R.string.tbao),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.tbao), Toast.LENGTH_SHORT).show();
             } else {
                 dialogRe();
             }
@@ -809,8 +812,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             public void onResponse(String response) {
                 try {
                     view1.setVisibility(View.VISIBLE);
-
+                    prbar.setVisibility(View.GONE);
                     pr1.setVisibility(View.GONE);
+                    liner.setVisibility(View.VISIBLE);
                     Log.d("PDR", response);
 
                     JSONObject jo = new JSONObject(response);
