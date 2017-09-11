@@ -35,7 +35,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,14 +68,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         geocoder = new Geocoder(this, Locale.getDefault());
 
-         // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-
-//        String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-//        String city = addresses.get(0).getLocality();
-//        String state = addresses.get(0).getAdminArea();
-//        String country = addresses.get(0).getCountryName();
-//        String postalCode = addresses.get(0).getPostalCode();
-//        String knownName = addresses.get(0).getFeatureName();
         list = new ArrayList<>();
         tracker = new GPSTracker(this);
         if (!tracker.canGetLocation()) {
@@ -95,25 +86,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng vm = new LatLng(21.028663, 105.836454);
-
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(vm,15);
-        mMap.animateCamera(update,2000,null);
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         mMap = googleMap;
+
+
+
         // mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(latitude, longitude);
 
-        Marker mylo = mMap.addMarker(new MarkerOptions().position(sydney)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                .title(getResources().getString(R.string.yourin)));
-        CameraPosition update2 = new CameraPosition.Builder().target(sydney).zoom(14).build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(update2));
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(final Marker marker) {
@@ -135,11 +114,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return true;
             }
         });
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
+            public void onMapClick(LatLng latLng) {
+                mMap.clear();
+                latitude = latLng.latitude;
+                longitude = latLng.longitude;
 
-                return false;
+                mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                        .title(getResources().getString(R.string.loc)));
+                CameraPosition update = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(14).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(update));
+
+                for (int j = 0; j < list.size(); j++) {
+
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(Double.parseDouble(list.get(j).getLat()), Double.parseDouble(list.get(j).getLo())))
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                            .title(list.get(j).getBrandname().toString()));
+                }
             }
         });
 
@@ -183,11 +176,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void showMap(Double latitudee, Double longitudee) {
-        LatLng yourlocal = new LatLng(latitudee, longitudee);
+
         mMap.clear();
-        mMap.addMarker(new MarkerOptions().position(yourlocal).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(getResources().getString(R.string.loc))).showInfoWindow();
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(yourlocal).zoom(14).build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        if(latitude!=0&&longitude!=0){
+            LatLng sydney = new LatLng(latitude, longitude);
+
+            Marker mylo = mMap.addMarker(new MarkerOptions().position(sydney)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                    .title(getResources().getString(R.string.yourin)));
+            CameraPosition update2 = new CameraPosition.Builder().target(sydney).zoom(14).build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(update2));
+        }else{
+            LatLng vm = new LatLng(21.028663, 105.836454);
+            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(vm,7);
+            mMap.animateCamera(update,1000,null);
+        }
+
 
         for (int j = 0; j < list.size(); j++) {
 
@@ -198,27 +202,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     );
 
         }
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                mMap.clear();
-                latitude = latLng.latitude;
-                longitude = latLng.longitude;
 
-                mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                        .title(getResources().getString(R.string.loc)));
-                CameraPosition update = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(14).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(update));
-
-                for (int j = 0; j < list.size(); j++) {
-
-                    mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(Double.parseDouble(list.get(j).getLat()), Double.parseDouble(list.get(j).getLo())))
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                            .title(list.get(j).getBrandname().toString()));
-                }
-            }
-        });
 
     }
 
