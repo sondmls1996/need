@@ -62,7 +62,6 @@ public class QRCamera extends AppCompatActivity implements ZXingScannerView.Resu
         String text = rawResult.getText();
         if (!text.equals("")) {
 
-
             Log.d("MMMM", text);
             if (text.contains("{idProduct=")) {
                 text = text.substring(11, text.length() - 1);
