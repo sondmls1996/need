@@ -1,26 +1,23 @@
-package com.needfood.kh;
+package com.needfood.kh.Barcode;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.google.zxing.Result;
-import com.google.zxing.qrcode.QRCodeWriter;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Product.ProductDetail;
+import com.needfood.kh.R;
 
 import java.util.List;
 

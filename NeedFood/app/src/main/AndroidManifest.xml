@@ -91,7 +91,7 @@
             android:name=".Login.ChangePass"
             android:parentActivityName=".More.MoreContanct" />
         <activity
-            android:name=".QRCamera"
+            android:name=".Barcode.QRCamera"
             android:parentActivityName=".StartActivity" />
         <activity
             android:name=".More.History.MoreHistory"
@@ -154,7 +154,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BarcodeCamera"></activity>
+        <activity android:name=".Barcode.BarcodeCamera"></activity>
     </application>
 
 </manifest>

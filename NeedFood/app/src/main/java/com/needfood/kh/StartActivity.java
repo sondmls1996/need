@@ -39,6 +39,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Adapter.SearchAdapter;
+import com.needfood.kh.Barcode.BarcodeCamera;
+import com.needfood.kh.Barcode.QRCamera;
 import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.SearchConstructor;

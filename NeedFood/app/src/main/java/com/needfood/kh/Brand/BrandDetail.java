@@ -37,7 +37,7 @@ import com.needfood.kh.Constructor.SearchConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Maps.MapsActivity;
 import com.needfood.kh.Product.ProductDetail;
-import com.needfood.kh.QRCamera;
+import com.needfood.kh.Barcode.QRCamera;
 import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.SupportClass.PostCL;
@@ -88,7 +88,7 @@ public class BrandDetail extends AppCompatActivity {
                     }
                 }, new IntentFilter(BubbleService.ACTION_LOCATION_BROADCAST)
         );
-
+        startService(new Intent(BrandDetail.this, BubbleService.class));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         tvname = (TextView) findViewById(R.id.brname);
