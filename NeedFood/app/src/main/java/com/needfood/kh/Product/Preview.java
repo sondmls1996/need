@@ -347,6 +347,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         dataHandle.deleteInfo();
+                        dataHandle.deleteAll();
                         ses = new Session(getBaseContext());
                         ses.setLoggedin(false);
                         Intent i = new Intent(getApplicationContext(), StartActivity.class);

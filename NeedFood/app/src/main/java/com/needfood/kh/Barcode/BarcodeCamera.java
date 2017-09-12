@@ -1,15 +1,10 @@
-package com.needfood.kh;
+package com.needfood.kh.Barcode;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.Spanned;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -20,29 +15,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.share.Sharer;
-import com.facebook.share.model.ShareHashtag;
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.ShareDialog;
 import com.google.zxing.Result;
-import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Product.ProductDetail;
-import com.needfood.kh.Service.BubbleService;
+import com.needfood.kh.R;
 import com.needfood.kh.SupportClass.PostCL;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;

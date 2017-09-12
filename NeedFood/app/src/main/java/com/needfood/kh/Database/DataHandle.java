@@ -12,6 +12,7 @@ import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.NotiConstructor;
+import com.needfood.kh.Constructor.ShareConstructor;
 import com.needfood.kh.SupportClass.DBHandle;
 
 import java.util.ArrayList;
@@ -28,7 +29,10 @@ public class DataHandle extends SQLiteOpenHelper {
     public static final int DB_VERSION = 1;
 
     public static final String TABLEPRD = "tableprd";
-
+    public static final String TABLESHARE = "tbshare";
+    public static final String IDS = "idshare";
+    public static final String DAYSHARE = "dayshare";
+    public static final String STTSHARE = "sttshare";
     public static final String IDPRD = "idprd";
     public static final String TITLEPRD = "title";
     public static final String PRICE = "price";
@@ -72,6 +76,11 @@ public class DataHandle extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        String CREATE_TB_SHARE = "CREATE TABLE " + TABLESHARE + "(" +
+                IDS + " TEXT," +
+                DAYSHARE + " TEXT," +
+                STTSHARE + " TEXT" +
+                ");";
         String CREATE_TABLE_CART = "CREATE TABLE " + TABLEPRD + "(" +
                 QUAN + " TEXT," +
                 PRICE + " TEXT," +
@@ -136,6 +145,7 @@ public class DataHandle extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS" + CHECK_LAN);
         db.execSQL("DROP TABLE IF EXISTS" + TABLE_NOTI);
         db.execSQL("DROP TABLE IF EXISTS" + TABLEPRD);
+        db.execSQL("DROP TABLE IF EXISTS" + TABLESHARE);
         onCreate(db);
     }
     public void addPDR(CheckConstructor listu) {
@@ -158,6 +168,17 @@ public class DataHandle extends SQLiteOpenHelper {
         db.insert(TABLEPRD, null, values);
         db.close(); // Closing database connection
     }
+    public void addShare(ShareConstructor listu) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(IDS, listu.getIds()); // Contact Name
+        values.put(DAYSHARE, listu.getDays()); // Contact Phone
+        values.put(STTSHARE, listu.getSttshare()); // Contact Phone
+
+        db.insert(TABLESHARE, null, values);
+        db.close(); // Closing database connection
+    }
     public boolean updatePrd(String id,String qua) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -166,6 +187,16 @@ public class DataHandle extends SQLiteOpenHelper {
         db.update(TABLEPRD, values, IDPRD + " = ?", new String[]{id});
         return true;
     }
+    public boolean updateShare(String id,String days,String stt) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DAYSHARE, days);
+        values.put(STTSHARE, stt);
+
+        db.update(TABLESHARE, values, IDS + " = ?", new String[]{id});
+        return true;
+    }
+
     public List<CheckConstructor> getPRDID(String id) {
         List<CheckConstructor> contactList = new ArrayList<CheckConstructor>();
         // Select All Query
@@ -487,7 +518,10 @@ public class DataHandle extends SQLiteOpenHelper {
 
     public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(MONEYTB, null, null);
+
+        db.delete(TABLEPRD,null,null);
+        db.delete(TABLE_NOTI,null,null);
+
         db.close();
     }
 

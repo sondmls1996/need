@@ -175,6 +175,7 @@ public class CommentBrand extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         db.deleteInfo();
+                        db.deleteAll();
                         ses = new Session(getActivity());
                         ses.setLoggedin(false);
                         Intent i = new Intent(getActivity(), StartActivity.class);

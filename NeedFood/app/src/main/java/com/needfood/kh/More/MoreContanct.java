@@ -522,6 +522,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         db.deleteInfo();
+                        db.deleteAll();
                         ses = new Session(getBaseContext());
                         ses.setLoggedin(false);
                         Intent i = new Intent(getApplicationContext(), StartActivity.class);

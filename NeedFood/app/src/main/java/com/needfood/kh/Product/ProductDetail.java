@@ -1013,8 +1013,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             mn = lu.getMn();
                         }
 
-                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                prd.getString("price"), mn, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
+                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" +
+                                jaimg.getString(0), prd.getString("title"),
+                                prd.getString("price"), mn, prd.getString("nameUnit"),
+                                false, prd.getString("id"), prd.getString("code"),
                                 "", prd.getString("id"), prd.getString("moneyShip"), typemn));
 
 
@@ -1654,6 +1656,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         db.deleteInfo();
+                        db.deleteAll();
                         ses = new Session(getBaseContext());
                         ses.setLoggedin(false);
                         Intent i = new Intent(getApplicationContext(), StartActivity.class);

@@ -1,7 +1,6 @@
 package com.needfood.kh.Brand;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,13 +15,11 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Adapter.MenuBrandAdapter;
 import com.needfood.kh.Constructor.ListMN;
-import com.needfood.kh.Constructor.MenuBrandConstructor;
+import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
-import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
 import com.needfood.kh.SupportClass.EndlessScroll;
 import com.needfood.kh.SupportClass.PostCL;
-import com.needfood.kh.SupportClass.RecyclerItemClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,7 +45,7 @@ public class MenuBrand extends Fragment {
     String money;
     EndlessScroll endlessScroll;
     MenuBrandAdapter adapter1, adapter2, adapter3;
-    ArrayList<MenuBrandConstructor> arr1, arr2, arr3;
+    ArrayList<OftenConstructor> arr1, arr2, arr3;
 
     public MenuBrand() {
         // Required empty public constructor
@@ -69,19 +66,7 @@ public class MenuBrand extends Fragment {
         adapter1 = new MenuBrandAdapter(getContext(), arr1);
         rc1.setAdapter(adapter1);
         rc1.setLayoutManager(layoutManager);
-        rc1.addOnItemTouchListener(
-                new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
 
-                        Intent it = new Intent(getApplicationContext(), ProductDetail.class);
-                        it.putExtra("idprd", arr1.get(position).getId());
-                        startActivity(it);
-
-                        // TODO Handle item click
-                    }
-                })
-        );
         endlessScroll = new EndlessScroll(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -114,8 +99,9 @@ public class MenuBrand extends Fragment {
                         for (ListMN lu : list) {
                             money = lu.getMn();
                         }
-                        arr1.add(new MenuBrandConstructor(prd.getString("title"), "http://needfood.webmantan.com" + jaimg.getString(0),
-                                prd.getString("price"), prd.getString("priceOther"), money, prd.getString("id"), prd.getString("nameUnit")));
+                        arr1.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
+                                prd.getString("price"), money, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
+                                "", prd.getString("id"), prd.getString("moneyShip"), prd.getString("typeMoneyId")));
                     }
                     adapter1.notifyDataSetChanged();
                     getupdateSellerView();

@@ -2,9 +2,13 @@ package com.needfood.kh.Brand;
 
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -33,8 +37,9 @@ import com.needfood.kh.Constructor.SearchConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Maps.MapsActivity;
 import com.needfood.kh.Product.ProductDetail;
-import com.needfood.kh.QRCamera;
+import com.needfood.kh.Barcode.QRCamera;
 import com.needfood.kh.R;
+import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.ViewAdapter;
 
@@ -42,16 +47,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.needfood.kh.R.menu.main;
 
 public class BrandDetail extends AppCompatActivity {
     TabLayout tabLayout;
-    TextView tvname,tvadr,bran,tvp;
+    TextView tvname,tvadr,bran,tvp,txthang;
     ViewPager viewPager;
     ListView lvs;
     String mns;
@@ -70,6 +77,18 @@ public class BrandDetail extends AppCompatActivity {
         setContentView(R.layout.activity_brand_detail);
         Intent it = getIntent();
         idsl = it.getStringExtra("ids");
+        txthang = (TextView) findViewById(R.id.txthang);
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        int tong = intent.getIntExtra(BubbleService.INTENTNAME, 0);
+
+                        txthang.setText(NumberFormat.getNumberInstance(Locale.UK).format(tong));
+                    }
+                }, new IntentFilter(BubbleService.ACTION_LOCATION_BROADCAST)
+        );
+        startService(new Intent(BrandDetail.this, BubbleService.class));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         tvname = (TextView) findViewById(R.id.brname);
