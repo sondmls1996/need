@@ -212,7 +212,6 @@ public class HistoryDetail extends AppCompatActivity {
                     mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker()).title(fullnamee).snippet("Shipper"));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
                     mMap.getUiSettings().setZoomControlsEnabled(true);
-// Zoom in, animating the camera.
                     mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
                 }
             }
