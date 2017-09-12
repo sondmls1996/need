@@ -131,6 +131,7 @@ public class Setting extends AppCompatActivity {
                     //write your code here what to do when user clicks on facebook logout
                     ses.setLoggedin(false);
                     db.deleteInfo();
+                    db.deleteAll();
                     Intent it = new Intent(getApplicationContext(), StartActivity.class);
                     startActivity(it);
                     finish();
@@ -218,6 +219,7 @@ public class Setting extends AppCompatActivity {
 
                     progressDialog.dismiss();
                     db.deleteInfo();
+                    db.deleteAll();
                     ses.setLoggedin(false);
                     Intent intent = new Intent(getApplicationContext(), StartActivity.class);
                     startActivity(intent);

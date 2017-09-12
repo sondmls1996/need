@@ -8,31 +8,20 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.StartActivity;
-import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Howtouse extends AppCompatActivity {
     String htu, simg;
@@ -128,6 +117,7 @@ public class Howtouse extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         db.deleteInfo();
+                        db.deleteAll();
                         ses = new Session(getBaseContext());
                         ses.setLoggedin(false);
                         Intent i = new Intent(getApplicationContext(), StartActivity.class);
