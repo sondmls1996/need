@@ -40,7 +40,7 @@ public class SellingOut extends AppCompatActivity {
     long now;
     int check = 0;
     List<SellingConstructor> arr;
-
+    long endt = 0;
     EndlessScroll endlessScroll;
     SellingOutAdapter adapter;
     LinearLayoutManager layoutManager;
@@ -76,6 +76,8 @@ public class SellingOut extends AppCompatActivity {
                         Intent it = new Intent(getApplicationContext(), ProductDetail.class);
                         it.putExtra("idprd", arr.get(position).getIdprd());
                         it.putExtra("sell","true");
+                        it.putExtra("now",now);
+                        it.putExtra("end",endt);
                         startActivity(it);
                         // TODO Handle item click
                     }
@@ -120,6 +122,7 @@ public class SellingOut extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d("aaza", response + "");
+
                 try {
                     JSONArray ja = new JSONArray(response);
                     if (ja.length() == 0) {
@@ -138,11 +141,12 @@ public class SellingOut extends AppCompatActivity {
                             JSONArray imgs = prd.getJSONArray("images");
                             JSONObject vote = prd.getJSONObject("vote");
                             JSONObject  sell = prd.getJSONObject("sellingOut");
+                            endt = sell.getLong("timeEnd");
                             arr.add(new SellingConstructor("http://needfood.webmantan.com" + imgs.getString(0), prd.getString("id"),
                                     prd.getString("idSeller"),
                                     prd.getString("title"), prd.getString("nameSeller"), sell.getString("price")
                                     , "", prd.getString("price"), vote.getString("point"), prd.getString("nameUnit"),
-                                    prd.getString("typeMoneyId"),sell.getLong("timeEnd"),now));
+                                    prd.getString("typeMoneyId"),endt,now));
                         }
                         adapter.notifyDataSetChanged();
 

@@ -147,7 +147,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ChangeTimestamp change;
     TextView vote, inven;
     String point;
-    TextView nameseller, exp, txtof, txtbrand, txtcomp;
+    TextView txtsel,nameseller, exp, txtof, txtbrand, txtcomp;
     LinearLayout lnpro;
     boolean checkclick = false;
     String sex, birthday;
@@ -159,6 +159,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String dia_comment;
     ProgressBar prbar;
     LinearLayout liner;
+
 
 
     @Override
@@ -275,8 +276,17 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         view1 = (LinearLayout) findViewById(R.id.v1);
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
+        txtsel = (TextView)findViewById(R.id.seltime);
         if (it.hasExtra("sell")) {
             sttsell = it.getStringExtra("sell");
+            txtsel.setVisibility(View.VISIBLE);
+
+            long now = it.getLongExtra("now",0);
+            long end = it.getLongExtra("end",0);
+            long left = end-now;
+            long giocl = left / 3600;
+            long phutcl = (left % 3600) / 60;
+            txtsel.setText(giocl+":"+phutcl);
         }
         if (it.hasExtra("hot")) {
             hot = it.getStringExtra("hot");
@@ -313,23 +323,23 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         next = (ImageView) findViewById(R.id.nextt);
         down = (ImageView) findViewById(R.id.downn);
         lnprd = (LinearLayout) findViewById(R.id.prd);
-        lnprd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkclick == false) {
-                    checkclick = true;
-                    down.setVisibility(View.VISIBLE);
-                    next.setVisibility(View.GONE);
-                    lnpro.setVisibility(View.VISIBLE);
-                } else {
-                    checkclick = false;
-                    down.setVisibility(View.GONE);
-                    lnpro.setVisibility(View.GONE);
-                    next.setVisibility(View.VISIBLE);
-                }
-
-            }
-        });
+//        lnprd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (checkclick == false) {
+//                    checkclick = true;
+//                    down.setVisibility(View.VISIBLE);
+//                    next.setVisibility(View.GONE);
+//                    lnpro.setVisibility(View.VISIBLE);
+//                } else {
+//                    checkclick = false;
+//                    down.setVisibility(View.GONE);
+//                    lnpro.setVisibility(View.GONE);
+//                    next.setVisibility(View.VISIBLE);
+//                }
+//
+//            }
+//        });
 
         imgshare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -649,9 +659,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.report) {
             if (access == null) {
@@ -659,19 +666,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             } else {
                 getReport();
             }
-
-
             return true;
         }
-        if (id == R.id.vote) {
-            if (access == null) {
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.tbao), Toast.LENGTH_SHORT).show();
-            } else {
-                dialogRe();
-            }
 
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 

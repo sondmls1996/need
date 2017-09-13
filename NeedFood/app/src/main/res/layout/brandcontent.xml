@@ -16,7 +16,33 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/fbot"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+
+            <Button
+                android:id="@+id/bn2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/buyblue"
+                android:text="@string/buynow"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/bnedit2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/buttonz"
+                android:text="@string/edcart"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
         <android.support.design.widget.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
@@ -31,6 +57,7 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vpage"
+                android:layout_above="@id/fbot"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tablayout"
@@ -38,6 +65,7 @@
             android:background="@color/white"
 
             ></android.support.v4.view.ViewPager>
+
     </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>
