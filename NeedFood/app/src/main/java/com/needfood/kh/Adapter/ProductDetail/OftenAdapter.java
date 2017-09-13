@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +15,31 @@ import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
+import com.needfood.kh.SupportClass.PostCL;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -34,8 +49,12 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerViewHolder> {
     public static ArrayList<CheckConstructor> arrcheck = new ArrayList<>();
+    public List<ListMN> listmn;
+    public RecyclerView rcq;
+    public ArrayList<OftenConstructor> arrq;
     public DataHandle db;
     public int tong=0;
+    public QuanAdapter quana;
     Context mContext = getApplicationContext();
     private List<OftenConstructor> listData = new ArrayList<>();
     Context context;
@@ -59,7 +78,8 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         public RecyclerViewHolder(View itemView) {
             super(itemView);
             db = new DataHandle(getApplicationContext());
-            img = (ImageView)itemView.findViewById(R.id.imgsug);
+
+                    img = (ImageView)itemView.findViewById(R.id.imgsug);
             tvName = (TextView)itemView.findViewById(R.id.namesug);
             prize = (TextView)itemView.findViewById(R.id.prizesug);
              tvd = (TextView)itemView.findViewById(R.id.tvdv);
@@ -113,6 +133,58 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                  Dialog dialog = new Dialog((Activity) v.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.layoutdetail);
+                final ProgressBar pgr = (ProgressBar)dialog.findViewById(R.id.prg1);
+
+                final LinearLayout v1 = (LinearLayout)dialog.findViewById(R.id.v1);
+                final ImageView imgn = (ImageView)dialog.findViewById(R.id.imgnews);
+                final TextView tvname = (TextView)dialog.findViewById(R.id.tvname2);
+                final TextView tvgia = (TextView)dialog.findViewById(R.id.pr1);
+                final TextView tvdv = (TextView)dialog.findViewById(R.id.donvi1) ;
+                 rcq = (RecyclerView)dialog.findViewById(R.id.rcquan);
+                arrq = new ArrayList<OftenConstructor>();
+                quana= new QuanAdapter(context,arrq);
+                rcq.setAdapter(quana);
+                StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+                rcq.setLayoutManager(mStaggeredVerticalLayoutManager);
+                EditText edq = (EditText)dialog.findViewById(R.id.edquan);
+                edq.setText("1");
+                final String link = context.getResources().getString(R.string.linkprdde);
+                Map<String, String> map = new HashMap<>();
+                map.put("idProduct", ip.getId());
+                map.put("type", "");
+                Response.Listener<String> response = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("FGFG",response);
+
+                        try {
+                            JSONObject jo = new JSONObject(response);
+
+                            JSONObject prd = jo.getJSONObject("Product");
+                            pgr.setVisibility(View.GONE);
+                            v1.setVisibility(View.VISIBLE);
+                            JSONArray img = prd.getJSONArray("images");
+                            StringBuilder simg = new StringBuilder("http://needfood.webmantan.com" + img.getString(0));
+                            Picasso.with(getApplicationContext()).load(simg.toString()).into(imgn);
+                            tvname.setText(prd.getString("title"));
+                            String tym = prd.getString("typeMoneyId");
+                            listmn = db.getMNid(tym);
+                            for (ListMN lu:listmn){
+                                tvgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("price"))) + lu.getMn());
+                            }
+                            tvdv.setText(prd.getString("nameUnit"));
+                            getQuan(ip.getId());
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                };
+                PostCL pos = new PostCL(link,map,response);
+                RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+                que.add(pos);
+
                 dialog.show();
             }
         });
@@ -196,12 +268,50 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
 //        viewHolder.edo.addTextChangedListener(viewHolder.textWatcher);
     }
 
-    public void showDialog() {
-        final Dialog dialog = new Dialog(getApplicationContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.layoutdetail);
-        dialog.show();
+    private void getQuan(String id) {
+        final String link = context.getResources().getString(R.string.linkprdat);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("idProduct", id );
+
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.d("EEE", response);
+                try {
+                    JSONArray ja = new JSONArray(response);
+
+                    for (int i = 0; i < ja.length(); i++) {
+                        String mn = "";
+                        JSONObject jo = ja.getJSONObject(i);
+                        JSONObject prd = jo.getJSONObject("Product");
+                        JSONArray jaimg = prd.getJSONArray("images");
+                        String typemn = prd.getString("typeMoneyId");
+                        listmn = db.getMNid(typemn);
+                        for (ListMN lu : listmn) {
+                            mn = lu.getMn();
+                        }
+
+                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" +
+                                jaimg.getString(0), prd.getString("title"),
+                                prd.getString("price"), mn, prd.getString("nameUnit"),
+                                false, prd.getString("id"), prd.getString("code"),
+                                "", prd.getString("id"), prd.getString("moneyShip"), typemn));
+                    }
+                    quana.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
     }
+
+
 
     public void removeItem(int position) {
         listData.remove(position);

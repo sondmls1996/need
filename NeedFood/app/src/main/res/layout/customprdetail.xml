@@ -114,20 +114,20 @@
                         android:id="@+id/pr2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="160.000 vnd"
+
                         android:textColor="@color/gray2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="/"
+
                         android:textColor="@color/gray2" />
 
                     <TextView
                         android:id="@+id/donvi2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1 pices"
+
                         android:textColor="@color/gray2" />
                 </LinearLayout>
 
@@ -139,8 +139,7 @@
                     android:ellipsize="middle"
                     android:maxLength="80"
                     android:maxLines="3"
-                    android:text="One day of guided fishing on the Henry’s Fork of the Snake River and two nights lodging with Three Rivers Ranch.
-Nestled in the quiet town of Warm River, in Southeastern Idaho, the ranch is surrounded by enormous pines, brilliant colored aspens and three enticing rivers, all within walking distance from the front step of your cabin. Three Rivers Ranch has "
+
                     android:textColor="@color/gray2" />
 
 
