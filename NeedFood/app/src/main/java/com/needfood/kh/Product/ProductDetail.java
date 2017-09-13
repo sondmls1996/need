@@ -108,7 +108,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Session ses;
     String uadr, tax;
     String typemn;
-    String sexxx, coordinates, numberBuy, headFone, nameman, birthdayy, typedevice, namelower,typepay;
+    String sexxx, coordinates, numberBuy, headFone, nameman, birthdayy, typedevice, namelower, typepay;
     EditText edquan;
     String cata;
     Button deal, bn;
@@ -126,8 +126,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String text1, text2, time1, time2, priceDiscount, discountCode;
     List<InfoConstructor> listu;
     DataHandle db;
-    public static String idprd="";
-    String  idsl, namesl, access, idu, fullname, phone, bar, priceother;
+    public static String idprd = "";
+    String idsl, namesl, access, idu, fullname, phone, bar, priceother;
     EditText txt_comment;
     ImageView img_comment;
     Button imgshare;
@@ -148,7 +148,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ChangeTimestamp change;
     TextView vote, inven;
     String point;
-    TextView txtsel,nameseller, exp, txtof, txtbrand, txtcomp;
+    TextView txtsel, nameseller, exp, txtof, txtbrand, txtcomp;
     LinearLayout lnpro;
     boolean checkclick = false;
     String sex, birthday;
@@ -160,8 +160,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String dia_comment;
     ProgressBar prbar;
     LinearLayout liner;
-
-
+    String coin;
+    int moneyall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,7 +240,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         dialog.show();
     }
-    public void loadDialogData(){
+
+    public void loadDialogData() {
 
     }
 
@@ -287,17 +288,17 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         view1 = (LinearLayout) findViewById(R.id.v1);
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
-        txtsel = (TextView)findViewById(R.id.seltime);
+        txtsel = (TextView) findViewById(R.id.seltime);
         if (it.hasExtra("sell")) {
             sttsell = it.getStringExtra("sell");
             txtsel.setVisibility(View.VISIBLE);
 
-            long now = it.getLongExtra("now",0);
-            long end = it.getLongExtra("end",0);
-            long left = end-now;
+            long now = it.getLongExtra("now", 0);
+            long end = it.getLongExtra("end", 0);
+            long left = end - now;
             long giocl = left / 3600;
             long phutcl = (left % 3600) / 60;
-            txtsel.setText(giocl+":"+phutcl);
+            txtsel.setText(giocl + ":" + phutcl);
         }
         if (it.hasExtra("hot")) {
             hot = it.getStringExtra("hot");
@@ -334,23 +335,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         next = (ImageView) findViewById(R.id.nextt);
         down = (ImageView) findViewById(R.id.downn);
         lnprd = (LinearLayout) findViewById(R.id.prd);
-//        lnprd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (checkclick == false) {
-//                    checkclick = true;
-//                    down.setVisibility(View.VISIBLE);
-//                    next.setVisibility(View.GONE);
-//                    lnpro.setVisibility(View.VISIBLE);
-//                } else {
-//                    checkclick = false;
-//                    down.setVisibility(View.GONE);
-//                    lnpro.setVisibility(View.GONE);
-//                    next.setVisibility(View.VISIBLE);
-//                }
-//
-//            }
-//        });
 
         imgshare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -391,9 +375,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void afterTextChanged(Editable s) {
                 if (edquan.getText().toString().equals("")) {
-                    if(db.isProductEmpty(idprd)==false){
+                    if (db.isProductEmpty(idprd) == false) {
                         db.updatePrd(idprd, "1");
-                    }else{
+                    } else {
                         db.addPDR(new CheckConstructor("1",
                                 priceprd, "false", "", "", bar, prdcode
                                 , titl,
@@ -401,9 +385,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     }
 
                 } else {
-                    if(!db.isProductEmpty(idprd)){
+                    if (!db.isProductEmpty(idprd)) {
                         db.updatePrd(idprd, edquan.getText().toString());
-                    }else{
+                    } else {
                         db.addPDR(new CheckConstructor(edquan.getText().toString(),
                                 priceprd, "false", "", "", bar, prdcode
                                 , titl,
@@ -440,7 +424,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             uadr = listu.get(listu.size() - 1).getAddress();
             sex = listu.get(listu.size() - 1).getSex();
             birthday = listu.get(listu.size() - 1).getBirtday();
-
             //  imgshare.setVisibility(View.VISIBLE);
             lnshare.setVisibility(View.VISIBLE);
             getNumberBuy();
@@ -490,7 +473,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             public void onClick(View view) {
                 Intent it = new Intent(getApplicationContext(), BrandDetail.class);
                 it.putExtra("ids", idsl);
-                it.putExtra("typeH","0");
+                it.putExtra("typeH", "0");
                 startActivity(it);
             }
         });
@@ -554,14 +537,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     a2 = Integer.parseInt(response);
                     Log.d("TTT", a2 + "");
                     tvmyphi.setText(a2 + "");
-                    if(hot.equals("hot")){
+                    if (hot.equals("hot")) {
                         if (a2 >= numshare && numshare != 0) {
 
                             deal.setVisibility(View.VISIBLE);
                         } else {
                             deal.setVisibility(View.GONE);
                         }
-                    }else {
+                    } else {
                         deal.setVisibility(View.GONE);
                     }
                 }
@@ -647,8 +630,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
             Log.d("HAJAR", jsonArray.toString());
 
-            int money = 0;
-
 
             HashMap<String, String> map = new HashMap<>();
             map.put("accessToken", access);
@@ -663,16 +644,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("fone", "");
             // map.put("idUseronl",idu);
             map.put("idSeller", idsl);
-//             Log.d("GTGT",  (money * (Integer.parseInt(tax)+1))/100+  "");
-            Intent it = new Intent(getApplicationContext(), Preview.class);
-            it.putExtra("map", map);
-            it.putExtra("min", mnid);
-            it.putExtra("stt", "nom");
-            it.putExtra("tymn", tym);
-            it.putExtra("codedis",codeDiscount);
-            it.putExtra("typediss",typeDiscount);
-            it.putExtra("tax", tax);
-            startActivity(it);
+
+            moneyall = (tong + (tong * (Integer.parseInt(tax))) / 100) + mnship;
+
+            dialogRe(map, mnid, "nom", tym, codeDiscount, typeDiscount, tax, moneyall);
             pro.dismiss();
         } else {
             pro.dismiss();
@@ -759,8 +734,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("min", mnid);
             it.putExtra("stt", stt);
             it.putExtra("num", ns);
-            it.putExtra("codedis",codeDiscount);
-            it.putExtra("typediss",typeDiscount);
+            it.putExtra("codedis", codeDiscount);
+            it.putExtra("typediss", typeDiscount);
             it.putExtra("tymn", tym);
             it.putExtra("tax", tax);
             startActivity(it);
@@ -818,16 +793,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             map.put("fone", "");
             // map.put("idUseronl",idu);
             map.put("idSeller", idsl);
+            moneyall = (money + (money * (Integer.parseInt(tax))) / 100) + Integer.parseInt(strship.toString());
+            dialogRe(map, mnid, "", tym, codeDiscount, typeDiscount, tax, moneyall);
 
-            Intent it = new Intent(getApplicationContext(), Preview.class);
-            it.putExtra("map", map);
-            it.putExtra("min", mnid);
-            it.putExtra("stt", "");
-            it.putExtra("tymn", tym);
-            it.putExtra("codedis",codeDiscount);
-            it.putExtra("typediss",typeDiscount);
-            it.putExtra("tax", tax);
-            startActivity(it);
             pro.dismiss();
         } else {
             pro.dismiss();
@@ -1783,7 +1751,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     String email = jo.getString("email");
                     String fone = jo.getString("fone");
                     String address = jo.getString("address");
-                    String coin = jo.getString("coin");
+                    coin = jo.getString("coin");
                     String birthday = jo.getString("birthday");
                     String sex = jo.getString("sex");
                 } catch (JSONException e) {
@@ -1798,68 +1766,51 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void dialogRe() {
+    private void dialogRe(final HashMap<String, String> map, final String mnid, final String a, final String tym, final String codeDiscount, final String typeDiscount, final String tax, final int moneyal) {
 
-        final Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(ProductDetail.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.htucontent);
         dialog.show();
 
-        TextView txtht = (TextView) dialog.findViewById(R.id.txtht);
-        TextView txtvote = (TextView) dialog.findViewById(R.id.txt_votee);
-        final RatingBar ratingbar = (RatingBar) dialog.findViewById(R.id.ratingBar1);
-        EditText edtcoment = (EditText) dialog.findViewById(R.id.dia_comment);
-        txtht.setVisibility(View.GONE);
-        edtcoment.setVisibility(View.GONE);
-        Button bbtn1 = (Button) dialog.findViewById(R.id.button1);
-        bbtn1.setOnClickListener(new View.OnClickListener() {
+        LinearLayout txtht = (LinearLayout) dialog.findViewById(R.id.lnbc);
+        LinearLayout txtvote = (LinearLayout) dialog.findViewById(R.id.lnbm);
+        final double coinint = Double.parseDouble(coin);
+        txtht.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                    Intent it = new Intent(getApplicationContext(), Preview.class);
+                    it.putExtra("map", map);
+                    it.putExtra("min", mnid);
+                    it.putExtra("stt", a);
+                    it.putExtra("tymn", tym);
+                    it.putExtra("codedis", codeDiscount);
+                    it.putExtra("typediss", typeDiscount);
+                    it.putExtra("tax", tax);
+                    it.putExtra("typePay", "coin");
+                    startActivity(it);
+              
+
+            }
+
+
+        });
+        txtvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(getApplicationContext(), Preview.class);
+                it.putExtra("map", map);
+                it.putExtra("min", mnid);
+                it.putExtra("stt", a);
+                it.putExtra("tymn", tym);
+                it.putExtra("codedis", codeDiscount);
+                it.putExtra("typediss", typeDiscount);
+                it.putExtra("tax", tax);
+                it.putExtra("typePay", "money");
+                startActivity(it);
                 //Getting the rating and displaying it on the toast
-                String rating = String.valueOf(ratingbar.getRating());
-                final String link = getResources().getString(R.string.linkvote);
-                final ProgressDialog progressDialog = new ProgressDialog(ProductDetail.this);
-                progressDialog.setMessage(getResources().getString(R.string.wait));
-                progressDialog.show();
-                Map<String, String> map = new HashMap<>();
-                map.put("idProduct", idprd);
-                map.put("accessToken", access);
-                map.put("point", rating);
-                Log.d("checkcc", idprd + "-" + access + "-" + rating);
-                Response.Listener<String> response = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
 
-                        Log.d("checkcc", response);
-                        try {
-                            JSONObject jo = new JSONObject(response);
-                            String code = jo.getString("code");
-                            if (code.equals("0")) {
-                                progressDialog.dismiss();
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.tkvote), Toast.LENGTH_SHORT).show();
-                                dialog.cancel();
-
-                            } else if (code.equals("-1")) {
-                                dialog.dismiss();
-                                progressDialog.dismiss();
-                                AlertDialog alertDialog = taoMotAlertDialog();
-                                alertDialog.show();
-                            } else {
-                                dialog.dismiss();
-                                progressDialog.dismiss();
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                };
-                PostCL get = new PostCL(link, map, response);
-                RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-                que.add(get);
             }
 
 
@@ -1869,7 +1820,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     public void getReport() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.htucontent);
+        dialog.setContentView(R.layout.htucontent1);
         dialog.show();
         TextView txtht = (TextView) dialog.findViewById(R.id.txtht);
         TextView txtvote = (TextView) dialog.findViewById(R.id.txt_votee);
