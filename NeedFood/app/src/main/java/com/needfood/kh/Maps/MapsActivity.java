@@ -15,6 +15,11 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -47,10 +52,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     GPSTracker tracker;
     Geocoder geocoder;
     List<Address> addresses;
-    double latitude=0, longitude=0;
+    double latitudee = 0, longitudee = 0;
     List<MapConstructor> list;
-    String brandName, fullName, fone, address, id, lat, lo;
+    String brandName, fullName, fone, address, id, latt, loo;
     String linkbrand, linkname, linkfone, linkadd, linkid;
+    PlaceAutocompleteFragment autocompleteFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,28 +73,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         txt.setText(getResources().getString(R.string.aro));
 
         geocoder = new Geocoder(this, Locale.getDefault());
-
+        autocompleteFragment = (PlaceAutocompleteFragment) MapsActivity.this.getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
         list = new ArrayList<>();
         tracker = new GPSTracker(this);
         if (!tracker.canGetLocation()) {
             tracker.showSettingsAlert();
         } else {
-            latitude = tracker.getLatitude();
-            longitude = tracker.getLongitude();
+            latitudee = tracker.getLatitude();
+            longitudee = tracker.getLongitude();
+            getMoney(latitudee, longitudee);
         }
-        Log.d("LATLONG", latitude + "-" + longitude);
-        getMoney();
+        Log.d("LATLONG", latitudee + "-" + longitudee);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
-
-
+        mMap.clear();
 
         // mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
         // Add a marker in Sydney and move the camera
@@ -118,28 +125,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onMapClick(LatLng latLng) {
                 mMap.clear();
-                latitude = latLng.latitude;
-                longitude = latLng.longitude;
+                latitudee = latLng.latitude;
+                longitudee = latLng.longitude;
 
-                mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                mMap.addMarker(new MarkerOptions().position(new LatLng(latitudee, longitudee)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                         .title(getResources().getString(R.string.loc)));
 
-               getMoney();
+                getMoney(latitudee, longitudee);
+            }
+        });
+        AutocompleteFilter filter = new AutocompleteFilter.Builder().setCountry("VN").setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS).build();
+        autocompleteFragment.setFilter(filter);
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                mMap.clear();
+                latitudee = place.getLatLng().latitude;
+                longitudee = place.getLatLng().longitude;
+                Log.d("CHECKGPS", latitudee + "-" + longitudee);
+                LatLng yourlocal = new LatLng(latitudee, longitudee);
+                mMap.addMarker(new MarkerOptions().position(yourlocal).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title("Vị trí chỉ định")).showInfoWindow();
+                CameraPosition update = new CameraPosition.Builder().target(yourlocal).zoom(14).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(update));
+                getMoney(latitudee, longitudee);
+            }
+
+            @Override
+            public void onError(Status status) {
+
             }
         });
 
     }
 
-    private void getMoney() {
+    private void getMoney(final double lat, final double lo) {
+        list.clear();
         String link = getResources().getString(R.string.linkgetselleraround);
         Map<String, String> map = new HashMap<>();
-        map.put("lat", latitude + "");
-        map.put("long", longitude + "");
+        map.put("lat", lat + "");
+        map.put("long", lo + "");
         Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("MNTTT", response);
                 try {
+
                     JSONArray jo = new JSONArray(response);
                     for (int i = 0; i < jo.length(); i++) {
                         JSONObject jo2 = jo.getJSONObject(i);
@@ -150,13 +180,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         address = jo1.getString("address");
                         id = jo1.getString("id");
                         JSONObject jo3 = jo1.getJSONObject("gps");
-                        lat = jo3.getString("lat");
-                        lo = jo3.getString("long");
-                        list.add(new MapConstructor(id, brandName, fullName, fone, address, lat, lo));
-                        Log.d("ABCC", id + "-" + brandName + "-" + fullName + "-" + fone + "-" + address + "-" + lat + "-" + lo);
+                        latt = jo3.getString("lat");
+                        loo = jo3.getString("long");
+                        list.add(new MapConstructor(id, brandName, fullName, fone, address, latt, loo));
+                        Log.d("ABCC", id + "-" + brandName + "-" + fullName + "-" + fone + "-" + address + "-" + latt + "-" + loo);
 
                     }
-                    showMap(latitude, longitude);
+                    showMap(lat, lo);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -170,18 +200,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void showMap(Double latitudee, Double longitudee) {
 
         mMap.clear();
-        if(latitudee!=0&&longitudee!=0){
+        if (latitudee != 0 && longitudee != 0) {
             LatLng sydney = new LatLng(latitudee, longitudee);
 
-            Marker mylo = mMap.addMarker(new MarkerOptions().position(sydney)
+            mMap.addMarker(new MarkerOptions().position(sydney)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                     .title(getResources().getString(R.string.yourin)));
             CameraPosition update2 = new CameraPosition.Builder().target(sydney).zoom(10).build();
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(update2));
-        }else{
+        } else {
             LatLng vm = new LatLng(21.028663, 105.836454);
-            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(vm,7);
-            mMap.animateCamera(update,1000,null);
+            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(vm, 7);
+            mMap.animateCamera(update, 1000, null);
         }
 
 
@@ -191,7 +221,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .position(new LatLng(Double.parseDouble(list.get(j).getLat()), Double.parseDouble(list.get(j).getLo())))
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                     .title(list.get(j).getBrandname().toString())
-                    );
+            );
 
         }
 
@@ -222,7 +252,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMap(latitude, longitude);
+                showMap(latitudee, longitudee);
                 dialog.dismiss();
                 dialog.cancel();
             }
