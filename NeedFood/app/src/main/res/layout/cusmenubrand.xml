@@ -69,15 +69,25 @@
                 android:orientation="horizontal">
 
 
-
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/rm"
+                    android:src="@drawable/removeb"/>
                 <EditText
                     android:layout_width="100dp"
                     android:padding="3dp"
                     android:inputType="number"
+                    android:enabled="false"
                     android:id="@+id/idspb"
                     android:layout_height="wrap_content"
                     android:background="@drawable/commentedt"
                     />
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/pl"
+                    android:src="@drawable/plustb"/>
 
 
             </LinearLayout>
@@ -125,6 +135,7 @@
        <CheckBox
            android:layout_width="wrap_content"
             android:background="@color/white"
+           android:visibility="gone"
            android:id="@+id/cbbrand"
            android:layout_height="wrap_content" />
    </RelativeLayout>

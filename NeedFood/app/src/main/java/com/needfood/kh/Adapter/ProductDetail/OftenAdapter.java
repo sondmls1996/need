@@ -1,10 +1,10 @@
 package com.needfood.kh.Adapter.ProductDetail;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +35,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerViewHolder> {
     public static ArrayList<CheckConstructor> arrcheck = new ArrayList<>();
     public DataHandle db;
+    public int tong=0;
+    Context mContext = getApplicationContext();
     private List<OftenConstructor> listData = new ArrayList<>();
     Context context;
     public OftenAdapter(Context context,List<OftenConstructor> listData) {
@@ -50,6 +52,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         public TextView prize;
         public ImageView img;
         public TextWatcher textWatcher;
+        public ImageView imgcong,imgtru;
         public TextView tvd;
         public EditText edo;
         public CheckBox cb;
@@ -61,6 +64,8 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
             prize = (TextView)itemView.findViewById(R.id.prizesug);
              tvd = (TextView)itemView.findViewById(R.id.tvdv);
             cb = (CheckBox)itemView.findViewById(R.id.check);
+            imgcong = (ImageView) itemView.findViewById(R.id.imgcong);
+            imgtru = (ImageView) itemView.findViewById(R.id.imgtru);
             edo = (EditText)itemView.findViewById(R.id.edot);
 
         }
@@ -105,50 +110,94 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
             @Override
             public void onClick(View v) {
 
-                // showDialog(viewHolder);
+                 Dialog dialog = new Dialog((Activity) v.getContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.layoutdetail);
+                dialog.show();
             }
         });
-
-        viewHolder.textWatcher = new TextWatcher() {
+        viewHolder.imgtru.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                if (viewHolder.edo.getText().toString().equals("")) {
-                    if (db.isProductEmpty(ip.getId()) == true) {
-                        db.deletePrd(ip.getId());
-                    }
+            public void onClick(View v) {
+                if(!viewHolder.edo.getText().toString().equals("")&&!viewHolder.edo.getText().toString().equals("0")){
+                    tong=Integer.parseInt(viewHolder.edo.getText().toString())-1;
+                    viewHolder.edo.setText(tong+"");
+                    db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
                     context.startService(new Intent(context, BubbleService.class));
-                } else {
-                    if (!db.isProductEmpty(ip.getId())) {
-                        db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
-                    } else {
-                        db.addPDR(new CheckConstructor(viewHolder.edo.getText().toString(),
-                                ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode(),
-                                ip.getName(),
-                                ip.getNote(), ip.getId(), ip.getTymn()));
-                    }
+                }else if(viewHolder.edo.getText().toString().equals("1")){
+                    tong=Integer.parseInt(viewHolder.edo.getText().toString())-1;
+                    viewHolder.edo.setText(tong+"");
+                    db.deletePrd(ip.getId());
+                    context.startService(new Intent(context, BubbleService.class));
+                }else{
+                    viewHolder.edo.setText("");
+                    db.deletePrd(ip.getId());
                     context.startService(new Intent(context, BubbleService.class));
                 }
-
             }
+        });
+        viewHolder.imgcong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!viewHolder.edo.getText().toString().equals("")){
+                    tong=Integer.parseInt(viewHolder.edo.getText().toString())+1;
+                    viewHolder.edo.setText(tong+"");
+                    db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
+                    context.startService(new Intent(context, BubbleService.class));
+                }else{
 
-
-        };
-        viewHolder.edo.addTextChangedListener(viewHolder.textWatcher);
+                    viewHolder.edo.setText("1");
+                    db.addPDR(new CheckConstructor(viewHolder.edo.getText().toString(),
+                            ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode(),
+                            ip.getName(),
+                            ip.getNote(), ip.getId(), ip.getTymn()));
+                    context.startService(new Intent(context, BubbleService.class));
+                }
+            }
+        });
+//        viewHolder.textWatcher = new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//                if (viewHolder.edo.getText().toString().equals("")) {
+//                        db.deletePrd(ip.getId());
+//
+//                    context.startService(new Intent(context, BubbleService.class));
+//                } else {
+//                    if (viewHolder.edo.getText().equals("1")) {
+//                        db.deletePrd(ip.getId());
+//                        db.addPDR(new CheckConstructor(viewHolder.edo.getText().toString(),
+//                                ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode(),
+//                                ip.getName(),
+//                                ip.getNote(), ip.getId(), ip.getTymn()));
+//
+//                        context.startService(new Intent(context, BubbleService.class));
+//                    } else {
+//                        db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
+//                        context.startService(new Intent(context, BubbleService.class));
+//                    }
+//
+//                }
+//
+//            }
+//
+//
+//        };
+//        viewHolder.edo.addTextChangedListener(viewHolder.textWatcher);
     }
 
-    public void showDialog(RecyclerViewHolder viewHolder) {
-        final Dialog dialog = new Dialog(context);
+    public void showDialog() {
+        final Dialog dialog = new Dialog(getApplicationContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.layoutdetail);
         dialog.show();

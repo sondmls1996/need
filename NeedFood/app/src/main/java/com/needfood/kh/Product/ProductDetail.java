@@ -206,7 +206,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         super.onBackPressed();
         db.deleteAllPRD();
     }
-
+    private void dialogToping(){
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layoutdetail);
+        dialog.show();
+    }
     private void showPreDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -495,6 +500,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rcof = (RecyclerView) findViewById(R.id.rcprd);
         rcof2 = (RecyclerView) findViewById(R.id.rcprd2);
         rctp = (RecyclerView) findViewById(R.id.rcprd3);
+
+
 
         adapter = new CommentAdapter(getApplicationContext(), arr);
         adapterof1 = new OftenAdapter(getApplicationContext(), arrof);

@@ -325,10 +325,20 @@ public class BrandDetail extends AppCompatActivity {
                 }
             }
         };
+
         PostCL get = new PostCL(link, map, response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(get);
     }
+
+    @Override
+    public void onBackPressed() {
+        if(!type.equals("0")){
+            db.deleteAllPRD();
+        }
+        super.onBackPressed();
+    }
+
     private void showLog() {
         final Dialog dialog = new Dialog(this);
         Window window = dialog.getWindow();

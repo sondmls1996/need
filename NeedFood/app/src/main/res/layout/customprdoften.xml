@@ -25,7 +25,7 @@
                 android:scaleType="centerCrop" />
 
             <LinearLayout
-                android:layout_width="150dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:orientation="vertical">
@@ -89,18 +89,26 @@
                     android:orientation="horizontal">
 
                     />
-
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/imgtru"
+                        android:src="@drawable/removeb"/>
                     <EditText
                         android:id="@+id/edot"
-                        android:layout_width="match_parent"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/commentedt"
-                        android:enabled="true"
+                        android:enabled="false"
                         android:hint="@string/quanlity"
                         android:inputType="number"
                         android:padding="3dp" />
 
-
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/imgcong"
+                        android:src="@drawable/plustb"/>
                 </LinearLayout>
 
 

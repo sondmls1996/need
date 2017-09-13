@@ -3,14 +3,11 @@ package com.needfood.kh.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +15,6 @@ import android.widget.TextView;
 import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
-import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
 import com.squareup.picasso.Picasso;
@@ -28,8 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static com.needfood.kh.Adapter.ProductDetail.OftenAdapter.arrcheck;
-
 /**
  * Created by Vi on 5/8/2017.
  */
@@ -37,7 +31,7 @@ import static com.needfood.kh.Adapter.ProductDetail.OftenAdapter.arrcheck;
 public class MenuBrandAdapter extends
         RecyclerView.Adapter<MenuBrandAdapter.RecyclerViewHolder> {
     public DataHandle db;
-
+    public int tong = 0;
     private List<OftenConstructor> listData = new ArrayList<>();
     Context context;
     public MenuBrandAdapter(Context context,List<OftenConstructor> listData) {
@@ -56,6 +50,7 @@ public class MenuBrandAdapter extends
         public TextWatcher textWatcher;
         public EditText edb;
         public TextView stt;
+        public ImageView rv,pl;
         public ImageView img;
 
         public RecyclerViewHolder(View itemView) {
@@ -66,6 +61,8 @@ public class MenuBrandAdapter extends
             tvgia = (TextView)itemView.findViewById(R.id.mnmn);
             tvunit = (TextView)itemView.findViewById(R.id.unitmn);
             img = (ImageView)itemView.findViewById(R.id.imgmn);
+            rv = (ImageView)itemView.findViewById(R.id.rm);
+            pl = (ImageView)itemView.findViewById(R.id.pl);
             edb = (EditText)itemView.findViewById(R.id.idspb);
             seltime2 = (TextView)itemView.findViewById(R.id.seltime2);
 
@@ -106,52 +103,36 @@ public class MenuBrandAdapter extends
             }
 
         }
-        viewHolder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        viewHolder.rv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if(isChecked){
-                    db.addPDR(new CheckConstructor("1",
-                            ip.getPrize(),"false","","",ip.getBar(),ip.getCode(),
-                            ip.getName(),
-                            ip.getNote(),ip.getId(),ip.getTymn()));
+            public void onClick(View v) {
+                if(!viewHolder.edb.getText().toString().equals("")&&!viewHolder.edb.getText().toString().equals("0")){
+                    tong=Integer.parseInt(viewHolder.edb.getText().toString())-1;
+                    viewHolder.edb.setText(tong+"");
+                    db.updatePrd(ip.getId(), viewHolder.edb.getText().toString());
                     context.startService(new Intent(context, BubbleService.class));
-                    viewHolder.edb.setEnabled(true);
-
-                    ProductDetail.listship.add(Integer.parseInt(ip.getNmship()));
-                    viewHolder.edb.setText("1");
-                    viewHolder.textWatcher = new TextWatcher() {
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                        }
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable s) {
-
-                            if(viewHolder.edb.getText().toString().equals("")){
-                                db.updatePrd(ip.getId(),"1");
-
-                            }else {
-                                db.updatePrd(ip.getId(),viewHolder.edb.getText().toString());
-
-                            }
-                            context.startService(new Intent(context, BubbleService.class));
-
-                        }
-                    };
-                    viewHolder.edb.addTextChangedListener(viewHolder.textWatcher);
-                    Log.d("ARRSIZE",arrcheck.size()+"");
                 }else {
-                    viewHolder.edb.setEnabled(false);
-                    viewHolder.edb.removeTextChangedListener(viewHolder.textWatcher);
-                    viewHolder.edb.setText(null);
+                    viewHolder.edb.setText("");
                     db.deletePrd(ip.getId());
+                    context.startService(new Intent(context, BubbleService.class));
+                }
+            }
+        });
+        viewHolder.pl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!viewHolder.edb.getText().toString().equals("")){
+                    tong=Integer.parseInt(viewHolder.edb.getText().toString())+1;
+                    viewHolder.edb.setText(tong+"");
+                    db.updatePrd(ip.getId(), viewHolder.edb.getText().toString());
+                    context.startService(new Intent(context, BubbleService.class));
+                }else{
+
+                    viewHolder.edb.setText("1");
+                    db.addPDR(new CheckConstructor(viewHolder.edb.getText().toString(),
+                            ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode(),
+                            ip.getName(),
+                            ip.getNote(), ip.getId(), ip.getTymn()));
                     context.startService(new Intent(context, BubbleService.class));
                 }
             }
