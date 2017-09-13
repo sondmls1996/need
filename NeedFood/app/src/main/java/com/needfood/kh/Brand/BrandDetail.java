@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -62,6 +63,8 @@ public class BrandDetail extends AppCompatActivity {
     ViewPager viewPager;
     ListView lvs;
     String mns;
+    Button bn2,edit2;
+
     SearchAdapter adapter;
     ArrayList<SearchConstructor> arrs;
     ViewAdapter viewAdapter;
@@ -77,6 +80,8 @@ public class BrandDetail extends AppCompatActivity {
         setContentView(R.layout.activity_brand_detail);
         Intent it = getIntent();
         idsl = it.getStringExtra("ids");
+        bn2 = (Button)findViewById(R.id.bn);
+        edit2 = (Button)findViewById(R.id.bnedit2);
         txthang = (TextView) findViewById(R.id.txthang);
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 new BroadcastReceiver() {

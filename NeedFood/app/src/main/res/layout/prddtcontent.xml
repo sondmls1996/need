@@ -41,6 +41,7 @@
                 <ImageView
                     android:id="@+id/nextt"
                     android:layout_width="wrap_content"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:src="@drawable/next" />
 
@@ -49,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/down"
-                    android:visibility="gone" />
+            />
             </RelativeLayout>
 
         </LinearLayout>
@@ -60,7 +61,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp"
-            android:visibility="gone">
+           >
 
             <LinearLayout
                 android:layout_width="match_parent"

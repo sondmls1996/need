@@ -20,7 +20,7 @@
             android:id="@+id/v1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+
             android:orientation="horizontal"
          >
 
@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:background="@drawable/borderedt"
-
+                        android:id="@+id/seltime"
                         android:padding="3dp"
                         android:text="1:20"
                         android:textColor="@color/white"

@@ -31,7 +31,7 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize|adjustPan"
         tools:replace="android:icon">
-        <activity android:name=".StartActivity"></activity>
+        <activity android:name=".StartActivity" />
         <activity android:name=".News.BestQuality" />
         <activity android:name=".Sugges.RawFood" />
         <activity android:name=".Sugges.Food" />
@@ -154,7 +154,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Barcode.BarcodeCamera"></activity>
+        <activity android:name=".Barcode.BarcodeCamera" />
+        <activity android:name=".Product.DialogDetail"></activity>
     </application>
 
 </manifest>

@@ -72,6 +72,7 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
             viewHolder.tvName.setText(ip.getName());
         }
 
+
     }
 
     public void removeItem(int position) {

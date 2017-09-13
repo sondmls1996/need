@@ -1,5 +1,6 @@
 package com.needfood.kh.Adapter.ProductDetail;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -102,6 +104,13 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         }else{
             Picasso.with(context).load(ip.getImg()).into(viewHolder.img);
         }
+        viewHolder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+               // showDialog(viewHolder);
+            }
+        });
 
 
    //     viewHolder.cb.setTag(ip);
@@ -156,6 +165,14 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
             }
         });
     }
+
+    public void showDialog(RecyclerViewHolder viewHolder) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layoutdetail);
+        dialog.show();
+    }
+
     public void removeItem(int position) {
         listData.remove(position);
         notifyItemRemoved(position);

@@ -8,10 +8,5 @@
         android:title="report"
         android:icon="@drawable/report"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/vote"
 
-        android:title="Vote"
-        android:icon="@drawable/start"
-        app:showAsAction="ifRoom" />
 </menu>
