@@ -51,7 +51,7 @@ import java.util.Map;
 
 public class Preview extends AppCompatActivity implements View.OnClickListener {
 
-    String json, mid, stt, mnship, idsl, acess, tax;
+    String json, mid, stt, mnship, idsl, acess, tax,codediss,typediss;
 
     RecyclerView lv;
     private SimpleDateFormat dateFormatter, timeformat;
@@ -87,6 +87,8 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             }
         });
         Intent intent = getIntent();
+        codediss = intent.getStringExtra("codedis");
+        typediss = intent.getStringExtra("typediss");
         hashMap = (HashMap<String, String>) intent.getSerializableExtra("map");
         json = hashMap.get("listProduct");
         Log.d("JIO", json.toString());
@@ -165,7 +167,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             JSONArray jo = new JSONArray(json);
             for (int i = 0; i < jo.length(); i++) {
                 JSONObject idx = jo.getJSONObject(i);
-                arr.add(new PreConstructor(idx.getString("title"), idx.getString("quantity"), idx.getString("money"), mid));
+                arr.add(new PreConstructor(idx.getString("title"), idx.getString("quantity"), idx.getString("money"), "VND"));
             }
             adapter.notifyDataSetChanged();
         } catch (JSONException e) {
@@ -218,8 +220,8 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             hashMap.put("address", adr);
             hashMap.put("note", note);
             hashMap.put("fone", phone);
-            hashMap.put("codeDiscount", ProductDetail.codeDiscount);
-            hashMap.put("typeDiscount", ProductDetail.typeDiscount);
+            hashMap.put("codeDiscount", codediss);
+            hashMap.put("typeDiscount", typediss);
             hashMap.put("idSeller", idsl);
             hashMap.put("typePay","money");
 

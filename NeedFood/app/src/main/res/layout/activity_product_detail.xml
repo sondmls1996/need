@@ -159,14 +159,6 @@
                     android:textColor="@color/white"
                     android:visibility="gone" />
 
-                <Button
-                    android:id="@+id/bn"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/buyblue"
-                    android:text="@string/buynow"
-                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/bnedit"
@@ -177,6 +169,14 @@
                     android:text="@string/edcart"
                     android:textColor="@color/white" />
 
+                <Button
+                    android:id="@+id/bn"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/buyblue"
+                    android:text="@string/buynow"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
         </com.needfood.kh.SupportClass.VerticalScrollview>

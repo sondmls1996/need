@@ -246,6 +246,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 Intent it = new Intent(getApplicationContext(), BrandDetail.class);
                 it.putExtra("ids", linkid);
+                it.putExtra("typeH", "");
                 startActivity(it);
             }
         });

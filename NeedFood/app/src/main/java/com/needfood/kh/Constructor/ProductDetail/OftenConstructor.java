@@ -15,8 +15,43 @@ public class OftenConstructor {
     public String code;
     public String note;
     public String id;
-    public String  nmship;
+    public String nmship;
     public String tymn;
+    public long sellend;
+    public long timen;
+
+    public OftenConstructor(String img, String name, String prize, String mn, String dv, boolean isSelected, String bar, String code, String note, String id, String nmship, String tymn,long sel,long n) {
+        this.img = img;
+        this.name = name;
+        this.prize = prize;
+        this.mn = mn;
+        this.dv = dv;
+        this.isSelected = isSelected;
+        this.bar = bar;
+        this.code = code;
+        this.note = note;
+        this.id = id;
+        this.nmship = nmship;
+        this.tymn = tymn;
+        this.sellend = sel;
+        this.timen = n;
+    }
+
+    public long getTimen() {
+        return timen;
+    }
+
+    public void setTimen(long timen) {
+        this.timen = timen;
+    }
+
+    public long getSellend() {
+        return sellend;
+    }
+
+    public void setSellend(long sellend) {
+        this.sellend = sellend;
+    }
 
     public OftenConstructor(String img, String name, String prize, String mn, String dv, boolean isSelected, String bar, String code, String note, String id, String nmship, String tymn) {
         this.img = img;

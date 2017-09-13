@@ -50,7 +50,7 @@ public class MenuBrandAdapter extends
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvName;
-        public TextView tvgia;
+        public TextView tvgia,seltime2;
         public TextView tvunit;
         public CheckBox cb;
         public TextWatcher textWatcher;
@@ -67,6 +67,7 @@ public class MenuBrandAdapter extends
             tvunit = (TextView)itemView.findViewById(R.id.unitmn);
             img = (ImageView)itemView.findViewById(R.id.imgmn);
             edb = (EditText)itemView.findViewById(R.id.idspb);
+            seltime2 = (TextView)itemView.findViewById(R.id.seltime2);
 
         }
 
@@ -92,6 +93,18 @@ public class MenuBrandAdapter extends
         viewHolder.tvunit.setText(ip.getDv());
         if(ip.getImg()!=null){
             Picasso.with(context).load(ip.getImg()).into(viewHolder.img);
+        }
+        if(ip.getSellend()!=0){
+            long now =ip.getTimen();
+            long tl = ip.getSellend()-now;
+            if(tl>0){
+                long giocl = tl / 3600;
+                long phutcl = (tl % 3600) / 60;
+                viewHolder.seltime2.setVisibility(View.VISIBLE);
+
+                viewHolder.seltime2.setText(giocl+":"+phutcl);
+            }
+
         }
         viewHolder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

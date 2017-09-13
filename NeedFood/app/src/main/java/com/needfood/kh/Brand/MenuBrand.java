@@ -14,12 +14,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Adapter.MenuBrandAdapter;
+import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.SupportClass.EndlessScroll;
+import com.needfood.kh.SupportClass.GetCL;
 import com.needfood.kh.SupportClass.PostCL;
+import com.needfood.kh.SupportClass.Session;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,16 +40,20 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 public class MenuBrand extends Fragment {
     int page = 1;
-    String idl;
+    String idl,access;
     List<ListMN> list;
+
     RecyclerView rc1;
     LinearLayoutManager layoutManager;
     DataHandle db;
-    String money;
+    long timeend = 0,now = 0;
+    String tyemn;
+    String money,idpr,pricesel,tax,tym,mnn;
+    Session ses;
     EndlessScroll endlessScroll;
     MenuBrandAdapter adapter1, adapter2, adapter3;
     ArrayList<OftenConstructor> arr1, arr2, arr3;
-
+    List<CheckConstructor> listcheck;
     public MenuBrand() {
         // Required empty public constructor
     }
@@ -55,14 +62,17 @@ public class MenuBrand extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         BrandDetail activity = (BrandDetail) getActivity();
+        ses = new Session(getContext());
         idl = activity.getMyData();
+        tax = activity.getTax();
         db = new DataHandle(getApplicationContext());
+        getTime();
         getPRDSell(1);
         View v = inflater.inflate(R.layout.fragment_menu_brand, container, false);
         rc1 = (RecyclerView) v.findViewById(R.id.rc1);
         arr1 = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getContext());
-
+        idpr = BrandDetail.idprd;
         adapter1 = new MenuBrandAdapter(getContext(), arr1);
         rc1.setAdapter(adapter1);
         rc1.setLayoutManager(layoutManager);
@@ -94,14 +104,25 @@ public class MenuBrand extends Fragment {
                         JSONObject idx = ja.getJSONObject(i);
                         JSONObject prd = idx.getJSONObject("Product");
                         JSONArray jaimg = prd.getJSONArray("images");
-                        String tyemn = prd.getString("typeMoneyId");
+                         tyemn = prd.getString("typeMoneyId");
+
+                        pricesel = prd.getString("price");
+                        if(prd.has("sellingOut")){
+                            JSONObject jsel = prd.getJSONObject("sellingOut");
+                            timeend = jsel.getLong("timeEnd");
+                            if(timeend-now>0){
+                                pricesel = jsel.getString("price");
+                            }
+
+                        }
                         list = db.getMNid(tyemn);
                         for (ListMN lu : list) {
                             money = lu.getMn();
                         }
                         arr1.add(new OftenConstructor("http://needfood.webmantan.com" + jaimg.getString(0), prd.getString("title"),
-                                prd.getString("price"), money, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
-                                "", prd.getString("id"), prd.getString("moneyShip"), prd.getString("typeMoneyId")));
+                                pricesel, money, prd.getString("nameUnit"), false, prd.getString("id"), prd.getString("code"),
+                                "", prd.getString("id"), prd.getString("moneyShip"),tyemn ,timeend,now));
+
                     }
                     adapter1.notifyDataSetChanged();
                     getupdateSellerView();
@@ -135,6 +156,27 @@ public class MenuBrand extends Fragment {
             }
         };
         PostCL get = new PostCL(link, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(get);
+    }
+
+    private void getTime() {
+
+        final String link = getResources().getString(R.string.linktimenow);
+        Response.Listener<String> response = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jo = new JSONObject(response);
+                    now = jo.getLong("0");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        GetCL get = new GetCL(link, response);
         RequestQueue que = Volley.newRequestQueue(getApplicationContext());
         que.add(get);
     }

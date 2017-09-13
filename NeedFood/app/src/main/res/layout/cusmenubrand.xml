@@ -83,7 +83,7 @@
             </LinearLayout>
 
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -96,8 +96,25 @@
                 android:src="@drawable/bg"
                 android:id="@+id/imgmn"
                 android:scaleType="centerCrop"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:visibility="gone"
+                    android:background="@drawable/borderedt"
+                    android:id="@+id/seltime2"
+                    android:padding="3dp"
+                    android:text="1:20"
+                    android:textColor="@color/white"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
 
     </LinearLayout>
    <RelativeLayout
