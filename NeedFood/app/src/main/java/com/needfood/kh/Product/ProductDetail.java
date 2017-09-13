@@ -280,8 +280,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         if (it.hasExtra("sell")) {
             sttsell = it.getStringExtra("sell");
             txtsel.setVisibility(View.VISIBLE);
-            getTime();
 
+            long now = it.getLongExtra("now",0);
             long end = it.getLongExtra("end",0);
             long left = end-now;
             long giocl = left / 3600;

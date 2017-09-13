@@ -162,9 +162,9 @@
                 <Button
                     android:id="@+id/bn"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/buttonz"
+                    android:background="@drawable/buyblue"
                     android:text="@string/buynow"
                     android:textColor="@color/white" />
 
@@ -173,7 +173,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/buyblue"
+                    android:background="@drawable/buttonz"
                     android:text="@string/edcart"
                     android:textColor="@color/white" />
 
