@@ -49,11 +49,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.needfood.kh.Product.ProductDetail.typeDiscount;
-
 public class Preview extends AppCompatActivity implements View.OnClickListener {
 
-    String json, mid, stt, mnship, idsl, acess, tax;
+    String json, mid, stt, mnship, idsl, acess, tax,codediss,typediss;
 
     RecyclerView lv;
     private SimpleDateFormat dateFormatter, timeformat;
@@ -71,7 +69,6 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
     int day, month2, year2, hour, minitus, numshare;
     public DatePickerDialog fromDatePickerDialog;
     public TimePickerDialog timepicker;
-    String codedis, typedis;
     PreAdapter adapter;
     Button btno;
 
@@ -90,9 +87,8 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             }
         });
         Intent intent = getIntent();
-        codedis = intent.getStringExtra("codedis");
-        typedis = intent.getStringExtra("typediss");
-
+        codediss = intent.getStringExtra("codedis");
+        typediss = intent.getStringExtra("typediss");
         hashMap = (HashMap<String, String>) intent.getSerializableExtra("map");
         json = hashMap.get("listProduct");
         Log.d("JIO", json.toString());
@@ -218,15 +214,14 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
         } else {
             btno.setEnabled(true);
-
             hashMap.put("totalMoneyProduct", total + Integer.parseInt(mnship) + "");
             hashMap.put("fullName", name);
             hashMap.put("timeShiper", day + "/" + (month2 + 1) + "/" + year2 + " " + hour + ":" + minitus);
             hashMap.put("address", adr);
             hashMap.put("note", note);
             hashMap.put("fone", phone);
-            hashMap.put("codeDiscount", codedis);
-            hashMap.put("typeDiscount", typeDiscount);
+            hashMap.put("codeDiscount", codediss);
+            hashMap.put("typeDiscount", typediss);
             hashMap.put("idSeller", idsl);
 
             Log.d("TYPEH", hashMap.toString());
@@ -238,7 +233,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
                 @Override
                 public void onResponse(String response) {
                     try {
-                        Log.d("PRT",response);
+
                         JSONObject jo = new JSONObject(response);
                         String code = jo.getString("code");
                         if (code.equals("0")) {

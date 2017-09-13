@@ -86,9 +86,11 @@ public class BrandDetail extends AppCompatActivity {
     List<ListMN> list;
     List<CheckConstructor> listcheck;
     DataHandle db;
+    String typedis,codedis;
     EditText edsearch;
-    public String idsl,type;
+    public String idsl,type,fullname;
     public String tax,access;
+
     public static String idsel = "",idprd="";
 
     @Override
@@ -104,6 +106,7 @@ public class BrandDetail extends AppCompatActivity {
             listu = db.getAllInfor();
             for(InfoConstructor lu:listu){
                 access = lu.getAccesstoken();
+
             }
         }
 
@@ -184,10 +187,11 @@ public class BrandDetail extends AppCompatActivity {
     }
     private void sendOrder() {
 
-        final ProgressDialog pro = DialogUtils.show(BrandDetail.this, getResources().getString(R.string.wait));
+        final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (session.loggedin()) {
             int tong = 0;
-
+            typedis = "0";
+            codedis="";
             String quan;
             int mnship = Collections.max(listship);
 
@@ -237,14 +241,16 @@ public class BrandDetail extends AppCompatActivity {
             map.put("address", "");
             map.put("note", "");
             map.put("fone", "");
-
-            map.put("idSeller", idsel);
-
+            // map.put("idUseronl",idu);
+            map.put("idSeller", idsl);
+//             Log.d("GTGT",  (money * (Integer.parseInt(tax)+1))/100+  "");
             Intent it = new Intent(getApplicationContext(), Preview.class);
             it.putExtra("map", map);
-            it.putExtra("min", money);
-            it.putExtra("codedis","");
-            it.putExtra("typediss","0");
+            it.putExtra("min", "VND");
+            it.putExtra("stt", "nom");
+            it.putExtra("tymn", "1");
+            it.putExtra("codedis",codedis);
+            it.putExtra("typediss",typedis);
             it.putExtra("tax", tax);
             startActivity(it);
             pro.dismiss();
