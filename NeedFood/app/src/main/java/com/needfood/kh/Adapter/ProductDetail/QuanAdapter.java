@@ -48,7 +48,7 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         imgtru = (ImageView)itemView.findViewById(R.id.imgtru);
         imgcong = (ImageView)itemView.findViewById(R.id.imgcong);
         edo = (EditText)itemView.findViewById(R.id.edot);
-        tvName = (TextView)itemView.findViewById(R.id.imgcong);
+      //  tvName = (TextView)itemView.findViewById(R.id.imgcong);
 
     }
 

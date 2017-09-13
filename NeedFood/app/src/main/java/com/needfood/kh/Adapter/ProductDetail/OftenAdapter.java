@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,6 +74,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         public TextWatcher textWatcher;
         public ImageView imgcong,imgtru;
         public TextView tvd;
+
         public EditText edo;
         public CheckBox cb;
         public RecyclerViewHolder(View itemView) {
@@ -146,7 +148,45 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                 rcq.setAdapter(quana);
                 StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
                 rcq.setLayoutManager(mStaggeredVerticalLayoutManager);
-                EditText edq = (EditText)dialog.findViewById(R.id.edquan);
+                final EditText edq = (EditText)dialog.findViewById(R.id.edquan);
+                TextWatcher textWatcher = new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if (edq.getText().toString().equals("")) {
+                            if (db.isProductEmpty(ip.getId()) == false) {
+                                db.updatePrd(ip.getId(), "1");
+                            } else {
+                                db.addPDR(new CheckConstructor("1",
+                                        ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode()
+                                        , ip.getName(),
+                                        "", ip.getId(), ip.getTymn()));
+                            }
+
+                        } else {
+                            if (!db.isProductEmpty(ip.getId())) {
+                                db.updatePrd(ip.getId(), edq.getText().toString());
+                            } else {
+                                db.addPDR(new CheckConstructor(edq.getText().toString(),
+                                        ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode()
+                                        , ip.getName(),
+                                        "", ip.getId(), ip.getTymn()));
+                            }
+
+                        }
+                        context.startService(new Intent(context, BubbleService.class));
+                    }
+                };
+                edq.addTextChangedListener(textWatcher);
                 edq.setText("1");
                 final String link = context.getResources().getString(R.string.linkprdde);
                 Map<String, String> map = new HashMap<>();
