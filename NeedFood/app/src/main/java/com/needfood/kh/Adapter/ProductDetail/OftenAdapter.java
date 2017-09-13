@@ -124,11 +124,12 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
             public void afterTextChanged(Editable s) {
 
                 if (viewHolder.edo.getText().toString().equals("")) {
-                    if (db.isProductEmpty(ip.getId()) == false) {
+                    if (db.isProductEmpty(ip.getId()) == true) {
                         db.deletePrd(ip.getId());
                     }
+                    context.startService(new Intent(context, BubbleService.class));
                 } else {
-                    if (db.isProductEmpty(ip.getId()) == false) {
+                    if (!db.isProductEmpty(ip.getId())) {
                         db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
                     } else {
                         db.addPDR(new CheckConstructor(viewHolder.edo.getText().toString(),
@@ -136,8 +137,9 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                 ip.getName(),
                                 ip.getNote(), ip.getId(), ip.getTymn()));
                     }
+                    context.startService(new Intent(context, BubbleService.class));
                 }
-                context.startService(new Intent(context, BubbleService.class));
+
             }
 
 
