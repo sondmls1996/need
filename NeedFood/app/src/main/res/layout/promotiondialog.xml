@@ -62,24 +62,6 @@
             android:background="@color/white"
             android:hint="@string/prcode"
             android:padding="5dp" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="@string/coinn"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
-
-    <EditText
-        android:layout_gravity="center"
-        android:id="@+id/encoins"
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@color/white"
-        android:hint="@string/coins"
-        android:padding="5dp" />
 
 
         <LinearLayout

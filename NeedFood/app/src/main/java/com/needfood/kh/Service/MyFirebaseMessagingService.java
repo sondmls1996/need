@@ -16,6 +16,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.needfood.kh.Constructor.NotiConstructor;
 import com.needfood.kh.Database.DataHandle;
+import com.needfood.kh.More.History.OrderHistory;
 import com.needfood.kh.More.History.TransferHistory;
 import com.needfood.kh.R;
 import com.needfood.kh.SupportClass.ChangeTimestamp;
@@ -73,7 +74,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 it = new Intent(this, TransferHistory.class);
             }
             if (notif.equals("infoOrder")) {
-                it = new Intent(this, TransferHistory.class);
+                it = new Intent(this, OrderHistory.class);
+            }
+            if (notif.equals("saveStatusOrderAPI")) {
+                it = new Intent(this, OrderHistory.class);
             }
         }
         it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

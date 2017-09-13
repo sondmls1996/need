@@ -149,6 +149,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                 StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
                 rcq.setLayoutManager(mStaggeredVerticalLayoutManager);
                 final EditText edq = (EditText)dialog.findViewById(R.id.edquan);
+                edq.setText(viewHolder.edo.getText().toString());
                 TextWatcher textWatcher = new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -195,7 +196,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     }
                 };
                 edq.addTextChangedListener(textWatcher);
-                edq.setText("1");
+
                 final String link = context.getResources().getString(R.string.linkprdde);
                 Map<String, String> map = new HashMap<>();
                 map.put("idProduct", ip.getId());
