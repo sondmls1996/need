@@ -8,9 +8,9 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/white"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        app:cardBackgroundColor="@color/white">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -102,28 +102,28 @@
 
                     <TextView
                         android:id="@+id/pr11"
-                        android:background="@drawable/dashline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/dashline"
                         android:text="240.000 VND"
                         android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:background="@drawable/dashline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="3dp"
+                        android:background="@drawable/dashline"
                         android:maxLength="20"
                         android:text="/"
                         android:textColor="@color/black" />
 
                     <TextView
-                        android:background="@drawable/dashline"
                         android:id="@+id/unit1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="3dp"
+                        android:background="@drawable/dashline"
                         android:maxLength="20"
                         android:text="2 xuất"
                         android:textColor="@color/black" />
@@ -138,10 +138,27 @@
                         android:id="@+id/pr21"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/fre"
+                        android:text="9.000 VND"
                         android:textColor="@color/red"
-                        android:textSize="18dp" />
+                        android:textSize="20sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/dashline"
+                        android:text="/"
+                        android:textSize="20sp"
+                        android:textColor="@color/red" />
 
+                    <TextView
+                        android:id="@+id/unit2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/dashline"
+                        android:text="1 xuất"
+                        android:textSize="20sp"
+                        android:textColor="@color/red" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -162,35 +179,19 @@
                             android:textSize="20dp" />
 
                         <TextView
-                            android:layout_marginLeft="5dp"
                             android:id="@+id/numvotee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:textSize="20dp" />
-                        <TextView
-                            android:text="@string/phieu"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="2dp"
-                            android:text="*" />
-
-                        <TextView
-                            android:id="@+id/mis"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/sare" />
+                            android:text="@string/phieu" />
                     </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>

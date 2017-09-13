@@ -56,6 +56,7 @@ public class HotdealAdapter extends
             tvname = (TextView) itemView.findViewById(R.id.tvname1);
 
             tvdv = (TextView) itemView.findViewById(R.id.unit1);
+            tvdv2 = (TextView) itemView.findViewById(R.id.unit2);
 
             namea = (TextView) itemView.findViewById(R.id.tvau1);
 
@@ -102,7 +103,7 @@ public class HotdealAdapter extends
         }
 
         viewHolder.tvdv.setText(p.dv);
-
+        viewHolder.tvdv2.setText(p.dv);
         // TextView namea = (TextView)view.findViewById(R.id.tvau);
         viewHolder.namea.setText(p.nameauth);
         //TextView price = (TextView)view.findViewById(R.id.pr1);
