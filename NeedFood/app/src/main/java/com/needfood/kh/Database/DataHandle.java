@@ -230,6 +230,19 @@ public class DataHandle extends SQLiteOpenHelper {
         // return contact list　
         return contactList;
     }
+
+    public boolean isProductEmpty(String id) {
+        boolean empty = false;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM " + TABLEPRD + " WHERE "+ IDPRD+" = '" + id + "'", null);
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) { // This will get the integer value of the COUNT(*)
+            empty=false;
+        }else{
+            empty=true;
+        }
+        return empty;
+    }
     public void deletePrd(String id) {
 
         SQLiteDatabase db = this.getWritableDatabase();

@@ -108,7 +108,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     Session ses;
     String uadr, tax;
     String typemn;
-    String sexxx, coordinates, numberBuy, headFone, nameman, birthdayy, typedevice, namelower;
+    String sexxx, coordinates, numberBuy, headFone, nameman, birthdayy, typedevice, namelower,typepay;
     EditText edquan;
     String cata;
     Button deal, bn;
@@ -213,7 +213,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         dialog.setContentView(R.layout.dialogprev);
         precons = new ArrayList<>();
 
-        int tong = 0;
+
         RecyclerView rcp = (RecyclerView) dialog.findViewById(R.id.rcpre);
         TextView txttong = (TextView) dialog.findViewById(R.id.txttong);
         DialogPreAdapter preadap = new DialogPreAdapter(getApplicationContext(), precons);
@@ -221,8 +221,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rcp.setAdapter(preadap);
         LinearLayoutManager lnm = new LinearLayoutManager(getApplicationContext());
         rcp.setLayoutManager(lnm);
-        listcheck = db.getPrd();
 
+        listcheck = db.getPrd();
+        int tong = 0;
         for (CheckConstructor lu : listcheck) {
             tong = Integer.parseInt(lu.getPrice()) * Integer.parseInt(lu.getQuanli()) + tong;
             Log.d("SHOWALL", "quanli:" + lu.getQuanli() + "\n" + "price:" + lu.getPrice() + "\n" + "ID:" + lu.getId() + "name:" + lu.getTitle());
@@ -231,9 +232,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         }
         txttong.setText(NumberFormat.getNumberInstance(Locale.UK).format(tong));
         preadap.notifyDataSetChanged();
+
         dialog.show();
     }
+    public void loadDialogData(){
 
+    }
 
     @Override
     protected void onPause() {
@@ -382,9 +386,24 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void afterTextChanged(Editable s) {
                 if (edquan.getText().toString().equals("")) {
-                    db.updatePrd(idprd, "1");
+                    if(db.isProductEmpty(idprd)==false){
+                        db.updatePrd(idprd, "1");
+                    }else{
+                        db.addPDR(new CheckConstructor("1",
+                                priceprd, "false", "", "", bar, prdcode
+                                , titl,
+                                "", idprd, tym));
+                    }
+
                 } else {
-                    db.updatePrd(idprd, edquan.getText().toString());
+                    if(!db.isProductEmpty(idprd)){
+                        db.updatePrd(idprd, edquan.getText().toString());
+                    }else{
+                        db.addPDR(new CheckConstructor(edquan.getText().toString(),
+                                priceprd, "false", "", "", bar, prdcode
+                                , titl,
+                                "", idprd, tym));
+                    }
 
                 }
                 startService(new Intent(ProductDetail.this, BubbleService.class));
@@ -503,11 +522,11 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
         rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
         rctp.setLayoutManager(mStaggeredVerticalLayoutManager4);
-        if (!hot.isEmpty()) {
-            tvpr.setVisibility(View.GONE);
-        } else {
-
-        }
+//        if (!hot.isEmpty()) {
+//            tvpr.setVisibility(View.GONE);
+//        } else {
+//
+//        }
         getProductDT();
     }
 
@@ -528,13 +547,16 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     a2 = Integer.parseInt(response);
                     Log.d("TTT", a2 + "");
                     tvmyphi.setText(a2 + "");
-                    if (a2 >= numshare && numshare != 0) {
+                    if(hot.equals("hot")){
+                        if (a2 >= numshare && numshare != 0) {
 
-                        deal.setVisibility(View.VISIBLE);
-                    } else {
+                            deal.setVisibility(View.VISIBLE);
+                        } else {
+                            deal.setVisibility(View.GONE);
+                        }
+                    }else {
                         deal.setVisibility(View.GONE);
                     }
-
                 }
             }
         };
@@ -880,6 +902,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                             lnmyshare.setVisibility(View.VISIBLE);
                             tvphi.setText(numshare + "");
                             imgshare.setVisibility(View.VISIBLE);
+                            tvpr.setVisibility(View.GONE);
                         } else {
                             lnmyshare.setVisibility(View.GONE);
                             imgshare.setVisibility(View.GONE);
