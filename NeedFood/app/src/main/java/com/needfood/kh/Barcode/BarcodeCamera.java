@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -65,6 +66,7 @@ public class BarcodeCamera extends AppCompatActivity implements ZXingScannerView
     public void handleResult(Result rawResult) {
 
         String text = rawResult.getText();
+        Log.d("CHECKBAR", text);
         if (!text.equals("")) {
             getProductDT(text);
         } else {
