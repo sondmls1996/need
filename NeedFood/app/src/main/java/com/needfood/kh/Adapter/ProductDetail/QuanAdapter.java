@@ -27,6 +27,7 @@ public class QuanAdapter extends  RecyclerView.Adapter<QuanAdapter.RecyclerViewH
 private List<OftenConstructor> listData = new ArrayList<>();
         Context context;
     public int tong = 0;
+
     public DataHandle db;
 public QuanAdapter(Context context,List<OftenConstructor> listData) {
         this.context = context;

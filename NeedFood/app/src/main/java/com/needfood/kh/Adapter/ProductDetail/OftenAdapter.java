@@ -152,7 +152,11 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                 TextWatcher textWatcher = new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                        db.addPDR(new CheckConstructor("1",
+                                ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode()
+                                , ip.getName(),
+                                "", ip.getId(), ip.getTymn()));
+                        viewHolder.edo.setText("1");
                     }
 
                     @Override
@@ -165,21 +169,25 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         if (edq.getText().toString().equals("")) {
                             if (db.isProductEmpty(ip.getId()) == false) {
                                 db.updatePrd(ip.getId(), "1");
+                                viewHolder.edo.setText("1");
                             } else {
                                 db.addPDR(new CheckConstructor("1",
                                         ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode()
                                         , ip.getName(),
                                         "", ip.getId(), ip.getTymn()));
+                                viewHolder.edo.setText("1");
                             }
 
                         } else {
                             if (!db.isProductEmpty(ip.getId())) {
                                 db.updatePrd(ip.getId(), edq.getText().toString());
+                                viewHolder.edo.setText(edq.getText().toString());
                             } else {
                                 db.addPDR(new CheckConstructor(edq.getText().toString(),
                                         ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode()
                                         , ip.getName(),
                                         "", ip.getId(), ip.getTymn()));
+                                viewHolder.edo.setText(edq.getText().toString());
                             }
 
                         }
