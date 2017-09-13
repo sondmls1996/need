@@ -282,4 +282,9 @@
     <string name="tkre">Thank you for reporting to us</string>
     <string name="tkvote">Thank you for product evaluation</string>
     <string name="xl">No product code</string>
+    <string name="mon">Money</string>
+    <string name="bcoin">By Coins</string>
+    <string name="bmoney">By Money</string>
+    <string name="engouh">Not enough coins to purchase your products</string>
+    <string name="nxx">You want payment type?</string>
 </resources>

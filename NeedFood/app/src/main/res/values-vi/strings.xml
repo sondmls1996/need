@@ -283,4 +283,9 @@
     <string name="tkre">Cảm ơn bạn đã báo cáo về cho chúng tôi</string>
     <string name="tkvote">Cảm ơn bạn đã đánh giá sản phẩm</string>
     <string name="xl">Không có mã sản phẩm này</string>
+    <string name="mon">Tiền mặt</string>
+    <string name="bcoin">Bởi xu</string>
+    <string name="bmoney">Bởi tiền mặt</string>
+    <string name="engouh">Bạn không đủ xu để mua sản phẩm này</string>
+    <string name="nxx">Bạn muốn thanh toán kiểu ?</string>
 </resources>
