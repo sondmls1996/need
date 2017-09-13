@@ -221,6 +221,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             hashMap.put("codeDiscount", ProductDetail.codeDiscount);
             hashMap.put("typeDiscount", ProductDetail.typeDiscount);
             hashMap.put("idSeller", idsl);
+            hashMap.put("typePay","money");
 
             Log.d("TYPEH", hashMap.toString());
             Log.d("total", total + "");
@@ -231,7 +232,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
                 @Override
                 public void onResponse(String response) {
                     try {
-
+                        Log.d("TOTALL", response);
                         JSONObject jo = new JSONObject(response);
                         String code = jo.getString("code");
                         if (code.equals("0")) {
