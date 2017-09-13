@@ -126,7 +126,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String text1, text2, time1, time2, priceDiscount, discountCode;
     List<InfoConstructor> listu;
     DataHandle db;
-    String idprd, idsl, namesl, access, idu, fullname, phone, bar, priceother;
+    public static String idprd="";
+    String  idsl, namesl, access, idu, fullname, phone, bar, priceother;
     EditText txt_comment;
     ImageView img_comment;
     Button imgshare;
@@ -271,6 +272,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     private void khaibao() {
         db = new DataHandle(this);
+        db.deleteAllPRD();
         change = new ChangeTimestamp();
         Intent it = getIntent();
         view1 = (LinearLayout) findViewById(R.id.v1);
@@ -464,6 +466,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             public void onClick(View view) {
                 Intent it = new Intent(getApplicationContext(), BrandDetail.class);
                 it.putExtra("ids", idsl);
+                it.putExtra("typeH","0");
                 startActivity(it);
             }
         });
@@ -637,6 +640,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("min", mnid);
             it.putExtra("stt", "nom");
             it.putExtra("tymn", tym);
+            it.putExtra("codedis",codeDiscount);
+            it.putExtra("typediss",typeDiscount);
             it.putExtra("tax", tax);
             startActivity(it);
             pro.dismiss();
@@ -725,6 +730,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("min", mnid);
             it.putExtra("stt", stt);
             it.putExtra("num", ns);
+            it.putExtra("codedis",codeDiscount);
+            it.putExtra("typediss",typeDiscount);
             it.putExtra("tymn", tym);
             it.putExtra("tax", tax);
             startActivity(it);
@@ -788,6 +795,8 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("min", mnid);
             it.putExtra("stt", "");
             it.putExtra("tymn", tym);
+            it.putExtra("codedis",codeDiscount);
+            it.putExtra("typediss",typeDiscount);
             it.putExtra("tax", tax);
             startActivity(it);
             pro.dismiss();
@@ -907,7 +916,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         priceother = prd.getString("priceOther");
                     }
                     db.addPDR(new CheckConstructor("1",
-
                             priceprd, "false", "", "", bar, prdcode
                             , titl,
                             "", idprd, tym));

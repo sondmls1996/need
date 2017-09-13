@@ -2,6 +2,7 @@ package com.needfood.kh.Brand;
 
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
@@ -32,16 +35,24 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.needfood.kh.Adapter.DialogPreAdapter;
+import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
 import com.needfood.kh.Adapter.SearchAdapter;
+import com.needfood.kh.Barcode.QRCamera;
+import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.ListMN;
+import com.needfood.kh.Constructor.PreDialogConstructor;
 import com.needfood.kh.Constructor.SearchConstructor;
 import com.needfood.kh.Database.DataHandle;
+import com.needfood.kh.Login.Login;
 import com.needfood.kh.Maps.MapsActivity;
+import com.needfood.kh.Product.Preview;
 import com.needfood.kh.Product.ProductDetail;
-import com.needfood.kh.Barcode.QRCamera;
 import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
+import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.PostCL;
+import com.needfood.kh.SupportClass.Session;
 import com.needfood.kh.SupportClass.ViewAdapter;
 
 import org.json.JSONArray;
@@ -50,11 +61,13 @@ import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.needfood.kh.Product.ProductDetail.listship;
 import static com.needfood.kh.R.menu.main;
 
 public class BrandDetail extends AppCompatActivity {
@@ -64,15 +77,19 @@ public class BrandDetail extends AppCompatActivity {
     ListView lvs;
     String mns;
     Button bn2,edit2;
-
+    Session session;
     SearchAdapter adapter;
     ArrayList<SearchConstructor> arrs;
+    List<InfoConstructor> listu;
     ViewAdapter viewAdapter;
+    ArrayList<PreDialogConstructor> precons;
     List<ListMN> list;
+    List<CheckConstructor> listcheck;
     DataHandle db;
     EditText edsearch;
-    String idsl;
-    public static String idsel = "";
+    public String idsl,type;
+    public String tax,access;
+    public static String idsel = "",idprd="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +97,32 @@ public class BrandDetail extends AppCompatActivity {
         setContentView(R.layout.activity_brand_detail);
         Intent it = getIntent();
         idsl = it.getStringExtra("ids");
-        bn2 = (Button)findViewById(R.id.bn);
+        db = new DataHandle(this);
+        type = it.getStringExtra("typeH");
+        session = new Session(this);
+        if(session.loggedin()){
+            listu = db.getAllInfor();
+            for(InfoConstructor lu:listu){
+                access = lu.getAccesstoken();
+            }
+        }
+
+
+
+        bn2 = (Button)findViewById(R.id.bn2);
+        bn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendOrder();
+            }
+        });
         edit2 = (Button)findViewById(R.id.bnedit2);
+        edit2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPreDialog();
+            }
+        });
         txthang = (TextView) findViewById(R.id.txthang);
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 new BroadcastReceiver() {
@@ -98,7 +139,10 @@ public class BrandDetail extends AppCompatActivity {
         setSupportActionBar(toolbar);
         tvname = (TextView) findViewById(R.id.brname);
         bran = (TextView)findViewById(R.id.brn);
-        db = new DataHandle(this);
+
+        if(!type.equals("0")){
+            db.deleteAllPRD();
+        }
         arrs = new ArrayList<>();
         tvadr = (TextView)findViewById(R.id.adr);
         tvp = (TextView)findViewById(R.id.tvphone);
@@ -138,7 +182,107 @@ public class BrandDetail extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
 
     }
+    private void sendOrder() {
 
+        final ProgressDialog pro = DialogUtils.show(BrandDetail.this, getResources().getString(R.string.wait));
+        if (session.loggedin()) {
+            int tong = 0;
+
+            String quan;
+            int mnship = Collections.max(listship);
+
+
+            JSONArray jsonArray = new JSONArray();
+
+
+            try {
+                listcheck = db.getPrd();
+                for (CheckConstructor lu : listcheck) {
+                    JSONObject j1 = new JSONObject();
+                    tong = Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()) + tong;
+                    j1.put("quantity", lu.getQuanli());
+                    j1.put("price", lu.getPrice());
+                    j1.put("tickKM", lu.getTickkm());
+                    j1.put("tickKM_percent", lu.getTickkm2());
+                    j1.put("tickKM_money", lu.getTickkm3());
+                    j1.put("barcode", lu.getBarcode());
+                    j1.put("code", lu.getCode());
+                    j1.put("title", lu.getTitle());
+                    j1.put("money", Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()));
+                    j1.put("note", lu.getNote());
+                    j1.put("id", lu.getId());
+                    j1.put("typeMoneyId", lu.getTypeid());
+                    jsonArray.put(j1);
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            Log.d("HAJAR", jsonArray.toString());
+
+            int money = 0;
+
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("accessToken", access);
+            map.put("listProduct", jsonArray.toString());
+            map.put("money", tong + "");
+            map.put("totalMoneyProduct", tong + (tong * (Integer.parseInt(tax))) / 100 + "");
+            map.put("fullName", "");
+            map.put("moneyShip", mnship + "");
+            map.put("timeShiper", "");
+            map.put("address", "");
+            map.put("note", "");
+            map.put("fone", "");
+
+            map.put("idSeller", idsel);
+
+            Intent it = new Intent(getApplicationContext(), Preview.class);
+            it.putExtra("map", map);
+            it.putExtra("min", money);
+            it.putExtra("codedis","");
+            it.putExtra("typediss","0");
+            it.putExtra("tax", tax);
+            startActivity(it);
+            pro.dismiss();
+        } else {
+            pro.dismiss();
+            Intent i = new Intent(getApplicationContext(), Login.class);
+            startActivity(i);
+            finish();
+            db.deleteAllPRD();
+        }
+
+    }
+    private void showPreDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialogprev);
+        precons = new ArrayList<>();
+
+        int tong = 0;
+        RecyclerView rcp = (RecyclerView) dialog.findViewById(R.id.rcpre);
+        TextView txttong = (TextView) dialog.findViewById(R.id.txttong);
+        DialogPreAdapter preadap = new DialogPreAdapter(getApplicationContext(), precons);
+
+        rcp.setAdapter(preadap);
+        LinearLayoutManager lnm = new LinearLayoutManager(getApplicationContext());
+        rcp.setLayoutManager(lnm);
+        listcheck = db.getPrd();
+
+        for (CheckConstructor lu : listcheck) {
+            tong = Integer.parseInt(lu.getPrice()) * Integer.parseInt(lu.getQuanli()) + tong;
+            Log.d("SHOWALL", "quanli:" + lu.getQuanli() + "\n" + "price:" + lu.getPrice() + "\n" + "ID:" + lu.getId() + "name:" + lu.getTitle());
+            precons.add(new PreDialogConstructor(lu.getQuanli(), lu.getPrice(), lu.getTitle(), lu.getId(), lu.getTypeid()));
+
+        }
+        txttong.setText(NumberFormat.getNumberInstance(Locale.UK).format(tong));
+        preadap.notifyDataSetChanged();
+        dialog.show();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -169,6 +313,7 @@ public class BrandDetail extends AppCompatActivity {
                     tvadr.setText(sl.getString("address"));
                     bran.setText(sl.getString("branchName"));
                     tvp.setText(sl.getString("fone"));
+                    tax = sl.getString("taxNumber");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -258,6 +403,9 @@ public class BrandDetail extends AppCompatActivity {
     }
     public String getMyData() {
         return idsl;
+    }
+    public String getTax() {
+        return tax;
     }
 
 }
