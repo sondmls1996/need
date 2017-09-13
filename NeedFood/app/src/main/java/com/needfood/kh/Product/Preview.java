@@ -60,7 +60,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
     List<ListMN> list;
     List<InfoConstructor> listif;
     Session ses;
-
+    String typePay;
     TextView shipm, txtgia, txtdv;
     HashMap<String, String> hashMap;
     EditText edname, edadr, edphome, edemail, edghichu, edpickngay, edpickgio;
@@ -97,6 +97,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         mnship = hashMap.get("moneyShip");
         stt = intent.getStringExtra("stt");
         tax = intent.getStringExtra("tax");
+        typePay = intent.getStringExtra("typePay");
         if (intent.hasExtra("num")) {
             numshare = intent.getIntExtra("num", 0);
         }
@@ -223,7 +224,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             hashMap.put("codeDiscount", codediss);
             hashMap.put("typeDiscount", typediss);
             hashMap.put("idSeller", idsl);
-            hashMap.put("typePay","money");
+            hashMap.put("typePay",typePay);
 
             Log.d("TYPEH", hashMap.toString());
             Log.d("total", total + "");

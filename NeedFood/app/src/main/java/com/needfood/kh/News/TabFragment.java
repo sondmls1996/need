@@ -59,7 +59,7 @@ public class TabFragment extends Fragment {
 
         /** Add the tabs  to the TabHost to display. */
 
-       tabHost.addTab(tab1);
+        tabHost.addTab(tab1);
         tabHost.addTab(tab2);
         tabHost.addTab(taba);
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {

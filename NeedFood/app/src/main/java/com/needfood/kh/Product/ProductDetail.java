@@ -1761,18 +1761,18 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     private void dialogRe(final HashMap<String, String> map, final String mnid, final String a, final String tym, final String codeDiscount, final String typeDiscount, final String tax, final int moneyal) {
 
-        final Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(ProductDetail.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.htucontent);
         dialog.show();
 
         LinearLayout txtht = (LinearLayout) dialog.findViewById(R.id.lnbc);
         LinearLayout txtvote = (LinearLayout) dialog.findViewById(R.id.lnbm);
-        final int coinint = Integer.parseInt(coin);
+        final double coinint = Double.parseDouble(coin);
         txtht.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (coinint > moneyal) {
+
                     Intent it = new Intent(getApplicationContext(), Preview.class);
                     it.putExtra("map", map);
                     it.putExtra("min", mnid);
@@ -1783,9 +1783,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     it.putExtra("tax", tax);
                     it.putExtra("typePay", "coin");
                     startActivity(it);
-                } else {
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.engouh), Toast.LENGTH_LONG).show();
-                }
+              
 
             }
 

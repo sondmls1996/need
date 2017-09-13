@@ -41,16 +41,15 @@
                 <ImageView
                     android:id="@+id/nextt"
                     android:layout_width="wrap_content"
-                    android:visibility="gone"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/next" />
+                    android:src="@drawable/next"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/downn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/down"
-            />
+                    android:src="@drawable/down" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -60,8 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp"
-           >
+            android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -182,8 +180,8 @@
                                 android:id="@+id/textView2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/bc"
                                 android:layout_marginLeft="5dp"
+                                android:text="@string/bc"
                                 android:textColor="@color/black" />
 
                         </LinearLayout>
@@ -210,6 +208,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/prd"
                     android:textColor="@color/black" />
 
@@ -217,6 +216,7 @@
                     android:id="@+id/nameseller"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="6"
                     android:text="SEA"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
