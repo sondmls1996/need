@@ -72,7 +72,7 @@ public class OrderHistory extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent it = new Intent(getApplicationContext(),HistoryDetail.class);
-                it.putExtra("js",ls.get(position).getJs());
+                it.putExtra("idp",ls.get(position).getId());
                 startActivity(it);
             }
         });

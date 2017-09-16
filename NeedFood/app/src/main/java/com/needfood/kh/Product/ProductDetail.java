@@ -157,6 +157,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     GPSTracker tracker;
     String quantity;
     double latitude, longitude, lat, lo;
+    LinearLayout lngiam2;
     String dia_comment;
     ProgressBar prbar;
     LinearLayout liner;
@@ -192,7 +193,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 finish();
-                db.deleteAllPRD();
+             //   db.deleteAllPRD();
             }
         });
         khaibao();
@@ -204,7 +205,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        db.deleteAllPRD();
+    //    db.deleteAllPRD();
     }
     private void dialogToping(){
         final Dialog dialog = new Dialog(this);
@@ -255,7 +256,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
 
-        db.deleteAllPRD();
+       // db.deleteAllPRD();
         //     stopService(new Intent(ProductDetail.this, BubbleService.class));
 
     }
@@ -283,12 +284,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     private void khaibao() {
         db = new DataHandle(this);
         db.deleteAllPRD();
+        ses = new Session(this);
         change = new ChangeTimestamp();
         Intent it = getIntent();
         view1 = (LinearLayout) findViewById(R.id.v1);
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
         txtsel = (TextView) findViewById(R.id.seltime);
+        lngiam2 = (LinearLayout)findViewById(R.id.lngiam2);
         if (it.hasExtra("sell")) {
             sttsell = it.getStringExtra("sell");
             txtsel.setVisibility(View.VISIBLE);
@@ -319,6 +322,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         if (it.hasExtra("icheck")) {
             icheck = it.getStringExtra("icheck");
         }
+
 
         OftenAdapter.arrcheck.clear();
         bn = (Button) findViewById(R.id.bn);
@@ -399,7 +403,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         };
         edquan.addTextChangedListener(textWatcher);
-        ses = new Session(this);
+
 
         deal = (Button) findViewById(R.id.btndeal);
         deal.setOnClickListener(new View.OnClickListener() {
@@ -508,10 +512,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager3 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager2 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);// (int spanCount, int orientation)
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager4 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+
         rcof.setLayoutManager(mStaggeredVerticalLayoutManager);
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
         rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
         rctp.setLayoutManager(mStaggeredVerticalLayoutManager4);
+
+
+
 //        if (!hot.isEmpty()) {
 //            tvpr.setVisibility(View.GONE);
 //        } else {
@@ -654,7 +662,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             Intent i = new Intent(getApplicationContext(), Login.class);
             startActivity(i);
             finish();
-            db.deleteAllPRD();
+          //  db.deleteAllPRD();
         }
 
     }
@@ -737,6 +745,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             it.putExtra("codedis", codeDiscount);
             it.putExtra("typediss", typeDiscount);
             it.putExtra("tymn", tym);
+            it.putExtra("typePay","money");
             it.putExtra("tax", tax);
             startActivity(it);
             pro.dismiss();
@@ -935,9 +944,16 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     for (ListMN lu : list) {
                         mnid = lu.getMn();
                         tvgia1.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(priceprd)) + lu.getMn());
-                        tvgia2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(priceother)) + lu.getMn(), TextView.BufferType.SPANNABLE);
-                        Spannable spannable = (Spannable) tvgia2.getText();
-                        spannable.setSpan(STRIKE_THROUGH_SPAN, 0, tvgia2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        if(priceother.equals("0")){
+                            lngiam2.setVisibility(View.GONE);
+                        }else{
+                            lngiam2.setVisibility(View.VISIBLE);
+                            tvgia2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(priceother)) + lu.getMn(), TextView.BufferType.SPANNABLE);
+                            Spannable spannable = (Spannable) tvgia2.getText();
+                            spannable.setSpan(STRIKE_THROUGH_SPAN, 0, tvgia2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        }
+
+
                         tvprize.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("price"))) + lu.getMn());
                     }
                     tvco.setText(prd.getString("code"));
@@ -1665,7 +1681,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         Intent i = new Intent(getApplicationContext(), StartActivity.class);
                         startActivity(i);
                         finish();
-                        db.deleteAllPRD();
+                      //  db.deleteAllPRD();
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -1881,4 +1897,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+
+
 }

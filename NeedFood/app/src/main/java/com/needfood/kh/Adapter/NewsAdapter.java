@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.needfood.kh.Constructor.ListMN;
@@ -47,11 +48,12 @@ public class NewsAdapter extends
 
         public TextView tvname, tvdv, tvdv2, namea, price, price2, vote, unv;
         public ImageView imageView, imga;
+        public LinearLayout lng;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
             db = new DataHandle(context);
-
+            lng = (LinearLayout)itemView.findViewById(R.id.lngiam);
             tvname = (TextView) itemView.findViewById(R.id.tvname);
 
             tvdv = (TextView) itemView.findViewById(R.id.unit);
@@ -115,10 +117,15 @@ public class NewsAdapter extends
         viewHolder.price.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getPrice())) + tymn);
         ;
         //TextView price2 = (TextView)view.findViewById(R.id.pr2);
+        if(p.getPrice2().equals("0")){
+            viewHolder.lng.setVisibility(View.GONE);
+        }else{
+            viewHolder.lng.setVisibility(View.VISIBLE);
+            viewHolder.price2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getPrice2())) + tymn, TextView.BufferType.SPANNABLE);
+            Spannable spannable = (Spannable) viewHolder.price2.getText();
+            spannable.setSpan(STRIKE_THROUGH_SPAN, 0, viewHolder.price2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
 
-        viewHolder.price2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getPrice2())) + tymn, TextView.BufferType.SPANNABLE);
-        Spannable spannable = (Spannable) viewHolder.price2.getText();
-        spannable.setSpan(STRIKE_THROUGH_SPAN, 0, viewHolder.price2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //TextView vote = (TextView)view.findViewById(R.id.vt);
         viewHolder.vote.setText(p.vt);
 

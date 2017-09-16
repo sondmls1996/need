@@ -1,6 +1,7 @@
 package com.needfood.kh.More.History;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,8 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -53,8 +58,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class HistoryDetail extends AppCompatActivity {
-    String js, mn;
+public class HistoryDetail extends AppCompatActivity  {
+    String idp, mn;
     RecyclerView rchis;
     TextView txtgia, txtdv, texttime, textship, txttax, txtadr, textshiptime, txttotal;
     ArrayList<PreConstructor> arr;
@@ -76,6 +81,7 @@ public class HistoryDetail extends AppCompatActivity {
     double lat, lo;
     GoogleMap googleMap;
     Handler handler;
+    String dia_comment;
     String idshiper;
     String idseller;
     String res;
@@ -85,6 +91,15 @@ public class HistoryDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_detail);
+
+        ImageView imgr = (ImageView)findViewById(R.id.reimg);
+        imgr.setVisibility(View.VISIBLE);
+        imgr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getReport();
+            }
+        });
         ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,15 +135,39 @@ public class HistoryDetail extends AppCompatActivity {
         }
 
         Intent it = getIntent();
-        js = it.getStringExtra("js");
+        idp = it.getStringExtra("idp");
         rchis = (RecyclerView) findViewById(R.id.lvpre);
         arr = new ArrayList<>();
         adapter = new PreAdapter(getApplicationContext(), arr);
         rchis.setAdapter(adapter);
         rchis.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 //        Log.d("IDSHIPPER", js);
-        try {
-            JSONObject jo = new JSONObject(js);
+        getData();
+
+//        Log.d("STAAAA", status);
+
+        shiplo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogShip();
+
+            }
+        });
+
+    }
+
+    private void getData() {
+        String link = getResources().getString(R.string.linkInforo);
+        Map<String,String> map = new HashMap<>();
+        map.put("accessToken",access);
+        map.put("idOrder",idp);
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("RRRR",response);
+                        try {
+             JSONObject joo = new JSONObject(response);
+            JSONObject jo = joo.getJSONObject("Order");
             JSONArray list = jo.getJSONArray("listProduct");
             JSONObject ino = jo.getJSONObject("infoOrder");
             int total = ino.getInt("totalMoneyProduct");
@@ -159,31 +198,112 @@ public class HistoryDetail extends AppCompatActivity {
             textship.setText(mns + " " + mn);
             textshiptime.setText(times);
             txttotal.setText(total + " " + mn);
+                            if (status.equals("done")) {
+                                shiplo.setVisibility(View.GONE);
+                                votee.setVisibility(View.VISIBLE);
+                                dialogVote();
+                            } else if (status.equals("waiting") && !idshipper.equals("")) {
+                                shiplo.setVisibility(View.VISIBLE);
+                                votee.setVisibility(View.GONE);
+                            } else {
+                                shiplo.setVisibility(View.GONE);
+                                votee.setVisibility(View.GONE);
+                            }
             getLocalShipper();
         } catch (JSONException e) {
 
             e.printStackTrace();
         }
-        Log.d("STAAAA", status);
-        if (status.equals("done")) {
-            shiplo.setVisibility(View.GONE);
-            votee.setVisibility(View.VISIBLE);
-            dialogVote();
-        } else if (status.equals("waiting") && !idshipper.equals("")) {
-            shiplo.setVisibility(View.VISIBLE);
-            votee.setVisibility(View.GONE);
-        } else {
-            shiplo.setVisibility(View.GONE);
-            votee.setVisibility(View.GONE);
+            }
+        };
+        PostCL po = new PostCL(link,map,response);
+        RequestQueue re = Volley.newRequestQueue(getApplicationContext());
+        re.add(po);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_brand_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.report) {
+            if (access == null) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.tbao), Toast.LENGTH_SHORT).show();
+            } else {
+                getReport();
+            }
+            return true;
         }
-        shiplo.setOnClickListener(new View.OnClickListener() {
+
+        return super.onOptionsItemSelected(item);
+    }
+    public void getReport() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.htucontent1);
+        dialog.show();
+        TextView txtht = (TextView) dialog.findViewById(R.id.txtht);
+        TextView txtvote = (TextView) dialog.findViewById(R.id.txt_votee);
+        final RatingBar ratingbar = (RatingBar) dialog.findViewById(R.id.ratingBar1);
+        final EditText edtcoment = (EditText) dialog.findViewById(R.id.dia_comment);
+        ratingbar.setVisibility(View.GONE);
+        txtvote.setVisibility(View.GONE);
+
+        Button bbtn1 = (Button) dialog.findViewById(R.id.button1);
+        bbtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogShip();
+                final ProgressDialog progressDialog = new ProgressDialog(HistoryDetail.this);
+                progressDialog.setMessage(getResources().getString(R.string.wait));
+                progressDialog.show();
+                String link = getResources().getString(R.string.linkReportSeller);
+                dia_comment = edtcoment.getText().toString();
+                if (dia_comment.equals("")) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
+                } else {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("idSeller", idseller);
+                    map.put("accessToken", access);
+                    map.put("comment", dia_comment);
+                    Response.Listener<String> response = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                Log.d("checkcc", response);
+                                JSONObject jo = new JSONObject(response);
+                                String code = jo.getString("code");
+                                if (code.equals("0")) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.tkre), Toast.LENGTH_SHORT).show();
+                                    dialog.cancel();
 
+                                } else if (code.equals("-1")) {
+                                    dialog.dismiss();
+                                    progressDialog.dismiss();
+                                    AlertDialog alertDialog = taoMotAlertDialog();
+                                    alertDialog.show();
+                                } else {
+                                    dialog.dismiss();
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    PostCL po = new PostCL(link, map, response);
+                    RequestQueue re = Volley.newRequestQueue(getApplicationContext());
+                    re.add(po);
+                }
             }
         });
-
     }
 
     private void dialogShip() {

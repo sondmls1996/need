@@ -16,6 +16,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.needfood.kh.Constructor.NotiConstructor;
 import com.needfood.kh.Database.DataHandle;
+import com.needfood.kh.More.History.HistoryDetail;
 import com.needfood.kh.More.History.OrderHistory;
 import com.needfood.kh.More.History.TransferHistory;
 import com.needfood.kh.R;
@@ -66,6 +67,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     title = jobj.getString("title");
                     savedata(title);
                 }
+                if(jobj.has("idOrder")){
+                    id=jobj.getString("idOrder");
+                }
                 notif = jobj.getString("functionCall");
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -74,7 +78,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 it = new Intent(this, TransferHistory.class);
             }
             if (notif.equals("infoOrder")) {
-                it = new Intent(this, OrderHistory.class);
+                it = new Intent(this, HistoryDetail.class);
+                it.putExtra("idp",id);
             }
             if (notif.equals("saveStatusOrderAPI")) {
                 it = new Intent(this, OrderHistory.class);

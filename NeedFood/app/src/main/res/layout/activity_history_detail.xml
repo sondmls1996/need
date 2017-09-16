@@ -47,10 +47,9 @@
     <com.needfood.kh.SupportClass.VerticalScrollview
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/shiplo"
-        android:layout_alignParentStart="true"
+        android:padding="10dp"
         android:layout_below="@+id/th"
-        android:padding="10dp">
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,6 +58,9 @@
 
 
             <include layout="@layout/info"></include>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
 
             <include layout="@layout/deliif"></include>
 

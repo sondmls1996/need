@@ -174,6 +174,9 @@
     <string name="linkvotshiper">http://needfood.webmantan.com/updateVoteShiperAPI</string>
     <string name="linkvoteseller">http://needfood.webmantan.com/updateVoteSellerAPI</string>
     <string name="linkreport">http://needfood.webmantan.com/saveReportProductAPI</string>
+    <string name="linkInforo">http://needfood.webmantan.com/getInfoOrderAPI</string>
+    <string name="linkReportSeller">http://needfood.webmantan.com/saveReportSellerAPI</string>
+    <string name="linkFeedback">http://needfood.webmantan.com/saveFeedbackAPI</string>
 
 
     <string name="logout">Đăng xuất</string>
@@ -267,7 +270,7 @@
     <string name="man">Đàn ông</string>
     <string name="sex">Giới tính</string>
     <string name="wm">Phụ nữ</string>
-    <string name="lh">Linh hoạt</string>
+    <string name="lh">Khác</string>
     <string name="birt">Ngày sinh</string>
     <string name="areapr">Mã khuyến mãi không được áp dụng do bạn nằm ngoài khu vực khuyến mãi</string>
     <string name="phonepr">Mã khuyến mãi không được áp dụng cho số điện thoại này</string>
@@ -275,6 +278,8 @@
     <string name="votship">Đánh giá cho người giao hàng</string>
     <string name="votpro">Đánh giá chất lượng cửa hàng</string>
     <string name="vott">Bỏ phiếu</string>
+    <string name="tit">Tiêu đề</string>
+    <string name="contre">Nội dung cần báo cáo</string>
     <string name="ordersuc">Bạn đã đặt hàng thành công. Xin cảm ơn!</string>
     <string name="scanc">Bạn muốn quét loại mã nào?</string>
     <string name="nx">Báo cáo về sản phẩm</string>

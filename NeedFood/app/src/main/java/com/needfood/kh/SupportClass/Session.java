@@ -14,7 +14,7 @@ public class Session {
 
     public Session(Context ctx){
         this.ctx = ctx;
-        prefs = ctx.getSharedPreferences("needfood.db", Context.MODE_PRIVATE);
+        prefs = ctx.getSharedPreferences("needfooddt.db", Context.MODE_PRIVATE);
         editor = prefs.edit();
     }
 
