@@ -232,7 +232,7 @@ public class DataHandle extends SQLiteOpenHelper {
     public boolean isProductEmpty(String id) {
         boolean empty = false;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLEPRD + " WHERE "+ IDPRD+" = '" + id + "'", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLEPRD + " WHERE "+ IDPRD +" = '" + id + "'", null);
         cursor.moveToFirst();
         if (cursor.getCount() > 0) { // This will get the integer value of the COUNT(*)
             empty=false;

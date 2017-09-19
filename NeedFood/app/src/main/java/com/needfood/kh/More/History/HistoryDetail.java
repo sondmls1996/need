@@ -12,8 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -220,27 +218,7 @@ public class HistoryDetail extends AppCompatActivity  {
         RequestQueue re = Volley.newRequestQueue(getApplicationContext());
         re.add(po);
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_brand_detail, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.report) {
-            if (access == null) {
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.tbao), Toast.LENGTH_SHORT).show();
-            } else {
-                getReport();
-            }
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
     public void getReport() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

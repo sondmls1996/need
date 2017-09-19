@@ -1,12 +1,12 @@
 package com.needfood.kh.Login;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,11 +29,12 @@ import com.needfood.kh.SupportClass.PostCL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Register extends AppCompatActivity {
+public class Register extends AppCompatActivity implements View.OnClickListener {
     EditText tvname, tvfone, tvmail, tvpass, tvpass2, tvadr, tvbirth;
     TextView policy;
     Button btnokay;
@@ -43,6 +44,9 @@ public class Register extends AppCompatActivity {
     String sex = "man";
     String birtday;
     static final int DATE_DIALOG_ID = 0;
+    Calendar c;
+    private SimpleDateFormat dateFormatter;
+    public DatePickerDialog fromDatePickerDialog;
     private int mYear, mMonth, mDay;
 
     @Override
@@ -61,10 +65,13 @@ public class Register extends AppCompatActivity {
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.regiss));
 
-        Calendar c = Calendar.getInstance();
+         c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+        fromDatePickerDialog = new DatePickerDialog(this, datePickerListener, mYear, mMonth, mDay);
+        String formattedDate = dateFormatter.format(c.getTime());
         final String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         final String regexStr = "^[0-9]$";
         tvname = (EditText) findViewById(R.id.tvfn);
@@ -100,12 +107,11 @@ public class Register extends AppCompatActivity {
         tvadr = (EditText) findViewById(R.id.tvadr);
         btnokay = (Button) findViewById(R.id.btnreg);
         tvbirth = (EditText) findViewById(R.id.tvbirt);
-        tvbirth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(DATE_DIALOG_ID);
-            }
-        });
+        tvbirth.setInputType(InputType.TYPE_NULL);
+        tvbirth.requestFocus();
+        tvbirth.setOnClickListener(this);
+        tvbirth.setText(formattedDate);
+
         btnokay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,18 +185,22 @@ public class Register extends AppCompatActivity {
 
     }
 
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DATE_DIALOG_ID:
-                return new DatePickerDialog(this,
-                        mDateSetListener,
-                        mYear, mMonth, mDay);
+
+    private DatePickerDialog.OnDateSetListener datePickerListener
+            = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int year,
+                              int month, int dayOfMonth) {
+            c.set(year, month, dayOfMonth);
+            mYear = year;
+            mMonth = month;
+            mDay = dayOfMonth;
+            tvbirth.setText(dateFormatter.format(c.getTime()));
+
 
         }
-
-        return null;
-
-    }
+    };
 
     private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
@@ -205,4 +215,12 @@ public class Register extends AppCompatActivity {
 
     };
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tvbirt:
+                fromDatePickerDialog.show();
+                break;
+        }
+    }
 }

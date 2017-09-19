@@ -27,6 +27,7 @@
     <string name="enamout">Enter amount of coin using</string>
     <string name="coins">Coins</string>
     <string name="coins2">Coins:\u0020</string>
+    <string name="notquan">Sorry, inventory is not enough</string>
     <string name="paym">Payment</string>
     <string name="changepass">Change Password</string>
     <string name="more">More</string>
@@ -56,7 +57,7 @@
     <string name="prd">Pruduct\u0020</string>
     <string name="er">Error</string>
     <string name="shipto">Ship to</string>
-    <string name="promo">Promotion Code / Coins</string>
+    <string name="promo">Promotion Code</string>
     <string name="phonenum">Phone number</string>
     <string name="email">Email:\u0020</string>
     <string name="concode">Confirmation code</string>

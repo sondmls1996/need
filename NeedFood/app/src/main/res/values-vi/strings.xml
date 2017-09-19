@@ -59,7 +59,7 @@
     <string name="er">Lỗi</string>
     <string name="shipto">Chuyển đến</string>
     <string name="email">Email:\u0020</string>
-    <string name="promo">Mã khuyến mại / Coins</string>
+    <string name="promo">Mã khuyến mại</string>
     <string name="phonenum">Số điện thoại</string>
     <string name="phonenum2">Số điện thoại:\u0020</string>
     <string name="tax2">Thuế:</string>
@@ -95,6 +95,7 @@
     <string name="besqua">Tốt nhất</string>
     <string name="sugg">Gợi ý</string>
     <string name="notif">Thông báo</string>
+    <string name="notquan">Xin lỗi, hàng tồn kho không đủ</string>
     <string name="succ">Thành công</string>
     <string name="buy0">Mua với giá 9k</string>
     <string name="emailwr">Email không đúng định dạng</string>
