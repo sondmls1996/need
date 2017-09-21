@@ -147,6 +147,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String linkfbb, sttsell = "", icheck = "";
 
     ChangeTimestamp change;
+    int numquan=0;
     TextView vote, inven;
     String point;
     TextView txtsel, nameseller, exp, txtof, txtbrand, txtcomp;
@@ -382,6 +383,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void afterTextChanged(Editable s) {
                 if (edquan.getText().toString().equals("")) {
+                    inven.setText(quantity);
                     if (db.isProductEmpty(idprd) == false) {
                         db.updatePrd(idprd, "1");
                     } else {
@@ -392,6 +394,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     }
 
                 } else {
+                    numquan = Integer.parseInt(quantity)-Integer.parseInt(edquan.getText().toString());
+                    if(numquan<0){
+                        inven.setText("0");
+                    }else{
+                        inven.setText(numquan+"");
+                    }
                     if (db.isProductEmpty(idprd)==false) {
                         db.updatePrd(idprd, edquan.getText().toString());
                     } else {
