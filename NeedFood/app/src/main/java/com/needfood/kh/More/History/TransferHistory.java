@@ -22,7 +22,6 @@ import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.SupportClass.ChangeTimestamp;
 import com.needfood.kh.SupportClass.DialogUtils;
-import com.needfood.kh.SupportClass.GetHisCoin;
 import com.needfood.kh.SupportClass.PostCL;
 
 import org.json.JSONArray;
@@ -114,11 +113,12 @@ public class TransferHistory extends AppCompatActivity {
 
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
                 try {
 
                     JSONArray jo = new JSONArray(response);
                     if (jo.length() == 0) {
+                        progressDialog.dismiss();
                         if (arr.size() == 0) {
                             nop.setVisibility(View.VISIBLE);
                         } else {

@@ -288,7 +288,7 @@ public class HistoryDetail extends AppCompatActivity  {
         Dialog dialog = new Dialog(HistoryDetail.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.maplayout);
-        dialog.show();
+        Toast.makeText(getApplicationContext(),"TOAST",Toast.LENGTH_SHORT).show();
         MapView mMapView = (MapView) dialog.findViewById(R.id.mapView);
         MapsInitializer.initialize(HistoryDetail.this);
 
@@ -309,7 +309,7 @@ public class HistoryDetail extends AppCompatActivity  {
                 }
             }
         });
-
+        dialog.show();
     }
 
     private void dialogVote() {
