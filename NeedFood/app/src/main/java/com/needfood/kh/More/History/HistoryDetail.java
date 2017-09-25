@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.needfood.kh.Adapter.PreAdapter;
+import com.needfood.kh.Constructor.CheckVoteConstructor;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.PreConstructor;
@@ -58,7 +59,7 @@ public class HistoryDetail extends AppCompatActivity {
     RecyclerView rchis;
     TextView txtgia, txtdv, texttime, textship, txttax, txtadr, textshiptime, txttotal;
     ArrayList<PreConstructor> arr;
-    LinearLayout shiplo, shipvote;
+    LinearLayout shiplo, shipvote, ln1, ln2;
     GoogleMap mMap;
     View v;
     List<InfoConstructor> listu;
@@ -80,6 +81,9 @@ public class HistoryDetail extends AppCompatActivity {
     String idseller;
     String res;
     RelativeLayout votee;
+    String mscode;
+    List<CheckVoteConstructor> list1, list2;
+    RatingBar ratingBar1, ratingBar2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +103,8 @@ public class HistoryDetail extends AppCompatActivity {
         db = new DataHandle(this);
         ses = new Session(this);
         // v = (View) LayoutInflater.from(this).inflate(R.layout.maplayout, null);
-
+        list1 = db.getCheckVoteS();
+        list2 = db.getCheckVoteSh();
         txtgia = (TextView) findViewById(R.id.mntong);
         txtdv = (TextView) findViewById(R.id.dvtong);
         texttime = (TextView) findViewById(R.id.retime);
@@ -108,9 +113,13 @@ public class HistoryDetail extends AppCompatActivity {
         txttax = (TextView) findViewById(R.id.taxx);
         shiplo = (LinearLayout) findViewById(R.id.shiplo);
         shipvote = (LinearLayout) findViewById(R.id.shipvote);
+        ln1 = (LinearLayout) findViewById(R.id.linner);
+        ln2 = (LinearLayout) findViewById(R.id.linner1);
         textshiptime = (TextView) findViewById(R.id.retimee);
         txttotal = (TextView) findViewById(R.id.totalmoney);
         votee = (RelativeLayout) findViewById(R.id.votee);
+        ratingBar1 = (RatingBar) findViewById(R.id.ratingpro);
+        ratingBar2 = (RatingBar) findViewById(R.id.ratingship);
         if (ses.loggedin()) {
             listu = db.getAllInfor();
             access = listu.get(listu.size() - 1).getAccesstoken();
@@ -132,7 +141,7 @@ public class HistoryDetail extends AppCompatActivity {
             JSONArray list = jo.getJSONArray("listProduct");
             JSONObject ino = jo.getJSONObject("infoOrder");
             int total = ino.getInt("totalMoneyProduct");
-            String code = jo.getString("code");
+            mscode = jo.getString("code");
             idseller = jo.getString("idSellerBoss");
             JSONObject incus = jo.getJSONObject("infoCustomer");
             status = jo.getString("status");
@@ -149,26 +158,41 @@ public class HistoryDetail extends AppCompatActivity {
                 }
                 arr.add(new PreConstructor(idx.getString("title"), idx.getString("quantity"), idx.getString("money"), mn));
             }
+            getLocalShipper();
             adapter.notifyDataSetChanged();
             txtadr.setText(incus.getString("address"));
             txtgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(total) + "");
 
             //    txtdv.setText(mn +" ("+tax+"%"+" VAT"+")");
             txttax.setText(price + " " + mn);
-            texttime.setText(code);
+            texttime.setText(mscode);
             textship.setText(mns + " " + mn);
             textshiptime.setText(times);
             txttotal.setText(total + " " + mn);
-            getLocalShipper();
+
         } catch (JSONException e) {
 
             e.printStackTrace();
         }
         Log.d("STAAAA", status);
+        dialogVote();
+        for (int i = 0; i < list1.size(); i++) {
+            if (list1.get(i).getId().equals(mscode)) {
+                ln2.setVisibility(View.GONE);
+            }
+        }
+
+        for (int k = 0; k < list2.size(); k++) {
+            if (list2.get(k).getId().equals(mscode)) {
+
+                ln1.setVisibility(View.GONE);
+            }
+        }
+
+
         if (status.equals("done")) {
             shiplo.setVisibility(View.GONE);
             votee.setVisibility(View.VISIBLE);
-            dialogVote();
         } else if (status.equals("waiting") && !idshipper.equals("")) {
             shiplo.setVisibility(View.VISIBLE);
             votee.setVisibility(View.GONE);
@@ -194,15 +218,15 @@ public class HistoryDetail extends AppCompatActivity {
         MapView mMapView = (MapView) dialog.findViewById(R.id.mapView);
         MapsInitializer.initialize(HistoryDetail.this);
 
-
+        Log.d("CHECKSIZE", lat + "-" + lo);
         mMapView.onCreate(dialog.onSaveInstanceState());
         mMapView.onResume();
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(final GoogleMap googleMap) {
                 mMap = googleMap;
+                mMap.clear();
                 LatLng latLng = new LatLng(lat, lo);
-
                 if (mMap != null) {
                     mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker()).title(fullnamee).snippet("Shipper"));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
@@ -216,8 +240,7 @@ public class HistoryDetail extends AppCompatActivity {
 
     private void dialogVote() {
 
-        RatingBar ratingBar1 = (RatingBar) findViewById(R.id.ratingpro);
-        RatingBar ratingBar2 = (RatingBar) findViewById(R.id.ratingship);
+
         ratingBar1.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -235,11 +258,12 @@ public class HistoryDetail extends AppCompatActivity {
                         Log.d("EEE", response);
                         try {
                             JSONObject jo = new JSONObject(response);
-                            String code = jo.getString("code");
-                            if (code.equals("0")) {
+                            String codez = jo.getString("code");
+                            if (codez.equals("0")) {
+                                db.addCheckVoteSH(new CheckVoteConstructor(mscode));
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
 
-                            } else if (code.equals("-1")) {
+                            } else if (codez.equals("-1")) {
                                 AlertDialog alertDialog = taoMotAlertDialog();
                                 alertDialog.show();
                             } else {
@@ -277,6 +301,7 @@ public class HistoryDetail extends AppCompatActivity {
                             JSONObject jo = new JSONObject(response);
                             String code = jo.getString("code");
                             if (code.equals("0")) {
+                                db.addCheckVoteSe(new CheckVoteConstructor(mscode));
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.succ), Toast.LENGTH_SHORT).show();
 
                             } else if (code.equals("-1")) {

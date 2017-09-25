@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
+import com.needfood.kh.Constructor.CheckVoteConstructor;
 import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Constructor.ListMN;
@@ -70,6 +71,12 @@ public class DataHandle extends SQLiteOpenHelper {
     public static final String TIME_NOTI = "timenoti";
     public static final String ID_NOTI = "idnoti";
 
+    public static final String TABLECHECKVOTE = "checkvotese";
+    public static final String IDCHECKVOTESEL = "checkvotesel";
+
+    public static final String TABLECHECKVOTESH = "checkvotesez";
+    public static final String IDCHECKVOTESHI = "checkvoteshi";
+
     public DataHandle(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -92,7 +99,6 @@ public class DataHandle extends SQLiteOpenHelper {
                 TITLEPRD + " TEXT," +
                 NOTE + " TEXT," +
                 IDPRD + " TEXT NOT NULL PRIMARY KEY," +
-
                 TYPEMN + " TEXT" +
 
                 ");";
@@ -128,12 +134,23 @@ public class DataHandle extends SQLiteOpenHelper {
                         IMAGE_NOTI + " TEXT NOT NULL," +
                         TIME_NOTI + " TEXT NOT NULL" +
                         ");";
+        String CREATE_TABLE_CHECKV =
+                "CREATE TABLE " + TABLECHECKVOTE + "(" +
+                        IDCHECKVOTESEL + " TEXT NOT NULL PRIMARY KEY " +
+                        ");";
+        String CREATE_TABLE_CHECKS =
+                "CREATE TABLE " + TABLECHECKVOTESH + "(" +
+                        IDCHECKVOTESHI + " TEXT NOT NULL PRIMARY KEY " +
+                        ");";
+
 
         db.execSQL(CREATE_TABLE_USER);
         db.execSQL(CREATE_TABLE_INFO);
         db.execSQL(CREATE_TABLE_LAN);
         db.execSQL(CREATE_TABLE_NOTI);
         db.execSQL(CREATE_TABLE_CART);
+        db.execSQL(CREATE_TABLE_CHECKV);
+        db.execSQL(CREATE_TABLE_CHECKS);
         Log.d("TAG", TAG);
 
     }
@@ -148,6 +165,7 @@ public class DataHandle extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS" + TABLESHARE);
         onCreate(db);
     }
+
     public void addPDR(CheckConstructor listu) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -168,18 +186,27 @@ public class DataHandle extends SQLiteOpenHelper {
         db.insert(TABLEPRD, null, values);
         db.close(); // Closing database connection
     }
-    public void addShare(ShareConstructor listu) {
+
+    public void addCheckVoteSe(CheckVoteConstructor ch) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(IDS, listu.getIds()); // Contact Name
-        values.put(DAYSHARE, listu.getDays()); // Contact Phone
-        values.put(STTSHARE, listu.getSttshare()); // Contact Phone
+        values.put(IDCHECKVOTESEL, ch.getId());
 
-        db.insert(TABLESHARE, null, values);
+        db.insert(TABLECHECKVOTE, null, values);
         db.close(); // Closing database connection
     }
-    public boolean updatePrd(String id,String qua) {
+
+    public void addCheckVoteSH(CheckVoteConstructor ch) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(IDCHECKVOTESHI, ch.getId());
+        db.insert(TABLECHECKVOTESH, null, values);
+        db.close(); // Closing database connection
+    }
+
+    public boolean updatePrd(String id, String qua) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(QUAN, qua);
@@ -187,20 +214,12 @@ public class DataHandle extends SQLiteOpenHelper {
         db.update(TABLEPRD, values, IDPRD + " = ?", new String[]{id});
         return true;
     }
-    public boolean updateShare(String id,String days,String stt) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(DAYSHARE, days);
-        values.put(STTSHARE, stt);
 
-        db.update(TABLESHARE, values, IDS + " = ?", new String[]{id});
-        return true;
-    }
 
-    public List<CheckConstructor> getPRDID(String id) {
-        List<CheckConstructor> contactList = new ArrayList<CheckConstructor>();
+    public List<CheckVoteConstructor> getCheckVoteS() {
+        List<CheckVoteConstructor> contactList = new ArrayList<CheckVoteConstructor>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLEPRD + " WHERE " + IDPRD + " = " + id;
+        String selectQuery = "SELECT  * FROM " + TABLECHECKVOTE;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -208,18 +227,32 @@ public class DataHandle extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                CheckConstructor contact = new CheckConstructor();
-                contact.setQuanli(cursor.getString(0));
-                contact.setPrice(cursor.getString(1));
-                contact.setTickkm(cursor.getString(2));
-                contact.setTickkm2(cursor.getString(3));
-                contact.setTickkm3(cursor.getString(4));
-                contact.setBarcode(cursor.getString(5));
-                contact.setCode(cursor.getString(6));
-                contact.setTitle(cursor.getString(7));
-                contact.setNote(cursor.getString(8));
-                contact.setId(cursor.getString(9));
-                contact.setTypeid(cursor.getString(10));
+                CheckVoteConstructor contact = new CheckVoteConstructor();
+                contact.setId(cursor.getString(0));
+
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        // return contact list　
+        return contactList;
+    }
+
+    public List<CheckVoteConstructor> getCheckVoteSh() {
+        List<CheckVoteConstructor> contactList = new ArrayList<CheckVoteConstructor>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLECHECKVOTESH;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                CheckVoteConstructor contact = new CheckVoteConstructor();
+                contact.setId(cursor.getString(0));
 
                 // Adding contact to list
                 contactList.add(contact);
@@ -234,15 +267,16 @@ public class DataHandle extends SQLiteOpenHelper {
     public boolean isProductEmpty(String id) {
         boolean empty = false;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLEPRD + " WHERE "+ IDPRD+" = '" + id + "'", null);
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLEPRD + " WHERE " + IDPRD + " = '" + id + "'", null);
         cursor.moveToFirst();
         if (cursor.getCount() > 0) { // This will get the integer value of the COUNT(*)
-            empty=false;
-        }else{
-            empty=true;
+            empty = false;
+        } else {
+            empty = true;
         }
         return empty;
     }
+
     public void deletePrd(String id) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -250,11 +284,13 @@ public class DataHandle extends SQLiteOpenHelper {
                 new String[]{String.valueOf(id)});
         db.close();
     }
+
     public void deleteAllPRD() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLEPRD, null, null);
         db.close();
     }
+
     public List<CheckConstructor> getPrd() {
         List<CheckConstructor> contactList = new ArrayList<CheckConstructor>();
         // Select All Query
@@ -288,6 +324,7 @@ public class DataHandle extends SQLiteOpenHelper {
         // return contact list　
         return contactList;
     }
+
     public void addMN(ListMN listu) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -366,7 +403,6 @@ public class DataHandle extends SQLiteOpenHelper {
     }
 
 
-
     public List<ListMN> getMNid(String id) {
         List<ListMN> contactList = new ArrayList<ListMN>();
         // Select All Query
@@ -391,7 +427,6 @@ public class DataHandle extends SQLiteOpenHelper {
         // return contact list　
         return contactList;
     }
-
 
 
     public List<InfoConstructor> getAllInfor() {
@@ -477,7 +512,7 @@ public class DataHandle extends SQLiteOpenHelper {
         return contactList;
     }
 
-    public boolean updateinfo(String name, String email, String addr, String id, String coin,String birth) {
+    public boolean updateinfo(String name, String email, String addr, String id, String coin, String birth) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(FULLNAME, name);
@@ -532,8 +567,8 @@ public class DataHandle extends SQLiteOpenHelper {
     public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.delete(TABLEPRD,null,null);
-        db.delete(TABLE_NOTI,null,null);
+        db.delete(TABLEPRD, null, null);
+        db.delete(TABLE_NOTI, null, null);
 
         db.close();
     }
