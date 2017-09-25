@@ -1872,6 +1872,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 it.putExtra("typediss", typeDiscount);
                 it.putExtra("tax", tax);
                 it.putExtra("typePay", "money");
+                it.putExtra("coin", "0");
                 startActivity(it);
                 //Getting the rating and displaying it on the toast
 
