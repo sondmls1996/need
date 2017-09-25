@@ -27,6 +27,7 @@
     <string name="enamout">Enter amount of coin using</string>
     <string name="coins">Coins</string>
     <string name="coins2">Coins:\u0020</string>
+    <string name="notquan">Sorry, inventory is not enough</string>
     <string name="paym">Payment</string>
     <string name="changepass">Change Password</string>
     <string name="more">More</string>
@@ -56,7 +57,7 @@
     <string name="prd">Pruduct\u0020</string>
     <string name="er">Error</string>
     <string name="shipto">Ship to</string>
-    <string name="promo">Promotion Code / Coins</string>
+    <string name="promo">Promotion Code</string>
     <string name="phonenum">Phone number</string>
     <string name="email">Email:\u0020</string>
     <string name="concode">Confirmation code</string>
@@ -175,8 +176,12 @@
     <string name="linkvotshiper">http://needfood.webmantan.com/updateVoteShiperAPI</string>
     <string name="linkvoteseller">http://needfood.webmantan.com/updateVoteSellerAPI</string>
     <string name="linkreport">http://needfood.webmantan.com/saveReportProductAPI</string>
+    <string name="linkInforo">http://needfood.webmantan.com/getInfoOrderAPI</string>
+    <string name="linkReportSeller">http://needfood.webmantan.com/saveReportSellerAPI</string>
+    <string name="linkFeedback">http://needfood.webmantan.com/saveFeedbackAPI</string>
 
-
+    <string name="tit">Title</string>
+    <string name="contre">Report content</string>
     <string name="logout">Logout</string>
     <string name="tiengviet">Tiếng Việt</string>
     <string name="tienganh">English</string>
@@ -287,4 +292,5 @@
     <string name="bmoney">By Money</string>
     <string name="engouh">Not enough coins to purchase your products</string>
     <string name="nxx">You want payment type?</string>
+    <string name="tmoney">Total money\u0020</string>
 </resources>

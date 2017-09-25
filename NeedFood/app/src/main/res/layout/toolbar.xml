@@ -15,7 +15,7 @@
         android:layout_gravity="center_vertical"
         android:src="@drawable/backw"/>
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
@@ -25,4 +25,12 @@
         android:textSize="16sp"
         android:id="@+id/titletxt"
         android:text="sdsdasd"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:id="@+id/reimg"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:src="@drawable/report"/>
 </android.support.v7.widget.Toolbar>

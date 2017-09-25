@@ -106,6 +106,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     public static String priceprd;
     String prdcode, titl;
     Session ses;
+    public static TextView txttong;
     String uadr, tax;
     String typemn;
     String sexxx, coordinates, numberBuy, headFone, nameman, birthdayy, typedevice, namelower, typepay;
@@ -146,6 +147,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String linkfbb, sttsell = "", icheck = "";
 
     ChangeTimestamp change;
+    int numquan = 0;
     TextView vote, inven;
     String point;
     TextView txtsel, nameseller, exp, txtof, txtbrand, txtcomp;
@@ -157,6 +159,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     GPSTracker tracker;
     String quantity;
     double latitude, longitude, lat, lo;
+    LinearLayout lngiam2;
     String dia_comment;
     ProgressBar prbar;
     LinearLayout liner;
@@ -171,6 +174,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_product_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarr);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        db = new DataHandle(this);
+        db.deleteAllPRD();
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.prddetail));
         ver = (VerticalScrollview) findViewById(R.id.vers);
@@ -192,7 +198,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 finish();
-                db.deleteAllPRD();
+                //   db.deleteAllPRD();
             }
         });
         khaibao();
@@ -204,14 +210,16 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        db.deleteAllPRD();
+        //    db.deleteAllPRD();
     }
-    private void dialogToping(){
+
+    private void dialogToping() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.layoutdetail);
         dialog.show();
     }
+
     private void showPreDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -220,7 +228,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
 
         RecyclerView rcp = (RecyclerView) dialog.findViewById(R.id.rcpre);
-        TextView txttong = (TextView) dialog.findViewById(R.id.txttong);
+        txttong = (TextView) dialog.findViewById(R.id.txttong);
         DialogPreAdapter preadap = new DialogPreAdapter(getApplicationContext(), precons);
 
         rcp.setAdapter(preadap);
@@ -255,7 +263,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
 
-        db.deleteAllPRD();
+        // db.deleteAllPRD();
         //     stopService(new Intent(ProductDetail.this, BubbleService.class));
 
     }
@@ -281,14 +289,15 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
 
     private void khaibao() {
-        db = new DataHandle(this);
-        db.deleteAllPRD();
+
+        ses = new Session(this);
         change = new ChangeTimestamp();
         Intent it = getIntent();
         view1 = (LinearLayout) findViewById(R.id.v1);
         pr1 = (ProgressBar) findViewById(R.id.prg1);
         idprd = it.getStringExtra("idprd");
         txtsel = (TextView) findViewById(R.id.seltime);
+        lngiam2 = (LinearLayout) findViewById(R.id.lngiam2);
         if (it.hasExtra("sell")) {
             sttsell = it.getStringExtra("sell");
             txtsel.setVisibility(View.VISIBLE);
@@ -319,6 +328,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         if (it.hasExtra("icheck")) {
             icheck = it.getStringExtra("icheck");
         }
+
 
         OftenAdapter.arrcheck.clear();
         bn = (Button) findViewById(R.id.bn);
@@ -375,6 +385,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             @Override
             public void afterTextChanged(Editable s) {
                 if (edquan.getText().toString().equals("")) {
+                    inven.setText(quantity);
                     if (db.isProductEmpty(idprd) == false) {
                         db.updatePrd(idprd, "1");
                     } else {
@@ -385,7 +396,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     }
 
                 } else {
-                    if (!db.isProductEmpty(idprd)) {
+                    numquan = Integer.parseInt(quantity) - Integer.parseInt(edquan.getText().toString());
+                    if (numquan < 0) {
+                        inven.setText("0");
+                    } else {
+                        inven.setText(numquan + "");
+                    }
+                    if (db.isProductEmpty(idprd) == false) {
                         db.updatePrd(idprd, edquan.getText().toString());
                     } else {
                         db.addPDR(new CheckConstructor(edquan.getText().toString(),
@@ -399,7 +416,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         };
         edquan.addTextChangedListener(textWatcher);
-        ses = new Session(this);
+
 
         deal = (Button) findViewById(R.id.btndeal);
         deal.setOnClickListener(new View.OnClickListener() {
@@ -485,7 +502,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rctp = (RecyclerView) findViewById(R.id.rcprd3);
 
 
-
         adapter = new CommentAdapter(getApplicationContext(), arr);
         adapterof1 = new OftenAdapter(getApplicationContext(), arrof);
         adapterof2 = new OftenAdapter(getApplicationContext(), arrof2);
@@ -508,10 +524,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager3 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager2 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);// (int spanCount, int orientation)
         StaggeredGridLayoutManager mStaggeredVerticalLayoutManager4 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+
         rcof.setLayoutManager(mStaggeredVerticalLayoutManager);
         rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
         rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
         rctp.setLayoutManager(mStaggeredVerticalLayoutManager4);
+
+
 //        if (!hot.isEmpty()) {
 //            tvpr.setVisibility(View.GONE);
 //        } else {
@@ -595,66 +614,72 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         if (ses.loggedin()) {
             int tong = 0;
             typeDiscount = "0";
-            String quan;
-            int mnship = Collections.max(listship);
+            String quan = edquan.getText().toString();
+            if (Integer.parseInt(quan) > Integer.parseInt(quantity)) {
+                pro.dismiss();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.notquan), Toast.LENGTH_SHORT).show();
+            } else {
+                int mnship = Collections.max(listship);
 
 
-            JSONArray jsonArray = new JSONArray();
+                JSONArray jsonArray = new JSONArray();
 
 
-            try {
-                listcheck = db.getPrd();
-                for (CheckConstructor lu : listcheck) {
-                    JSONObject j1 = new JSONObject();
-                    tong = Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()) + tong;
-                    j1.put("quantity", lu.getQuanli());
-                    j1.put("price", lu.getPrice());
-                    j1.put("tickKM", lu.getTickkm());
-                    j1.put("tickKM_percent", lu.getTickkm2());
-                    j1.put("tickKM_money", lu.getTickkm3());
-                    j1.put("barcode", lu.getBarcode());
-                    j1.put("code", lu.getCode());
-                    j1.put("title", lu.getTitle());
-                    j1.put("money", Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()));
-                    j1.put("note", lu.getNote());
-                    j1.put("id", lu.getId());
-                    j1.put("typeMoneyId", lu.getTypeid());
-                    jsonArray.put(j1);
+                try {
+                    listcheck = db.getPrd();
+                    for (CheckConstructor lu : listcheck) {
+                        JSONObject j1 = new JSONObject();
+                        tong = Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()) + tong;
+                        j1.put("quantity", lu.getQuanli());
+                        j1.put("price", lu.getPrice());
+                        j1.put("tickKM", lu.getTickkm());
+                        j1.put("tickKM_percent", lu.getTickkm2());
+                        j1.put("tickKM_money", lu.getTickkm3());
+                        j1.put("barcode", lu.getBarcode());
+                        j1.put("code", lu.getCode());
+                        j1.put("title", lu.getTitle());
+                        j1.put("money", Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()));
+                        j1.put("note", lu.getNote());
+                        j1.put("id", lu.getId());
+                        j1.put("typeMoneyId", lu.getTypeid());
+                        jsonArray.put(j1);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
 
-            } catch (JSONException e) {
-                e.printStackTrace();
+                Log.d("HAJAR", jsonArray.toString());
+
+
+                HashMap<String, String> map = new HashMap<>();
+                map.put("accessToken", access);
+                map.put("listProduct", jsonArray.toString());
+                map.put("money", tong + "");
+                map.put("totalMoneyProduct", tong + (tong * (Integer.parseInt(tax))) / 100 + "");
+                map.put("fullName", "");
+                map.put("moneyShip", mnship + "");
+                map.put("timeShiper", "");
+                map.put("address", "");
+                map.put("note", "");
+                map.put("fone", "");
+                // map.put("idUseronl",idu);
+                map.put("idSeller", idsl);
+
+                moneyall = (tong + (tong * (Integer.parseInt(tax))) / 100) + mnship;
+
+                dialogRe(map, mnid, "nom", tym, codeDiscount, typeDiscount, tax, moneyall);
+                pro.dismiss();
             }
 
-
-            Log.d("HAJAR", jsonArray.toString());
-
-
-            HashMap<String, String> map = new HashMap<>();
-            map.put("accessToken", access);
-            map.put("listProduct", jsonArray.toString());
-            map.put("money", tong + "");
-            map.put("totalMoneyProduct", tong + (tong * (Integer.parseInt(tax))) / 100 + "");
-            map.put("fullName", "");
-            map.put("moneyShip", mnship + "");
-            map.put("timeShiper", "");
-            map.put("address", "");
-            map.put("note", "");
-            map.put("fone", "");
-            // map.put("idUseronl",idu);
-            map.put("idSeller", idsl);
-
-            moneyall = (tong + (tong * (Integer.parseInt(tax))) / 100) + mnship;
-
-            dialogRe(map, mnid, "nom", tym, codeDiscount, typeDiscount, tax, moneyall);
-            pro.dismiss();
         } else {
             pro.dismiss();
             Intent i = new Intent(getApplicationContext(), Login.class);
             startActivity(i);
             finish();
-            db.deleteAllPRD();
+            //  db.deleteAllPRD();
         }
 
     }
@@ -686,60 +711,69 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
-            String quan = "1";
-            codeDiscount = stt;
-            int money1 = Integer.parseInt(quan) * Integer.parseInt(prices);
-            JSONArray jsonArray = new JSONArray();
-            JSONObject j1 = new JSONObject();
 
-            try {
-                j1.put("quantity", "1");
-                j1.put("price", prices);
-                j1.put("tickKM", "false");
-                j1.put("tickKM_percent", "");
-                j1.put("tickKM_money", "");
-                j1.put("barcode", idprd);
-                j1.put("code", prdcode);
-                j1.put("title", titl);
-                j1.put("money", money1 + "");
-                j1.put("note", "");
-                j1.put("id", idprd);
-                j1.put("typeMoneyId", tym);
-                jsonArray.put(j1);
-            } catch (JSONException e) {
-                e.printStackTrace();
+            String quan = edquan.getText().toString();
+            if (Integer.parseInt(quan) > Integer.parseInt(quantity)) {
+                pro.dismiss();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.notquan), Toast.LENGTH_SHORT).show();
+            } else {
+                quan = "1";
+                codeDiscount = stt;
+                int money1 = Integer.parseInt(quan) * Integer.parseInt(prices);
+                JSONArray jsonArray = new JSONArray();
+                JSONObject j1 = new JSONObject();
+
+                try {
+                    j1.put("quantity", "1");
+                    j1.put("price", prices);
+                    j1.put("tickKM", "false");
+                    j1.put("tickKM_percent", "");
+                    j1.put("tickKM_money", "");
+                    j1.put("barcode", idprd);
+                    j1.put("code", prdcode);
+                    j1.put("title", titl);
+                    j1.put("money", money1 + "");
+                    j1.put("note", "");
+                    j1.put("id", idprd);
+                    j1.put("typeMoneyId", tym);
+                    jsonArray.put(j1);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                int money = 0;
+
+
+                money = money + money1;
+
+                HashMap<String, String> map = new HashMap<>();
+                map.put("accessToken", access);
+                map.put("listProduct", jsonArray.toString());
+                map.put("money", money + "");
+                map.put("totalMoneyProduct", money + (money * (Integer.parseInt(tax))) / 100 + "");
+                map.put("fullName", "");
+                map.put("moneyShip", ship);
+                map.put("timeShiper", "");
+                map.put("address", "");
+                map.put("note", "");
+                map.put("fone", "");
+                // map.put("idUseronl",idu);
+                map.put("idSeller", idsl);
+
+
+                Intent it = new Intent(getApplicationContext(), Preview.class);
+                it.putExtra("map", map);
+                it.putExtra("min", mnid);
+                it.putExtra("stt", stt);
+                it.putExtra("num", ns);
+                it.putExtra("codedis", codeDiscount);
+                it.putExtra("typediss", typeDiscount);
+                it.putExtra("tymn", tym);
+                it.putExtra("typePay", "money");
+                it.putExtra("tax", tax);
+                startActivity(it);
+                pro.dismiss();
             }
-            int money = 0;
 
-
-            money = money + money1;
-
-            HashMap<String, String> map = new HashMap<>();
-            map.put("accessToken", access);
-            map.put("listProduct", jsonArray.toString());
-            map.put("money", money + "");
-            map.put("totalMoneyProduct", money + (money * (Integer.parseInt(tax))) / 100 + "");
-            map.put("fullName", "");
-            map.put("moneyShip", ship);
-            map.put("timeShiper", "");
-            map.put("address", "");
-            map.put("note", "");
-            map.put("fone", "");
-            // map.put("idUseronl",idu);
-            map.put("idSeller", idsl);
-
-
-            Intent it = new Intent(getApplicationContext(), Preview.class);
-            it.putExtra("map", map);
-            it.putExtra("min", mnid);
-            it.putExtra("stt", stt);
-            it.putExtra("num", ns);
-            it.putExtra("codedis", codeDiscount);
-            it.putExtra("typediss", typeDiscount);
-            it.putExtra("tymn", tym);
-            it.putExtra("tax", tax);
-            startActivity(it);
-            pro.dismiss();
         } else {
             pro.dismiss();
             AlertDialog alertDialog = taoMotAlertDialog2();
@@ -904,7 +938,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     namesl = prd.getString("nameSeller");
                     prdcode = prd.getString("code");
                     bar = prd.getString("barcode");
-                    inven.setText(quantity);
+                    if (Integer.parseInt(quantity) < 0) {
+                        inven.setText("0");
+                    } else {
+                        inven.setText(quantity);
+                    }
+
                     if (sttsell.equals("true")) {
                         JSONObject selling = prd.getJSONObject("sellingOut");
                         priceprd = selling.getString("price");
@@ -935,9 +974,16 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     for (ListMN lu : list) {
                         mnid = lu.getMn();
                         tvgia1.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(priceprd)) + lu.getMn());
-                        tvgia2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(priceother)) + lu.getMn(), TextView.BufferType.SPANNABLE);
-                        Spannable spannable = (Spannable) tvgia2.getText();
-                        spannable.setSpan(STRIKE_THROUGH_SPAN, 0, tvgia2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        if (priceother.equals("0")) {
+                            lngiam2.setVisibility(View.GONE);
+                        } else {
+                            lngiam2.setVisibility(View.VISIBLE);
+                            tvgia2.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(priceother)) + lu.getMn(), TextView.BufferType.SPANNABLE);
+                            Spannable spannable = (Spannable) tvgia2.getText();
+                            spannable.setSpan(STRIKE_THROUGH_SPAN, 0, tvgia2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        }
+
+
                         tvprize.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("price"))) + lu.getMn());
                     }
                     tvco.setText(prd.getString("code"));
@@ -1665,7 +1711,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         Intent i = new Intent(getApplicationContext(), StartActivity.class);
                         startActivity(i);
                         finish();
-                        db.deleteAllPRD();
+                        //  db.deleteAllPRD();
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -1773,13 +1819,30 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         dialog.setContentView(R.layout.htucontent);
         dialog.show();
 
-        LinearLayout txtht = (LinearLayout) dialog.findViewById(R.id.lnbc);
-        LinearLayout txtvote = (LinearLayout) dialog.findViewById(R.id.lnbm);
-        final double coinint = Double.parseDouble(coin);
+        final LinearLayout txtht = (LinearLayout) dialog.findViewById(R.id.lnbc);
+        final LinearLayout txtvote = (LinearLayout) dialog.findViewById(R.id.lnbm);
+        final LinearLayout lnn = (LinearLayout) dialog.findViewById(R.id.linner2);
+        final EditText edCoin = (EditText) dialog.findViewById(R.id.inputcoin);
+        Button btnsub = (Button) dialog.findViewById(R.id.btnxac);
+        TextView txtCoin = (TextView) dialog.findViewById(R.id.socoin);
+        final int coinz = Math.round(Float.parseFloat(coin));
+        txtCoin.setText(coinz + "");
+
         txtht.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                lnn.setVisibility(View.VISIBLE);
+                txtht.setVisibility(View.GONE);
+                txtvote.setVisibility(View.GONE);
+            }
 
+
+        });
+        btnsub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String coinn = edCoin.getText().toString();
+                if (Double.parseDouble(coinn) < Double.parseDouble(String.valueOf(coinz))) {
                     Intent it = new Intent(getApplicationContext(), Preview.class);
                     it.putExtra("map", map);
                     it.putExtra("min", mnid);
@@ -1789,16 +1852,17 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     it.putExtra("typediss", typeDiscount);
                     it.putExtra("tax", tax);
                     it.putExtra("typePay", "coin");
+                    it.putExtra("coin", coinn);
                     startActivity(it);
-              
-
+                } else {
+                    Toast.makeText(ProductDetail.this, getResources().getString(R.string.engouh), Toast.LENGTH_SHORT).show();
+                }
             }
-
-
         });
         txtvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                lnn.setVisibility(View.GONE);
                 Intent it = new Intent(getApplicationContext(), Preview.class);
                 it.putExtra("map", map);
                 it.putExtra("min", mnid);
@@ -1881,4 +1945,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+
+
 }

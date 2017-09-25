@@ -48,15 +48,15 @@ public class OrderHisAdapter extends ArrayAdapter<OrderHisConstructor> {
 
             TextView tvct = (TextView) view.findViewById(R.id.title_pro);
             tvct.setText(p.getTitle());
-            ImageView imgstt = (ImageView)view.findViewById(R.id.sttimg);
-            if(p.getStatus().equals("new")){
+            ImageView imgstt = (ImageView) view.findViewById(R.id.sttimg);
+            if (p.getStatus().equals("new")) {
                 imgstt.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 imgstt.setVisibility(View.GONE);
             }
             TextView pri = (TextView) view.findViewById(R.id.price);
-            pri.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(p.getMoney())));
-
+            int price = Math.round(Float.parseFloat(p.getMoney()));
+            pri.setText(NumberFormat.getNumberInstance(Locale.UK).format(price));
 
 
         } else {

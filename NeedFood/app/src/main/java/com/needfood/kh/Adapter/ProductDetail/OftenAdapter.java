@@ -1,6 +1,5 @@
 package com.needfood.kh.Adapter.ProductDetail;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +23,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Constructor.ListMN;
+import com.needfood.kh.Constructor.Often2Constructor;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
@@ -52,10 +52,10 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
     public static ArrayList<CheckConstructor> arrcheck = new ArrayList<>();
     public List<ListMN> listmn;
     public RecyclerView rcq;
-    public ArrayList<OftenConstructor> arrq;
+    private ArrayList<Often2Constructor> arrq;
     public DataHandle db;
     public int tong=0;
-    public QuanAdapter quana;
+    private QuanAdapter quana;
     Context mContext = getApplicationContext();
     private List<OftenConstructor> listData = new ArrayList<>();
     Context context;
@@ -132,7 +132,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
             @Override
             public void onClick(View v) {
 
-                 Dialog dialog = new Dialog((Activity) v.getContext());
+                 Dialog dialog = new Dialog(v.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.layoutdetail);
                 final ProgressBar pgr = (ProgressBar)dialog.findViewById(R.id.prg1);
@@ -143,7 +143,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                 final TextView tvgia = (TextView)dialog.findViewById(R.id.pr1);
                 final TextView tvdv = (TextView)dialog.findViewById(R.id.donvi1) ;
                  rcq = (RecyclerView)dialog.findViewById(R.id.rcquan);
-                arrq = new ArrayList<OftenConstructor>();
+                arrq = new ArrayList<Often2Constructor>();
                 quana= new QuanAdapter(context,arrq);
                 rcq.setAdapter(quana);
                 StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
@@ -222,6 +222,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                 tvgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("price"))) + lu.getMn());
                             }
                             tvdv.setText(prd.getString("nameUnit"));
+
                             getQuan(ip.getId());
 
                         } catch (JSONException e) {
@@ -240,81 +241,49 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
         viewHolder.imgtru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!viewHolder.edo.getText().toString().equals("")&&!viewHolder.edo.getText().toString().equals("0")){
-                    tong=Integer.parseInt(viewHolder.edo.getText().toString())-1;
-                    viewHolder.edo.setText(tong+"");
-                    db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
-                    context.startService(new Intent(context, BubbleService.class));
-                }else if(viewHolder.edo.getText().toString().equals("1")){
-                    tong=Integer.parseInt(viewHolder.edo.getText().toString())-1;
-                    viewHolder.edo.setText(tong+"");
-                    db.deletePrd(ip.getId());
-                    context.startService(new Intent(context, BubbleService.class));
-                }else{
-                    viewHolder.edo.setText("");
-                    db.deletePrd(ip.getId());
-                    context.startService(new Intent(context, BubbleService.class));
-                }
+
+                    if(!viewHolder.edo.getText().toString().equals("")&&!viewHolder.edo.getText().toString().equals("0")){
+                        tong=Integer.parseInt(viewHolder.edo.getText().toString())-1;
+                        viewHolder.edo.setText(tong+"");
+                        db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
+                        context.startService(new Intent(context, BubbleService.class));
+                    }else if(viewHolder.edo.getText().toString().equals("1")){
+                        tong=Integer.parseInt(viewHolder.edo.getText().toString())-1;
+                        viewHolder.edo.setText(tong+"");
+                        db.deletePrd(ip.getId());
+                        context.startService(new Intent(context, BubbleService.class));
+                    }else{
+                        viewHolder.edo.setText("");
+                        db.deletePrd(ip.getId());
+                        context.startService(new Intent(context, BubbleService.class));
+                    }
+
+
             }
         });
         viewHolder.imgcong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!viewHolder.edo.getText().toString().equals("")){
-                    tong=Integer.parseInt(viewHolder.edo.getText().toString())+1;
-                    viewHolder.edo.setText(tong+"");
-                    db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
-                    context.startService(new Intent(context, BubbleService.class));
-                }else{
 
-                    viewHolder.edo.setText("1");
-                    db.addPDR(new CheckConstructor(viewHolder.edo.getText().toString(),
-                            ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode(),
-                            ip.getName(),
-                            ip.getNote(), ip.getId(), ip.getTymn()));
-                    context.startService(new Intent(context, BubbleService.class));
-                }
+                    if(!viewHolder.edo.getText().toString().equals("")){
+                        tong=Integer.parseInt(viewHolder.edo.getText().toString())+1;
+                        viewHolder.edo.setText(tong+"");
+                        db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
+                        context.startService(new Intent(context, BubbleService.class));
+                    }else{
+
+                        viewHolder.edo.setText("1");
+                        db.addPDR(new CheckConstructor(viewHolder.edo.getText().toString(),
+                                ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode(),
+                                ip.getName(),
+                                ip.getNote(), ip.getId(), ip.getTymn()));
+                        context.startService(new Intent(context, BubbleService.class));
+                    }
+
+
             }
         });
-//        viewHolder.textWatcher = new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                if (viewHolder.edo.getText().toString().equals("")) {
-//                        db.deletePrd(ip.getId());
-//
-//                    context.startService(new Intent(context, BubbleService.class));
-//                } else {
-//                    if (viewHolder.edo.getText().equals("1")) {
-//                        db.deletePrd(ip.getId());
-//                        db.addPDR(new CheckConstructor(viewHolder.edo.getText().toString(),
-//                                ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode(),
-//                                ip.getName(),
-//                                ip.getNote(), ip.getId(), ip.getTymn()));
-//
-//                        context.startService(new Intent(context, BubbleService.class));
-//                    } else {
-//                        db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
-//                        context.startService(new Intent(context, BubbleService.class));
-//                    }
-//
-//                }
-//
-//            }
-//
-//
-//        };
-//        viewHolder.edo.addTextChangedListener(viewHolder.textWatcher);
+
     }
 
     private void getQuan(String id) {
@@ -341,8 +310,8 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         for (ListMN lu : listmn) {
                             mn = lu.getMn();
                         }
-
-                        arrq.add(new OftenConstructor("http://needfood.webmantan.com" +
+                        Log.d("ert",prd.getString("id")+"\n"+prd.getString("title"));
+                        arrq.add(new Often2Constructor("http://needfood.webmantan.com" +
                                 jaimg.getString(0), prd.getString("title"),
                                 prd.getString("price"), mn, prd.getString("nameUnit"),
                                 false, prd.getString("id"), prd.getString("code"),

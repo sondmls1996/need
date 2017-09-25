@@ -1,6 +1,7 @@
 package com.needfood.kh.More.History;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -55,11 +58,12 @@ import java.util.Locale;
 import java.util.Map;
 
 public class HistoryDetail extends AppCompatActivity {
-    String js, mn;
+    String idp, mn;
     RecyclerView rchis;
     TextView txtgia, txtdv, texttime, textship, txttax, txtadr, textshiptime, txttotal;
     ArrayList<PreConstructor> arr;
-    LinearLayout shiplo, shipvote, ln1, ln2;
+    LinearLayout shipvote, ln1, ln2;
+    Button shiplo;
     GoogleMap mMap;
     View v;
     List<InfoConstructor> listu;
@@ -68,15 +72,12 @@ public class HistoryDetail extends AppCompatActivity {
     List<ListMN> listmn;
     Context context;
     DataHandle db;
-    SupportMapFragment mapFragment;
-    private android.support.v4.app.FragmentManager fragmentManager;
     PreAdapter adapter;
     String idshipper;
     Session ses;
     String status;
     double lat, lo;
-    GoogleMap googleMap;
-    Handler handler;
+    String dia_comment;
     String idshiper;
     String idseller;
     String res;
@@ -89,6 +90,15 @@ public class HistoryDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_detail);
+
+        ImageView imgr = (ImageView) findViewById(R.id.reimg);
+        imgr.setVisibility(View.VISIBLE);
+        imgr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getReport();
+            }
+        });
         ImageView imgb = (ImageView) findViewById(R.id.immgb);
         imgb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,13 +115,16 @@ public class HistoryDetail extends AppCompatActivity {
         // v = (View) LayoutInflater.from(this).inflate(R.layout.maplayout, null);
         list1 = db.getCheckVoteS();
         list2 = db.getCheckVoteSh();
+        arr = new ArrayList<>();
+        Intent it = getIntent();
+        idp = it.getStringExtra("idp");
         txtgia = (TextView) findViewById(R.id.mntong);
         txtdv = (TextView) findViewById(R.id.dvtong);
         texttime = (TextView) findViewById(R.id.retime);
         txtadr = (TextView) findViewById(R.id.txtadr);
         textship = (TextView) findViewById(R.id.shipmnn);
         txttax = (TextView) findViewById(R.id.taxx);
-        shiplo = (LinearLayout) findViewById(R.id.shiplo);
+        shiplo = (Button) findViewById(R.id.shiploa);
         shipvote = (LinearLayout) findViewById(R.id.shipvote);
         ln1 = (LinearLayout) findViewById(R.id.linner);
         ln2 = (LinearLayout) findViewById(R.id.linner1);
@@ -126,98 +139,169 @@ public class HistoryDetail extends AppCompatActivity {
             idu = listu.get(listu.size() - 1).getId();
             fullname = listu.get(listu.size() - 1).getFullname();
             phone = listu.get(listu.size() - 1).getFone();
-        }
 
-        Intent it = getIntent();
-        js = it.getStringExtra("js");
+        }
         rchis = (RecyclerView) findViewById(R.id.lvpre);
-        arr = new ArrayList<>();
         adapter = new PreAdapter(getApplicationContext(), arr);
         rchis.setAdapter(adapter);
         rchis.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//        Log.d("IDSHIPPER", js);
-        try {
-            JSONObject jo = new JSONObject(js);
-            JSONArray list = jo.getJSONArray("listProduct");
-            JSONObject ino = jo.getJSONObject("infoOrder");
-            int total = ino.getInt("totalMoneyProduct");
-            mscode = jo.getString("code");
-            idseller = jo.getString("idSellerBoss");
-            JSONObject incus = jo.getJSONObject("infoCustomer");
-            status = jo.getString("status");
-            String price = ino.getString("moneyProduct");
-            idshipper = ino.getString("idShiper");
-            String tax = ino.getString("percentTaxAll");
-            String times = ino.getString("timeShiper");
-            String mns = ino.getString("moneyShip");
-            for (int i = 0; i < list.length(); i++) {
-                JSONObject idx = list.getJSONObject(i);
-                listmn = db.getMNid(idx.getString("typeMoneyId"));
-                for (ListMN lu : listmn) {
-                    mn = lu.getMn();
-                }
-                arr.add(new PreConstructor(idx.getString("title"), idx.getString("quantity"), idx.getString("money"), mn));
-            }
-            getLocalShipper();
-            adapter.notifyDataSetChanged();
-            txtadr.setText(incus.getString("address"));
-            txtgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(total) + "");
-
-            //    txtdv.setText(mn +" ("+tax+"%"+" VAT"+")");
-            txttax.setText(price + " " + mn);
-            texttime.setText(mscode);
-            textship.setText(mns + " " + mn);
-            textshiptime.setText(times);
-            txttotal.setText(total + " " + mn);
-
-        } catch (JSONException e) {
-
-            e.printStackTrace();
-        }
-        Log.d("STAAAA", status);
-        dialogVote();
-        for (int i = 0; i < list1.size(); i++) {
-            if (list1.get(i).getId().equals(mscode)) {
-                ln2.setVisibility(View.GONE);
-            }
-        }
-
-        for (int k = 0; k < list2.size(); k++) {
-            if (list2.get(k).getId().equals(mscode)) {
-
-                ln1.setVisibility(View.GONE);
-            }
-        }
-
-
-        if (status.equals("done")) {
-            shiplo.setVisibility(View.GONE);
-            votee.setVisibility(View.VISIBLE);
-        } else if (status.equals("waiting") && !idshipper.equals("")) {
-            shiplo.setVisibility(View.VISIBLE);
-            votee.setVisibility(View.GONE);
-        } else {
-            shiplo.setVisibility(View.GONE);
-            votee.setVisibility(View.GONE);
-        }
+        getData();
         shiplo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogShip();
-
             }
         });
+    }
 
+
+    private void getData() {
+        String link = getResources().getString(R.string.linkInforo);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", access);
+        map.put("idOrder", idp);
+        Log.d("RRRR", access + "-" + idp);
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("RRRR", response);
+                try {
+                    JSONObject joo = new JSONObject(response);
+                    JSONObject jo = joo.getJSONObject("Order");
+                    JSONArray list = jo.getJSONArray("listProduct");
+                    JSONObject ino = jo.getJSONObject("infoOrder");
+                    int total = ino.getInt("totalMoneyProduct");
+                    mscode = jo.getString("code");
+                    idseller = jo.getString("idSellerBoss");
+                    JSONObject incus = jo.getJSONObject("infoCustomer");
+                    status = jo.getString("status");
+                    String price = ino.getString("moneyProduct");
+                    idshipper = ino.getString("idShiper");
+                    String tax = ino.getString("percentTaxAll");
+                    String times = ino.getString("timeShiper");
+                    String mns = ino.getString("moneyShip");
+                    for (int i = 0; i < list.length(); i++) {
+                        JSONObject idx = list.getJSONObject(i);
+                        listmn = db.getMNid(idx.getString("typeMoneyId"));
+                        for (ListMN lu : listmn) {
+                            mn = lu.getMn();
+                        }
+                        arr.add(new PreConstructor(idx.getString("title"), idx.getString("quantity"), idx.getString("money"), mn));
+                    }
+                    getLocalShipper();
+                    adapter.notifyDataSetChanged();
+                    txtadr.setText(incus.getString("address"));
+                    txtgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(total) + "");
+                    txttax.setText(price + " " + mn);
+                    texttime.setText(mscode);
+                    textship.setText(mns + " " + mn);
+                    textshiptime.setText(times);
+                    txttotal.setText(total + " " + mn);
+                } catch (JSONException e) {
+
+                    e.printStackTrace();
+                }
+                dialogVote();
+                for (int i = 0; i < list1.size(); i++) {
+                    if (list1.get(i).getId().equals(mscode)) {
+                        ln2.setVisibility(View.GONE);
+                    }
+                }
+
+                for (int k = 0; k < list2.size(); k++) {
+                    if (list2.get(k).getId().equals(mscode)) {
+                        ln1.setVisibility(View.GONE);
+                    }
+                }
+                Log.d("CHECKDATA", status);
+                if (status.equals("done")) {
+                    shiplo.setVisibility(View.GONE);
+                    votee.setVisibility(View.VISIBLE);
+                } else if (status.equals("waiting") && !idshipper.equals("")) {
+                    shiplo.setVisibility(View.VISIBLE);
+                    votee.setVisibility(View.GONE);
+                } else {
+                    shiplo.setVisibility(View.GONE);
+                    votee.setVisibility(View.GONE);
+                }
+            }
+        };
+        PostCL po = new PostCL(link, map, response);
+        RequestQueue re = Volley.newRequestQueue(getApplicationContext());
+        re.add(po);
+    }
+
+    public void getReport() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.htucontent1);
+        dialog.show();
+        TextView txtht = (TextView) dialog.findViewById(R.id.txtht);
+        TextView txtvote = (TextView) dialog.findViewById(R.id.txt_votee);
+        final RatingBar ratingbar = (RatingBar) dialog.findViewById(R.id.ratingBar1);
+        final EditText edtcoment = (EditText) dialog.findViewById(R.id.dia_comment);
+        ratingbar.setVisibility(View.GONE);
+        txtvote.setVisibility(View.GONE);
+
+        Button bbtn1 = (Button) dialog.findViewById(R.id.button1);
+        bbtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(HistoryDetail.this);
+                progressDialog.setMessage(getResources().getString(R.string.wait));
+                progressDialog.show();
+                String link = getResources().getString(R.string.linkReportSeller);
+                dia_comment = edtcoment.getText().toString();
+                if (dia_comment.equals("")) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
+                } else {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("idSeller", idseller);
+                    map.put("accessToken", access);
+                    map.put("comment", dia_comment);
+                    Response.Listener<String> response = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                Log.d("checkcc", response);
+                                JSONObject jo = new JSONObject(response);
+                                String code = jo.getString("code");
+                                if (code.equals("0")) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.tkre), Toast.LENGTH_SHORT).show();
+                                    dialog.cancel();
+
+                                } else if (code.equals("-1")) {
+                                    dialog.dismiss();
+                                    progressDialog.dismiss();
+                                    AlertDialog alertDialog = taoMotAlertDialog();
+                                    alertDialog.show();
+                                } else {
+                                    dialog.dismiss();
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    PostCL po = new PostCL(link, map, response);
+                    RequestQueue re = Volley.newRequestQueue(getApplicationContext());
+                    re.add(po);
+                }
+            }
+        });
     }
 
     private void dialogShip() {
         Dialog dialog = new Dialog(HistoryDetail.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.maplayout);
-        dialog.show();
         MapView mMapView = (MapView) dialog.findViewById(R.id.mapView);
         MapsInitializer.initialize(HistoryDetail.this);
-
         Log.d("CHECKSIZE", lat + "-" + lo);
         mMapView.onCreate(dialog.onSaveInstanceState());
         mMapView.onResume();
@@ -235,17 +319,15 @@ public class HistoryDetail extends AppCompatActivity {
                 }
             }
         });
-
+        dialog.create();
+        dialog.show();
     }
 
     private void dialogVote() {
-
-
         ratingBar1.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 final String link = getResources().getString(R.string.linkvotshiper);
-
                 Map<String, String> map = new HashMap<>();
                 map.put("idShiper", idshipper);
                 map.put("accessToken", access);
@@ -359,7 +441,7 @@ public class HistoryDetail extends AppCompatActivity {
     }
 
     private AlertDialog taoMotAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(HistoryDetail.this);
         //Thiết lập tiêu đề hiển thị
         builder.setTitle(getResources().getString(R.string.er));
         //Thiết lập thông báo hiển thị

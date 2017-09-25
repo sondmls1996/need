@@ -27,7 +27,7 @@ import java.util.List;
 public class DataHandle extends SQLiteOpenHelper {
     public static final String TAG = DBHandle.class.getSimpleName();
     public static final String DB_NAME = "needfooddt.db";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     public static final String TABLEPRD = "tableprd";
     public static final String TABLESHARE = "tbshare";
@@ -100,7 +100,6 @@ public class DataHandle extends SQLiteOpenHelper {
                 NOTE + " TEXT," +
                 IDPRD + " TEXT NOT NULL PRIMARY KEY," +
                 TYPEMN + " TEXT" +
-
                 ");";
         String CREATE_TABLE_USER =
                 "CREATE TABLE " + MONEYTB + "(" +
@@ -157,12 +156,12 @@ public class DataHandle extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS" + MONEYTB);
-        db.execSQL("DROP TABLE IF EXISTS" + INFO);
-        db.execSQL("DROP TABLE IF EXISTS" + CHECK_LAN);
-        db.execSQL("DROP TABLE IF EXISTS" + TABLE_NOTI);
-        db.execSQL("DROP TABLE IF EXISTS" + TABLEPRD);
-        db.execSQL("DROP TABLE IF EXISTS" + TABLESHARE);
+        db.execSQL("DROP TABLE IF EXISTS " + MONEYTB);
+        db.execSQL("DROP TABLE IF EXISTS " + INFO);
+        db.execSQL("DROP TABLE IF EXISTS " + CHECK_LAN);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTI);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLEPRD);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLESHARE);
         onCreate(db);
     }
 

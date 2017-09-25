@@ -1,9 +1,9 @@
-<android.support.v7.widget.CardView android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
 
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    app:cardBackgroundColor="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,28 +22,31 @@
             android:id="@+id/lvpre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:gravity="center"
-            android:visibility="gone"
             android:background="@color/gray"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:visibility="gone">
+
             <TextView
+                android:id="@+id/mntong"
                 android:layout_width="wrap_content"
-                android:textSize="16sp"
+                android:layout_height="wrap_content"
                 android:text="0"
                 android:textColor="@color/red"
-                android:id="@+id/mntong"
-                android:layout_height="wrap_content" />
+                android:textSize="16sp" />
+
             <TextView
-                android:layout_width="wrap_content"
-                android:textColor="@color/red"
-                android:textSize="16sp"
                 android:id="@+id/dvtong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="vnd"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/red"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -9,6 +9,7 @@
         <item name="colorControlActivated">@color/red</item>
 
 
+
         <item name="windowNoTitle">true</item>
     </style>
 

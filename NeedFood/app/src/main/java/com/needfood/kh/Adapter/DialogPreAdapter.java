@@ -9,14 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
 import com.needfood.kh.Constructor.PreDialogConstructor;
 import com.needfood.kh.Database.DataHandle;
+import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.SupportClass.ChangeTimestamp;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Vi on 9/7/2017.
@@ -25,6 +29,8 @@ import java.util.List;
 public class DialogPreAdapter  extends
         RecyclerView.Adapter<DialogPreAdapter.RecyclerViewHolder> {
     public DataHandle db;
+    public List<CheckConstructor> listp;
+    public Integer tong=0;
     private List<PreDialogConstructor> listData = new ArrayList<>();
     Context context;
     public DialogPreAdapter(Context context,List<PreDialogConstructor> listData) {
@@ -40,6 +46,7 @@ public class DialogPreAdapter  extends
         public TextView prequan;
         public TextView premn;
         public ImageView img;
+        public List<CheckConstructor> listp;
         public TextView prename;
 
 
@@ -69,6 +76,7 @@ public class DialogPreAdapter  extends
     @Override
     public void onBindViewHolder(final RecyclerViewHolder viewHolder, final int position) {
         final PreDialogConstructor ip = listData.get(position);
+
         viewHolder.prename.setText(ip.getTitle());
 
         viewHolder.prequan.setText(ip.getQuanli());
@@ -89,6 +97,12 @@ public class DialogPreAdapter  extends
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, listData.size());
         notifyDataSetChanged();
+        listp = db.getPrd();
+        for (CheckConstructor lu:listp){
+            tong = Integer.parseInt(lu.getPrice()) * Integer.parseInt(lu.getQuanli()) + tong;
+        }
+        ProductDetail.txttong.setText(NumberFormat.getNumberInstance(Locale.UK).format(tong));
+
     }
 
     /**

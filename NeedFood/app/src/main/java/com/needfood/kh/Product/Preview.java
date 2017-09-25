@@ -51,8 +51,8 @@ import java.util.Map;
 
 public class Preview extends AppCompatActivity implements View.OnClickListener {
 
-    String json, mid, stt, mnship, idsl, acess, tax,codediss,typediss;
-
+    String json, mid, stt, mnship, idsl, acess, tax, codediss, typediss;
+    TextView tm;
     RecyclerView lv;
     private SimpleDateFormat dateFormatter, timeformat;
     ArrayList<PreConstructor> arr;
@@ -71,6 +71,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
     public TimePickerDialog timepicker;
     PreAdapter adapter;
     Button btno;
+    int coinn = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,13 +92,16 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         typediss = intent.getStringExtra("typediss");
         hashMap = (HashMap<String, String>) intent.getSerializableExtra("map");
         json = hashMap.get("listProduct");
-        Log.d("JIO", json.toString());
+
         idsl = hashMap.get("idSeller");
         total = Integer.parseInt(hashMap.get("totalMoneyProduct"));
         mnship = hashMap.get("moneyShip");
         stt = intent.getStringExtra("stt");
         tax = intent.getStringExtra("tax");
         typePay = intent.getStringExtra("typePay");
+        coinn = Integer.parseInt(intent.getStringExtra("coin"));
+        Log.d("JIO", total + "");
+        Log.d("JIO", coinn + "");
         if (intent.hasExtra("num")) {
             numshare = intent.getIntExtra("num", 0);
         }
@@ -112,7 +116,10 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         hour = c.get(Calendar.HOUR_OF_DAY);
         minitus = c.get(Calendar.MINUTE);
         txtgia = (TextView) findViewById(R.id.mntong);
-        txtgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(total) + "");
+        tm = (TextView) findViewById(R.id.tm);
+        int totalaf = total - coinn;
+        Log.d("JIO", totalaf + "");
+        tm.setText(NumberFormat.getNumberInstance(Locale.UK).format(totalaf) + ""+"VND");
         txtdv = (TextView) findViewById(R.id.dvtong);
         txtdv.setText(mid + " (" + tax + "%" + " VAT" + ")");
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -224,8 +231,8 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             hashMap.put("codeDiscount", codediss);
             hashMap.put("typeDiscount", typediss);
             hashMap.put("idSeller", idsl);
-            hashMap.put("typePay",typePay);
-
+            hashMap.put("typePay", typePay);
+            hashMap.put("coinPay", coinn + "");
             Log.d("TYPEH", hashMap.toString());
             Log.d("total", total + "");
 

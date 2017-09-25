@@ -59,7 +59,7 @@
     <string name="er">Lỗi</string>
     <string name="shipto">Chuyển đến</string>
     <string name="email">Email:\u0020</string>
-    <string name="promo">Mã khuyến mại / Coins</string>
+    <string name="promo">Mã khuyến mại</string>
     <string name="phonenum">Số điện thoại</string>
     <string name="phonenum2">Số điện thoại:\u0020</string>
     <string name="tax2">Thuế:</string>
@@ -95,6 +95,7 @@
     <string name="besqua">Tốt nhất</string>
     <string name="sugg">Gợi ý</string>
     <string name="notif">Thông báo</string>
+    <string name="notquan">Xin lỗi, hàng tồn kho không đủ</string>
     <string name="succ">Thành công</string>
     <string name="buy0">Mua với giá 9k</string>
     <string name="emailwr">Email không đúng định dạng</string>
@@ -174,6 +175,9 @@
     <string name="linkvotshiper">http://needfood.webmantan.com/updateVoteShiperAPI</string>
     <string name="linkvoteseller">http://needfood.webmantan.com/updateVoteSellerAPI</string>
     <string name="linkreport">http://needfood.webmantan.com/saveReportProductAPI</string>
+    <string name="linkInforo">http://needfood.webmantan.com/getInfoOrderAPI</string>
+    <string name="linkReportSeller">http://needfood.webmantan.com/saveReportSellerAPI</string>
+    <string name="linkFeedback">http://needfood.webmantan.com/saveFeedbackAPI</string>
 
 
     <string name="logout">Đăng xuất</string>
@@ -212,7 +216,7 @@
     <string name="poli">Chính sách</string>
     <string name="hiset">Lịch sử đặt hàng</string>
     <string name="checkfon">Số điện thoại không hợp lệ</string>
-    <string name="coinn">Coins: \u0020</string>
+    <string name="coinn">Số xu: \u0020</string>
     <string name="trancoin">Chuyển xu</string>
     <string name="haslock">Tài khoản seller hoặc sản phẩm đã bị khóa</string>
     <string name="mis">Yêu cầu: \u0020</string>
@@ -267,7 +271,7 @@
     <string name="man">Đàn ông</string>
     <string name="sex">Giới tính</string>
     <string name="wm">Phụ nữ</string>
-    <string name="lh">Linh hoạt</string>
+    <string name="lh">Khác</string>
     <string name="birt">Ngày sinh</string>
     <string name="areapr">Mã khuyến mãi không được áp dụng do bạn nằm ngoài khu vực khuyến mãi</string>
     <string name="phonepr">Mã khuyến mãi không được áp dụng cho số điện thoại này</string>
@@ -275,6 +279,8 @@
     <string name="votship">Đánh giá cho người giao hàng</string>
     <string name="votpro">Đánh giá chất lượng cửa hàng</string>
     <string name="vott">Bỏ phiếu</string>
+    <string name="tit">Tiêu đề</string>
+    <string name="contre">Nội dung cần báo cáo</string>
     <string name="ordersuc">Bạn đã đặt hàng thành công. Xin cảm ơn!</string>
     <string name="scanc">Bạn muốn quét loại mã nào?</string>
     <string name="nx">Báo cáo về sản phẩm</string>
@@ -288,4 +294,5 @@
     <string name="bmoney">Bởi tiền mặt</string>
     <string name="engouh">Bạn không đủ xu để mua sản phẩm này</string>
     <string name="nxx">Bạn muốn thanh toán kiểu ?</string>
+    <string name="tmoney">Tổng tiền </string>
 </resources>
