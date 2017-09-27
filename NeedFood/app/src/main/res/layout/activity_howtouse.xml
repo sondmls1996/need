@@ -53,10 +53,45 @@
                         android:textColor="@color/white"
                         android:textSize="20sp" />
                 </LinearLayout>
-                <include layout="@layout/toolbar"></include>
+
             </RelativeLayout>
 
+            <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/toolbarr"
+                app:layout_collapseMode="pin"
+                android:layout_width="match_parent"
+                android:background="@color/red"
 
+                android:layout_height="?attr/actionBarSize">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_margin="5dp"
+                        android:id="@+id/immgb"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/backw"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        app:layout_collapseMode="pin"
+
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:id="@+id/titletxt"
+                        android:text="sdsdasd"/>
+                </RelativeLayout>
+
+
+            </android.support.v7.widget.Toolbar>
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
