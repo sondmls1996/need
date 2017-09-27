@@ -53,10 +53,11 @@
                         android:textColor="@color/white"
                         android:textSize="20sp" />
                 </LinearLayout>
+                <include layout="@layout/toolbar"></include>
             </RelativeLayout>
 
 
-            <include layout="@layout/toolbar"></include>
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

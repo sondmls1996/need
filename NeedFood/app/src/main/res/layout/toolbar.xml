@@ -20,7 +20,7 @@
         android:layout_gravity="center"
         android:textAlignment="center"
         app:layout_collapseMode="pin"
-        android:layout_marginRight="32dp"
+
         android:textColor="@color/white"
         android:textSize="16sp"
         android:id="@+id/titletxt"
