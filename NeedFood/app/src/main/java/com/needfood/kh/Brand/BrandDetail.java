@@ -106,7 +106,6 @@ public class BrandDetail extends AppCompatActivity {
             listu = db.getAllInfor();
             for(InfoConstructor lu:listu){
                 access = lu.getAccesstoken();
-
             }
         }
 
