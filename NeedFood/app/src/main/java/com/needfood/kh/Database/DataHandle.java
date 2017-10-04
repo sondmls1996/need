@@ -60,7 +60,7 @@ public class DataHandle extends SQLiteOpenHelper {
     public static final String COIN = "coin";
     public static final String BIRTHDAY = "birthday";
     public static final String SEX = "sex";
-
+    public static final String MNSHIP = "mnship";
     public static final String CHECK_LAN = "language";
     public static final String ID_LANGUAGE = "id_language";
 
@@ -98,7 +98,8 @@ public class DataHandle extends SQLiteOpenHelper {
                 TITLEPRD + " TEXT," +
                 NOTE + " TEXT," +
                 IDPRD + " TEXT NOT NULL PRIMARY KEY," +
-                TYPEMN + " TEXT" +
+                TYPEMN + " TEXT," +
+                MNSHIP +" TEXT "+
                 ");";
         String CREATE_TABLE_MN =
                 "CREATE TABLE " + MONEYTB + "(" +
@@ -183,7 +184,9 @@ public class DataHandle extends SQLiteOpenHelper {
         values.put(BARCODE, listu.getBarcode()); // Contact Phone
         values.put(CODE, listu.getCode()); // Contact Phone
         values.put(TYPEMN, listu.getTypeid()); // Contact Phone
-        values.put(NOTE, listu.getNote()); // Contact Phone// Contact Phone
+        values.put(NOTE, listu.getNote());
+        values.put(MNSHIP,listu.getMns());
+        // Contact Phone// Contact Phone
 
 
         db.insert(TABLEPRD, null, values);
@@ -317,6 +320,7 @@ public class DataHandle extends SQLiteOpenHelper {
                     contact.setNote(cursor.getString(8));
                     contact.setId(cursor.getString(9));
                     contact.setTypeid(cursor.getString(10));
+                    contact.setMns(cursor.getString(11));
                     // Adding contact to list
                     contactList.add(contact);
                 } while (cursor.moveToNext());

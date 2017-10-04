@@ -60,6 +60,7 @@
     <string name="prd">Sản phẩm\u0020</string>
     <string name="er">Lỗi</string>
     <string name="shipto">Chuyển đến</string>
+    <string name="changeadr">Ấn vào bản đồ để thay đổi địa chỉ</string>
     <string name="email">Email:\u0020</string>
     <string name="promo">Mã khuyến mại</string>
     <string name="phonenum">Số điện thoại</string>

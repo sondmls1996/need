@@ -275,11 +275,11 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     public void foo(boolean bo){
         if(bo==true){
-            item1.setEnabled(true);
-            item2.setEnabled(true);
+            item1.setVisible(true);
+            item2.setVisible(true);
         }else{
-            item1.setEnabled(false);
-            item2.setEnabled(false);
+            item1.setVisible(false);
+            item2.setVisible(false);
         }
     }
     public boolean onCreateOptionsMenu(Menu menu) {

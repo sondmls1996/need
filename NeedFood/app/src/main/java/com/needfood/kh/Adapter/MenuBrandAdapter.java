@@ -132,7 +132,7 @@ public class MenuBrandAdapter extends
                     db.addPDR(new CheckConstructor(viewHolder.edb.getText().toString(),
                             ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode(),
                             ip.getName(),
-                            ip.getNote(), ip.getId(), ip.getTymn()));
+                            ip.getNote(), ip.getId(), ip.getTymn(),ip.getNmship()));
                     context.startService(new Intent(context, BubbleService.class));
                 }
             }

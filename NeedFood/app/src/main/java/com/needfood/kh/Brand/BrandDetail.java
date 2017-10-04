@@ -88,9 +88,11 @@ public class BrandDetail extends AppCompatActivity {
     List<CheckConstructor> listcheck;
     DataHandle db;
     String coin="";
+    public static ArrayList<Integer> listship2;
     String typedis,codedis;
     EditText edsearch;
-    public String idsl,type,fullname;
+    public String idsl,fullname;
+    public static String type="";
     public static TextView txttong2;
     public String tax,access;
 
@@ -103,6 +105,7 @@ public class BrandDetail extends AppCompatActivity {
         Intent it = getIntent();
         idsl = it.getStringExtra("ids");
         db = new DataHandle(this);
+        listship2 = new ArrayList<>();
         type = it.getStringExtra("typeH");
         session = new Session(this);
         if(session.loggedin()){
@@ -222,11 +225,17 @@ public class BrandDetail extends AppCompatActivity {
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (session.loggedin()) {
+            int mnship = 0;
             int tong = 0;
             typedis = "0";
             codedis="";
             String quan;
-            int mnship = Collections.max(listship);
+            if(!type.equals("0")){
+                 mnship = Collections.max(listship);
+            }else{
+                 mnship = Collections.max(listship2);
+            }
+
 
 
             JSONArray jsonArray = new JSONArray();

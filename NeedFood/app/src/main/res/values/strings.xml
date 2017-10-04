@@ -75,6 +75,7 @@
     <string name="procomt">Component of the product</string>
     <string name="inven">Inventory</string>
     <string name="inven2">Inventory:\u0020</string>
+    <string name="changeadr">Click on the map to change the address</string>
     <string name="usname">User name</string>
     <string name="pass">Password</string>
     <string name="quanlity">Quantity</string>

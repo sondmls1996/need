@@ -26,6 +26,7 @@ import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.Often2Constructor;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Database.DataHandle;
+import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.SupportClass.PostCL;
@@ -206,7 +207,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         db.addPDR(new CheckConstructor("1",
                                 ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode()
                                 , ip.getName(),
-                                "", ip.getId(), ip.getTymn()));
+                                "", ip.getId(), ip.getTymn(),ip.getNmship()));
                         viewHolder.edo.setText("1");
                     }
 
@@ -226,7 +227,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                 db.addPDR(new CheckConstructor("1",
                                         ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode()
                                         , ip.getName(),
-                                        "", ip.getId(), ip.getTymn()));
+                                        "", ip.getId(), ip.getTymn(),ip.getNmship()));
                                 viewHolder.edo.setText("1");
                             }
 
@@ -244,7 +245,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                 db.addPDR(new CheckConstructor(edq.getText().toString(),
                                         ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode()
                                         , ip.getName(),
-                                        "", ip.getId(), ip.getTymn()));
+                                        "", ip.getId(), ip.getTymn(),ip.getNmship()));
                                 viewHolder.edo.setText(edq.getText().toString());
                             }
 
@@ -269,10 +270,12 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         tong=Integer.parseInt(viewHolder.edo.getText().toString())-1;
                         viewHolder.edo.setText(tong+"");
                         db.deletePrd(ip.getId());
+                        ProductDetail.listship.remove(position);
                         context.startService(new Intent(context, BubbleService.class));
                     }else{
                         viewHolder.edo.setText("");
                         db.deletePrd(ip.getId());
+                        ProductDetail.listship.remove(position);
                         context.startService(new Intent(context, BubbleService.class));
                     }
 
@@ -294,8 +297,9 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         db.addPDR(new CheckConstructor(viewHolder.edo.getText().toString(),
                                 ip.getPrize(), "false", "", "", ip.getBar(), ip.getCode(),
                                 ip.getName(),
-                                ip.getNote(), ip.getId(), ip.getTymn()));
+                                ip.getNote(), ip.getId(), ip.getTymn(),ip.getNmship()));
                         context.startService(new Intent(context, BubbleService.class));
+
                     }
 
 

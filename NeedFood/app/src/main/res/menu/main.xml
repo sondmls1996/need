@@ -8,12 +8,12 @@
         android:id="@+id/cam"
         android:icon="@drawable/cam"
 
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:title="Cam" />
     <item
         android:id="@+id/mark"
         android:icon="@drawable/mark"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:title="swip" />
 
 

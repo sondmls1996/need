@@ -396,7 +396,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         db.addPDR(new CheckConstructor("1",
                                 priceprd, "false", "", "", bar, prdcode
                                 , titl,
-                                "", idprd, tym));
+                                "", idprd, tym,strship.toString()));
                         qq="1";
                     }
 
@@ -413,7 +413,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         db.addPDR(new CheckConstructor(edquan.getText().toString(),
                                 priceprd, "false", "", "", bar, prdcode
                                 , titl,
-                                "", idprd, tym));
+                                "", idprd, tym,strship.toString()));
                         qq="1";
                     }
 
@@ -625,8 +625,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 pro.dismiss();
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.notquan), Toast.LENGTH_SHORT).show();
             } else {
-                int mnship = Collections.max(listship);
-
 
                 JSONArray jsonArray = new JSONArray();
 
@@ -634,6 +632,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 try {
                     listcheck = db.getPrd();
                     for (CheckConstructor lu : listcheck) {
+                        listship.add(Integer.parseInt(lu.getMns()));
                         if(!lu.getNote().equals("0")){
                             JSONObject j1 = new JSONObject();
                             tong = Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()) + tong;
@@ -658,7 +657,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
+                int mnship = Collections.max(listship);
 
                 Log.d("HAJAR", jsonArray.toString());
 
@@ -925,7 +924,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     JSONObject joo = prd.getJSONObject("vote");
                     point = joo.getString("point");
                     strship = new StringBuilder(prd.getString("moneyShip"));
-                    listship.add(Integer.parseInt(strship.toString()));
+
                     JSONObject jos = prd.getJSONObject("discount");
                     JSONObject jos1 = jos.getJSONObject("discountStart");
                     text1 = jos1.getString("text");
@@ -986,7 +985,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     db.addPDR(new CheckConstructor("1",
                             priceprd, "false", "", "", bar, prdcode
                             , titl,
-                            "", idprd, tym));
+                            "", idprd, tym,strship.toString()));
                     startService(new Intent(ProductDetail.this, BubbleService.class));
                     Log.d("IDS", titl);
 
