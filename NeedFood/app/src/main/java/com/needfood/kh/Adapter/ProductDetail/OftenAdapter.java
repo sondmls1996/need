@@ -27,7 +27,6 @@ import com.needfood.kh.Constructor.Often2Constructor;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
 import com.needfood.kh.Constructor.UpdateConstructor;
 import com.needfood.kh.Database.DataHandle;
-import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
 import com.needfood.kh.SupportClass.PostCL;
@@ -277,13 +276,16 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     }else if(viewHolder.edo.getText().toString().equals("1")){
                         tong=Integer.parseInt(viewHolder.edo.getText().toString())-1;
                         viewHolder.edo.setText(tong+"");
-                        db.deletePrd(ip.getId());
-                        ProductDetail.listship.remove(position);
+                        arrud = new ArrayList<>();
+                        arrud.add(new UpdateConstructor(DataHandle.QUAN,"0"));
+                        arrud.add(new UpdateConstructor(DataHandle.MNSHIP,"0"));
+                        db.updatePrd(ip.getId(), arrud);
+                      //  ProductDetail.listship.remove(position);
                         context.startService(new Intent(context, BubbleService.class));
                     }else{
                         viewHolder.edo.setText("");
                         db.deletePrd(ip.getId());
-                        ProductDetail.listship.remove(position);
+                      //  ProductDetail.listship.remove(position);
                         context.startService(new Intent(context, BubbleService.class));
                     }
 

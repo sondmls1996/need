@@ -629,6 +629,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         if (ses.loggedin()) {
+            listship.clear();
             int tong = 0;
             typeDiscount = "0";
             String quan = edquan.getText().toString();

@@ -127,7 +127,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         minitus = c.get(Calendar.MINUTE);
         txtgia = (TextView) findViewById(R.id.mntong);
         tm = (TextView) findViewById(R.id.tm);
-        tm.setText(NumberFormat.getNumberInstance(Locale.UK).format(total) + "VND");
+        tm.setText(NumberFormat.getNumberInstance(Locale.UK).format(total) + "VND"+" (VAT)");
         txtdv = (TextView) findViewById(R.id.dvtong);
         txtdv.setText(mid + " (" + tax + "%" + " VAT" + ")");
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
