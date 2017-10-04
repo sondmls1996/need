@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     //login
+    <string name="app_name">Shipper</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+
     <string name="loginhinsodienthoai">Input phone</string>
     <string name="loginhinmatkhau">Input password</string>
     <string name="logindangnhap">Login</string>
@@ -104,6 +112,23 @@
     <string name="dslydo1">Required evaluation</string>
     <string name="dslydo2">No shortage of reason or evaluation</string>
 
+    <string name="checkLoginAPI">http://needfood.webmantan.com/checkLoginShiperAPI</string>
+    <string name="getListOrderShiperAPI">http://needfood.webmantan.com/getListOrderShiperAPI</string>
+    <string name="saveTokenDeviceShiperAPI">http://needfood.webmantan.com/saveTokenDeviceShiperAPI</string>
+    <string name="checkLogoutShiperAPI">http://needfood.webmantan.com/checkLogoutShiperAPI</string>
+    <string name="saveStatusOrderAPI">http://needfood.webmantan.com/saveStatusOrderAPI</string>
+    <string name="saveGPSShiperAPI">http://needfood.webmantan.com/saveGPSShiperAPI</string>
+    <string name="searchOrderShiperAPI">http://needfood.webmantan.com/searchOrderShiperAPI</string>
+    <string name="changePassShiperAPI">http://needfood.webmantan.com/changePassShiperAPI</string>
+    <string name="sendCodePassShiperAPI">http://needfood.webmantan.com/sendCodePassShiperAPI</string>
+    <string name="sendPassShiperAPI">http://needfood.webmantan.com/sendPassShiperAPI</string>
+    <string name="getListOrderDoneShiperAPI">http://needfood.webmantan.com/getListOrderDoneShiperAPI</string>
+    <string name="updateInfoShiperAPI">http://needfood.webmantan.com/updateInfoShiperAPI</string>
+    <string name="getListOrderWaitingShiperAPI">http://needfood.webmantan.com/getListOrderWaitingShiperAPI</string>
+    <string name="getinfo">http://needfood.webmantan.com/getInfoShiperAPI</string>
+    <string name="F_REF">com.mantanapp.needfoodshiper.f_ref</string>
+    <string name="F_CM">com.mantanapp.needfoodshiper.f_cm</string>
+
     <string name="succ">Success</string>
     <string name="er">Error</string>
     <string name="evs">Are you want to save and exit?</string>
@@ -123,4 +148,11 @@
     <string name="kmang">Please enable Internet connection</string>
     <string name="codemot">Your account was logged in other device</string>
 
+    <string name="sttthanhcong">Save Success</string>
+    <string name="lnhapthieu">Can not be empty</string>
+
+    <string name="mkkhongdung">Confirm password don\'t match</string>
+    <string name="mkxnkhongdung">Confirm password don\'t match</string>
+
+    <string name="nhapthieutruong">Can not be empty</string>
 </resources>
