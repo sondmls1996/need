@@ -13,6 +13,7 @@ import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.NotiConstructor;
+import com.needfood.kh.Constructor.UpdateConstructor;
 import com.needfood.kh.SupportClass.DBHandle;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import java.util.List;
 public class DataHandle extends SQLiteOpenHelper {
     public static final String TAG = DBHandle.class.getSimpleName();
     public static final String DB_NAME = "needfooddt.db";
-    public static final int DB_VERSION = 3;
+    public static final int DB_VERSION = 4;
 
     public static final String TABLEPRD = "tableprd";
     public static final String TABLESHARE = "tbshare";
@@ -212,15 +213,17 @@ public class DataHandle extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    public boolean updatePrd(String id, String qua) {
+
+    public boolean updatePrd(String id, ArrayList<UpdateConstructor> uarr) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(QUAN, qua);
+        for (int i=0;i<uarr.size();i++){
+            values.put(uarr.get(i).getRow(),uarr.get(i).getValue());
+        }
 
         db.update(TABLEPRD, values, IDPRD + " = ?", new String[]{id});
         return true;
     }
-
 
     public List<CheckVoteConstructor> getCheckVoteS() {
         List<CheckVoteConstructor> contactList = new ArrayList<CheckVoteConstructor>();

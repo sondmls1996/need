@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.needfood.kh.Constructor.Often2Constructor;
+import com.needfood.kh.Constructor.UpdateConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
@@ -31,7 +32,7 @@ public class QuanAdapter extends  RecyclerView.Adapter<QuanAdapter.RecyclerViewH
 private List<Often2Constructor> listDataa = new ArrayList<>();
         Context context;
     public int tong = 0;
-
+    public ArrayList<UpdateConstructor> arrud;
     public DataHandle db;
 public QuanAdapter(Context context,List<Often2Constructor> listData) {
         this.context = context;
@@ -104,16 +105,23 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
                     tong=Integer.parseInt(viewHolder.edo.getText().toString())-1;
                     viewHolder.edo.setText(tong+"");
 
-                    db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
+                    arrud = new ArrayList<>();
+                    arrud.add(new UpdateConstructor(DataHandle.QUAN,viewHolder.edo.getText().toString()));
+
+                    db.updatePrd(ip.getId(), arrud);
                     context.startService(new Intent(context, BubbleService.class));
                 }else if(viewHolder.edo.getText().toString().equals("1")){
                     tong=Integer.parseInt(viewHolder.edo.getText().toString())-1;
                     viewHolder.edo.setText(tong+"");
                     db.deletePrd(ip.getId());
                     context.startService(new Intent(context, BubbleService.class));
-                }else{
+                }else {
+                    arrud = new ArrayList<>();
+                    arrud.add(new UpdateConstructor(DataHandle.QUAN,"0"));
+                    arrud.add(new UpdateConstructor(DataHandle.MNSHIP,"0"));
+                    db.updatePrd(ip.getId(), arrud);
                     viewHolder.edo.setText("");
-                    db.deletePrd(ip.getId());
+
                     context.startService(new Intent(context, BubbleService.class));
                 }
             }
@@ -124,7 +132,10 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
                 if(!viewHolder.edo.getText().toString().equals("")){
                     tong=Integer.parseInt(viewHolder.edo.getText().toString())+1;
                     viewHolder.edo.setText(tong+"");
-                    db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
+                    arrud = new ArrayList<>();
+                    arrud.add(new UpdateConstructor(DataHandle.QUAN,viewHolder.edo.getText().toString()));
+
+                    db.updatePrd(ip.getId(), arrud);
                     context.startService(new Intent(context, BubbleService.class));
                 }else{
 

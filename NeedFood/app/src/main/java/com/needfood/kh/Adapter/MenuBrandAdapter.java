@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
+import com.needfood.kh.Constructor.UpdateConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
@@ -32,6 +33,7 @@ public class MenuBrandAdapter extends
         RecyclerView.Adapter<MenuBrandAdapter.RecyclerViewHolder> {
     public DataHandle db;
     public int tong = 0;
+    public ArrayList<UpdateConstructor> arrud;
     private List<OftenConstructor> listData = new ArrayList<>();
     Context context;
     public MenuBrandAdapter(Context context,List<OftenConstructor> listData) {
@@ -109,9 +111,11 @@ public class MenuBrandAdapter extends
                 if(!viewHolder.edb.getText().toString().equals("")&&!viewHolder.edb.getText().toString().equals("0")){
                     tong=Integer.parseInt(viewHolder.edb.getText().toString())-1;
                     viewHolder.edb.setText(tong+"");
-                    db.updatePrd(ip.getId(), viewHolder.edb.getText().toString());
+                    arrud = new ArrayList<>();
+                    arrud.add(new UpdateConstructor(DataHandle.QUAN,viewHolder.edb.getText().toString()));
+                    db.updatePrd(ip.getId(), arrud);
                     context.startService(new Intent(context, BubbleService.class));
-                }else {
+                }else if(viewHolder.edb.getText().toString().equals("0")){
                     viewHolder.edb.setText("");
                     db.deletePrd(ip.getId());
                     context.startService(new Intent(context, BubbleService.class));
@@ -124,7 +128,9 @@ public class MenuBrandAdapter extends
                 if(!viewHolder.edb.getText().toString().equals("")){
                     tong=Integer.parseInt(viewHolder.edb.getText().toString())+1;
                     viewHolder.edb.setText(tong+"");
-                    db.updatePrd(ip.getId(), viewHolder.edb.getText().toString());
+                    arrud = new ArrayList<>();
+                    arrud.add(new UpdateConstructor(DataHandle.QUAN,viewHolder.edb.getText().toString()));
+                    db.updatePrd(ip.getId(), arrud);
                     context.startService(new Intent(context, BubbleService.class));
                 }else{
 

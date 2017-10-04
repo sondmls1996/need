@@ -67,7 +67,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.needfood.kh.Product.ProductDetail.listship;
 import static com.needfood.kh.R.menu.main;
 
 public class BrandDetail extends AppCompatActivity {
@@ -230,11 +229,7 @@ public class BrandDetail extends AppCompatActivity {
             typedis = "0";
             codedis="";
             String quan;
-            if(!type.equals("0")){
-                 mnship = Collections.max(listship);
-            }else{
-                 mnship = Collections.max(listship2);
-            }
+
 
 
 
@@ -244,6 +239,7 @@ public class BrandDetail extends AppCompatActivity {
             try {
                 listcheck = db.getPrd();
                 for (CheckConstructor lu : listcheck) {
+                    listship2.add(Integer.parseInt(lu.getMns()));
                     JSONObject j1 = new JSONObject();
                     tong = Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()) + tong;
                     j1.put("quantity", lu.getQuanli());
@@ -265,7 +261,7 @@ public class BrandDetail extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+            mnship = Collections.max(listship2);
 
             Log.d("HAJAR", jsonArray.toString());
 

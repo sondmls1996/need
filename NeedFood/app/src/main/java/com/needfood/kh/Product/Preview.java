@@ -183,7 +183,10 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             JSONArray jo = new JSONArray(json);
             for (int i = 0; i < jo.length(); i++) {
                 JSONObject idx = jo.getJSONObject(i);
-                arr.add(new PreConstructor(idx.getString("title"), idx.getString("quantity"), idx.getString("money"), "VND"));
+                if(!idx.getString("quantity").equals("0")){
+                    arr.add(new PreConstructor(idx.getString("title"), idx.getString("quantity"), idx.getString("money"), "VND"));
+                }
+
             }
             adapter.notifyDataSetChanged();
         } catch (JSONException e) {

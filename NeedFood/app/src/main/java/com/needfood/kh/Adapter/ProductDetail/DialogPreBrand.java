@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.needfood.kh.Brand.BrandDetail;
 import com.needfood.kh.Constructor.PreDialogConstructor;
+import com.needfood.kh.Constructor.UpdateConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.R;
 import com.needfood.kh.Service.BubbleService;
@@ -30,6 +31,7 @@ public class DialogPreBrand extends
     public DataHandle db;
     public List<CheckConstructor> listp;
     public Integer tong = 0;
+    public ArrayList<UpdateConstructor> arrud;
     private List<PreDialogConstructor> listData = new ArrayList<>();
     Context context;
 
@@ -86,7 +88,10 @@ public class DialogPreBrand extends
                 @Override
                 public void onClick(View v) {
 
-                    db.updatePrd(ip.getId(), "0");
+                    arrud = new ArrayList<>();
+                    arrud.add(new UpdateConstructor(DataHandle.QUAN,"0"));
+                    arrud.add(new UpdateConstructor(DataHandle.MNSHIP,"0"));
+                    db.updatePrd(ip.getId(), arrud);
                     removeItem(position);
                     context.startService(new Intent(context, BubbleService.class));
                 }

@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.Often2Constructor;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
+import com.needfood.kh.Constructor.UpdateConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
@@ -56,6 +57,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
     public RecyclerView rcq;
     public String quantity="";
     public int numquan=0;
+    public ArrayList<UpdateConstructor> arrud;
     private ArrayList<Often2Constructor> arrq;
     public DataHandle db;
     public int tong=0;
@@ -221,7 +223,9 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                         if (edq.getText().toString().equals("")) {
                             inven.setText(quantity);
                             if (db.isProductEmpty(ip.getId()) == false) {
-                                db.updatePrd(ip.getId(), "1");
+                                arrud = new ArrayList<>();
+                                arrud.add(new UpdateConstructor(DataHandle.QUAN,"1"));
+                                db.updatePrd(ip.getId(), arrud);
                                 viewHolder.edo.setText("1");
                             } else {
                                 db.addPDR(new CheckConstructor("1",
@@ -239,7 +243,9 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                                 inven.setText(numquan + "");
                             }
                             if (!db.isProductEmpty(ip.getId())) {
-                                db.updatePrd(ip.getId(), edq.getText().toString());
+                                arrud = new ArrayList<>();
+                                arrud.add(new UpdateConstructor(DataHandle.QUAN,edq.getText().toString()));
+                                db.updatePrd(ip.getId(), arrud);
                                 viewHolder.edo.setText(edq.getText().toString());
                             } else {
                                 db.addPDR(new CheckConstructor(edq.getText().toString(),
@@ -264,7 +270,9 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     if(!viewHolder.edo.getText().toString().equals("")&&!viewHolder.edo.getText().toString().equals("0")){
                         tong=Integer.parseInt(viewHolder.edo.getText().toString())-1;
                         viewHolder.edo.setText(tong+"");
-                        db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
+                        arrud = new ArrayList<>();
+                        arrud.add(new UpdateConstructor(DataHandle.QUAN,viewHolder.edo.getText().toString()));
+                        db.updatePrd(ip.getId(), arrud);
                         context.startService(new Intent(context, BubbleService.class));
                     }else if(viewHolder.edo.getText().toString().equals("1")){
                         tong=Integer.parseInt(viewHolder.edo.getText().toString())-1;
@@ -289,7 +297,9 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     if(!viewHolder.edo.getText().toString().equals("")){
                         tong=Integer.parseInt(viewHolder.edo.getText().toString())+1;
                         viewHolder.edo.setText(tong+"");
-                        db.updatePrd(ip.getId(), viewHolder.edo.getText().toString());
+                        arrud = new ArrayList<>();
+                        arrud.add(new UpdateConstructor(DataHandle.QUAN,viewHolder.edo.getText().toString()));
+                        db.updatePrd(ip.getId(), arrud);
                         context.startService(new Intent(context, BubbleService.class));
                     }else{
 

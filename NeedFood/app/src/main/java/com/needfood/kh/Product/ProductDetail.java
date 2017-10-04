@@ -58,6 +58,7 @@ import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.PreDialogConstructor;
 import com.needfood.kh.Constructor.ProductDetail.CommentConstructor;
 import com.needfood.kh.Constructor.ProductDetail.OftenConstructor;
+import com.needfood.kh.Constructor.UpdateConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Login.Login;
 import com.needfood.kh.R;
@@ -144,7 +145,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     ImageView imageView, next, down;
     ShareDialog shareDialog;
 
-
+    ArrayList<UpdateConstructor> arrud;
     String linkfbb, sttsell = "", icheck = "";
 
     ChangeTimestamp change;
@@ -391,7 +392,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 if (edquan.getText().toString().equals("")) {
                     inven.setText(quantity);
                     if (db.isProductEmpty(idprd) == false) {
-                        db.updatePrd(idprd, "1");
+                        arrud = new ArrayList<>();
+                        arrud.add(new UpdateConstructor(DataHandle.QUAN,"1"));
+                        db.updatePrd(idprd, arrud);
                     } else {
                         db.addPDR(new CheckConstructor("1",
                                 priceprd, "false", "", "", bar, prdcode
@@ -400,7 +403,13 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         qq="1";
                     }
 
-                } else {
+                } else if(edquan.getText().toString().equals("0")) {
+                    arrud = new ArrayList<>();
+                    arrud.add(new UpdateConstructor(DataHandle.QUAN,"0"));
+                    arrud.add(new UpdateConstructor(DataHandle.MNSHIP,"0"));
+                    db.updatePrd(idprd, arrud);
+                }else{
+
                     numquan = Integer.parseInt(quantity) - Integer.parseInt(edquan.getText().toString());
                     if (numquan < 0) {
                         inven.setText("0");
@@ -408,7 +417,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                         inven.setText(numquan + "");
                     }
                     if (db.isProductEmpty(idprd) == false) {
-                        db.updatePrd(idprd, edquan.getText().toString());
+                        arrud = new ArrayList<>();
+                        arrud.add(new UpdateConstructor(DataHandle.QUAN,edquan.getText().toString()));
+                        db.updatePrd(idprd, arrud);
                     } else if(ProductDetail.qq.equals("0")){
                         db.addPDR(new CheckConstructor(edquan.getText().toString(),
                                 priceprd, "false", "", "", bar, prdcode

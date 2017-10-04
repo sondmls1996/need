@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
 import com.needfood.kh.Constructor.PreDialogConstructor;
+import com.needfood.kh.Constructor.UpdateConstructor;
 import com.needfood.kh.Database.DataHandle;
 import com.needfood.kh.Product.ProductDetail;
 import com.needfood.kh.R;
@@ -29,6 +30,7 @@ import java.util.Locale;
 public class DialogPreAdapter  extends
         RecyclerView.Adapter<DialogPreAdapter.RecyclerViewHolder> {
     public DataHandle db;
+    public ArrayList<UpdateConstructor> arrud;
     public List<CheckConstructor> listp;
     public Integer tong=0;
     private List<PreDialogConstructor> listData = new ArrayList<>();
@@ -86,7 +88,10 @@ public class DialogPreAdapter  extends
                 @Override
                 public void onClick(View v) {
 
-                    db.updatePrd(ip.getId(),"0");
+                    arrud = new ArrayList<>();
+                    arrud.add(new UpdateConstructor(DataHandle.QUAN,"0"));
+                    arrud.add(new UpdateConstructor(DataHandle.MNSHIP,"0"));
+                    db.updatePrd(ip.getId(), arrud);
                     removeItem(position);
                     context.startService(new Intent(context, BubbleService.class));
                 }
