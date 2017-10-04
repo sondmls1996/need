@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    - <!--  our tablayout to display tabs
+  -->
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/red"
+        app:layout_scrollFlags="enterAlwaysCollapsed|enterAlways"
+        app:tabBackground="@drawable/ontabselect"
+        app:tabGravity="center"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/white"
+
+
+        app:tabTextColor="@color/white"
+
+        ></android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" />
+</LinearLayout>

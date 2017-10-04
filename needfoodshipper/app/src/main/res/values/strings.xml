@@ -1,0 +1,161 @@
+<resources>
+    <string name="app_name">Shipper</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="checkLoginAPI">http://needfood.webmantan.com/checkLoginShiperAPI</string>
+    <string name="getListOrderShiperAPI">http://needfood.webmantan.com/getListOrderShiperAPI</string>
+    <string name="saveTokenDeviceShiperAPI">http://needfood.webmantan.com/saveTokenDeviceShiperAPI</string>
+    <string name="checkLogoutShiperAPI">http://needfood.webmantan.com/checkLogoutShiperAPI</string>
+    <string name="saveStatusOrderAPI">http://needfood.webmantan.com/saveStatusOrderAPI</string>
+    <string name="saveGPSShiperAPI">http://needfood.webmantan.com/saveGPSShiperAPI</string>
+    <string name="searchOrderShiperAPI">http://needfood.webmantan.com/searchOrderShiperAPI</string>
+    <string name="changePassShiperAPI">http://needfood.webmantan.com/changePassShiperAPI</string>
+    <string name="sendCodePassShiperAPI">http://needfood.webmantan.com/sendCodePassShiperAPI</string>
+    <string name="sendPassShiperAPI">http://needfood.webmantan.com/sendPassShiperAPI</string>
+    <string name="getListOrderDoneShiperAPI">http://needfood.webmantan.com/getListOrderDoneShiperAPI</string>
+    <string name="updateInfoShiperAPI">http://needfood.webmantan.com/updateInfoShiperAPI</string>
+    <string name="getListOrderWaitingShiperAPI">http://needfood.webmantan.com/getListOrderWaitingShiperAPI</string>
+    <string name="getinfo">http://needfood.webmantan.com/getInfoShiperAPI</string>
+    <string name="F_REF">com.mantanapp.needfoodshiper.f_ref</string>
+    <string name="F_CM">com.mantanapp.needfoodshiper.f_cm</string>
+    //login
+    <string name="loginhinsodienthoai">Nhập số điện thoại</string>
+    <string name="loginhinmatkhau">Nhập mật khẩu</string>
+    <string name="late">Muộn</string>
+    <string name="logindangnhap">Đăng nhập</string>
+    <string name="loginquenmatkhau">Quên mật khẩu?</string>
+    //thongtin
+    <string name="ttmanhanvien">Mã nhân viên</string>
+    <string name="tthoten">Họ tên</string>
+    <string name="ttngaysinh">Ngày sinh</string>
+    <string name="ttsodienthoai">Số điện thoại</string>
+    <string name="ttemail">Email</string>
+    <string name="ttdiachi">Địa chỉ</string>
+    <string name="ttskype">Skype</string>
+    <string name="ttfacebook">Facebook</string>
+    <string name="ttgioithieu">Thông tin</string>
+    <string name="ttsuapass">Sửa mật khẩu?</string>-
+    <string name="ttbtnsua">Chỉnh sửa</string>
+    <string name="next">Tiếp tục</string>
+    <string name="ttbtnluu">Lưu</string>
+    //sua pass
+    <string name="cspmatkhaucu">Nhập mật khẩu cũ</string>
+    <string name="cspmatkhaumoi">Nhập mật khẩu mới</string>
+    <string name="accode">Mã xác nhận đã được gửi vào email</string>
+    <string name="cspnhaplai">Nhập lại mật khẩu mới</string>
+    //customitem
+    <string name="ctdonship">ĐƠN SHIP</string>
+    <string name="cttenhang">Hàng ship:\u0020</string>
+    <string name="ctdiachi">Địa chỉ:\u0020</string>
+    <string name="ctlienhe">Liên hệ:\u0020</string>
+    <string name="ctkhachhang">Khách hàng:\u0020</string>
+    <string name="wait">Đang chờ..</string>
+
+    <string name="ctthoigiannhan">Thời gian :\u0020</string>
+    <string name="cttongtien">Tổng tiền:</string>
+    <string name="ctbtnnhan">Nhận </string>
+    <string name="ctbtnhuy">Hủy</string>
+    <string name="ctbtnhuy2">Hủy Đơn</string>
+    <string name="strnew">Đơn mới</string>
+    <string name="ctphanhoi">Lý do hủy</string>
+    <string name="ctbtngui">Gửi</string>
+    //deliveri
+    <string name="ctbtnhoanthanh">Hoàn thành</string>
+    <string name="dltext1">Đánh giá thái độ của khách hàng</string>
+    <string name="dltext2">Để lại một lý do nếu bạn hủy đơn</string>
+    <string name="dlcode">Mã đơn:</string>
+    <string name="dlmoneyship">Ghi chú:</string>
+    <string name="dltimeleft">Còn lại:</string>
+    <string name="dlbtnhoanthanh">Kết thúc</string>
+    <string name="dlbtnchiduowng">Chỉ đường</string>
+    <string name="dlnote">Chú ý:</string>
+    <string name="dltoobar">Chi tiết</string>
+    <string name="dlbando">Bản đồ</string>
+    <string name="dltool">Thông tin đơn hàng</string>
+    //home
+    <string name="hnew">Đơn mới</string>
+    <string name="hdandoi">Đang chờ</string>
+    <string name="hhome">Trang chủ</string>
+    <string name="hthongtin">Thông tin</string>
+    <string name="hlichsu">Lịch sử</string>
+    <string name="hcaidat">Cài đặt</string>
+    //History
+    <string name="lstoobar">Lịch sử</string>
+    <string name="lscode">Mã đơn:</string>
+    <string name="lstime">Giờ nhận:</string>
+    <string name="lstimeleft">Còn lại:</string>
+    <string name="lsreason">Lý do:</string>
+    <string name="lskeolen">Kéo lên để mở bộ lọc</string>
+    <string name="lskeoxuong">Kéo xuống để đóng bộ lọc</string>
+    <string name="lstu">Từ</string>
+    <string name="lsden">Đến</string>
+    <string name="lsbtloc">Lọc</string>
+    <string name="lsedt">Nhập mã hoặc số điện thoại</string>
+    //ìnormation
+    <string name="iftoobar">Thông tin</string>
+    <string name="ifchangetoobar">Sửa thông tin</string>
+    <string name="ifchangepasstoobar">Sửa mật khẩu</string>
+    <string name="lcngonngu">Cài đặt ngôn ngữ</string>
+    //bnt
+    <string name="btnsingout">Đăng xuất</string>
+    <string name="done">Đã xong</string>
+    <string name="cancell">Đã hủy</string>
+    <string name="cdtoobar">Cài đặt</string>
+    //them
+    <string name="kdata">Không có đơn hàng</string>
+    //Login
+    <string name="diangnhap">Đang đăng nhập</string>
+    <string name="disaiten">Sai số điện thoại hoặc mật khẩu !</string>
+    <string name="dithieu">Nhập thiếu thông tin</string>
+    <string name="diathanhcong">Đăng nhập thành công !</string>
+    //donhang
+    <string name="dhloiketnoi">Lỗi kết nối</string>
+    <string name="dhgailan">Nhấn 2 lần để thoát</string>
+    <string name="dhhoithoat">Bạn thực sự muốn thoát ứng dụng ?</string>
+    <string name="dhkhong">Không</string>
+    <string name="dhdongy">Đồng ý</string>
+    //danh sách sp
+    <string name="dstieude">Danh sách sản phẩm</string>
+    <string name="dssanpham">Sản Phẩm</string>
+    <string name="dssoluong">Số lượng</string>
+    <string name="dsdongia">Đơn giá</string>
+    <string name="dstinhtien">T.tiền</string>
+    <string name="dsthanhcong">Thành công</string>
+    <string name="dslydo">Lý do không được được để trống</string>
+    <string name="dslydo1">Bắt buộc phải đánh giá</string>
+    <string name="dslydo2">Không được thiếu lý do hoặc đánh giá</string>
+
+    //suatt
+    <string name="sttthanhcong">Lưu thành công</string>
+    <string name="lnhapthieu">Nhập thiếu thông tin</string>
+
+    <string name="mkkhongdung">Mật khẩu cũ không đúng</string>
+    <string name="mkxnkhongdung">Mật khẩu xác nhận không đúng</string>
+
+    <string name="nhapthieutruong">Nhập thiếu trường dữ liệu</string>
+
+
+    <string name="succ">Thành Công</string>
+    <string name="er">Lỗi</string>
+    <string name="evs">Bạn có muốn lưu và thoát ?</string>
+    <string name="no">Không</string>
+    <string name="dclick">Nhấn 2 lần để thoát</string>
+    <string name="gpse">Đã bật GPS</string>
+    <string name="dates">Chọn ngày bắt đầu</string>
+    <string name="datee">Chọn ngày kết thúc</string>
+    <string name="mkc">Mật khẩu không đúng</string>
+    <string name="wrreg">Không được để trống</string>
+    <string name="logut">Đăng xuất</string>
+    <string name="chan">Đang cập nhật...</string>
+    //tab
+    <string name="t1">Chi tiết</string>
+    <string name="t2">Bản đồ</string>
+    <string name="danhgia">Đánh giá khách hàng</string>
+    <string name="kmang">Bạn vui lòng bật kết nối Internet</string>
+    <string name="codemot"> Tài khoản của bạn đã đăng nhập ở thiết bị khác</string>
+</resources>

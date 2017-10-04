@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.nf.vi.needfoodshipper.MainClass.ChangePhone1Activity">
+    <include layout="@layout/custom_toobar" />
+    <EditText
+        android:background="@drawable/customtext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:padding="5dp"
+        android:layout_margin="20dp"
+        android:hint="Enter New Mobile Phone Number "
+       />
+    <Button
+        android:id="@+id/btnNextPhone"
+        android:background="@drawable/custombt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:text="Next"/>
+
+</LinearLayout>

@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "432973613941",
+    "firebase_url": "https://needfood-4525e.firebaseio.com",
+    "project_id": "needfood-4525e",
+    "storage_bucket": "needfood-4525e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432973613941:android:db7666342d64e522",
+        "android_client_info": {
+          "package_name": "com.needfood.kh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432973613941-15pr1fd42qm0c8aodjlco0dmht66rck8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.needfood.kh",
+            "certificate_hash": "b50ee2015448e882f7ecffbbe095b11afd95f389"
+          }
+        },
+        {
+          "client_id": "432973613941-1n89qddl2jvvnoj9n5r3fur3r2f8he14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0Zjx0mUkDhDGdnclROukcQXbUZ_mDbQ0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "432973613941-1n3h90aamg435ns2e65opq6s1kv06hkm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.phamhop.Needfood"
+              }
+            },
+            {
+              "client_id": "432973613941-1n89qddl2jvvnoj9n5r3fur3r2f8he14.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432973613941:android:8dfb1057d21be776",
+        "android_client_info": {
+          "package_name": "com.nf.vi.needfoodshipper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432973613941-1n89qddl2jvvnoj9n5r3fur3r2f8he14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0Zjx0mUkDhDGdnclROukcQXbUZ_mDbQ0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
