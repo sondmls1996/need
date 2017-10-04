@@ -90,6 +90,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     SearchAdapter adapter;
     public static Toolbar toolbar;
     TextView nf, su, no, mo;
+    private MenuItem item1;
+    private MenuItem item2;
+
     TextView se;
     CoordinatorLayout activity_news;
     NetworkCheck networkCheck;
@@ -100,8 +103,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
          toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
-        menu = (Menu)findViewById(R.menu.main);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         networkCheck = new NetworkCheck();
         Boolean conn = networkCheck.checkNow(getApplicationContext());
         if (conn == true) {
@@ -269,9 +273,19 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         que.add(get);
     }
 
-
+    public void foo(boolean bo){
+        if(bo==true){
+            item1.setEnabled(true);
+            item2.setEnabled(true);
+        }else{
+            item1.setEnabled(false);
+            item2.setEnabled(false);
+        }
+    }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(main, menu);
+        item1 = menu.getItem(0);
+        item2 =  menu.getItem(1);
         return super.onCreateOptionsMenu(menu);
 
     }
@@ -307,43 +321,39 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         switch (id) {
             case R.id.imgnewstart:
                 edsearch.setVisibility(View.VISIBLE);
-                showOverflowMenu(true);
+                foo(true);
                 fragmentClass = TabFragment.class;
                 ReplaceFrag(fragmentClass);
                 pg = 0;
                 break;
             case R.id.dod:
                 edsearch.setVisibility(View.VISIBLE);
-                showOverflowMenu(true);
+                foo(true);
                 fragmentClass = Hotdeal.class;
                 ReplaceFrag(fragmentClass);
                 break;
             case R.id.sug:
                 edsearch.setVisibility(View.VISIBLE);
-                showOverflowMenu(true);
+                foo(true);
                 fragmentClass = SuggessFrag.class;
                 ReplaceFrag(fragmentClass);
                 break;
             case R.id.notif:
                 edsearch.setVisibility(View.VISIBLE);
-                showOverflowMenu(true);
+                foo(true);
                 fragmentClass = Notif.class;
                 ReplaceFrag(fragmentClass);
                 break;
             case R.id.more:
                 edsearch.setVisibility(View.GONE);
-                showOverflowMenu(false);
+                foo(false);
                 fragmentClass = More.class;
                 ReplaceFrag(fragmentClass);
                 break;
 
         }
     }
-    public void showOverflowMenu(boolean showMenu){
-        if(menu == null)
-            return;
-        menu.setGroupVisible(R.id.mangroup, showMenu);
-    }
+
     public void Dialogchoice(){
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
