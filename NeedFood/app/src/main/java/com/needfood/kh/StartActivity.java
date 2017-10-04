@@ -84,6 +84,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     FrameLayout contf;
     List<Language> lt;
     Locale myLocale;
+    Menu menu;
     ListView lvs;
     ArrayList<SearchConstructor> arrs;
     SearchAdapter adapter;
@@ -100,6 +101,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_start);
          toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        menu = (Menu)findViewById(R.menu.main);
         networkCheck = new NetworkCheck();
         Boolean conn = networkCheck.checkNow(getApplicationContext());
         if (conn == true) {
@@ -304,28 +306,43 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         int id = view.getId();
         switch (id) {
             case R.id.imgnewstart:
+                edsearch.setVisibility(View.VISIBLE);
+                showOverflowMenu(true);
                 fragmentClass = TabFragment.class;
                 ReplaceFrag(fragmentClass);
                 pg = 0;
                 break;
             case R.id.dod:
+                edsearch.setVisibility(View.VISIBLE);
+                showOverflowMenu(true);
                 fragmentClass = Hotdeal.class;
                 ReplaceFrag(fragmentClass);
                 break;
             case R.id.sug:
+                edsearch.setVisibility(View.VISIBLE);
+                showOverflowMenu(true);
                 fragmentClass = SuggessFrag.class;
                 ReplaceFrag(fragmentClass);
                 break;
             case R.id.notif:
+                edsearch.setVisibility(View.VISIBLE);
+                showOverflowMenu(true);
                 fragmentClass = Notif.class;
                 ReplaceFrag(fragmentClass);
                 break;
             case R.id.more:
+                edsearch.setVisibility(View.GONE);
+                showOverflowMenu(false);
                 fragmentClass = More.class;
                 ReplaceFrag(fragmentClass);
                 break;
 
         }
+    }
+    public void showOverflowMenu(boolean showMenu){
+        if(menu == null)
+            return;
+        menu.setGroupVisible(R.id.mangroup, showMenu);
     }
     public void Dialogchoice(){
         final Dialog dialog = new Dialog(this);
