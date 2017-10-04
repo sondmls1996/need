@@ -24,6 +24,13 @@
             android:orientation="vertical">
 
             <include layout="@layout/orif"></include>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                 />
+            <include
+                layout="@layout/htucontent"
+                ></include>
 
             <View
                 android:layout_width="match_parent"

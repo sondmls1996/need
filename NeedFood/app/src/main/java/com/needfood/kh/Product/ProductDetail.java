@@ -100,6 +100,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     TextWatcher textWatcher;
     public static String codeDiscount = "";
     String tym;
+    public static String qq="1";
     private final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
     ImageView imgprd;
@@ -110,7 +111,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     String uadr, tax;
     String typemn;
     String sexxx, coordinates, numberBuy, headFone, nameman, birthdayy, typedevice, namelower, typepay;
-    EditText edquan;
+    public static EditText edquan;
     String cata;
     Button deal, bn;
     OftenAdapter adapterof1, adapterof2, adapterof3;
@@ -240,7 +241,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         for (CheckConstructor lu : listcheck) {
             tong = Integer.parseInt(lu.getPrice()) * Integer.parseInt(lu.getQuanli()) + tong;
             Log.d("SHOWALL", "quanli:" + lu.getQuanli() + "\n" + "price:" + lu.getPrice() + "\n" + "ID:" + lu.getId() + "name:" + lu.getTitle());
-            precons.add(new PreDialogConstructor(lu.getQuanli(), lu.getPrice(), lu.getTitle(), lu.getId(), lu.getTypeid()));
+            if(!lu.getQuanli().equals("0")){
+                precons.add(new PreDialogConstructor(lu.getQuanli(), lu.getPrice(), lu.getTitle(), lu.getId(), lu.getTypeid()));
+            }
+
 
         }
         txttong.setText(NumberFormat.getNumberInstance(Locale.UK).format(tong));
@@ -263,7 +267,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
 
-        // db.deleteAllPRD();
+         db.deleteAllPRD();
         //     stopService(new Intent(ProductDetail.this, BubbleService.class));
 
     }
@@ -393,6 +397,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                                 priceprd, "false", "", "", bar, prdcode
                                 , titl,
                                 "", idprd, tym));
+                        qq="1";
                     }
 
                 } else {
@@ -404,11 +409,12 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     }
                     if (db.isProductEmpty(idprd) == false) {
                         db.updatePrd(idprd, edquan.getText().toString());
-                    } else {
+                    } else if(ProductDetail.qq.equals("0")){
                         db.addPDR(new CheckConstructor(edquan.getText().toString(),
                                 priceprd, "false", "", "", bar, prdcode
                                 , titl,
                                 "", idprd, tym));
+                        qq="1";
                     }
 
                 }
@@ -628,21 +634,24 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 try {
                     listcheck = db.getPrd();
                     for (CheckConstructor lu : listcheck) {
-                        JSONObject j1 = new JSONObject();
-                        tong = Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()) + tong;
-                        j1.put("quantity", lu.getQuanli());
-                        j1.put("price", lu.getPrice());
-                        j1.put("tickKM", lu.getTickkm());
-                        j1.put("tickKM_percent", lu.getTickkm2());
-                        j1.put("tickKM_money", lu.getTickkm3());
-                        j1.put("barcode", lu.getBarcode());
-                        j1.put("code", lu.getCode());
-                        j1.put("title", lu.getTitle());
-                        j1.put("money", Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()));
-                        j1.put("note", lu.getNote());
-                        j1.put("id", lu.getId());
-                        j1.put("typeMoneyId", lu.getTypeid());
-                        jsonArray.put(j1);
+                        if(!lu.getNote().equals("0")){
+                            JSONObject j1 = new JSONObject();
+                            tong = Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()) + tong;
+                            j1.put("quantity", lu.getQuanli());
+                            j1.put("price", lu.getPrice());
+                            j1.put("tickKM", lu.getTickkm());
+                            j1.put("tickKM_percent", lu.getTickkm2());
+                            j1.put("tickKM_money", lu.getTickkm3());
+                            j1.put("barcode", lu.getBarcode());
+                            j1.put("code", lu.getCode());
+                            j1.put("title", lu.getTitle());
+                            j1.put("money", Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()));
+                            j1.put("note", lu.getNote());
+                            j1.put("id", lu.getId());
+                            j1.put("typeMoneyId", lu.getTypeid());
+                            jsonArray.put(j1);
+                        }
+
                     }
 
 
@@ -670,7 +679,17 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
                 moneyall = (tong + (tong * (Integer.parseInt(tax))) / 100) + mnship;
 
-                dialogRe(map, mnid, "nom", tym, codeDiscount, typeDiscount, tax, moneyall);
+                Intent it = new Intent(getApplicationContext(), Preview.class);
+                it.putExtra("map", map);
+                it.putExtra("min", mnid);
+                it.putExtra("stt", "");
+                it.putExtra("tymn", tym);
+                it.putExtra("codedis", codeDiscount);
+                it.putExtra("typediss", typeDiscount);
+                it.putExtra("tax", tax);
+                it.putExtra("typePay", "money");
+                it.putExtra("coin", coin);
+                startActivity(it);
                 pro.dismiss();
             }
 
@@ -756,6 +775,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 map.put("address", "");
                 map.put("note", "");
                 map.put("fone", "");
+
                 // map.put("idUseronl",idu);
                 map.put("idSeller", idsl);
 
@@ -770,6 +790,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 it.putExtra("tymn", tym);
                 it.putExtra("typePay", "money");
                 it.putExtra("tax", tax);
+                it.putExtra("coin",coin);
                 startActivity(it);
                 pro.dismiss();
             }
@@ -828,7 +849,17 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             // map.put("idUseronl",idu);
             map.put("idSeller", idsl);
             moneyall = (money + (money * (Integer.parseInt(tax))) / 100) + Integer.parseInt(strship.toString());
-            dialogRe(map, mnid, "", tym, codeDiscount, typeDiscount, tax, moneyall);
+            Intent it = new Intent(getApplicationContext(), Preview.class);
+            it.putExtra("map", map);
+            it.putExtra("min", mnid);
+            it.putExtra("stt", "");
+            it.putExtra("tymn", tym);
+            it.putExtra("codedis", codeDiscount);
+            it.putExtra("typediss", typeDiscount);
+            it.putExtra("tax", tax);
+            it.putExtra("typePay", "money");
+            it.putExtra("coin", coin);
+            startActivity(it);
 
             pro.dismiss();
         } else {
@@ -1812,75 +1843,65 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void dialogRe(final HashMap<String, String> map, final String mnid, final String a, final String tym, final String codeDiscount, final String typeDiscount, final String tax, final int moneyal) {
-
-        final Dialog dialog = new Dialog(ProductDetail.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.htucontent);
-        dialog.show();
-
-        final LinearLayout txtht = (LinearLayout) dialog.findViewById(R.id.lnbc);
-        final LinearLayout txtvote = (LinearLayout) dialog.findViewById(R.id.lnbm);
-        final LinearLayout lnn = (LinearLayout) dialog.findViewById(R.id.linner2);
-        final EditText edCoin = (EditText) dialog.findViewById(R.id.inputcoin);
-        Button btnsub = (Button) dialog.findViewById(R.id.btnxac);
-        TextView txtCoin = (TextView) dialog.findViewById(R.id.socoin);
-        final int coinz = Math.round(Float.parseFloat(coin));
-        txtCoin.setText(coinz + "");
-
-        txtht.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lnn.setVisibility(View.VISIBLE);
-                txtht.setVisibility(View.GONE);
-                txtvote.setVisibility(View.GONE);
-            }
-
-
-        });
-        btnsub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String coinn = edCoin.getText().toString();
-                if (Double.parseDouble(coinn) < Double.parseDouble(String.valueOf(coinz))) {
-                    Intent it = new Intent(getApplicationContext(), Preview.class);
-                    it.putExtra("map", map);
-                    it.putExtra("min", mnid);
-                    it.putExtra("stt", a);
-                    it.putExtra("tymn", tym);
-                    it.putExtra("codedis", codeDiscount);
-                    it.putExtra("typediss", typeDiscount);
-                    it.putExtra("tax", tax);
-                    it.putExtra("typePay", "coin");
-                    it.putExtra("coin", coinn);
-                    startActivity(it);
-                } else {
-                    Toast.makeText(ProductDetail.this, getResources().getString(R.string.engouh), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        txtvote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lnn.setVisibility(View.GONE);
-                Intent it = new Intent(getApplicationContext(), Preview.class);
-                it.putExtra("map", map);
-                it.putExtra("min", mnid);
-                it.putExtra("stt", a);
-                it.putExtra("tymn", tym);
-                it.putExtra("codedis", codeDiscount);
-                it.putExtra("typediss", typeDiscount);
-                it.putExtra("tax", tax);
-                it.putExtra("typePay", "money");
-                it.putExtra("coin", "0");
-                startActivity(it);
-                //Getting the rating and displaying it on the toast
-
-            }
-
-
-        });
-    }
+//    private void dialogRe(final HashMap<String, String> map, final String mnid, final String a, final String tym, final String codeDiscount, final String typeDiscount, final String tax, final int moneyal) {
+//
+//        final Dialog dialog = new Dialog(ProductDetail.this);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.htucontent);
+//        dialog.show();
+//
+//        final LinearLayout txtht = (LinearLayout) dialog.findViewById(R.id.lnbc);
+//        final LinearLayout txtvote = (LinearLayout) dialog.findViewById(R.id.lnbm);
+//        final LinearLayout lnn = (LinearLayout) dialog.findViewById(R.id.linner2);
+//        final EditText edCoin = (EditText) dialog.findViewById(R.id.inputcoin);
+//        Button btnsub = (Button) dialog.findViewById(R.id.btnxac);
+//        TextView txtCoin = (TextView) dialog.findViewById(R.id.socoin);
+//        final int coinz = Math.round(Float.parseFloat(coin));
+//        txtCoin.setText(coinz + "");
+//
+//        txtht.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                lnn.setVisibility(View.VISIBLE);
+//                txtht.setVisibility(View.GONE);
+//                txtvote.setVisibility(View.GONE);
+//            }
+//
+//
+//        });
+//        btnsub.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final String coinn = edCoin.getText().toString();
+//                if (Double.parseDouble(coinn) < Double.parseDouble(String.valueOf(coinz))) {
+//                    Intent it = new Intent(getApplicationContext(), Preview.class);
+//                    it.putExtra("map", map);
+//                    it.putExtra("min", mnid);
+//                    it.putExtra("stt", a);
+//                    it.putExtra("tymn", tym);
+//                    it.putExtra("codedis", codeDiscount);
+//                    it.putExtra("typediss", typeDiscount);
+//                    it.putExtra("tax", tax);
+//                    it.putExtra("typePay", "coin");
+//                    it.putExtra("coin", coinn);
+//                    startActivity(it);
+//                } else {
+//                    Toast.makeText(ProductDetail.this, getResources().getString(R.string.engouh), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//        txtvote.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                lnn.setVisibility(View.GONE);
+//
+//                //Getting the rating and displaying it on the toast
+//
+//            }
+//
+//
+//        });
+//    }
 
     public void getReport() {
         final Dialog dialog = new Dialog(this);

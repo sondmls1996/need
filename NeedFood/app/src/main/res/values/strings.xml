@@ -117,6 +117,8 @@
     <string name="note">Note</string>
     <string name="search">Search...</string>
     <string name="tranhis">Transfer history</string>
+    <string name="younotacc">You not agreed with the Customer regulations</string>
+    <string name="accus">I agreed the Customer regulations</string>
     <string name="action_settings">Settings</string>
     <string name="hisord">Order history</string>
     <string name="ssor">Order Success</string>
@@ -291,6 +293,6 @@
     <string name="bcoin">By Coins</string>
     <string name="bmoney">By Money</string>
     <string name="engouh">Not enough coins to purchase your products</string>
-    <string name="nxx">You want payment type?</string>
+    <string name="nxx">Pay with Coins</string>
     <string name="tmoney">Total money\u0020</string>
 </resources>

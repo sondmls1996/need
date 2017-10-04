@@ -76,23 +76,31 @@ public class DialogPreAdapter  extends
     @Override
     public void onBindViewHolder(final RecyclerViewHolder viewHolder, final int position) {
         final PreDialogConstructor ip = listData.get(position);
+        if(ip.getQuanli().equals("0")){
+            removeItem(position);
+        }else{
+            viewHolder.prename.setText(ip.getTitle());
 
-        viewHolder.prename.setText(ip.getTitle());
+            viewHolder.prequan.setText(ip.getQuanli());
+            viewHolder.img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        viewHolder.prequan.setText(ip.getQuanli());
-        viewHolder.img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db.deletePrd(ip.getId());
-                removeItem(position);
-                context.startService(new Intent(context, BubbleService.class));
-            }
-        });
+                    db.updatePrd(ip.getId(),"0");
+                    removeItem(position);
+                    context.startService(new Intent(context, BubbleService.class));
+                }
+            });
+        }
+
 
 
     }
 
     public void removeItem(int position) {
+        if(listData.get(position).getId().equals(ProductDetail.idprd)){
+            ProductDetail.edquan.setText("0");
+        }
         listData.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, listData.size());
@@ -101,7 +109,10 @@ public class DialogPreAdapter  extends
         for (CheckConstructor lu:listp){
             tong = Integer.parseInt(lu.getPrice()) * Integer.parseInt(lu.getQuanli()) + tong;
         }
+
         ProductDetail.txttong.setText(NumberFormat.getNumberInstance(Locale.UK).format(tong));
+
+
 
     }
 

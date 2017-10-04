@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -52,7 +53,7 @@ import java.util.Map;
 public class Preview extends AppCompatActivity implements View.OnClickListener {
 
     String json, mid, stt, mnship, idsl, acess, tax, codediss, typediss;
-    TextView tm;
+    TextView tm,coinz;
     RecyclerView lv;
     private SimpleDateFormat dateFormatter, timeformat;
     ArrayList<PreConstructor> arr;
@@ -61,6 +62,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
     List<InfoConstructor> listif;
     Session ses;
     String typePay;
+    EditText edcoin;
     TextView shipm, txtgia, txtdv;
     HashMap<String, String> hashMap;
     EditText edname, edadr, edphome, edemail, edghichu, edpickngay, edpickgio;
@@ -68,6 +70,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
     int total;
     int day, month2, year2, hour, minitus, numshare;
     public DatePickerDialog fromDatePickerDialog;
+    LinearLayout lncoin;
     public TimePickerDialog timepicker;
     PreAdapter adapter;
     Button btno;
@@ -90,16 +93,23 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         Intent intent = getIntent();
         codediss = intent.getStringExtra("codedis");
         typediss = intent.getStringExtra("typediss");
+
+        lncoin = (LinearLayout)findViewById(R.id.nest);
+        if(typediss.equals("0")){
+            lncoin.setVisibility(View.VISIBLE);
+        }
         hashMap = (HashMap<String, String>) intent.getSerializableExtra("map");
         json = hashMap.get("listProduct");
-
+        coinz = (TextView)findViewById(R.id.socoin);
+        edcoin = (EditText)findViewById(R.id.inputcoin);
         idsl = hashMap.get("idSeller");
         total = Integer.parseInt(hashMap.get("totalMoneyProduct"));
         mnship = hashMap.get("moneyShip");
         stt = intent.getStringExtra("stt");
         tax = intent.getStringExtra("tax");
-        typePay = intent.getStringExtra("typePay");
-        coinn = Integer.parseInt(intent.getStringExtra("coin"));
+
+        coinn = Math.round(Float.parseFloat(intent.getStringExtra("coin")));
+        coinz.setText(coinn+"");
         Log.d("JIO", total + "");
         Log.d("JIO", coinn + "");
         if (intent.hasExtra("num")) {
@@ -117,9 +127,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
         minitus = c.get(Calendar.MINUTE);
         txtgia = (TextView) findViewById(R.id.mntong);
         tm = (TextView) findViewById(R.id.tm);
-        int totalaf = total - coinn;
-        Log.d("JIO", totalaf + "");
-        tm.setText(NumberFormat.getNumberInstance(Locale.UK).format(totalaf) + ""+"VND");
+        tm.setText(NumberFormat.getNumberInstance(Locale.UK).format(total) + "VND");
         txtdv = (TextView) findViewById(R.id.dvtong);
         txtdv.setText(mid + " (" + tax + "%" + " VAT" + ")");
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -207,7 +215,15 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void sendSever() {
+        String coinp = edcoin.getText().toString();
+        String realcoin = "";
         btno.setEnabled(false);
+        if(coinp.equals("")){
+            typePay = "money";
+        }else{
+            realcoin = coinp;
+            typePay = "coin";
+        }
         final ProgressDialog pro = DialogUtils.show(this, getResources().getString(R.string.wait));
         String link = getResources().getString(R.string.linkorder);
 
@@ -232,7 +248,7 @@ public class Preview extends AppCompatActivity implements View.OnClickListener {
             hashMap.put("typeDiscount", typediss);
             hashMap.put("idSeller", idsl);
             hashMap.put("typePay", typePay);
-            hashMap.put("coinPay", coinn + "");
+            hashMap.put("coinPay", realcoin + "");
             Log.d("TYPEH", hashMap.toString());
             Log.d("total", total + "");
 

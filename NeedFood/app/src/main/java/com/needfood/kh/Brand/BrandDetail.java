@@ -35,8 +35,8 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.needfood.kh.Adapter.DialogPreAdapter;
 import com.needfood.kh.Adapter.ProductDetail.CheckConstructor;
+import com.needfood.kh.Adapter.ProductDetail.DialogPreBrand;
 import com.needfood.kh.Adapter.SearchAdapter;
 import com.needfood.kh.Barcode.QRCamera;
 import com.needfood.kh.Constructor.InfoConstructor;
@@ -72,10 +72,11 @@ import static com.needfood.kh.R.menu.main;
 
 public class BrandDetail extends AppCompatActivity {
     TabLayout tabLayout;
-    TextView tvname,tvadr,bran,tvp,txthang;
+    TextView tvname,tvadr,bran,tvp;
+    TextView txthang;
     ViewPager viewPager;
     ListView lvs;
-    String mns;
+    String mns, idu;
     Button bn2,edit2;
     Session session;
     SearchAdapter adapter;
@@ -86,9 +87,11 @@ public class BrandDetail extends AppCompatActivity {
     List<ListMN> list;
     List<CheckConstructor> listcheck;
     DataHandle db;
+    String coin="";
     String typedis,codedis;
     EditText edsearch;
     public String idsl,type,fullname;
+    public static TextView txttong2;
     public String tax,access;
 
     public static String idsel = "",idprd="";
@@ -106,6 +109,7 @@ public class BrandDetail extends AppCompatActivity {
             listu = db.getAllInfor();
             for(InfoConstructor lu:listu){
                 access = lu.getAccesstoken();
+                idu= lu.getId();
             }
         }
 
@@ -176,12 +180,42 @@ public class BrandDetail extends AppCompatActivity {
         viewAdapter.notifyDataSetChanged();
         tabLayout.setTabTextColors(getResources().getColor(R.color.black), getResources().getColor(R.color.red));
         getBrand();
+        addInfo();
 
     }
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(main, menu);
         return super.onCreateOptionsMenu(menu);
+
+    }
+
+    private void addInfo() {
+        String linkk = getResources().getString(R.string.linkgetinfo);
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", access);
+        map.put("idUseronl", idu);
+        Response.Listener<String> response = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d("LOGA", response);
+                    JSONObject js = new JSONObject(response);
+                    JSONObject jo = js.getJSONObject("Useronl");
+
+                    coin = jo.getString("coin");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        PostCL post = new PostCL(linkk, map, response);
+        RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+        que.add(post);
 
     }
     private void sendOrder() {
@@ -251,6 +285,7 @@ public class BrandDetail extends AppCompatActivity {
             it.putExtra("codedis",codedis);
             it.putExtra("typediss",typedis);
             it.putExtra("tax", tax);
+            it.putExtra("coin",coin);
             startActivity(it);
             pro.dismiss();
         } else {
@@ -270,8 +305,8 @@ public class BrandDetail extends AppCompatActivity {
 
         int tong = 0;
         RecyclerView rcp = (RecyclerView) dialog.findViewById(R.id.rcpre);
-        TextView txttong = (TextView) dialog.findViewById(R.id.txttong);
-        DialogPreAdapter preadap = new DialogPreAdapter(getApplicationContext(), precons);
+         txttong2 = (TextView) dialog.findViewById(R.id.txttong);
+        DialogPreBrand preadap = new DialogPreBrand(getApplicationContext(), precons);
 
         rcp.setAdapter(preadap);
         LinearLayoutManager lnm = new LinearLayoutManager(getApplicationContext());
@@ -281,10 +316,13 @@ public class BrandDetail extends AppCompatActivity {
         for (CheckConstructor lu : listcheck) {
             tong = Integer.parseInt(lu.getPrice()) * Integer.parseInt(lu.getQuanli()) + tong;
             Log.d("SHOWALL", "quanli:" + lu.getQuanli() + "\n" + "price:" + lu.getPrice() + "\n" + "ID:" + lu.getId() + "name:" + lu.getTitle());
-            precons.add(new PreDialogConstructor(lu.getQuanli(), lu.getPrice(), lu.getTitle(), lu.getId(), lu.getTypeid()));
+            if(!lu.getQuanli().equals("0")){
+                precons.add(new PreDialogConstructor(lu.getQuanli(), lu.getPrice(), lu.getTitle(), lu.getId(), lu.getTypeid()));
+            }
+
 
         }
-        txttong.setText(NumberFormat.getNumberInstance(Locale.UK).format(tong));
+        txttong2.setText(NumberFormat.getNumberInstance(Locale.UK).format(tong));
         preadap.notifyDataSetChanged();
         dialog.show();
     }
@@ -314,7 +352,7 @@ public class BrandDetail extends AppCompatActivity {
                 try {
                     JSONObject jo = new JSONObject(response);
                     JSONObject sl = jo.getJSONObject("Seller");
-                    tvname.setText(sl.getString("fullName"));
+                    tvname.setText(sl.getString("branchName"));
                     tvadr.setText(sl.getString("address"));
                     bran.setText(sl.getString("branchName"));
                     tvp.setText(sl.getString("fone"));

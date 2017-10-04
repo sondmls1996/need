@@ -13,7 +13,6 @@ import com.needfood.kh.Constructor.InfoConstructor;
 import com.needfood.kh.Constructor.Language;
 import com.needfood.kh.Constructor.ListMN;
 import com.needfood.kh.Constructor.NotiConstructor;
-import com.needfood.kh.Constructor.ShareConstructor;
 import com.needfood.kh.SupportClass.DBHandle;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ import java.util.List;
 public class DataHandle extends SQLiteOpenHelper {
     public static final String TAG = DBHandle.class.getSimpleName();
     public static final String DB_NAME = "needfooddt.db";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
 
     public static final String TABLEPRD = "tableprd";
     public static final String TABLESHARE = "tbshare";
@@ -101,7 +100,7 @@ public class DataHandle extends SQLiteOpenHelper {
                 IDPRD + " TEXT NOT NULL PRIMARY KEY," +
                 TYPEMN + " TEXT" +
                 ");";
-        String CREATE_TABLE_USER =
+        String CREATE_TABLE_MN =
                 "CREATE TABLE " + MONEYTB + "(" +
                         IDMN + " TEXT NOT NULL," +
                         NAMEMN + " TEXT" +
@@ -135,7 +134,7 @@ public class DataHandle extends SQLiteOpenHelper {
                         ");";
         String CREATE_TABLE_CHECKV =
                 "CREATE TABLE " + TABLECHECKVOTE + "(" +
-                        IDCHECKVOTESEL + " TEXT NOT NULL PRIMARY KEY " +
+                        IDCHECKVOTESEL + " TEXT NOT NULL PRIMARY KEY" +
                         ");";
         String CREATE_TABLE_CHECKS =
                 "CREATE TABLE " + TABLECHECKVOTESH + "(" +
@@ -143,13 +142,15 @@ public class DataHandle extends SQLiteOpenHelper {
                         ");";
 
 
-        db.execSQL(CREATE_TABLE_USER);
+        db.execSQL(CREATE_TABLE_MN);
         db.execSQL(CREATE_TABLE_INFO);
         db.execSQL(CREATE_TABLE_LAN);
         db.execSQL(CREATE_TABLE_NOTI);
         db.execSQL(CREATE_TABLE_CART);
         db.execSQL(CREATE_TABLE_CHECKV);
         db.execSQL(CREATE_TABLE_CHECKS);
+        db.execSQL(CREATE_TB_SHARE);
+
         Log.d("TAG", TAG);
 
     }
@@ -162,6 +163,9 @@ public class DataHandle extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTI);
         db.execSQL("DROP TABLE IF EXISTS " + TABLEPRD);
         db.execSQL("DROP TABLE IF EXISTS " + TABLESHARE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLECHECKVOTE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLECHECKVOTESH);
+
         onCreate(db);
     }
 

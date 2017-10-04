@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.needfood.kh.StartActivity;
 import com.needfood.kh.SupportClass.DialogUtils;
 import com.needfood.kh.SupportClass.PostCL;
 import com.needfood.kh.SupportClass.Session;
+import com.needfood.kh.WebClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,11 +44,13 @@ import java.util.Map;
 public class Login extends AppCompatActivity {
     LoginButton lgb;
     CallbackManager callbackManager;
-    Button lg;
+    Button lg,fbf;
     TextView tvreg, tvfor;
     Session ses;
+    TextView term;
     EditText edus, edpass;
     DataHandle db;
+    CheckBox cb;
     String fullname, idfb, email = "", fone = "", adr = "", sex;
     String dvtoken;
 
@@ -66,13 +70,33 @@ public class Login extends AppCompatActivity {
         TextView txt = (TextView) findViewById(R.id.titletxt);
         txt.setText(getResources().getString(R.string.login));
         db = new DataHandle(getApplicationContext());
+        cb = (CheckBox)findViewById(R.id.checkBox);
         ses = new Session(getApplicationContext());
+        fbf = (Button)findViewById(R.id.fbfake);
         edus = (EditText) findViewById(R.id.edus);
+        term = (TextView)findViewById(R.id.term);
+        term.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+Intent it = new Intent(getApplicationContext(), WebClient.class);
+                startActivity(it);
+            }
+        });
         edpass = (EditText) findViewById(R.id.edpas);
         lgb = (LoginButton) findViewById(R.id.login_button);
-
+        fbf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!cb.isChecked()){
+                    Toast.makeText(getApplicationContext(),getResources().getString(R.string.younotacc),Toast.LENGTH_SHORT).show();
+                }else{
+                    lgb.performClick();
+                }
+            }
+        });
+        callbackManager = CallbackManager.Factory.create();
         lgb.setReadPermissions(Arrays.asList(
-                "public_profile", "email", "user_birthday", "user_location"));
+                "public_profile", "email", "user_location"));
         tvfor = (TextView) findViewById(R.id.tvfogot);
         tvfor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +114,7 @@ public class Login extends AppCompatActivity {
                 startActivity(it);
             }
         });
-        callbackManager = CallbackManager.Factory.create();
+
         lg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +126,9 @@ public class Login extends AppCompatActivity {
 
                 Map<String, String> map = new HashMap<String, String>();
                 if (phone.matches("") || pass.equals("")) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
+                }else if(!cb.isChecked()){
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrreg), Toast.LENGTH_SHORT).show();
                 } else {
@@ -152,6 +179,7 @@ public class Login extends AppCompatActivity {
         lgb.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Log.d("FACESTT","ok");
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
@@ -180,7 +208,7 @@ public class Login extends AppCompatActivity {
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,location,birthday");
+                parameters.putString("fields", "id,name,email,gender,location");
                 request.setParameters(parameters);
                 request.executeAsync();
             }
@@ -188,11 +216,13 @@ public class Login extends AppCompatActivity {
             @Override
             public void onCancel() {
                 // App code
+                Log.d("FACESTT","cancel");
             }
 
             @Override
             public void onError(FacebookException exception) {
                 // App code
+                Log.d("FACESTT",exception.toString());
             }
         });
     }

@@ -5,72 +5,28 @@
     android:id="@+id/nest"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:visibility="gone"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:background="@color/white"
+
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-    <TextView
-        android:id="@+id/txtht"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:text="@string/nxx"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
-
-    <LinearLayout
-        android:id="@+id/linner3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/lnbc"
+        <TextView
+            android:id="@+id/txtht"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/bcoin" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/coin" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lnbm"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:background="@color/red"
+            android:text="@string/nxx"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/bmoney" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/money1" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linner2"
-        android:visibility="gone"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -103,19 +59,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:inputType="number"
             android:hint="@string/enamout"
+            android:inputType="number"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/btnxac"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="@drawable/borderedt"
-            android:text="@string/ok"
-            android:textColor="@color/white" />
+
     </LinearLayout>
 </LinearLayout>

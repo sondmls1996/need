@@ -42,7 +42,7 @@
                         android:layout_weight="1"
                         android:padding="5dp"
                         android:maxLength="28"
-                        android:text="Pizza đế phomai 1221121212"
+                        android:text=""
                         android:textColor="@color/red" />
 
                     <CheckBox

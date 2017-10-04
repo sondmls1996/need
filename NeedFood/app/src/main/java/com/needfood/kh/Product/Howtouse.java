@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +33,7 @@ public class Howtouse extends AppCompatActivity {
     RatingBar ratingbar;
     Button submit;
     String idpr, idsl;
+    TextView web;
     Session ses;
     DataHandle db;
     List<InfoConstructor> listu;
@@ -62,15 +64,19 @@ public class Howtouse extends AppCompatActivity {
         simg = intent.getStringExtra("img");
         idpr = intent.getStringExtra("idpr");
         idsl = intent.getStringExtra("idsl");
-        txtht = (TextView) findViewById(R.id.txtht);
+        txtht = (TextView) findViewById(R.id.idwv);
 //        nom = (TextView) findViewById(R.id.nom);
+      //  web = (TextView)findViewById(R.id.idwv);
+
         txts = (TextView) findViewById(R.id.txtsp);
         img = (ImageView) findViewById(R.id.imgsp);
         if (htu.equals("")) {
 //             nom.setVisibility(View.VISIBLE);
         } else {
             //            nom.setVisibility(View.GONE);
-            txtht.setText(Html.fromHtml(Html.fromHtml(htu).toString()));
+
+            Spanned htmlAsSpanned = Html.fromHtml(htu);
+            txtht.setText(Html.fromHtml(htu, new ImageGetter(), null));
         }
 
         Picasso.with(getApplicationContext()).load(simg).into(img);

@@ -46,6 +46,8 @@
     <string name="drink">Đồ uống</string>
     <string name="brandprs">Sản phẩm cùng thương hiệu</string>
     <string name="hisord">Lịch sử đặt hàng</string>
+    <string name="younotacc">Bạn chưa đồng ý với Quy định sử dụng của khách hàng</string>
+    <string name="accus">Tôi đồng ý với Quy định sử dụng của khách hàng</string>
     <string name="item">Mặt hàng</string>
     <string name="where">Vị trí shipper</string>
     <string name="menu">Thực đơn</string>
@@ -82,6 +84,7 @@
     <string name="inven2">Hàng tồn kho:\u0020</string>
     <string name="usname">Tên người dùng</string>
     <string name="pass">Mật khẩu</string>
+    <string name="nxx">Thanh toán bằng Coins</string>
     <string name="quanlity">Số lượng</string>
     <string name="facebook_app_id">144493206000726</string>
 
@@ -293,6 +296,6 @@
     <string name="bcoin">Bởi xu</string>
     <string name="bmoney">Bởi tiền mặt</string>
     <string name="engouh">Bạn không đủ xu để mua sản phẩm này</string>
-    <string name="nxx">Bạn muốn thanh toán kiểu ?</string>
+
     <string name="tmoney">Tổng tiền </string>
 </resources>

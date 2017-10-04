@@ -43,6 +43,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.needfood.kh.R.id.edquan;
 
 /**
  * Created by Vi on 4/27/2017.
@@ -52,6 +53,8 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
     public static ArrayList<CheckConstructor> arrcheck = new ArrayList<>();
     public List<ListMN> listmn;
     public RecyclerView rcq;
+    public String quantity="";
+    public int numquan=0;
     private ArrayList<Often2Constructor> arrq;
     public DataHandle db;
     public int tong=0;
@@ -70,6 +73,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
 
         public TextView tvName;
         public TextView prize;
+
         public ImageView img;
         public TextWatcher textWatcher;
         public ImageView imgcong,imgtru;
@@ -136,7 +140,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.layoutdetail);
                 final ProgressBar pgr = (ProgressBar)dialog.findViewById(R.id.prg1);
-
+                final TextView inven = (TextView)dialog.findViewById(R.id.txt_inven);
                 final LinearLayout v1 = (LinearLayout)dialog.findViewById(R.id.v1);
                 final ImageView imgn = (ImageView)dialog.findViewById(R.id.imgnews);
                 final TextView tvname = (TextView)dialog.findViewById(R.id.tvname2);
@@ -148,8 +152,54 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                 rcq.setAdapter(quana);
                 StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
                 rcq.setLayoutManager(mStaggeredVerticalLayoutManager);
-                final EditText edq = (EditText)dialog.findViewById(R.id.edquan);
+                final EditText edq = (EditText)dialog.findViewById(edquan);
                 edq.setText(viewHolder.edo.getText().toString());
+
+
+                final String link = context.getResources().getString(R.string.linkprdde);
+                Map<String, String> map = new HashMap<>();
+                map.put("idProduct", ip.getId());
+                map.put("type", "");
+                Response.Listener<String> response = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("FGFG",response);
+
+                        try {
+
+                            JSONObject jo = new JSONObject(response);
+
+                            JSONObject prd = jo.getJSONObject("Product");
+                            pgr.setVisibility(View.GONE);
+                            v1.setVisibility(View.VISIBLE);
+                            JSONArray img = prd.getJSONArray("images");
+                            StringBuilder simg = new StringBuilder("http://needfood.webmantan.com" + img.getString(0));
+                            Picasso.with(getApplicationContext()).load(simg.toString()).into(imgn);
+                            tvname.setText(prd.getString("title"));
+                            String tym = prd.getString("typeMoneyId");
+                            listmn = db.getMNid(tym);
+                            quantity = prd.getString("quantity");
+                            if (Integer.parseInt(quantity) < 0) {
+                                inven.setText("0");
+                            } else {
+                                inven.setText(quantity);
+                            }
+                            for (ListMN lu:listmn){
+                                tvgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("price"))) + lu.getMn());
+                            }
+                            tvdv.setText(prd.getString("nameUnit"));
+
+                            getQuan(ip.getId());
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                };
+                PostCL pos = new PostCL(link,map,response);
+                RequestQueue que = Volley.newRequestQueue(getApplicationContext());
+                que.add(pos);
                 TextWatcher textWatcher = new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -168,6 +218,7 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     @Override
                     public void afterTextChanged(Editable s) {
                         if (edq.getText().toString().equals("")) {
+                            inven.setText(quantity);
                             if (db.isProductEmpty(ip.getId()) == false) {
                                 db.updatePrd(ip.getId(), "1");
                                 viewHolder.edo.setText("1");
@@ -180,6 +231,12 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                             }
 
                         } else {
+                            numquan = Integer.parseInt(quantity) - Integer.parseInt(edq.getText().toString());
+                            if (numquan < 0) {
+                                inven.setText("0");
+                            } else {
+                                inven.setText(numquan + "");
+                            }
                             if (!db.isProductEmpty(ip.getId())) {
                                 db.updatePrd(ip.getId(), edq.getText().toString());
                                 viewHolder.edo.setText(edq.getText().toString());
@@ -196,45 +253,6 @@ public class OftenAdapter extends  RecyclerView.Adapter<OftenAdapter.RecyclerVie
                     }
                 };
                 edq.addTextChangedListener(textWatcher);
-
-                final String link = context.getResources().getString(R.string.linkprdde);
-                Map<String, String> map = new HashMap<>();
-                map.put("idProduct", ip.getId());
-                map.put("type", "");
-                Response.Listener<String> response = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("FGFG",response);
-
-                        try {
-                            JSONObject jo = new JSONObject(response);
-
-                            JSONObject prd = jo.getJSONObject("Product");
-                            pgr.setVisibility(View.GONE);
-                            v1.setVisibility(View.VISIBLE);
-                            JSONArray img = prd.getJSONArray("images");
-                            StringBuilder simg = new StringBuilder("http://needfood.webmantan.com" + img.getString(0));
-                            Picasso.with(getApplicationContext()).load(simg.toString()).into(imgn);
-                            tvname.setText(prd.getString("title"));
-                            String tym = prd.getString("typeMoneyId");
-                            listmn = db.getMNid(tym);
-                            for (ListMN lu:listmn){
-                                tvgia.setText(NumberFormat.getNumberInstance(Locale.UK).format(Integer.parseInt(prd.getString("price"))) + lu.getMn());
-                            }
-                            tvdv.setText(prd.getString("nameUnit"));
-
-                            getQuan(ip.getId());
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                };
-                PostCL pos = new PostCL(link,map,response);
-                RequestQueue que = Volley.newRequestQueue(getApplicationContext());
-                que.add(pos);
-
                 dialog.show();
             }
         });

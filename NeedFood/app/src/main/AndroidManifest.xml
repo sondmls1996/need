@@ -144,8 +144,9 @@
         <activity android:name=".More.Contact" />
         <activity android:name=".More.ParentUs" />
         <activity android:name=".News.SellingOut" />
-        <activity android:name=".More.History.HistoryDetail"
-            android:parentActivityName=".More.History.OrderHistory"/>
+        <activity
+            android:name=".More.History.HistoryDetail"
+            android:parentActivityName=".More.History.OrderHistory" />
         <activity android:name=".Login.Policy" />
         <activity android:name=".Login.DetailPolicy" />
         <activity android:name=".WellcomeActivity">
@@ -156,7 +157,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Barcode.BarcodeCamera" />
-
+        <activity android:name=".WebClient"></activity>
     </application>
 
 </manifest>
