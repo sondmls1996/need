@@ -76,6 +76,7 @@ public class BrandDetail extends AppCompatActivity {
     ViewPager viewPager;
     ListView lvs;
     String mns, idu;
+    TextView tvvote;
     Button bn2,edit2;
     Session session;
     SearchAdapter adapter;
@@ -116,7 +117,7 @@ public class BrandDetail extends AppCompatActivity {
         }
 
 
-
+        tvvote = (TextView)findViewById(R.id.tvvote);
         bn2 = (Button)findViewById(R.id.bn2);
         bn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -362,6 +363,7 @@ public class BrandDetail extends AppCompatActivity {
                     bran.setText(sl.getString("branchName"));
                     tvp.setText(sl.getString("fone"));
                     tax = sl.getString("taxNumber");
+                    tvvote.setText(sl.getString("systemVote")+"/10");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
