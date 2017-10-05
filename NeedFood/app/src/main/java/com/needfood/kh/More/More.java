@@ -221,7 +221,7 @@ public class More extends Fragment implements View.OnClickListener {
                     }
 
 
-                    db.updateinfo(fullname, email, address, id, coin,birth);
+                    db.updateinfo(fullname, email, address, id, coin,birth,fone);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

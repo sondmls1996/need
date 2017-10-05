@@ -66,7 +66,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
     int RESULT_LOAD_IMAGE = 1;
     static byte[] b;
     private int mYear, mMonth, mDay;
-    String imageEncoded;
+    String imageEncoded,type;
     String ava;
     static final int DATE_DIALOG_ID = 0;
     String sex, birthday;
@@ -125,6 +125,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             address = it.getAddress();
             email = it.getEmail();
             sex = it.getSex();
+            type = it.getType();
             birthday = it.getBirtday();
         }
 
@@ -169,6 +170,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         name_id.setEnabled(false);
         email_id.setEnabled(false);
         phone_id.setEnabled(false);
+
         addr.setEnabled(false);
         change.setOnClickListener(this);
         changepass.setOnClickListener(this);
@@ -202,6 +204,9 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                 } else {
                     birt_id.setEnabled(false);
                 }
+                if(type.equals("1")&&phone_id.getText().toString().equals("")){
+                    phone_id.setEnabled(true);
+                }
                 break;
             case R.id.save:
 
@@ -231,6 +236,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         final String namee = tvName.getText().toString();
         final String emaill = email_id.getText().toString();
         final String addresss = addr.getText().toString();
+        final String phone = phone_id.getText().toString();
         String link = getResources().getString(R.string.linkupdate);
         Map<String, String> map = new HashMap<String, String>();
         if (namee.matches("") || emaill.matches("") || addresss.matches("")) {
@@ -243,6 +249,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             map.put("address", addresss);
             map.put("avatar", "");
             map.put("sex", sex);
+            map.put("fone",phone);
             map.put("birthday", birt_id.getText().toString());
             Response.Listener<String> response = new Response.Listener<String>() {
 
@@ -254,12 +261,13 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                         String code = jo.getString("code");
                         Log.d("ABBBB", response);
                         if (code.equals("0")) {
-                            db.updateinfo(namee, emaill, addresss, id, "", birt_id.getText().toString());
+                            db.updateinfo(namee, emaill, addresss, id, "", birt_id.getText().toString(),phone);
                             progressDialog.dismiss();
                             tvName.setEnabled(false);
                             email_id.setEnabled(false);
                             addr.setEnabled(false);
                             birt_id.setEnabled(false);
+                            phone_id.setEnabled(false);
                             Intent intent = getIntent();
                             finish();
                             startActivity(intent);
@@ -267,11 +275,15 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                         } else if (code.equals("-1")) {
                             AlertDialog alertDialog = taoMotAlertDialog();
                             alertDialog.show();
-                        } else {
+                        } else if(code.equals("2")) {
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.phonee), Toast.LENGTH_SHORT).show();
+                        }else {
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
 
-                        }
+                            }
+
                     } catch (JSONException e) {
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.er), Toast.LENGTH_SHORT).show();
@@ -290,6 +302,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         final String namee = tvName.getText().toString();
         final String emaill = email_id.getText().toString();
         final String addresss = addr.getText().toString();
+        final String phone = phone_id.getText().toString();
         String link = getResources().getString(R.string.linkupdate);
         Map<String, String> map = new HashMap<String, String>();
         if (namee.matches("") || emaill.matches("") || addresss.matches("")) {
@@ -302,6 +315,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             map.put("address", addresss);
             map.put("avatar", imageEncoded);
             map.put("sex", sex);
+            map.put("fone",phone);
             map.put("birthday", birt_id.getText().toString());
             Response.Listener<String> response = new Response.Listener<String>() {
 
@@ -309,7 +323,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                 public void onResponse(String response) {
                     try {
 
-                        db.updateinfo(namee, emaill, addresss, id, "", birt_id.getText().toString());
+                        db.updateinfo(namee, emaill, addresss, id, "", birt_id.getText().toString(),phone);
                         JSONObject jo = new JSONObject(response);
                         String code = jo.getString("code");
                         if (code.equals("0")) {
@@ -402,6 +416,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
         final String namee = tvName.getText().toString();
         final String emaill = email_id.getText().toString();
         final String addresss = addr.getText().toString();
+        final String phone = phone_id.getText().toString();
         String link = getResources().getString(R.string.linkupdate);
         Map<String, String> map = new HashMap<String, String>();
         if (namee.matches("") || emaill.matches("") || addresss.matches("")) {
@@ -414,6 +429,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
             map.put("address", addresss);
             map.put("avatar", "");
             map.put("sex", sex);
+            map.put("fone",phone);
             map.put("birthday", birt_id.getText().toString());
             Response.Listener<String> response = new Response.Listener<String>() {
 
@@ -425,7 +441,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                         String code = jo.getString("code");
                         Log.d("ABBBB1", response);
                         if (code.equals("0")) {
-                            db.updateinfo(namee, emaill, addresss, id, "", birt_id.getText().toString());
+                            db.updateinfo(namee, emaill, addresss, id, "", birt_id.getText().toString(),phone);
                             progressDialog.dismiss();
                             tvName.setEnabled(false);
                             email_id.setEnabled(false);
@@ -471,6 +487,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
                     String fone = jo.getString("fone");
                     String address = jo.getString("address");
                     String coin = jo.getString("coin");
+
                     if (jo.has("avatar")) {
                         ava = jo.getString("avatar");
                         Log.d("AVV", ava);
@@ -493,7 +510,7 @@ public class MoreContanct extends AppCompatActivity implements View.OnClickListe
 
 
                     pro.setText(coin + " coins");
-                    db.updateinfo(fullname, email, address, id, coin, birt_id.getText().toString());
+                    db.updateinfo(fullname, email, address, id, coin, birt_id.getText().toString(),fone);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

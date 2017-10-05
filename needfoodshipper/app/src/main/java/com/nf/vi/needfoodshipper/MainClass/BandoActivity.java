@@ -131,7 +131,7 @@ public class BandoActivity extends Fragment implements OnMapReadyCallback, Googl
         mMap = googleMap;
         mMap.clear();
       //  mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.style_json));
-        LatLng yourlocal2 = new LatLng(lat, lo);
+        final LatLng yourlocal2 = new LatLng(lat, lo);
         CameraPosition update = new CameraPosition.Builder().target(yourlocal2).zoom(14).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(update));
         mMap.addMarker(new MarkerOptions().position(yourlocal2).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)).title("Vị trí của bạn")).showInfoWindow();
@@ -150,6 +150,7 @@ public class BandoActivity extends Fragment implements OnMapReadyCallback, Googl
                 longitude = place.getLatLng().longitude;
                 Log.d("TAGG", latitude + "-" + longitude);
                 LatLng yourlocal = new LatLng(latitude, longitude);
+                mMap.addMarker(new MarkerOptions().position(yourlocal2).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)).title("Vị trí của tôi")).showInfoWindow();
                 mMap.addMarker(new MarkerOptions().position(yourlocal).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title("Điểm đến")).showInfoWindow();
                 CameraPosition update = new CameraPosition.Builder().target(yourlocal).zoom(14).build();
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(update));
@@ -183,8 +184,8 @@ public class BandoActivity extends Fragment implements OnMapReadyCallback, Googl
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new ReadGMAP().execute("http://maps.googleapis.com/maps/api/directions/json?origin=" + latitude + "," + longitude +
-                        "&destination=" + lat + "," + lo + "&sensor=false");
+                new ReadGMAP().execute("https://maps.googleapis.com/maps/api/directions/json?origin="+lat+","+lo+"&destination=" +
+                        latitude+","+longitude+"&region=es&mode=driving&key=AIzaSyCkdyj_s2bXwu70mOyI_Hugzkt9vICzdi0");
             }
         });
     }
@@ -199,7 +200,8 @@ public class BandoActivity extends Fragment implements OnMapReadyCallback, Googl
         @Override
         protected void onPostExecute(String s) {
             try {
-                PolylineOptions options = new PolylineOptions().width(5).color(Color.RED).geodesic(true);
+                Log.d("MAPD",s);
+                PolylineOptions options = new PolylineOptions().width(9).color(Color.RED).geodesic(true);
                 JSONObject jo = new JSONObject(s);
                 JSONArray route = jo.getJSONArray("routes");
                 for (int i = 0; i < route.length(); i++) {

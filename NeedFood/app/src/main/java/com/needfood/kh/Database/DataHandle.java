@@ -522,7 +522,7 @@ public class DataHandle extends SQLiteOpenHelper {
         return contactList;
     }
 
-    public boolean updateinfo(String name, String email, String addr, String id, String coin, String birth) {
+    public boolean updateinfo(String name, String email, String addr, String id, String coin, String birth,String phone) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(FULLNAME, name);
@@ -530,6 +530,7 @@ public class DataHandle extends SQLiteOpenHelper {
         values.put(ADDRESS, addr);
         values.put(COIN, coin);
         values.put(BIRTHDAY, birth);
+        values.put(PHONE, phone);
         db.update(INFO, values, IDINFO + " = ?", new String[]{id});
         return true;
     }

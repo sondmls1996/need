@@ -25,7 +25,7 @@
                 android:scaleType="centerCrop" />
 
             <LinearLayout
-                android:layout_width="200dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:orientation="vertical">
@@ -41,7 +41,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="5dp"
-                        android:maxLength="28"
+                        android:maxLength="20"
                         android:text=""
                         android:textColor="@color/red" />
 

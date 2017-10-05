@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -73,10 +72,8 @@ public class Howtouse extends AppCompatActivity {
         if (htu.equals("")) {
 //             nom.setVisibility(View.VISIBLE);
         } else {
-            //            nom.setVisibility(View.GONE);
-
-            Spanned htmlAsSpanned = Html.fromHtml(htu);
-            txtht.setText(Html.fromHtml(htu, new ImageGetter(), null));
+            String editedTextReadable = android.text.Html.fromHtml(htu).toString();
+            txtht.setText(editedTextReadable);
         }
 
         Picasso.with(getApplicationContext()).load(simg).into(img);

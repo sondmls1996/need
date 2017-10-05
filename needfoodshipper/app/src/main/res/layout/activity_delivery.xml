@@ -295,7 +295,7 @@
 
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="3kg Cá hồi + 4kg Rau cải"
+
                     android:textColor="@color/red"
                     android:textSize="20dp" />
 

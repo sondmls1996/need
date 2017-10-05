@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/red</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlActivated">@color/red</item>
-
+        <item name="android:windowSoftInputMode">stateHidden</item>
 
 
         <item name="windowNoTitle">true</item>

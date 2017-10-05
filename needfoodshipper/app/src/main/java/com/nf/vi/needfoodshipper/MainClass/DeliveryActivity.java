@@ -224,7 +224,7 @@ public class DeliveryActivity extends Fragment {
             timeleftc = "";
             tvTimeleft.setText("");
         } else {
-            timest = change.main(ngaythang);
+            timest = change.main(formattedDate);
 
 
             timestgh = change.main(tl);

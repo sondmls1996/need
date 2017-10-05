@@ -93,7 +93,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         builder.setVibrate(new long[]{0, 500});
         builder.setSound(uri);
-        builder.setSmallIcon(R.drawable.logo, 20);
+        builder.setSmallIcon(R.drawable.logo, 30);
         builder.setAutoCancel(true);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notif));
