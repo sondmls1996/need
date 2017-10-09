@@ -328,7 +328,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.dod:
                 edsearch.setVisibility(View.VISIBLE);
-                foo(true);
+                foo(false);
                 fragmentClass = Hotdeal.class;
                 ReplaceFrag(fragmentClass);
                 break;
@@ -339,8 +339,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 ReplaceFrag(fragmentClass);
                 break;
             case R.id.notif:
-                edsearch.setVisibility(View.VISIBLE);
-                foo(true);
+                edsearch.setVisibility(View.GONE);
+                foo(false);
                 fragmentClass = Notif.class;
                 ReplaceFrag(fragmentClass);
                 break;

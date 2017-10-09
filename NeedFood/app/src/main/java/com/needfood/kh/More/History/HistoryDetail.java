@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,7 +30,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -186,7 +184,11 @@ public class HistoryDetail extends AppCompatActivity {
                         for (ListMN lu : listmn) {
                             mn = lu.getMn();
                         }
-                        arr.add(new PreConstructor(idx.getString("title"), idx.getString("quantity"), idx.getString("money"), mn));
+                        if(!idx.getString("quantity").equals("0")){
+                            arr.add(new PreConstructor(idx.getString("title"), idx.getString("quantity"),
+                                    idx.getString("money"), mn));
+                        }
+
                     }
                     getLocalShipper();
                     adapter.notifyDataSetChanged();

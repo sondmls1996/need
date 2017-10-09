@@ -103,7 +103,6 @@ public class MenuBrandAdapter extends
 
                 viewHolder.seltime2.setText(giocl+":"+phutcl);
             }
-
         }
         viewHolder.rv.setOnClickListener(new View.OnClickListener() {
             @Override

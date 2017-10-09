@@ -15,7 +15,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Spannable;
@@ -101,7 +100,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     TextWatcher textWatcher;
     public static String codeDiscount = "";
     String tym;
-    public static String qq="1";
+    public static String qq = "1";
     private final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
     CommentAdapter adapter;
     ImageView imgprd;
@@ -242,7 +241,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         for (CheckConstructor lu : listcheck) {
             tong = Integer.parseInt(lu.getPrice()) * Integer.parseInt(lu.getQuanli()) + tong;
             Log.d("SHOWALL", "quanli:" + lu.getQuanli() + "\n" + "price:" + lu.getPrice() + "\n" + "ID:" + lu.getId() + "name:" + lu.getTitle());
-            if(!lu.getQuanli().equals("0")){
+            if (!lu.getQuanli().equals("0")) {
                 precons.add(new PreDialogConstructor(lu.getQuanli(), lu.getPrice(), lu.getTitle(), lu.getId(), lu.getTypeid()));
             }
 
@@ -268,7 +267,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
 
-         db.deleteAllPRD();
+        db.deleteAllPRD();
         //     stopService(new Intent(ProductDetail.this, BubbleService.class));
 
     }
@@ -393,22 +392,22 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     inven.setText(quantity);
                     if (db.isProductEmpty(idprd) == false) {
                         arrud = new ArrayList<>();
-                        arrud.add(new UpdateConstructor(DataHandle.QUAN,"1"));
+                        arrud.add(new UpdateConstructor(DataHandle.QUAN, "1"));
                         db.updatePrd(idprd, arrud);
                     } else {
                         db.addPDR(new CheckConstructor("1",
                                 priceprd, "false", "", "", bar, prdcode
                                 , titl,
-                                "", idprd, tym,strship.toString()));
-                        qq="1";
+                                "", idprd, tym, strship.toString()));
+                        qq = "1";
                     }
 
-                } else if(edquan.getText().toString().equals("0")) {
+                } else if (edquan.getText().toString().equals("0")) {
                     arrud = new ArrayList<>();
-                    arrud.add(new UpdateConstructor(DataHandle.QUAN,"0"));
-                    arrud.add(new UpdateConstructor(DataHandle.MNSHIP,"0"));
+                    arrud.add(new UpdateConstructor(DataHandle.QUAN, "0"));
+                    arrud.add(new UpdateConstructor(DataHandle.MNSHIP, "0"));
                     db.updatePrd(idprd, arrud);
-                }else{
+                } else {
 
                     numquan = Integer.parseInt(quantity) - Integer.parseInt(edquan.getText().toString());
                     if (numquan < 0) {
@@ -418,14 +417,14 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     }
                     if (db.isProductEmpty(idprd) == false) {
                         arrud = new ArrayList<>();
-                        arrud.add(new UpdateConstructor(DataHandle.QUAN,edquan.getText().toString()));
+                        arrud.add(new UpdateConstructor(DataHandle.QUAN, edquan.getText().toString()));
                         db.updatePrd(idprd, arrud);
-                    } else if(ProductDetail.qq.equals("0")){
+                    } else if (ProductDetail.qq.equals("0")) {
                         db.addPDR(new CheckConstructor(edquan.getText().toString(),
                                 priceprd, "false", "", "", bar, prdcode
                                 , titl,
-                                "", idprd, tym,strship.toString()));
-                        qq="1";
+                                "", idprd, tym, strship.toString()));
+                        qq = "1";
                     }
 
                 }
@@ -518,6 +517,9 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rcof2 = (RecyclerView) findViewById(R.id.rcprd2);
         rctp = (RecyclerView) findViewById(R.id.rcprd3);
 
+        rcof.setHasFixedSize(true);
+        rcof2.setHasFixedSize(true);
+        rctp.setHasFixedSize(true);
 
         adapter = new CommentAdapter(getApplicationContext(), arr);
         adapterof1 = new OftenAdapter(getApplicationContext(), arrof);
@@ -531,22 +533,74 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
         rc.setAdapter(adapter);
         rctp.setAdapter(adapterof3);
 
-        rcof.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rcof2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rcquan.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        LinearLayoutManager linearLayoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager2
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager3
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager4
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
+        rcof.setLayoutManager(linearLayoutManager);
+        rcof2.setLayoutManager(linearLayoutManager2);
+        rcquan.setLayoutManager(linearLayoutManager3);
         rc.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rctp.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rctp.setLayoutManager(linearLayoutManager4);
 
-        StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
-        StaggeredGridLayoutManager mStaggeredVerticalLayoutManager3 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
-        StaggeredGridLayoutManager mStaggeredVerticalLayoutManager2 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);// (int spanCount, int orientation)
-        StaggeredGridLayoutManager mStaggeredVerticalLayoutManager4 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+//        StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+//        StaggeredGridLayoutManager mStaggeredVerticalLayoutManager3 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+//        StaggeredGridLayoutManager mStaggeredVerticalLayoutManager2 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);// (int spanCount, int orientation)
+//        StaggeredGridLayoutManager mStaggeredVerticalLayoutManager4 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+//
+//        rcof.setLayoutManager(mStaggeredVerticalLayoutManager);
+//        rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
+//        rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
+//        rctp.setLayoutManager(mStaggeredVerticalLayoutManager4);
 
-        rcof.setLayoutManager(mStaggeredVerticalLayoutManager);
-        rcof2.setLayoutManager(mStaggeredVerticalLayoutManager2);
-        rcquan.setLayoutManager(mStaggeredVerticalLayoutManager3);
-        rctp.setLayoutManager(mStaggeredVerticalLayoutManager4);
-
+//        rcof.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()){
+//                    case MotionEvent.ACTION_DOWN:
+//                        rcof.setEnabled(false);
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        rcof.setEnabled(false);
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
+//        rcof2.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()){
+//                    case MotionEvent.ACTION_DOWN:
+//                        rcof2.setEnabled(false);
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        rcof2.setEnabled(false);
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
+//
+//        rctp.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()){
+//                    case MotionEvent.ACTION_DOWN:
+//                        rctp.setEnabled(false);
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        rcof2.setEnabled(false);
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
 
 //        if (!hot.isEmpty()) {
 //            tvpr.setVisibility(View.GONE);
@@ -645,7 +699,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     listcheck = db.getPrd();
                     for (CheckConstructor lu : listcheck) {
                         listship.add(Integer.parseInt(lu.getMns()));
-                        if(!lu.getNote().equals("0")){
+                        if (!lu.getNote().equals("0")) {
                             JSONObject j1 = new JSONObject();
                             tong = Integer.parseInt(lu.getQuanli()) * Integer.parseInt(lu.getPrice()) + tong;
                             j1.put("quantity", lu.getQuanli());
@@ -801,7 +855,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                 it.putExtra("tymn", tym);
                 it.putExtra("typePay", "money");
                 it.putExtra("tax", tax);
-                it.putExtra("coin",coin);
+                it.putExtra("coin", coin);
                 startActivity(it);
                 pro.dismiss();
             }
@@ -997,7 +1051,7 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
                     db.addPDR(new CheckConstructor("1",
                             priceprd, "false", "", "", bar, prdcode
                             , titl,
-                            "", idprd, tym,strship.toString()));
+                            "", idprd, tym, strship.toString()));
                     startService(new Intent(ProductDetail.this, BubbleService.class));
                     Log.d("IDS", titl);
 
@@ -1789,65 +1843,6 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
 
     }
 
-//    private void dialogRe(final HashMap<String, String> map, final String mnid, final String a, final String tym, final String codeDiscount, final String typeDiscount, final String tax, final int moneyal) {
-//
-//        final Dialog dialog = new Dialog(ProductDetail.this);
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.setContentView(R.layout.htucontent);
-//        dialog.show();
-//
-//        final LinearLayout txtht = (LinearLayout) dialog.findViewById(R.id.lnbc);
-//        final LinearLayout txtvote = (LinearLayout) dialog.findViewById(R.id.lnbm);
-//        final LinearLayout lnn = (LinearLayout) dialog.findViewById(R.id.linner2);
-//        final EditText edCoin = (EditText) dialog.findViewById(R.id.inputcoin);
-//        Button btnsub = (Button) dialog.findViewById(R.id.btnxac);
-//        TextView txtCoin = (TextView) dialog.findViewById(R.id.socoin);
-//        final int coinz = Math.round(Float.parseFloat(coin));
-//        txtCoin.setText(coinz + "");
-//
-//        txtht.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                lnn.setVisibility(View.VISIBLE);
-//                txtht.setVisibility(View.GONE);
-//                txtvote.setVisibility(View.GONE);
-//            }
-//
-//
-//        });
-//        btnsub.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final String coinn = edCoin.getText().toString();
-//                if (Double.parseDouble(coinn) < Double.parseDouble(String.valueOf(coinz))) {
-//                    Intent it = new Intent(getApplicationContext(), Preview.class);
-//                    it.putExtra("map", map);
-//                    it.putExtra("min", mnid);
-//                    it.putExtra("stt", a);
-//                    it.putExtra("tymn", tym);
-//                    it.putExtra("codedis", codeDiscount);
-//                    it.putExtra("typediss", typeDiscount);
-//                    it.putExtra("tax", tax);
-//                    it.putExtra("typePay", "coin");
-//                    it.putExtra("coin", coinn);
-//                    startActivity(it);
-//                } else {
-//                    Toast.makeText(ProductDetail.this, getResources().getString(R.string.engouh), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//        txtvote.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                lnn.setVisibility(View.GONE);
-//
-//                //Getting the rating and displaying it on the toast
-//
-//            }
-//
-//
-//        });
-//    }
 
     public void getReport() {
         final Dialog dialog = new Dialog(this);
@@ -1913,6 +1908,10 @@ public class ProductDetail extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+
+
+
+
 
 
 }
