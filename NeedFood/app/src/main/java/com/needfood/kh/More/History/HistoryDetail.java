@@ -215,6 +215,7 @@ public class HistoryDetail extends AppCompatActivity {
                         ln1.setVisibility(View.GONE);
                     }
                 }
+
                 Log.d("CHECKDATA", status);
                 if (status.equals("done")) {
                     shiplo.setVisibility(View.GONE);
